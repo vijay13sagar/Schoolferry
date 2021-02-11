@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Text, View, StyleSheet, TouchableOpacity, Linking, StatusBar } from 'react-native';
-// import RNPickerSelect from "react-native-picker-select";
+import { Picker } from '@react-native-picker/picker';
 
 
 const Homescreen = ({ navigation }) => {
 
   const [trip, setTrip] = useState("");
+  const [pickerValue, setPickerValue] = useState("")
 
 
   return (
@@ -29,18 +30,15 @@ const Homescreen = ({ navigation }) => {
           <Text style={styles.Text}>02</Text>
         </View>
       </View>
-      {/* <RNPickerSelect
-        //onValueChange={(value) => console.log(value)}
-        placeholder={{ label: "Select Trip ..", value: null }}
-        onValueChange={(trip) => setTrip(trip)}
-        items={[
-          { label: "Trip 1", value: "Trip 1 " },
-          { label: "Trip 2", value: "Trip 2" },
-          { label: "Trip 3", value: "Trip 3" },
-          { label: "Trip 4", value: "Trip 4" },
-        ]}
-        // style={pickerSelectStyles}
-      /> */}
+      <Picker
+      selectedValue={pickerValue}
+          style={styles.Picker}
+          onValueChange={(pickerValue) =>
+            setPickerValue(pickerValue)
+          }>
+          <Picker.Item label="Trip 1" value="Trip1" />
+          <Picker.Item label="Trip 2" value="Trip2" />
+        </Picker>
 
       <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate("Trip Details")}  >
         <Text style={styles.loginText}>Start Trip</Text>
@@ -88,6 +86,16 @@ const styles = StyleSheet.create({
     fontSize: 18,
     alignSelf: "center"
 
+  },
+  Picker: {
+     width:"75%",
+     marginVertical:10,
+     borderRadius:10,
+     height:30,
+     borderWidth:1,
+     alignContent:"center",
+     alignSelf:"center",
+     
   },
   loginBtn: {
     width: "60%",

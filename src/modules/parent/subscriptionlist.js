@@ -1,20 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Text, View, StyleSheet,StatusBar, FlatList, TouchableOpacity, ScrollView, Image } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { NavigationContainer } from '@react-navigation/native';
+import Ngrok from '../../constants/ngrok';
 
 
 const Subscriptions = ({navigation}) => {
-  const [data, setData] = useState([
-    { driverPrice: '499', nannyPrice: '399', othersPrice: '299', totalPrice: '1,999', id: '1', type: 'Monthly', nanny: 'Nanny Cost:', driver: 'Driver Cost', others: 'Others:', total: 'Total' },
-    { driverPrice: '499', nannyPrice: '399', othersPrice: '299', totalPrice: '7,499', id: '2', type: 'Quaterly', nanny: 'Nanny Cost:', driver: 'Driver Cost', others: 'Others:', total: 'Total' },
-    { driverPrice: '499', nannyPrice: '399', othersPrice: '299', totalPrice: '13,999', id: '3', type: 'Semi Annually', nanny: 'Nanny Cost:', driver: 'Driver Cost', others: 'Others:', total: 'Total' },
-    { driverPrice: '499', nannyPrice: '399', othersPrice: '299', totalPrice: '21,999', id: '4', type: 'Yearly', nanny: 'Nanny Cost:', driver: 'Driver Cost', others: 'Others:', total: 'Total' }
-
-  ])
+  const [data, setData] = useState("")
   const [pickerValue, setPickerValue] = useState("")
 
-
+  useEffect ( () => {    
+    fetch(`${Ngrok.url}/api/package/4`, {
+      "method": "GET",
+      "headers": {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        console.log(responseJson);
+        setData(responseJson)
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, [])
   return (
     <View style={styles.container}>
       <StatusBar
@@ -40,7 +51,7 @@ const Subscriptions = ({navigation}) => {
           <Picker.Item label="Child 2" value="Child2" />
         </Picker>
       </View>
-      <View style={{height:350}}>
+      <View style={{height:320}}>
       <FlatList
         style={styles.flatlist}
         horizontal={true}
@@ -52,30 +63,24 @@ const Subscriptions = ({navigation}) => {
             <TouchableOpacity style={styles.flatlistContainer} onPress={()=>navigation.navigate('Plan Details')}>
               <Image style={styles.avatar}  source={{ uri: 'https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg' }} />
 
-              <Text style={styles.typeOfSubscription}>{item.type}</Text>
+              <Text style={styles.typeOfSubscription}>{item.term}</Text>
 
+              
               <View style={{ flexDirection: 'row' }}>
-                <Text style={styles.serviceDetails}>{item.driver}</Text>
-                <Text style={styles.price}>  {item.driverPrice}</Text>
+                <Text style={styles.serviceDetails}>Nanny</Text>
+                <Text style={styles.price}>  {item.nannycost}</Text>
               </View>
-              <View style={{ flexDirection: 'row' }}>
-                <Text style={styles.serviceDetails}>{item.nanny}</Text>
-                <Text style={styles.price}>  {item.nannyPrice}</Text>
-              </View>
-              <View style={{ flexDirection: 'row' }}>
-                <Text style={styles.serviceDetails}>{item.others}</Text>
-                <Text style={styles.price}>    {item.othersPrice}</Text>
-              </View>
+              
               <View style={{ flexDirection: 'row', marginVertical:5, }}>
-                <Text style={styles.totalText}>{item.total}</Text>
-                <Text style={styles.totalCost}> - {item.totalPrice}</Text>
+                <Text style={styles.totalText}>Trip Cost</Text>
+                <Text style={styles.totalCost}> - {item.tripcost}</Text>
               </View>
             </TouchableOpacity>
           </View>
         )}
       />
       </View>
-      <Text style={styles.randomText}>Swipe Left And See Our special plans For You</Text>
+      <Text style={styles.randomText}>Compulsory nanny service for children till 8 years</Text>
 
       <View style={styles.addChildContainer}>
         <Text style={styles.addChildText}>To Avail Service For More Children, Click On Add Child</Text>
@@ -118,7 +123,7 @@ const styles = StyleSheet.create({
   flatlist: {
     flex:1,
     marginTop: 10,
-    height:200
+    height:100
 
   },
   flatlistContainer: {
@@ -138,7 +143,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: "700",
     alignSelf: 'center',
-    marginBottom: 5
+    marginVertical:12
   },
   serviceDetails: {
     fontSize: 18,
@@ -152,21 +157,23 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
   totalText: {
-    fontSize: 30,
+    fontSize: 25,
     fontWeight: "700",
     marginLeft: 10,
 
   },
   totalCost: {
-    fontSize: 30,
+    fontSize: 25,
     fontWeight: "700",
 
   },
   randomText: {
     //marginTop: 5,
-    fontSize: 17,
+    fontSize: 15,
     alignSelf: 'center',
     fontWeight: '700',
+    color: "red",
+    marginVertical: 5
   },
   addChildContainer: {
     borderWidth: 1,
@@ -191,7 +198,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#ff5c8d",
     alignSelf: "center",
-    marginTop: 20,
+    marginTop: 10,
   },
   unsubscribeBtn: {
     width: "75%",
@@ -201,7 +208,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#ff5c8d",
     alignSelf: "center",
-    marginTop:5,
+    marginTop:10,
     //marginBottom:15
   },
 

@@ -6,10 +6,11 @@ import {
   Image,
   StatusBar,
   TextInput,
-
+  Alert,
   TouchableOpacity,
 } from "react-native";
 import Ngrok from '../constants/ngrok';
+import axios from 'axios';
 
 
 
@@ -68,37 +69,49 @@ export default function App(){
 
   const pressHandler = () => {
     if (validateFunction()) {
-      /* const body = {
-         id: email,
-          password: password
-       }*/
-      /*let response = await loginApi(body)*/
-    fetch(`${Ngrok.url}/api/parent/signup`, {
-      "method": "POST",
-      "headers": {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        name: Name,
-        email: email,
-        contact: contact,
-        password: password
-      })
-    })
-      .then(response => response.json())
-      .then(responseJson => {
-        console.log(responseJson);
-        if (responseJson.message == "registered successfully") {
-          alert ('Congratulations..Sign Up Successful')
-        }else {
-          alert('sign up failed')
+      
+        
+        try {
+          axios({
+            method: 'POST',
+            url: `${Ngrok.url}api/parent/signup`,
+            "headers": {
+              Accept: 'application/json',
+              'Content-Type': 'application/json'
+            },
+            data: {
+              name: Name,
+             email: email,
+            contact: contact,
+            password: password
+  
+            }
+          })
+            .then(function (response) {
+              if (response.status == 200) {
+                Alert.alert('Signup Successful')
+              }
+  
+              console.log("response", response.status);
+            })
+            .catch(function (error) {
+              console.log(error.response.status) // 401
+              console.log(error.response.data.error) //Please Authenticate or whatever returned from server
+            if(error.response.status == 401){
+              //redirect to login
+              Alert.alert('Phone Number Alredy Exist!')
+            }
+         
+            })
+          // .catch(function (error) {
+          //   // handle error
+          //   console.log("errordetails",error);
+          // })
         }
-        //alert(JSON.stringify(response))
-      })
-      .catch(err => {
-        console.log(err);
-      });
+           catch(error){
+            console.log("errordetails",error);
+           }
+     
     }
    }
   return (
@@ -153,7 +166,7 @@ export default function App(){
           style={styles.TextInput}
           placeholder="Password"
           placeholderTextColor="#929292"
-          secureTextEntry={false}
+          secureTextEntry={true}
           onChangeText={(password) => setpassword(password)}
         />
       </View>
