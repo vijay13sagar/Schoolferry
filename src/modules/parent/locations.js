@@ -43,7 +43,7 @@ const location = ({ navigation }) => {
 
     const submitHandler = () => {
 
-        fetch(`https://b96d4fb82a33.ngrok.io/locations/${pincode}`, {
+        fetch(`https://963e976ffdf5.ngrok.io/api/locations/${pincode}`, {
             "method": "GET",
             "headers": {
                 Accept: 'application/json',

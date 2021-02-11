@@ -61,19 +61,19 @@ export default class App extends Component  {
           <Text style={styles.details}>{ startDate }</Text>
         </View> */}
         <View>
-          <Text style={styles.details}>{ maxDate }</Text>
+          <Text style={styles.inputView}>{ maxDate }</Text>
         </View>
         <View style={styles.textview}>
         <Text style={styles.headertext} >End Date</Text>
-        <Text style={styles.details}>{tomorrow}</Text>
+        <Text style={styles.inputView}>{tomorrow}</Text>
       </View>
       <View style={styles.textview}>
         <Text style={styles.headertext} >Cost</Text>
-        <Text style={styles.details}>xxx</Text>
+        <Text style={styles.inputView}>xxx</Text>
       </View>
       <View style={styles.textview}>
         <Text style={styles.headertext} >School Name</Text>
-        <Text style={styles.details}>xxx</Text>
+        <Text style={styles.inputView}>xxx</Text>
         </View>
         <TouchableOpacity style={styles.loginBtn} onPress={()=>this.props.navigation.navigate('PaymentScreen')}>
               <Text style={styles.loginText}>Pay</Text>
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
   },
   headertext: {
     fontSize: 13,
-    marginLeft: 30,
+    marginLeft: 50,
   },
   details: {
     height: 40,
@@ -139,6 +139,20 @@ const styles = StyleSheet.create({
     backgroundColor: "#ff5c8d",
     alignSelf: "center",
     marginTop: 20,
+  },
+  inputView: {
+    padding:9,
+    borderWidth: 1,
+    borderColor: '#b0003a',
+    borderRadius: 10,
+    width: "80%",
+    height: 45,
+    alignSelf
+    : "center",
+    
+    backgroundColor: "#fff",   //"#C4C4C4",
+    marginTop: 5,
+    //opacity: 0.5,
   },
 
 });
