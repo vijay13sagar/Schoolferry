@@ -8,6 +8,7 @@ const Profile = ({navigation}) => {
   const [data, getData] = useState([])
   
   useEffect ( async () => {    
+    
     let token = await AsyncStorage.getItem('token')
     
     fetch(`${Ngrok.url}/api/profiledetails/parent/${token}`, {
@@ -34,7 +35,7 @@ const Profile = ({navigation}) => {
         // dark-content, light-content and default
         hidden={false}
         //To hide statusBar
-        backgroundColor= '#e91e63'      //"#ff6090"
+        backgroundColor= '#e91e63' 
         //Background color of statusBar only works for Android
         translucent={false}
       //allowing light, but not detailed shapes

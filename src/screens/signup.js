@@ -14,43 +14,43 @@ import axios from 'axios';
 
 
 
-export default function App(){
+export default function App() {
   const [email, setEmail] = useState("");
   const [Name, setName] = useState("");
-  
+
   const [contact, setcontact] = useState("");
   const [password, setpassword] = useState("");
   const [{ emailError }, setEmailError] = useState("");
   const [{ contactError }, setcontactError] = useState("");
   const [{ emptyFields }, setemptyFeilds] = useState("");
-  
-  
- const validateEmail = (email) => {
+
+
+  const validateEmail = (email) => {
     const regex_mail = /^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)$/;
     if (regex_mail.test(email)) {
-        return true
+      return true
     }
   };
 
   const validatecontact = (contact) => {
-    
-      var regex_phone = /^((\+91)?|91)?[789][0-9]{9}/
-  
+
+    var regex_phone = /^((\+91)?|91)?[789][0-9]{9}/
+
     if (regex_phone.test(contact)) {
       return true
     }
-    else{return false}
+    else { return false }
 
   };
 
   const validateFunction = () => {
-    if (!Name||!email || !contact || !password) {
+    if (!Name || !email || !contact || !password) {
       setemptyFeilds({ emptyFields: "Please Enter All The Details" })
       return false
     }
     else if (!validateEmail(email)) {
       setEmailError({ emailError: "Enter Valid Email Id" })
-      setcontactError({contactError:null})
+      setcontactError({ contactError: null })
       setemptyFeilds({ emptyFields: null })
 
       return false
@@ -61,7 +61,7 @@ export default function App(){
       return false
     }
     return true
-    
+
   }
 
 
@@ -69,53 +69,53 @@ export default function App(){
 
   const pressHandler = () => {
     if (validateFunction()) {
-      
-        
-        try {
-          axios({
-            method: 'POST',
-            url: `${Ngrok.url}api/parent/signup`,
-            "headers": {
-              Accept: 'application/json',
-              'Content-Type': 'application/json'
-            },
-            data: {
-              name: Name,
-             email: email,
+
+
+      try {
+        axios({
+          method: 'POST',
+          url: `${Ngrok.url}api/parent/signup`,
+          "headers": {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          data: {
+            name: Name,
+            email: email,
             contact: contact,
             password: password
-  
+
+          }
+        })
+          .then(function (response) {
+            if (response.status == 200) {
+              Alert.alert('Signup Successful')
             }
+
+            console.log("response", response.status);
           })
-            .then(function (response) {
-              if (response.status == 200) {
-                Alert.alert('Signup Successful')
-              }
-  
-              console.log("response", response.status);
-            })
-            .catch(function (error) {
-              console.log(error.response.status) // 401
-              console.log(error.response.data.error) //Please Authenticate or whatever returned from server
-            if(error.response.status == 401){
+          .catch(function (error) {
+            console.log(error.response.status) // 401
+            console.log(error.response.data.error) //Please Authenticate or whatever returned from server
+            if (error.response.status == 401) {
               //redirect to login
               Alert.alert('Phone Number Alredy Exist!')
             }
-         
-            })
-          // .catch(function (error) {
-          //   // handle error
-          //   console.log("errordetails",error);
-          // })
-        }
-           catch(error){
-            console.log("errordetails",error);
-           }
-     
+
+          })
+        // .catch(function (error) {
+        //   // handle error
+        //   console.log("errordetails",error);
+        // })
+      }
+      catch (error) {
+        console.log("errordetails", error);
+      }
+
     }
-   }
+  }
   return (
-    
+
 
     <View style={styles.container}>
       <Image style={styles.image} source={require("../assets/Logo.png")} />
@@ -124,13 +124,13 @@ export default function App(){
         // dark-content, light-content and default
         hidden={false}
         //To hide statusBar
-        backgroundColor= '#e91e63'     
+        backgroundColor='#e91e63'
         //Background color of statusBar only works for Android
         translucent={false}
       //allowing light, but not detailed shapes
 
       />
-     
+
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
@@ -139,8 +139,8 @@ export default function App(){
           onChangeText={(Name) => setName(Name)}
         />
       </View>
-     
-     
+
+
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
@@ -149,7 +149,7 @@ export default function App(){
           onChangeText={(email) => setEmail(email)}
         />
       </View>
-      
+
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
@@ -160,7 +160,7 @@ export default function App(){
           onChangeText={(contact) => setcontact(contact)}
         />
       </View>
-      
+
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     width: "80%",
     height: 45,
     alignItems: "center",
-    backgroundColor:"#fff",   //"#C4C4C4",
+    backgroundColor: "#fff",   //"#C4C4C4",
     marginTop: 5,
     //opacity: 0.5,
   },
@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
 
   },
   error: {
-      padding:1,
+    padding: 1,
 
     color: '#dc143c',
     fontSize: 11,

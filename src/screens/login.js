@@ -8,11 +8,13 @@ import {
   TextInput,
   Button,
   TouchableOpacity,
+  Alert,
 } from "react-native";
-import { event } from "react-native-reanimated";
+
 import Ngrok from '../constants/ngrok';
-//import loginApi from '../../repository/exportlogin'
 import AsyncStorage from '@react-native-community/async-storage';
+
+
 export default function Login({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -81,13 +83,22 @@ export default function Login({ navigation }) {
             AsyncStorage.setItem("token", responseJson[0])
             navigation.replace('Nanny Interface')
           }
-          else {
-            alert('Login failed ')
+          else if (responseJson.message = "Invalid contact/password"){
+            Alert.alert("Incorrect contact/password")
           }
         })
-        .catch(err => {
+        .catch( (error) => {
+          console.log(error.response.status) // 401
+         // console.log(error.response.data.error) //Please Authenticate or whatever returned from server
+        if(error.responseJson.status == 401){
+          //redirect to login
+          Alert.alert('Phone Number Alredy Exist!')
+        }
+     
+        })
+        /*.catch(err => {
           console.log(err);
-        });
+        });*/
     }
   }
   return (
@@ -174,8 +185,8 @@ const styles = StyleSheet.create({
   error: {
     color: '#DC143C',
     fontSize: 11,
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start'
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   forgot_button: {
     height: 30,
