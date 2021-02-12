@@ -45,19 +45,19 @@ export default function Add_Nanny() {
 
   const validateFunction = () => {
     
-    if (!name ||!email || !contact || !ADR ||  !password) {
+    if (!name || !contact || !ADR ||  !password) {
       setemptyFeilds({ emptyFields: "Please Enter All The Details" })
       setcontactError({contactError:null})
       setEmailError({ emailError: null })
       return false
     }
-    else if (!validateEmail(email)) {
-      setEmailError({ emailError: "Enter Valid Email Id" })
-      setcontactError({contactError:null})
-      setemptyFeilds({ emptyFields: null })
+    // else if (!validateEmail(email)) {
+    //   setEmailError({ emailError: "Enter Valid Email Id" })
+    //   setcontactError({contactError:null})
+    //   setemptyFeilds({ emptyFields: null })
 
-      return false
-    }
+    //   return false
+    // }
     else if (!validatecontact(contact)) {
       setcontactError({ contactError: "Enter Valid Phone Number" })
       setEmailError({ emailError: null })
@@ -178,14 +178,14 @@ export default function Add_Nanny() {
           onChangeText={(contact) => setcontact(contact)}
         />
       </View>
-      <View style={styles.inputView}>
+      {/* <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
           placeholder="Email"
           placeholderTextColor="#929292"
           onChangeText={(email) => setEmail(email)}
         />
-      </View>
+      </View> */}
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
