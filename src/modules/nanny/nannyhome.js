@@ -36,7 +36,8 @@ export default class Triplist extends Component  {
       />
     return (
       
-      <View style={{ flex: 1, padding: 3 ,}}>
+      <View style={{ flex: 1, padding: 3 ,backgroundColor: "#F9F2F2",}}>
+        <Text style={styles.datestyle}>List of Trips</Text>
         <ScrollView>
         {isLoading ? <ActivityIndicator/> : (
           <FlatList
@@ -113,6 +114,10 @@ const styles = StyleSheet.create({
         bottom:0,
         borderRadius:20,
         marginLeft: 20
+    },
+    datestyle:{
+      alignSelf:'center',
+      fontSize:25
     },
     loginText:{
       color:'black',

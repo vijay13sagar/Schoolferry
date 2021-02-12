@@ -29,7 +29,7 @@ const Subscriptions = ({navigation}) => {
   return (
     <View style={styles.container}>
       <StatusBar
-        barStyle="dark-content"
+        barStyle="light-content"
         // dark-content, light-content and default
         hidden={false}
         //To hide statusBar
@@ -60,7 +60,7 @@ const Subscriptions = ({navigation}) => {
         keyExtractor={item => item.id}
         renderItem={({ item }) => (
           <View style={{ flex: 1, }}>
-            <TouchableOpacity style={styles.flatlistContainer} onPress={()=>navigation.navigate('Plan Details')}>
+            <TouchableOpacity style={styles.flatlistContainer} onPress={()=>navigation.navigate('Plan Details',{item:item})}>
               <Image style={styles.avatar}  source={{ uri: 'https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg' }} />
 
               <Text style={styles.typeOfSubscription}>{item.term}</Text>

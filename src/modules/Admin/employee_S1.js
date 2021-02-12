@@ -17,7 +17,7 @@ export default function Employee_s1() {
       
 
       <StatusBar
-        barStyle="dark-content"
+        barStyle="light-content"
         // dark-content, light-content and default
         hidden={false}
         //To hide statusBar

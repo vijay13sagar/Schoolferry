@@ -47,7 +47,7 @@ export default class App extends Component {
     return (
       <View style={styles.container}>
         <StatusBar
-        barStyle="dark-content"
+        barStyle="light-content"
         // dark-content, light-content and default
         hidden={false}
         //To hide statusBar

@@ -115,7 +115,7 @@ export default function Add_Nanny() {
     try {
       axios({
         method: 'POST',
-        url: `${Ngrok.url}api/admin/register/nanny`,
+        url: `${Ngrok.url}/api/admin/register/nanny`,
         "headers": {
           Accept: 'application/json',
           'Content-Type': 'application/json'

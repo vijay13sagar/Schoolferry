@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
+import { Item } from 'native-base';
 
 export default class App extends Component  { 
   constructor(props) {
@@ -23,7 +24,7 @@ export default class App extends Component  {
     });
   }
   render() {
-    
+  
     const { selectedStartDate } = this.state;
     const minDate=new Date();//Today
     const maxDate = moment(selectedStartDate).format('DD-MM-YYYY'); 
@@ -34,7 +35,7 @@ export default class App extends Component  {
     return (
       <View style={styles.container}>
         <StatusBar
-        barStyle="dark-content"
+        barStyle="light-content"
         // dark-content, light-content and default
         hidden={false}
         //To hide statusBar
@@ -69,11 +70,11 @@ export default class App extends Component  {
       </View>
       <View style={styles.textview}>
         <Text style={styles.headertext} >Cost</Text>
-        <Text style={styles.inputView}>xxx</Text>
+        <Text style={styles.inputView}>XXXXXXX</Text>
       </View>
       <View style={styles.textview}>
         <Text style={styles.headertext} >School Name</Text>
-        <Text style={styles.inputView}>xxx</Text>
+        <Text style={styles.inputView}>XXXXX</Text>
         </View>
         <TouchableOpacity style={styles.loginBtn} onPress={()=>this.props.navigation.navigate('PaymentScreen')}>
               <Text style={styles.loginText}>Pay</Text>
