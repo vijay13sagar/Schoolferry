@@ -24,7 +24,7 @@ export default class Triplist extends Component  {
   render() {
     const { data, isLoading } = this.state;
     return (
-      <View style={{ flex: 1, padding: 3 ,}}>
+      <View style={{ flex: 1, padding: 3 ,backgroundColor: "#F9F2F2",}}>
         <StatusBar
         barStyle="light-content"
         // dark-content, light-content and default
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   container: {
     padding: 50,
     flex:1,
-      backgroundColor: "#F9F2F2",
+    backgroundColor: "#F9F2F2",
       alignItems: "center",
     },
     datestyle:{

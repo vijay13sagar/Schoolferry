@@ -1,9 +1,5 @@
 import React, {useEffect, useState} from 'react';
-//import { render } from 'react-dom';
-import { Text, View, ScrollView,TouchableOpacity,StatusBar, StyleSheet, Image } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { TextInput } from 'react-native-gesture-handler';
+import { Text, View, ScrollView,TouchableOpacity,StatusBar,Linking, StyleSheet, Image } from 'react-native';
 import Ngrok from '../../constants/ngrok'
 
 const Profile = ({navigation}) => {
@@ -31,9 +27,12 @@ useEffect( () => {
   return (
     <View style={styles.container}>
         <StatusBar
-         barStyle = "dark-content" hidden = {false} backgroundColor = "#e91e63" translucent = {true}
+         barStyle = "light-content" hidden = {false} backgroundColor = "#e91e63" translucent = {true}
 
       />
+      <TouchableOpacity style={styles.edit}>
+        <Text style={styles.loginText} onPress={()=> navigation.navigate("Updateprof")}>EDIT</Text>
+      </TouchableOpacity>
       <View style={styles.body}>
         <Text style={styles.name}>Hello Nanny</Text>
       </View>
@@ -62,8 +61,7 @@ useEffect( () => {
       <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('Passwordchange')}  >
         <Text style={styles.loginText}>Change Password</Text>
       </TouchableOpacity>
-
-      <TouchableOpacity style={styles.loginBtn} >
+      <TouchableOpacity style={styles.loginBtn} onPress={() => { Linking.openURL('tel:8777111223') }}  >
         <Text style={styles.loginText}>Contact Admin</Text>
       </TouchableOpacity>
       
@@ -78,6 +76,19 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#F9F2F2",
 
+  },
+  edit:{
+    flexDirection:'row-reverse',
+    height:35,
+    backgroundColor:'#ff5c8d',
+    width:70,
+    alignSelf:'flex-end',
+    marginTop:15,
+    marginHorizontal:20,
+    alignItems:'center',
+    justifyContent:'center',
+    //borderColor:'black',
+    borderRadius:12,
   },
   inputView: {
     borderWidth: 1,

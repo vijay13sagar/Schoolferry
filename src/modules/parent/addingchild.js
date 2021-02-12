@@ -20,19 +20,17 @@ export default function addchild({navigation}) {
   const [CN, setCN] = useState("");
   const [CA, setCA] = useState("");
   const [CB, setCB] = useState("");
-  const [SA, setSA] = useState("");
   const [SN, setSN] = useState("");
-  const [ST, setST] = useState("");
-  const [ET, setET] = useState("");
+  const [SA, setSA] = useState("");
   const [{value_error},setError] = useState ("");
   
  
   const  validateFunction= () => {
-    if (!CN || !CA || !CB || !SA || !ST || !ET || !SN) {
+    if (!CN || !CA || !CB || !SA || !SN) {
         setError({value_error: "Fields Cannot be Empty" })
         return value_error
     }
-    if(CN && CA && CB && SA && ST && ET && SN){
+    if(CN && CA && CB && SA && SN){
       setError({value_error: null})
       //navigation.navigate('Subscription_list')
     }
@@ -61,8 +59,6 @@ const handlePress = async () => {
     bloodgroup:CB,
     schoolname:SN,
     schooladdress:SA,
-    schoolstarttime:ST,
-    schoolendtime:ET,
     parentid:token,
     // parentid:PID,
       })
@@ -114,6 +110,7 @@ const handlePress = async () => {
         <TextInput
           style={styles.TextInput}
           placeholder="Child Age"
+          keyboardType="numeric"
           placeholderTextColor="#929292"
           onChangeText={(CA) => setCA(CA)}
         />
@@ -141,22 +138,6 @@ const handlePress = async () => {
           placeholder="School Address"
           placeholderTextColor="#929292"
           onChangeText={(SA) => setSA(SA)}
-        />
-      </View>
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="School Start Time"
-          placeholderTextColor="#929292"
-          onChangeText={(ST) => setST(ST)}
-        />
-      </View>
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="School End Time"
-          placeholderTextColor="#929292"
-          onChangeText={(ET) => setET(ET)}
         />
       </View>
       <Text style={styles.error}>{value_error}</Text>
@@ -188,7 +169,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: "80%",
     height: 45,
-    alignItems: "center",
+    padding:2,
+    // alignItems: "center",
+    // justifyContent:'center',
+    // alignContent:'center',
+    // alignSelf:'center',
     backgroundColor:"#fff",   //"#C4C4C4",
     marginTop: 5,
     //opacity: 0.5,
@@ -198,7 +183,12 @@ const styles = StyleSheet.create({
     height: 50,
     flex: 1,
     padding: 10,
-    marginLeft: 20,
+    alignContent:'center',
+    justifyContent:'center',
+    alignItems:'center',
+    alignSelf:'center',
+    //marginLeft: 100,
+    //marginBottom:10,
 
   },
   error: {

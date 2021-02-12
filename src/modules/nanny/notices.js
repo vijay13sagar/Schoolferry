@@ -36,7 +36,7 @@ export default class Notificationlist extends Component  {
       />
     
     return (
-      <View style={{ flex: 1, padding: 3 ,}}>
+      <View style={{ flex: 1, padding: 3 ,backgroundColor: "#F9F2F2",}}>
         <ScrollView>
         {isLoading ? <ActivityIndicator/> : (
           <FlatList
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
   container: {
     padding: 50,
     flex:1,
-      backgroundColor: "#F9F2F2",
+    backgroundColor: "#F9F2F2",
       alignItems: "center",
     },
     cardbox:{
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     width:"80%",
     height:"30%",
     flex:1,
-      backgroundColor: "#F9F2F2",
+    //backgroundColor: "#F9F2F2",
       alignSelf: "center",
     },
 
