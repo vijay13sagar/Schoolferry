@@ -11,7 +11,7 @@ import NannyNav from './src/navigation/nanny_tabbar_nav';
 export default function App() {
   return (
     <NavigationContainer>
-         <ParentNav/>
+         <Onboarding/>
     </NavigationContainer>
   );
 }

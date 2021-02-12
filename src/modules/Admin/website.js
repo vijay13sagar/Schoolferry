@@ -1,10 +1,18 @@
 import * as React from 'react';
-import { Text, View } from 'react-native';
-const web_Site = () => {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Website</Text>
-      </View>
-    );
-  }
-export default web_Site;
+//import { Searchbar } from 'react-native-paper';
+
+const MyComponent = () => {
+  const [searchQuery, setSearchQuery] = React.useState('');
+
+  const onChangeSearch = query => setSearchQuery(query);
+
+  return (
+    <Searchbar
+      placeholder="Search"
+      onChangeText={onChangeSearch}
+      value={searchQuery}
+    />
+  );
+};
+
+export default MyComponent;

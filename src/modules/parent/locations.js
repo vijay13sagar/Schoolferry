@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import AddressPickup from '../../components/addresspickup'
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const location = ({ navigation }) => {
     const [pincode, setPincode] = useState("00")
@@ -23,6 +24,7 @@ const location = ({ navigation }) => {
     })
     const [travelMode, setTravelMode] = useState(" ")
     const [modalVisible, setModalVisible] = useState(false);
+    const [{error}, setError] = useState(" ")
 
     const fetchCoords = (lat, lng) => {
         console.log(lat, lng)
@@ -41,30 +43,49 @@ const location = ({ navigation }) => {
 
     }
 
+    const modalButtonHandler = () => {
+        setModalVisible(!modalVisible)
+        navigation.navigate ("Home")
+    }
+
     const submitHandler = () => {
 
-        fetch(`https://963e976ffdf5.ngrok.io/api/locations/${pincode}`, {
-            "method": "GET",
-            "headers": {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-            },
-        })
+        if (!pincode){
+
+            setError({error: 'Please enter pincode'})
+        }else if(pincode ==401401)
+        {
+            navigation.navigate('Subscriptions');
+        }
+        else 
+        {
+            setModalVisible(true)
+        }
+        // fetch(`https://963e976ffdf5.ngrok.io/api/locations/${pincode}`, {
+        //     "method": "GET",
+        //     "headers": {
+        //         Accept: 'application/json',
+        //         'Content-Type': 'application/json'
+        //     },
+        // })
            
-        .then((response) => {
-            console.log(response.status);
-            response.json()
-            //console.log('resp',response.status);
-            if (response.status == 200) {
-                navigation.navigate('Subscriptions')
+        // .then((response) => {
+        //     console.log(response.status);
+        //     response.json()
+        //     //console.log('resp',response.status);
+        //     if (response.status == 200) {
+        //         navigation.navigate('Subscriptions')
                
-            } else {
-                setModalVisible(true)
-            }
-        })
-            .catch(err => {
-                console.log(err);
-            });
+        //     } else {
+        //         setModalVisible(true)
+        //     }
+        // })
+        //     .catch(err => {
+        //         console.log(err);
+        //     });
+        // }else {
+        //     setError({error: 'Please enter pincode'})
+        // }
     }
 
     return (
@@ -77,12 +98,17 @@ const location = ({ navigation }) => {
                 visible={modalVisible}
             >
                 <View style={styles.modalContainer}>
+                <Ionicons name="close-circle-outline"
+                 color="#fff" size={30}
+                  style = {styles.icon}
+                  onPress={(modalVisible) => setModalVisible(!modalVisible)}
+                  />
                     <View style={styles.modalBody}>
+                    
+                        <Text style={styles.message}>Sorry, Currently Unavailable</Text>
+                        <Text style={styles.newsText}>We will get back to you once we start service at your area</Text>
 
-                        <Text style={styles.message}>Service unavailable</Text>
-                        <Text style={styles.newsText}>Your request has been accepted, we will get back to you SOON</Text>
-
-                        <TouchableOpacity style={styles.closeModal} onPress={(modalVisible) => setModalVisible(!modalVisible)}>
+                        <TouchableOpacity style={styles.closeModal} onPress={modalButtonHandler}>
                             <Text style={{ fontSize: 17, }}>Okay</Text>
                         </TouchableOpacity>
                     </View>
@@ -107,6 +133,8 @@ const location = ({ navigation }) => {
                 onChangeText={(pincode) => setPincode(pincode)}
 
             />
+            <Text style={styles.error}>{error}</Text>
+
             <TouchableOpacity style={styles.submitBtn} onPress={submitHandler} >
                 <Text style={styles.TextBtn}>Submit</Text>
             </TouchableOpacity>
@@ -135,6 +163,12 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         fontSize: 15,
     },
+    error: {
+        color: '#DC143C',
+        fontSize: 13,
+        alignSelf:'center',
+        marginTop:5
+      },
     submitBtn: {
         width: "65%",
         borderRadius: 10,
@@ -157,23 +191,25 @@ const styles = StyleSheet.create({
     modalBody: {
         backgroundColor: '#fff',
         borderRadius: 10,
-        height: '50%',
-        width: '90%',
+        height: 280,
+        width: '88%',
         alignSelf: 'center',
         justifyContent: 'center'
 
     },
     message: {
-        fontSize: 20,
+        fontSize: 26,
         textAlign: 'center',
         //marginTop: 30
+        color:'#DC143C',
+        fontWeight:'600'
     },
     newsText: {
-        fontSize: 26,
+        fontSize: 19,
         textAlign: 'center',
         marginTop: 15,
         padding: 2,
-        color: '#4169e1',
+        color: 'green',
     },
 
     closeModal: {
@@ -185,5 +221,9 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    icon:{
+        alignSelf:'flex-end',
+        marginRight:10
     }
 })

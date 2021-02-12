@@ -42,6 +42,7 @@ export default class userList extends Component  {
       //allowing light, but not detailed shapes
 
       />
+      <Text style={{alignSelf:"center",marginTop:6,fontSize:20}}>List of customers</Text>
         
         <ScrollView>
         {isLoading ? <ActivityIndicator/> : (
