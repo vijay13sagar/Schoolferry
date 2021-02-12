@@ -5,8 +5,6 @@ import Ngrok from '../../constants/ngrok';
 
 
 const HomeScreen = ({ navigation }) => {
-  const [pincode, setPincode] = useState(" ")
-  const [schoolname, setSchoolname] = useState(" ")
 
   /*function validateLocation() {
     fetch(`${Ngrok.url}/api/login`, {
@@ -115,7 +113,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F9F2F2',
   },
   map: {
-    height: '65%',
+    height: '68%',
 
     // marginBottom: 20,
   },
