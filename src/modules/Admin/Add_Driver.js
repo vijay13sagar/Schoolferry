@@ -23,12 +23,12 @@ export default function Add_Driver() {
   const [{ emailError }, setEmailError] = useState("");
   const [{ contactError }, setcontactError] = useState("");
   const [{ emptyFields }, setemptyFeilds] = useState("");
-  const validateEmail = (email) => {
-    const regex_mail = /^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)$/;
-    if (regex_mail.test(email)) {
-      return true
-    }
-  };
+  // const validateEmail = (email) => {
+  //   const regex_mail = /^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)$/;
+  //   if (regex_mail.test(email)) {
+  //     return true
+  //   }
+  // };
 
   const validatecontact = (contact) => {
 
@@ -43,23 +43,23 @@ export default function Add_Driver() {
 
   const validateFunction = () => {
 
-    if (!name || !email || !contact || !ADR || !LIN || !password) {
+    if (!name || !EXP || !contact || !ADR || !LIN || !password) {
       setemptyFeilds({ emptyFields: "Please Enter All The Details" })
       setcontactError({ contactError: null })
-      setEmailError({ emailError: null })
+     // setEmailError({ emailError: null })
       return false
     }
-    else if (!validateEmail(email)) {
-      setEmailError({ emailError: "Enter Valid Email Id" })
-      setcontactError({ contactError: null })
-      setemptyFeilds({ emptyFields: null })
+    // else if (!validateEmail(email)) {
+    //   setEmailError({ emailError: "Enter Valid Email Id" })
+    //   setcontactError({ contactError: null })
+    //   setemptyFeilds({ emptyFields: null })
 
-      return false
-    }
+    //   return false
+    //}
     else if (!validatecontact(contact)) {
       setcontactError({ contactError: "Enter Valid Phone Number" })
       setEmailError({ emailError: null })
-      setemptyFeilds({ emptyFields: null })
+      //setemptyFeilds({ emptyFields: null })
       return false
     }
     // else {
@@ -89,7 +89,7 @@ export default function Add_Driver() {
           },
           data: {
             name: name,
-            email: email,
+            //email: email,
             contact: contact,
             address: ADR,
             experience: EXP,
@@ -149,14 +149,14 @@ export default function Add_Driver() {
           onChangeText={(contact) => setcontact(contact)}
         />
       </View>
-      <View style={styles.inputView}>
+      {/* <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
           placeholder="Email"
           placeholderTextColor="#929292"
           onChangeText={(email) => setEmail(email)}
         />
-      </View>
+      </View> */}
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
@@ -165,6 +165,15 @@ export default function Add_Driver() {
           onChangeText={(ADR) => setADR(ADR)}
         />
       </View>
+      <View style={styles.inputView}>
+        <TextInput
+          style={styles.TextInput}
+          placeholder="Exp"
+        
+          placeholderTextColor="#929292"
+          onChangeText={(EXP) => setEXP(EXP)}
+        />
+         </View>
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}

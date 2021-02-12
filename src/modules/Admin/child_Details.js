@@ -152,14 +152,11 @@ export default function child_Details({ route, navigation }){
       </View>
       <View style={{width:"70%"}}>
         <Text>Subscription Details</Text></View> 
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder=""
-          placeholderTextColor="#929292"
-          secureTextEntry={true}
-          onChangeText={(SD) => setSD(SD)}
-        />
+      <View style={styles.inputViews}>
+      <Text  style={styles.subText}>Start Date:-</Text>
+      <Text  style={styles.subText}>End Date:-</Text>
+      <Text  style={styles.subText}>Tenure:-</Text>
+      <Text  style={styles.subText}>Subscription ID:-</Text>
       </View>
 
     </View>
@@ -192,6 +189,17 @@ const styles = StyleSheet.create({
     marginTop: 5,
     //opacity: 0.5,
   },
+  inputViews: {
+    borderWidth: 1,
+    borderColor: '#b0003a',
+    borderRadius: 10,
+    width: "80%",
+    height: 100,
+    alignItems: "center",
+    backgroundColor:"#fff",   //"#C4C4C4",
+    marginTop: 5,
+    //opacity: 0.5,
+  },
 
   TextInput: {
     width: "70%",
@@ -199,6 +207,14 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     marginLeft: 2,
+
+  },
+  subText: {
+    alignSelf:"flex-start",
+    marginLeft:10,
+    marginTop: 3,
+    
+  
 
   },
   error: {

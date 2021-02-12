@@ -29,7 +29,7 @@ export default class userSubscription extends Component  {
 
     return (
       <View style={{ flex: 1, padding: 3 ,}}>
-        <ScrollView>
+       
         {isLoading ? <ActivityIndicator/> : (
           <FlatList
             data={data}
@@ -59,7 +59,7 @@ export default class userSubscription extends Component  {
             )}
           />
         )}
-        </ScrollView>
+        
       </View>
     );
   }

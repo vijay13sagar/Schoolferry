@@ -66,6 +66,10 @@ export default function driver_Details({ route, navigation }){
     <ScrollView>
     <View style={styles.container}>
       <StatusBar style="auto" />
+      <TouchableOpacity style={styles.editBtn}  >
+        <Text style={{alignSelf:"center", marginTop: 8,}}>Edit</Text>
+
+      </TouchableOpacity> 
         <View style={{width:"70%"}}>
         <Text>Name</Text></View> 
         
@@ -76,19 +80,6 @@ export default function driver_Details({ route, navigation }){
           value={route.params.item.name}
           placeholderTextColor="black"
           onChangeText={(name) => setname(name)}
-        />
-      </View>
-     
-      <View style={{width:"70%"}}>
-        <Text>Email ID</Text></View> 
-      
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder=""
-          //value={route.params.item.email}
-          placeholderTextColor="#929292"
-          onChangeText={(email) => setEmail(email)}
         />
       </View>
      
@@ -151,10 +142,7 @@ export default function driver_Details({ route, navigation }){
           onChangeText={(LIC) => setLIC(LIC)}
         />
       </View>
-      <TouchableOpacity style={styles.loginBtn}  >
-        <Text style={styles.loginText}>Submit</Text>
-
-      </TouchableOpacity> 
+      
 
      
       <TouchableOpacity style={styles.loginBtn}  >
@@ -229,6 +217,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#ff5c8d",
     alignSelf: "center",
+    marginTop: 20,
+  },
+  editBtn: {
+    width: "20%",
+    borderRadius: 10,
+    height: 38,
+    alignSelf:"flex-end",
+    backgroundColor: "#ff5c8d",
+   marginRight:20,
     marginTop: 20,
   },
   registerTextStyle: {
