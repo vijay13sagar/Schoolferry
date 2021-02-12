@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View,StatusBar, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { Text, View,StatusBar, TouchableOpacity,Linking, StyleSheet, Image } from 'react-native';
 
 export default function trip_Details({ route, navigation }) {
   console.log("this.props",route.params.item.releaseYear);
@@ -30,6 +30,9 @@ export default function trip_Details({ route, navigation }) {
           {/* </View> */}
           <TouchableOpacity style={styles.loginBtn} onPress={ ()=>navigation.navigate('Child List')} >
         <Text style={styles.loginText}>Child List</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.CallBtn} onPress={() => { Linking.openURL('tel:8777111223') }}  >
+        <Text style={styles.loginText}>Contact Driver</Text>
       </TouchableOpacity>
       </View>
     );
@@ -107,17 +110,6 @@ const styles = StyleSheet.create({
     padding: 8,
     alignSelf: "center"
   },
-  details3: {
-    height: 150,
-    backgroundColor: "grey",
-    borderWidth: 1,
-    borderRadius: 12,
-    borderColor: '#4DAFCE',
-    //marginTop: 3,
-    width: '85%',
-    padding: 8,
-    alignSelf: "center"
-  },
   loginBtn: {
     width: "50%",
     borderRadius: 10,
@@ -132,6 +124,17 @@ const styles = StyleSheet.create({
     color:'black',
     fontSize:15,
    // fontWeight:'700'
-  }
+  },
+  CallBtn: {
+    width: "80%",
+    borderRadius: 10,
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 'auto',
+    backgroundColor: "#32cd32",
+    alignSelf: 'center',
+    marginBottom: 30,
+  },
 
 });

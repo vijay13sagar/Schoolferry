@@ -15,8 +15,8 @@ import {
   
   TouchableOpacity,
 } from "react-native";
-// import { CheckBox } from "react-native-community/checkbox";
-
+// import { CheckBox } from "react-native-community/checkbo
+import Ngrok from '../../constants/ngrok';
 
 export default function App() {
   const [NOC, setNOC] = useState("");
@@ -53,7 +53,7 @@ export default function App() {
 const [isSelected, setSelection] = useState(false);
 
   // const pressHandler = () => {
-  //   fetch("http://84b74dea56ac.ngrok.io/api/parent/signup", {
+  //   fetch(`${Ngrok.url}/api/payment`, {
   //     "method": "POST",
   //     "headers": {
   //       Accept: 'application/json',
@@ -80,13 +80,13 @@ const [isSelected, setSelection] = useState(false);
   //     .catch(err => {
   //       console.log(err);
   //     });
-  //   }
+    //}
   return (
     
 
     <View style={styles.container}>
       <StatusBar
-        barStyle="dark-content"
+        barStyle="light-content"
         // dark-content, light-content and default
         hidden={false}
         //To hide statusBar

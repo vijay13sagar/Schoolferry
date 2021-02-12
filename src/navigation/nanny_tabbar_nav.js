@@ -12,6 +12,7 @@ import Trip_details from '../modules/nanny/tripdetails';
 import Child_list from '../modules/nanny/childlist';
 import Child_details from '../modules/nanny/childdetails';
 import History from '../modules/nanny/history';
+import updateprof from '../modules/nanny/updatenannypro';
 
 const Tab = createBottomTabNavigator()
 const Stack=createStackNavigator()
@@ -77,6 +78,11 @@ function Profile() {
         name="Passwordchange"
         component={change_pwd}
         options={{ title: 'Change Password' }}
+      />
+      <Stack.Screen
+        name="Updateprof"
+        component={updateprof}
+        options={{ title: 'Update Profile' }}
       />
     </Stack.Navigator>
   );

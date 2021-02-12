@@ -52,31 +52,40 @@ const location = ({ navigation }) => {
 
         if (!pincode){
 
-        fetch(`https://963e976ffdf5.ngrok.io/api/locations/${pincode}`, {
-            "method": "GET",
-            "headers": {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-            },
-        })
-           
-        .then((response) => {
-            console.log(response.status);
-            response.json()
-            //console.log('resp',response.status);
-            if (response.status == 200) {
-                navigation.navigate('Subscriptions')
-               
-            } else {
-                setModalVisible(true)
-            }
-        })
-            .catch(err => {
-                console.log(err);
-            });
-        }else {
             setError({error: 'Please enter pincode'})
+        }else if(pincode ==401401)
+        {
+            navigation.navigate('Subscriptions');
         }
+        else 
+        {
+            setModalVisible(true)
+        }
+        // fetch(`https://963e976ffdf5.ngrok.io/api/locations/${pincode}`, {
+        //     "method": "GET",
+        //     "headers": {
+        //         Accept: 'application/json',
+        //         'Content-Type': 'application/json'
+        //     },
+        // })
+           
+        // .then((response) => {
+        //     console.log(response.status);
+        //     response.json()
+        //     //console.log('resp',response.status);
+        //     if (response.status == 200) {
+        //         navigation.navigate('Subscriptions')
+               
+        //     } else {
+        //         setModalVisible(true)
+        //     }
+        // })
+        //     .catch(err => {
+        //         console.log(err);
+        //     });
+        // }else {
+        //     setError({error: 'Please enter pincode'})
+        // }
     }
 
     return (

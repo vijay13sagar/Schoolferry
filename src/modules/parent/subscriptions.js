@@ -5,7 +5,7 @@ const subscription = ({navigation}) =>  {
     return (
       <View style={styles.container} >
         <StatusBar
-        barStyle="dark-content"
+        barStyle="light-content"
         // dark-content, light-content and default
         hidden={false}
         //To hide statusBar
@@ -17,7 +17,7 @@ const subscription = ({navigation}) =>  {
       />
           <View style={styles.body}>
             <Text style={styles.body} >To see plans, add the child details</Text>
-            <TouchableOpacity style={styles.loginBtn} onPress={()=>navigation.navigate('Add Child')}>
+            <TouchableOpacity style={styles.loginBtn} onPress={()=>navigation.navigate('Add Child',{refresh:true})}>
               <Text style={styles.loginText}>Add Child</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.loginBtn} onPress={()=>navigation.navigate('Cancel Rides')}>
