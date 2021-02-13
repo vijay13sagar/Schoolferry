@@ -21,47 +21,16 @@ export default function nanny_Details({ route, navigation }){
   
   console.log("this.props",route.params.item.releaseYear);
  
-  // const pressHandler = () => {
-  //   if (validateFunction()) {
-  //     /* const body = {
-  //        id: email,
-  //         password: password
-  //      }*/
-  //     /*let response = await loginApi(body)*/
-  //   fetch("http://eccff4463173.ngrok.io/api/parent/signup", {
-  //     "method": "POST",
-  //     "headers": {
-  //       Accept: 'application/json',
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify({
-  //       firstName: FN,
-  //       lastName:LN ,
-  //       email: email,
-  //       contact: contact,
-  //       password: password
-  //     })
-  //   })
-  //     .then(response => response.json())
-  //     .then(responseJson => {
-  //       console.log(responseJson);
-  //       if (responseJson.message == "registered successfully") {
-  //         alert ('Congratulations..Sign Up Successful')
-  //       }else {
-  //         alert('sign up failed')
-  //       }
-  //       //alert(JSON.stringify(response))
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     });
-  //   }
-  //  }
+ 
   return (
     
 
     <View style={styles.container}>
       <StatusBar style="auto" />
+      <TouchableOpacity style={styles.editBtn}  >
+        <Text style={{alignSelf:"center", marginTop: 8,}}>Edit</Text>
+
+      </TouchableOpacity> 
         <View style={{width:"70%"}}>
         <Text>Name</Text></View> 
         
@@ -134,10 +103,7 @@ export default function nanny_Details({ route, navigation }){
           onChangeText={(LIC) => setLIC(LIC)}
         />
       </View>
-      <TouchableOpacity style={styles.loginBtn}  >
-        <Text style={styles.loginText}>Submit</Text>
-
-      </TouchableOpacity> 
+      
 
      
       <TouchableOpacity style={styles.loginBtn}  >
@@ -161,6 +127,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#F9F2F2",
     alignItems: "center",
     justifyContent: "center",
+  },
+  editBtn: {
+    width: "20%",
+    borderRadius: 10,
+    height: 38,
+    alignSelf:"flex-end",
+    backgroundColor: "#ff5c8d",
+   marginRight:20,
+    marginTop: 20,
   },
 
   image: {

@@ -45,7 +45,7 @@ function Subscriptions() {
       <Stack.Screen
         name="Subscription_list"
         component={Subscriptionlist}
-        options={{ title: 'Subscription_list' }}
+        options={{ title: 'Subscription list' }}
       />
       <Stack.Screen
         name="Pause Plan"

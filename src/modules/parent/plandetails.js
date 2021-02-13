@@ -9,8 +9,7 @@ import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
 import { Item } from 'native-base';
 
-export default class App extends Component  {
-
+export default class App extends Component  { 
   constructor(props) {
     super(props);
     this.state = {

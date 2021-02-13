@@ -10,6 +10,7 @@ import {
 import { TextInput } from 'react-native-gesture-handler';
 import AddressPickup from '../../components/addresspickup'
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Ngrok from '../../constants/ngrok';
 
 const location = ({ navigation }) => {
     const [pincode, setPincode] = useState("00")
@@ -24,7 +25,7 @@ const location = ({ navigation }) => {
     })
     const [travelMode, setTravelMode] = useState(" ")
     const [modalVisible, setModalVisible] = useState(false);
-    const [{error}, setError] = useState(" ")
+    const [{ error }, setError] = useState(" ")
 
     const fetchCoords = (lat, lng) => {
         console.log(lat, lng)
@@ -45,47 +46,41 @@ const location = ({ navigation }) => {
 
     const modalButtonHandler = () => {
         setModalVisible(!modalVisible)
-        navigation.navigate ("Home")
+        navigation.navigate("Home")
     }
 
     const submitHandler = () => {
 
-        if (!pincode){
+        if (!pincode) {
+            setError({ error: 'Please enter pincode' })
+        }
+        else {
 
-            setError({error: 'Please enter pincode'})
-        }else if(pincode ==401401)
-        {
-            navigation.navigate('Subscriptions');
+
+            fetch(`${Ngrok.url}/api/locations/${pincode}`, {
+                "method": "GET",
+                "headers": {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+            })
+
+                .then((response) => {
+                    console.log(response.status);
+                    response.json()
+                    //console.log('resp',response.status);
+                    if (response.status == 200) {
+                        navigation.navigate('Subscriptions')
+
+                    } else {
+                        setModalVisible(true)
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                });
         }
-        else 
-        {
-            setModalVisible(true)
-        }
-        // fetch(`https://963e976ffdf5.ngrok.io/api/locations/${pincode}`, {
-        //     "method": "GET",
-        //     "headers": {
-        //         Accept: 'application/json',
-        //         'Content-Type': 'application/json'
-        //     },
-        // })
-           
-        // .then((response) => {
-        //     console.log(response.status);
-        //     response.json()
-        //     //console.log('resp',response.status);
-        //     if (response.status == 200) {
-        //         navigation.navigate('Subscriptions')
-               
-        //     } else {
-        //         setModalVisible(true)
-        //     }
-        // })
-        //     .catch(err => {
-        //         console.log(err);
-        //     });
-        // }else {
-        //     setError({error: 'Please enter pincode'})
-        // }
+
     }
 
     return (
@@ -98,13 +93,13 @@ const location = ({ navigation }) => {
                 visible={modalVisible}
             >
                 <View style={styles.modalContainer}>
-                <Ionicons name="close-circle-outline"
-                 color="#fff" size={30}
-                  style = {styles.icon}
-                  onPress={(modalVisible) => setModalVisible(!modalVisible)}
-                  />
+                    <Ionicons name="close-circle-outline"
+                        color="#fff" size={30}
+                        style={styles.icon}
+                        onPress={(modalVisible) => setModalVisible(!modalVisible)}
+                    />
                     <View style={styles.modalBody}>
-                    
+
                         <Text style={styles.message}>Sorry, Currently Unavailable</Text>
                         <Text style={styles.newsText}>We will get back to you once we start service at your area</Text>
 
@@ -166,9 +161,9 @@ const styles = StyleSheet.create({
     error: {
         color: '#DC143C',
         fontSize: 13,
-        alignSelf:'center',
-        marginTop:5
-      },
+        alignSelf: 'center',
+        marginTop: 5
+    },
     submitBtn: {
         width: "65%",
         borderRadius: 10,
@@ -201,8 +196,8 @@ const styles = StyleSheet.create({
         fontSize: 26,
         textAlign: 'center',
         //marginTop: 30
-        color:'#DC143C',
-        fontWeight:'600'
+        color: '#DC143C',
+        fontWeight: '600'
     },
     newsText: {
         fontSize: 19,
@@ -222,8 +217,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    icon:{
-        alignSelf:'flex-end',
-        marginRight:10
+    icon: {
+        alignSelf: 'flex-end',
+        marginRight: 10
     }
 })

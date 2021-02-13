@@ -74,7 +74,7 @@ export default function App() {
       try {
         axios({
           method: 'POST',
-          url: `${Ngrok.url}api/parent/signup`,
+          url: `${Ngrok.url}/api/parent/signup`,
           "headers": {
             Accept: 'application/json',
             'Content-Type': 'application/json'
