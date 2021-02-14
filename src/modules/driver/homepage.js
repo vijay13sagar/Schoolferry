@@ -1,11 +1,18 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet, TouchableOpacity, Linking, StatusBar } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Linking, StatusBar, FlatList} from 'react-native';
 import { Picker } from '@react-native-picker/picker';
+import {  Card, CardItem, Body } from 'native-base'
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
 const Homescreen = ({ navigation }) => {
 
-  const [trip, setTrip] = useState("");
+  const [trip, setTrip] = useState([
+    {id:'1' , number:' Trip - 1'},
+    {id:'2' , number:'Trip - 2'},
+    {id:'3' , number:'Trip - 3'},
+
+  ]);
   const [pickerValue, setPickerValue] = useState("")
 
 
@@ -27,22 +34,34 @@ const Homescreen = ({ navigation }) => {
         <Text style={styles.tripsTitleText}>Today's Trips</Text>
         <View style={styles.tripBox}>
           <Text style={styles.Text}>Pending Trips - </Text>
-          <Text style={styles.Text}>02</Text>
+          <Text style={styles.Text}>03</Text>
         </View>
       </View>
-      <Picker
-      selectedValue={pickerValue}
-          style={styles.Picker}
-          onValueChange={(pickerValue) =>
-            setPickerValue(pickerValue)
-          }>
-          <Picker.Item label="Trip 1" value="Trip1" />
-          <Picker.Item label="Trip 2" value="Trip2" />
-        </Picker>
 
-      <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate("Trip Details")}  >
-        <Text style={styles.loginText}>Start Trip</Text>
-      </TouchableOpacity>
+      <Text style={styles.startTripText}>Click to start trip</Text>
+      
+      <FlatList
+        style={styles.flatlist}
+        data={trip}
+        keyExtractor={item => item.id}
+        renderItem={({ item }) => (
+          <Card style={styles.card}>
+            <CardItem button onPress={() => navigation.navigate('Trip Details')}>
+              <Body style={{flexDirection:'row'}}>
+                <Text style={{fontSize:17}}>
+                  Start {item.number}
+                </Text>
+                <Ionicons name="chevron-forward-outline"
+                        color="#000" size={25}
+                        style={styles.icon}
+      
+                    />
+                
+              </Body>
+            </CardItem>
+          </Card>
+        )}
+      />
       <TouchableOpacity style={styles.CallBtn} onPress={() => { Linking.openURL('tel:8777111223') }}  >
         <Text style={styles.loginText}>Call Admin</Text>
       </TouchableOpacity>
@@ -62,7 +81,7 @@ const styles = StyleSheet.create({
   pendingTrips: {
     backgroundColor: "#fff",
     height: '20%',
-    marginTop: 150,
+    marginTop: 50,
     width: '90%',
     alignItems: "center",
     alignSelf: "center",
@@ -87,25 +106,11 @@ const styles = StyleSheet.create({
     alignSelf: "center"
 
   },
-  Picker: {
-     width:"75%",
-     marginVertical:10,
-     borderRadius:10,
-     height:30,
-     borderWidth:1,
-     alignContent:"center",
-     alignSelf:"center",
-     
-  },
-  loginBtn: {
-    width: "60%",
-    borderRadius: 10,
-    height: 40,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 30,
-    backgroundColor: "#ff5c8d",
-    alignSelf: 'center',
+  startTripText:{
+    fontSize:22,
+    textAlign:"center",
+    marginTop:50,
+    marginBottom:10,
 
   },
   CallBtn: {
@@ -114,14 +119,27 @@ const styles = StyleSheet.create({
     height: 40,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 'auto',
     backgroundColor: "#32cd32",
     alignSelf: 'center',
-    marginBottom: 30,
+    marginBottom:50,
   },
   loginText: {
     fontSize: 15,
 
+  },
+  card:{
+    width:'75%',
+    alignSelf:'center',
+    height:50,
+    alignItems:'center',
+    justifyContent:'center',
+    
+  },
+  icon:{
+    //justifyContent:'center',
+   // alignItems:'center',
+   // alignSelf:'flex-end',
+    marginLeft:140,
   }
 
 })

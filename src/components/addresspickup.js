@@ -11,17 +11,18 @@ const address_pickup = ({
     const onSubmit = (data, details) =>{
         const lat = details.geometry.location.lat
         const lng = details.geometry.location.lng
-        fetchAddress (lat, lng)
-
+        const name = data.structured_formatting.main_text
+        const address = data.description
+        //fetchAddress (lat, lng, address)
+        fetchAddress (lat, lng, name, address)
     }
-
-   // console.log('key',process.env.REACT_APP_MAPS_API_KEY)
 
     return (
 
         <View style={styles.container}>
             <GooglePlacesAutocomplete
                 placeholder={placeholderText}
+                minLength={2}
                 fetchDetails={true}
                 onPress= {onSubmit}
                // onPress={(data, details) => {
@@ -32,6 +33,8 @@ const address_pickup = ({
                 query={{
                     key: API_KEY.key,
                     language: 'en',
+                    location: "12.943140750715235, 77.6157813963218",
+                    radius: "300",
                 }}
                 style={{
                     textInputContainer: styles.containerStyle,
