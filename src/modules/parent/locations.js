@@ -29,13 +29,13 @@ const location = ({ navigation }) => {
 
     const fetchCoords = (lat, lng, name) => {
         console.log(lat, lng, name)
-       setDestination({
+        setDestination({
             latitude: lat,
             longitude: lng,
         })
     }
 
-    const fetchDestinationCoords = (lat, lng,name, address) => {
+    const fetchDestinationCoords = (lat, lng, name, address) => {
         console.log(lat, lng, address)
         setDestination({
             latitude: lat,
@@ -48,6 +48,30 @@ const location = ({ navigation }) => {
         setModalVisible(!modalVisible)
         navigation.navigate("Home")
     }
+
+    /*const calculateDistance = () => {
+        //const origin1 = (26.230103499877522, 78.16342134574947)
+        //const destination1 = (28.69452575953048, 77.18056765444814)
+        const service = google.maps.DistanceMatrixService();
+
+        service.getDistanceMatrix(
+            {
+              origins: [{lat: 26.230103499877522, lng: 78.16342134574947}],
+              destinations: [{lat: 28.69452575953048, lng: 77.180567654448147}],
+              travelMode: 'DRIVING',
+             // transitOptions: TransitOptions,
+              //drivingOptions: DrivingOptions,
+              unitSystem: UnitSystem,
+            }, callback);
+
+            function callback(response, status) {
+                if (status === "OK") {
+                    console.log(response)
+
+                }
+
+            }
+    }*/
 
     const submitHandler = () => {
 
@@ -130,7 +154,7 @@ const location = ({ navigation }) => {
             />
             <Text style={styles.error}>{error}</Text>
 
-            <TouchableOpacity style={styles.submitBtn} onPress={submitHandler} >
+            <TouchableOpacity style={styles.submitBtn} onPress={calculateDistance} >
                 <Text style={styles.TextBtn}>Submit</Text>
             </TouchableOpacity>
 

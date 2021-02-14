@@ -50,6 +50,10 @@ const Profile = ({ navigation }) => {
         <Text style={styles.details}>{data.contact}</Text>
       </View>
       <View style={styles.textview}>
+        <Text style={styles.headertext} >License Number </Text>
+        <Text style={styles.details}>{data.address}</Text>
+      </View>
+      <View style={styles.textview}>
         <Text style={styles.headertext} >Address</Text>
         <Text style={styles.details}>{data.address}</Text>
       </View>
