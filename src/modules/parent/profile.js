@@ -41,8 +41,8 @@ const Profile = ({navigation}) => {
       //allowing light, but not detailed shapes
 
       />
-      <TouchableOpacity style={styles.edit}>
-        <Text style={styles.loginText} onPress={()=> navigation.navigate("Update profile")}>Edit</Text>
+      <TouchableOpacity style={styles.edit} onPress={()=> navigation.navigate("Update profile")}>
+        <Text style={styles.loginText} >Edit</Text>
       </TouchableOpacity>
       <View style={styles.body}>
         <Text style={styles.name}>Hello, {data.name}</Text>

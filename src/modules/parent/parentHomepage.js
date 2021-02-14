@@ -52,26 +52,26 @@ const HomeScreen = ({ navigation }) => {
         initialRegion={{
           latitude: 12.980120875177654,
           longitude: 77.5876170887363,
-          latitudeDelta: 0.0922 * 4,
+          latitudeDelta: 0.0922 * 5,
           longitudeDelta: 0.0421 * 3,
         }}
 
       >
         <Marker
           coordinate={{
-            latitude: 12.919095107848468,
-            longitude: 77.75171683914937
+            latitude: 12.919032364316546, 
+            longitude: 77.75175975449223
           }}
-          image={require('../../assets/marker.png')}
+          image={require('../../assets/school.png')}
           title={"Basil Woods International School"}
         //description={marker.description}
         />
         <Marker
           coordinate={{
-            latitude: 12.899742142630496,
-            longitude: 77.65185291031341
+            latitude: 12.899553897414407, 
+            longitude: 77.65187436798485
           }}
-          image={require('../../assets/marker.png')}
+          image={require('../../assets/school.png')}
           title={"SVR Chinmaya School"}
         //description={marker.description}
         />
@@ -80,16 +80,16 @@ const HomeScreen = ({ navigation }) => {
             latitude: 12.91398054034311,
             longitude: 77.63500419682072
           }}
-          image={require('../../assets/marker.png')}
+          image={require('../../assets/school.png')}
           title={"Lawrence High School (ICSE)"}
         //description={marker.description}
         />
         <Marker
           coordinate={{
-            latitude: 12.905044463527954,
-            longitude: 77.67498829682062
+            latitude: 12.97603054085986, 
+            longitude: 77.6651062438763
           }}
-          image={require('../../assets/marker.png')}
+          image={require('../../assets/school.png')}
           title={"The International School Banglore"}
         //description={marker.description}
         />
