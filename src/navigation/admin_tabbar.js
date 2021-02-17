@@ -20,6 +20,7 @@ import child_Details from '../modules/Admin/child_Details';
 import { Icon } from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Home_page from '../modules/Admin/home';
+import Trip_Details from '../modules/Admin/daily trip details';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 function Homestack() {
@@ -36,6 +37,11 @@ function Homestack() {
         name="Home_page"
         component={Home_page}
         options={{ title: 'Home' }}
+      />
+      <Stack.Screen
+        name="Trip_Details"
+        component={Trip_Details}
+        options={{ title: 'Trip Details' }}
       />
       
      

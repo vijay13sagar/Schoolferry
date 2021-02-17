@@ -12,7 +12,7 @@ import Adminnav from './src/navigation/admin_tabbar';
 export default function App() {
   return (
     <NavigationContainer>
-         < Onboarding/>
+         < Adminnav/>
     </NavigationContainer>
   );
 }
