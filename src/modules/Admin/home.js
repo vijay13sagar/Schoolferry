@@ -40,7 +40,7 @@ export default class Home_page extends Component  {
       //allowing light, but not detailed shapes
 
       />
-        <Text style={{alignSelf:"center"}}>Dste:- 12/02/2021</Text>
+        <Text style={{alignSelf:"center"}}>Date:- 16/02/2021</Text>
         <ScrollView>
         {isLoading ? <ActivityIndicator/> : (
           <FlatList
@@ -48,7 +48,7 @@ export default class Home_page extends Component  {
             keyExtractor={({ id }, index) => id}
             renderItem={({ item }) => (
         <Card style={{flexDirection:"column"}}>
-        <CardItem button onPress = {()=>this.props.navigation.navigate('vehicle_Details',{item:item})}>
+        <CardItem button onPress = {()=>this.props.navigation.navigate('Trip_Details',{item:item})}>
               <Body>
                 <Text style={{flexDirection:'row'}}>
                 Trip Number:-{
