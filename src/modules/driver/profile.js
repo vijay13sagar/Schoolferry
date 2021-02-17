@@ -29,8 +29,8 @@ const Profile = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.edit}>
-        <Text style={styles.loginText} onPress={()=> navigation.navigate("Update profile")}>EDIT</Text>
+      <TouchableOpacity style={styles.edit} onPress={()=> navigation.navigate("Update profile")}>
+        <Text style={styles.loginText} >Edit</Text>
       </TouchableOpacity>
       
       <View style={styles.body}>

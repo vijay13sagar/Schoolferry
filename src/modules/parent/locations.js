@@ -27,16 +27,16 @@ const location = ({ navigation }) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [{ error }, setError] = useState(" ")
 
-    const fetchCoords = (lat, lng) => {
-        console.log(lat, lng)
-        setDestination({
+    const fetchCoords = (lat, lng, name) => {
+        console.log(lat, lng, name)
+       setDestination({
             latitude: lat,
             longitude: lng,
         })
     }
 
-    const fetchDestinationCoords = (lat, lng) => {
-        console.log(lat, lng)
+    const fetchDestinationCoords = (lat, lng,name, address) => {
+        console.log(lat, lng, address)
         setDestination({
             latitude: lat,
             longitude: lng,
