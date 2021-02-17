@@ -6,8 +6,6 @@ import AsyncStorage from '@react-native-community/async-storage';
 const Profile = ({ navigation }) => {
   const [data, getData] = useState([])
 
-
-
   useEffect( async () => {
     let token = await AsyncStorage.getItem('token')
     fetch(`${Ngrok.url}/api/profiledetails/driver/${token}`, {

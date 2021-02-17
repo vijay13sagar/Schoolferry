@@ -8,9 +8,12 @@ const Profile = ({navigation}) => {
   const [data, getData] = useState([])
   
   useEffect ( async () => {    
-    
-    let token = await AsyncStorage.getItem('token')
-    
+   
+    //async function fetchdata () {
+      let token = await AsyncStorage.getItem('token')
+     // return token
+    //}   
+   //const token = fetchdata()  
     fetch(`${Ngrok.url}/api/profiledetails/parent/${token}`, {
       "method": "GET",
       "headers": {

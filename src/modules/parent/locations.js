@@ -10,36 +10,39 @@ import {
 import { TextInput } from 'react-native-gesture-handler';
 import AddressPickup from '../../components/addresspickup'
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import AsyncStorage from '@react-native-community/async-storage';
 import Ngrok from '../../constants/ngrok';
+import { getDistance, getPreciseDistance } from 'geolib';
+
 
 const location = ({ navigation }) => {
-    const [pincode, setPincode] = useState("00")
+    const [pincode, setPincode] = useState("")
     const [origin, setOrigin] = useState({
-        latitude: " ",
-        longitude: " ",
+        latitude1: "0 ",
+        longitude1: "0 ",
 
     })
     const [destination, setDestination] = useState({
-        latitude: " ",
-        longitude: " ",
+        latitude2: "0",
+        longitude2: "0 ",
     })
-    const [travelMode, setTravelMode] = useState(" ")
+    const [distance, setDistance] = usestate("0")
     const [modalVisible, setModalVisible] = useState(false);
     const [{ error }, setError] = useState(" ")
 
     const fetchCoords = (lat, lng, name) => {
         console.log(lat, lng, name)
-        setDestination({
-            latitude: lat,
-            longitude: lng,
+        setOrigin({
+            latitude1: lat,
+            longitude1: lng,
         })
     }
 
     const fetchDestinationCoords = (lat, lng, name, address) => {
         console.log(lat, lng, address)
         setDestination({
-            latitude: lat,
-            longitude: lng,
+            latitude2: lat,
+            longitude2: lng,
         })
 
     }
@@ -49,38 +52,25 @@ const location = ({ navigation }) => {
         navigation.navigate("Home")
     }
 
-    /*const calculateDistance = () => {
-        //const origin1 = (26.230103499877522, 78.16342134574947)
-        //const destination1 = (28.69452575953048, 77.18056765444814)
-        const service = google.maps.DistanceMatrixService();
-
-        service.getDistanceMatrix(
-            {
-              origins: [{lat: 26.230103499877522, lng: 78.16342134574947}],
-              destinations: [{lat: 28.69452575953048, lng: 77.180567654448147}],
-              travelMode: 'DRIVING',
-             // transitOptions: TransitOptions,
-              //drivingOptions: DrivingOptions,
-              unitSystem: UnitSystem,
-            }, callback);
-
-            function callback(response, status) {
-                if (status === "OK") {
-                    console.log(response)
-
-                }
-
-            }
-    }*/
+    const calculateDistance = () => {
+        var dis = getDistance(
+          { latitude: origin.latitude1, longitude: origin.longitude1 },
+          { latitude: destination.latitude2, longitude: destination.longitude2 }
+        );
+       // alert(`Distance\n\n${dis} Meter\nOR\n${dis / 1000} KM`);
+        let finalDistance = dis/1000 
+        setDistance(finalDistance) 
+        AsyncStorage.setItem("distance",distance)
+      };
+    
 
     const submitHandler = () => {
+        calculateDistance();
 
         if (!pincode) {
             setError({ error: 'Please enter pincode' })
         }
         else {
-
-
             fetch(`${Ngrok.url}/api/locations/${pincode}`, {
                 "method": "GET",
                 "headers": {
@@ -154,13 +144,14 @@ const location = ({ navigation }) => {
             />
             <Text style={styles.error}>{error}</Text>
 
-            <TouchableOpacity style={styles.submitBtn} onPress={calculateDistance} >
+            <TouchableOpacity style={styles.submitBtn} onPress={submitHandler} >
                 <Text style={styles.TextBtn}>Submit</Text>
             </TouchableOpacity>
 
         </ScrollView>
     );
 }
+
 
 export default location;
 
