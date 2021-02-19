@@ -151,8 +151,8 @@ const NannyTab = () => {
       }}
     >
         <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="Notifications" component={Notification} />
         <Tab.Screen name="Trip History" component={Triphistory} />
+        <Tab.Screen name="Notifications" component={Notification} />
         <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
     );

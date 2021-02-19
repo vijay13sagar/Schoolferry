@@ -66,7 +66,7 @@ export default class App extends Component {
         <View style={styles.headertext}>
           <Text style={styles.registerTextStyle}>(Hint: Double-Tap to select One Day)</Text>
         </View>  
-      <View style={{backgroundColor:"#b3fff3",width:250,alignSelf:'center',margin:10}}>
+      <View style={{width:250,alignSelf:'center',margin:10}}>
         <CalendarPicker
           startFromMonday={true}
           allowRangeSelection={true}
@@ -76,8 +76,8 @@ export default class App extends Component {
           width={250}
           height={250}
           maxRangeDuration={10}
-          todayBackgroundColor="#f2e6ff"
-          selectedDayColor="#7300e6"
+          todayBackgroundColor="lightgrey"
+          selectedDayColor="#ff5c8d"
           selectedDayTextColor="#FFFFFF"
           onDateChange={this.onDateChange}
         />

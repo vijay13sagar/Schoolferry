@@ -82,7 +82,7 @@ export default function Add_Driver() {
       try {
         axios({
           method: 'POST',
-          url: `${Ngrok.url}api/admin/register/driver`,
+          url: `${Ngrok.url}/api/admin/register/driver`,
           "headers": {
             Accept: 'application/json',
             'Content-Type': 'application/json'

@@ -16,7 +16,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 // import { CheckBox } from "react-native-community/checkbo
-import Ngrok from '../../constants/ngrok';
+//import Ngrok from '../../constants/ngrok';
 
 export default function App() {
   const [NOC, setNOC] = useState("");
@@ -28,59 +28,69 @@ export default function App() {
   const [entry, setentry] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
 
-  const pressHandler = () => {
-    if(!UPI){
-      if (!CardN && !NOC && !CVV && !Expiry) {
-        setError({value_error: "Fill UPI or Card details" })
-        return value_error
-    }
-    }
-    if(!UPI){
-    if (!CardN || !NOC || !CVV || !Expiry) {
-      setError({value_error: "Fill Card details completely" })
-      return value_error
-  }
-  if(UPI ){
-    setError({value_error:null})
-    return value_error
-  }else if(CardN && NOC && CVV && Expiry){
-    setError({value_error:null})
-    return value_error
-  }
-}
+//   const pressHandler = () => {
+//     if(!UPI){
+//       if (!CardN && !NOC && !CVV && !Expiry) {
+//         setError({value_error: "Fill UPI or Card details" })
+//         return value_error
+//     }
+//     }
+//     if(!UPI){
+//     if (!CardN || !NOC || !CVV || !Expiry) {
+//       setError({value_error: "Fill Card details completely" })
+//       return value_error
+//   }
+//   if(UPI ){
+//     setError({value_error:null})
+//     return value_error
+//   }else if(CardN && NOC && CVV && Expiry){
+//     setError({value_error:null})
+//     return value_error
+//   }
+// }
    
-}
+
 const [isSelected, setSelection] = useState(false);
 
-  // const pressHandler = () => {
-  //   fetch(`${Ngrok.url}/api/payment`, {
-  //     "method": "POST",
-  //     "headers": {
-  //       Accept: 'application/json',
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify({
-  //       cardno: CardN,
-  //       name:NOC ,
-  //       email: CVV,
-  //       contact: Expiry,
-  //       password: UPI
-  //     })
-  //   })
-  //     .then(response => response.json())
-  //     .then(responseJson => {
-  //       console.log(responseJson);
-  //       if (responseJson.message == "Payment Succesful. Thanks.") {
-  //         alert ('Congratulations..Payment is Successful')
-  //       }else {
-  //         alert('sign up failed')
-  //       }
-  //       //alert(JSON.stringify(response))
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     });
-    //}
+  const pressHandler = () => {
+    fetch(`${Ngrok.url}/api/payment`, {
+      "method": "POST",
+      "headers": {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        cardno: CardN,
+        cardname:NOC ,
+        cvv: CVV,
+        expiry: Expiry,
+        password: UPI,
+        //save:saved,
+        //childid:token2,
+        //parentid:token,
+      })
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        console.log(responseJson);
+        if (responseJson.message == "Payment Succesful. Thanks.") {
+          setModalVisible(!modalVisible);
+        }else {
+          alert('sign up failed')
+        }
+        //alert(JSON.stringify(response))
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    }
+    let saved='yes';
+    if(isSelected){
+      saved='yes'
+    }
+    else{
+      saved='no'
+    }
   return (
     
 
@@ -148,7 +158,8 @@ const [isSelected, setSelection] = useState(false);
           onValueChange={setSelection}
           style={styles.check}
         />
-        <Text style={{fontSize:15}}>Save Card Details: {isSelected ? "👍" : "👎"}</Text>
+        {/* {isSelected ? "👍" : "👎"} */}
+        <Text style={{fontSize:15,marginTop:4}}>Save Card Details</Text>
         </View>
        
       
@@ -168,14 +179,11 @@ const [isSelected, setSelection] = useState(false);
           onChangeText={(UPI) => setUPI(UPI)}
         />
       </View>
-       {/* <View style={styles.centeredView}>
+       <View style={styles.centeredView}>
       <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-        }}
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
@@ -188,6 +196,7 @@ const [isSelected, setSelection] = useState(false);
               style={{ ...styles.openButtono, backgroundColor: "#2196F3" }}
               onPress={() => {
                 setModalVisible(!modalVisible);
+                navigation.navigate('Subscription_list');
               }}
             >
               <Text style={styles.textStyle}>OK</Text>
@@ -197,8 +206,8 @@ const [isSelected, setSelection] = useState(false);
       </Modal>
 
      
-    </View> */}
-    <View style={styles.centeredView}>
+    </View>
+    {/* <View style={styles.centeredView}>
       <Modal
         animationType="slide"
         transparent={true}
@@ -207,7 +216,7 @@ const [isSelected, setSelection] = useState(false);
           Alert.alert("Modal has been closed.");
         }}
       >
-        <View style={styles.centeredView}>
+        {/* <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styles.modalText}>Payment Failed</Text>
 
@@ -222,7 +231,7 @@ const [isSelected, setSelection] = useState(false);
           </View>
         </View>
       </Modal>
-     </View>
+     </View> */}
       <Text style={styles.error}>{value_error}</Text>
       <TouchableHighlight
         style={styles.loginBtn}
@@ -274,6 +283,7 @@ const styles = StyleSheet.create({
   },
   headertext: {
     fontSize: 13,
+    marginTop:15,
     marginLeft: 35,
   },
 

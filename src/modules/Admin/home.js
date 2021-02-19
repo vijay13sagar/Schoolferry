@@ -40,7 +40,7 @@ export default class Home_page extends Component  {
       //allowing light, but not detailed shapes
 
       />
-        
+        <Text style={{alignSelf:"center"}}>Dste:- 12/02/2021</Text>
         <ScrollView>
         {isLoading ? <ActivityIndicator/> : (
           <FlatList

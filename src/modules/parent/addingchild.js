@@ -22,15 +22,17 @@ export default function addchild({navigation}) {
   const [CB, setCB] = useState("");
   const [SN, setSN] = useState("");
   const [SA, setSA] = useState("");
+  const [ST, setST] = useState("");
+  const [ET, setET] = useState("");
   const [{value_error},setError] = useState ("");
   
  
   const  validateFunction= () => {
-    if (!CN || !CA || !CB || !SA || !SN) {
+    if (!CN || !CA || !CB || ST || ET || !SA || !SN) {
         setError({value_error: "Fields Cannot be Empty" })
         return value_error
     }
-    if(CN && CA && CB && SA && SN){
+    if(CN && CA && CB && SA && ST  && ET && SN){
       setError({value_error: null})
       //navigation.navigate('Subscription_list')
     }
@@ -98,6 +100,7 @@ const handlePress = async () => {
       //allowing light, but not detailed shapes
 
       />
+      
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
@@ -135,9 +138,25 @@ const handlePress = async () => {
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
-          placeholder="School Address"
+          placeholder="School"
           placeholderTextColor="#929292"
           onChangeText={(SA) => setSA(SA)}
+        />
+      </View>
+      <View style={styles.inputView}>
+        <TextInput
+          style={styles.TextInput}
+          placeholder="School Start Time"
+          placeholderTextColor="#929292"
+          onChangeText={(ST) => setST(ST)}
+        />
+      </View>
+      <View style={styles.inputView}>
+        <TextInput
+          style={styles.TextInput}
+          placeholder="School End Time"
+          placeholderTextColor="#929292"
+          onChangeText={(ET) => setET(ET)}
         />
       </View>
       <Text style={styles.error}>{value_error}</Text>
@@ -170,10 +189,10 @@ const styles = StyleSheet.create({
     width: "80%",
     height: 45,
     padding:2,
-    // alignItems: "center",
+    //alignItems: "center",
     // justifyContent:'center',
-    // alignContent:'center',
-    // alignSelf:'center',
+   // alignContent:'center',
+     //alignSelf:'center',
     backgroundColor:"#fff",   //"#C4C4C4",
     marginTop: 5,
     //opacity: 0.5,

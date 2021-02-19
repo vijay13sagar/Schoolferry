@@ -10,7 +10,7 @@ const Subscriptions = ({navigation}) => {
   const [pickerValue, setPickerValue] = useState("")
 
   useEffect ( () => {    
-    fetch(`${Ngrok.url}api/package/4`, {
+    fetch(`${Ngrok.url}/api/package/4`, {
       "method": "GET",
       "headers": {
         Accept: 'application/json',

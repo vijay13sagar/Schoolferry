@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Text, View,StatusBar, TouchableOpacity,Linking, StyleSheet, Image } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 
 export default function trip_Details({ route, navigation }) {
   console.log("this.props",route.params.item.releaseYear);
@@ -17,14 +18,30 @@ export default function trip_Details({ route, navigation }) {
 
       />
           <View style={styles.textview}>
-            <Text style={styles.headertext} >Trip Details</Text>
-            {/* <View style={styles.details2}> */}
-              <Text style={styles.inputView}>Driver ID:-{route.params.item.title}</Text>
-              <Text style={styles.inputView}>Driver Name:-{route.params.item.title}</Text>
-              <Text style={styles.inputView}>Driver No:-{route.params.item.releaseYear}</Text>
-              <Text style={styles.inputView}>Vehicle No:-{route.params.item.id}</Text>
-              <Text style={styles.inputView}>Location:-</Text>
-              <Text style={styles.inputView}>Timing’s:-</Text>
+            
+              <Text style={styles.headertext}>Location:         </Text>
+              <Text style={styles.details}>{route.params.item.title}</Text>
+              
+              
+              <Text style={styles.headertext}>Timing:            </Text>
+              <Text style={styles.details}>{route.params.item.title}</Text> 
+              
+              
+              <Text style={styles.headertext}>Driver ID:         </Text>
+              <Text style={styles.details}>{route.params.item.title}</Text>
+              
+              
+              <Text style={styles.headertext}>Driver Name:  </Text>
+              <Text style={styles.details}>{route.params.item.title}</Text>
+              
+              
+              <Text style={styles.headertext}>Driver No:        </Text>
+              <Text style={styles.details}>{route.params.item.releaseYear}</Text>
+              
+              
+              <Text style={styles.headertext}>Vehicle No:       </Text>
+              <Text style={styles.details}>{route.params.item.id}</Text>
+              
             </View>
            
           {/* </View> */}
@@ -55,6 +72,19 @@ const styles = StyleSheet.create({
     position: 'absolute',
     justifyContent: 'flex-start',
     marginTop: 50
+  },
+  showcase:{
+    padding:10,
+    marginLeft:20,
+    flexDirection:'row',
+    
+  },
+  sidehead:{
+    fontWeight:'bold',
+    marginLeft:8,
+    alignSelf:'flex-start',
+    //position:'relative',
+    justifyContent:'space-around'
   },
   inputView: {
     borderWidth: 1,
@@ -87,17 +117,17 @@ const styles = StyleSheet.create({
     fontSize: 13,
     marginLeft: 30,
   },
-  details: {
+  details:{
     height: 40,
-    margin:10,
-    backgroundColor: "#C4C4C4",
-    borderWidth: 1,
+    backgroundColor: "#d3d3d3",
+    //borderWidth: 1,
     borderRadius: 12,
-    borderColor: '#4DAFCE',
+    //borderColor: '#ff5c8d',
     //marginTop: 3,
     width: '85%',
     padding: 8,
     alignSelf: "center"
+
   },
   details2: {
     height: 320,
