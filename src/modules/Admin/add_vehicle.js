@@ -17,7 +17,7 @@ import axios from 'axios';
 export default function Add_Driver() {
   const [VH, setVH] = useState("");
   const [Gps, setGps] = useState("");
-  //const [Model, setModel] = useState("");
+  const [Model, setModel] = useState("");
   const [Type, setType] = useState();
   const [{ emptyFields }, setemptyFeilds] = useState("");
   const validateEmail = (email) => {
@@ -40,7 +40,7 @@ export default function Add_Driver() {
 
   const validateFunction = () => {
     
-    if (!VH||!Gps || !Type ) {
+    if (!VH||!Gps || !Model || !Type ) {
       setemptyFeilds({ emptyFields: "Please Enter All The Details" })
        return false
     }
@@ -117,14 +117,14 @@ export default function Add_Driver() {
           onChangeText={(Gps) => setGps(Gps)}
         />
       </View>
-      {/* <View style={styles.inputView}>
+       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
           placeholder="Enter Model"
           placeholderTextColor="#929292"
           onChangeText={(Model) => setModel(Model)}
         />
-      </View> */}
+      </View> 
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}

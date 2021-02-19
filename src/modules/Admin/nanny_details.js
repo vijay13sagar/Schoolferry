@@ -44,7 +44,7 @@ export default function nanny_Details({ route, navigation }){
         />
       </View>
      
-      <View style={{width:"70%"}}>
+      {/* <View style={{width:"70%"}}>
         <Text>Email ID</Text></View> 
       
       <View style={styles.inputView}>
@@ -55,7 +55,7 @@ export default function nanny_Details({ route, navigation }){
           placeholderTextColor="#929292"
           onChangeText={(email) => setEmail(email)}
         />
-      </View>
+      </View> */}
      
       <View style={{width:"70%"}}>
         <Text>Phone Number</Text></View> 
@@ -93,7 +93,7 @@ export default function nanny_Details({ route, navigation }){
         />
       </View>
      
-      <View style={{width:"70%"}}>
+      {/* <View style={{width:"70%"}}>
         <Text>ID Number</Text></View> 
       <View style={styles.inputView}>
         <TextInput
@@ -102,7 +102,7 @@ export default function nanny_Details({ route, navigation }){
           placeholderTextColor="#929292"
           onChangeText={(LIC) => setLIC(LIC)}
         />
-      </View>
+      </View> */}
       
 
      

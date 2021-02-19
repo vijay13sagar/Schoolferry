@@ -20,16 +20,17 @@ const Employee = ({navigation}) =>  {
             <Text style={styles.loginText}>Driver</Text>
 
           </TouchableOpacity>
+          <TouchableOpacity style={styles.loginBtn} onPress = {()=> navigation.navigate('Add_Driver')} >
+            <Text style={styles.loginText}>Add Driver</Text>
+
+          </TouchableOpacity>
         
           <TouchableOpacity style={styles.loginBtn}  onPress = {()=> navigation.navigate('nannyList')} >
             <Text style={styles.loginText}>Nanny</Text>
 
           </TouchableOpacity>
           
-          <TouchableOpacity style={styles.loginBtn} onPress = {()=> navigation.navigate('Add_Driver')} >
-            <Text style={styles.loginText}>Add Driver</Text>
-
-          </TouchableOpacity>
+         
         
           <TouchableOpacity style={styles.loginBtn} onPress = {()=> navigation.navigate('Add_Nanny')} >
             <Text style={styles.loginText}>Add Nanny</Text>

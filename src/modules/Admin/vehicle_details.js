@@ -33,6 +33,15 @@ export default function vehicle_Details({ route, navigation }){
         
       </View>
       <View style={styles.inputView}>
+       
+       <Text style={styles.TextInput}>
+         
+         Model:- {route.params.item.model}
+         
+       </Text>
+       
+     </View>
+      <View style={styles.inputView}>
       <Text style={styles.TextInput}>
           
          Capacity:- {route.params.item.capacity}
