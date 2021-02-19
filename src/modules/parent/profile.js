@@ -6,11 +6,22 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 const Profile = ({navigation}) => {
   const [data, getData] = useState([])
+  const [tokenvalue,setTokenValue] = useState (" ")
+
+  /*const saveData = async () => {
+    try {
+     let token = await AsyncStorage.setItem('token')
+     setTokenValue(token)
+     
+    } catch (e) {
+      //alert('Failed to save the data to the storage')
+    }
+  }*/
   
-  useEffect ( async () => {    
-    
-    let token = await AsyncStorage.getItem('token')
-    
+  useEffect ( async () => { 
+    //saveData()   
+   
+      let token = await AsyncStorage.getItem('token') 
     fetch(`${Ngrok.url}/api/profiledetails/parent/${token}`, {
       "method": "GET",
       "headers": {
@@ -50,7 +61,7 @@ const Profile = ({navigation}) => {
 
       <View style={styles.textview}>
         <Text style={styles.headertext} >Name</Text>
-        <Text style={styles.details}>{data.name}</Text>
+        <Text style={styles.details}>{data.name} </Text>
       </View>
       <View style={styles.textview}>
         <Text style={styles.headertext} >Contact</Text>
@@ -62,7 +73,7 @@ const Profile = ({navigation}) => {
       </View>
       <View style={styles.textview}>
         <Text style={styles.headertext} >Address</Text>
-        <Text style={styles.details}>{data.address}</Text>
+        <Text style={styles.detailsAddress}>{data.address}</Text>
       </View>
       <TouchableOpacity style={styles.loginBtn} onPress={()=> navigation.navigate("Change Password")}
       >
@@ -116,10 +127,10 @@ const styles = StyleSheet.create({
   },
   details: {
     height: 40,
-    backgroundColor: "#fff",
-    borderWidth: 1,
+    backgroundColor: "#d3d3d3",
+    //borderWidth: 1,
     borderRadius: 12,
-    borderColor: '#ff5c8d',
+    //borderColor: '#ff5c8d',
     //marginTop: 3,
     width: '85%',
     padding: 8,
@@ -139,6 +150,17 @@ const styles = StyleSheet.create({
     color:'black',
     fontSize:15,
    // fontWeight:'700'
-  }
+  },
+  detailsAddress:{
+    height: 100,
+    backgroundColor: "#d3d3d3",
+    //borderWidth: 1,
+    borderRadius: 12,
+    //borderColor: '#ff5c8d',
+    //marginTop: 3,
+    width: '85%',
+    padding: 8,
+    alignSelf: "center"
 
+  }
 });

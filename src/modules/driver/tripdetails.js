@@ -58,10 +58,11 @@ const Checklist = () => {
                         <Text style={styles.message}>Child Details</Text>
                         <Text style={styles.newsText}>Name - xxx</Text>
                         <Text style={styles.newsText}>Age - xxx</Text>
+                        <Text style={styles.newsText}>Blood Group - xxx</Text>
                         <Text style={styles.newsText}>Parent's Contact - xxx</Text>
                         <Text style={styles.newsText}>Address - xxx</Text>
 
-                        <View style={{ flexDirection: 'row', marginTop:30, alignSelf:'center', }}>
+                        <View style={{ flexDirection: 'row', marginTop:20, alignSelf:'center', }}>
                             <Text style={styles.absent}>Mark as Absent</Text>
                             <Switch
                                 value={switchValue}
@@ -166,7 +167,7 @@ const styles = StyleSheet.create({
     modalBody: {
         backgroundColor: '#fff',
         borderRadius: 10,
-        height: 330,
+        height: 370,
         width: '92%',
         alignSelf: 'center',
         //justifyContent: 'center'

@@ -6,32 +6,6 @@ import Ngrok from '../../constants/ngrok';
 
 const HomeScreen = ({ navigation }) => {
 
-  /*function validateLocation() {
-    fetch(`${Ngrok.url}/api/login`, {
-      "method": "POST",
-      "headers": {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        schoolname: schoolname,
-        pincode: pincode,
-      })
-    })
-      .then(response => response.json())
-      .then(responseJson => {
-        console.log(responseJson);
-        if (response.ok) {
-          //navigation.navigate('Parent Interface')
-          //alert("Login Sucessful")
-        } else {
-          alert('Login failed ')
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }*/
 
   return (
     <View style={styles.container}>

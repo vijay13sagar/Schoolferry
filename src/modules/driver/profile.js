@@ -6,8 +6,6 @@ import AsyncStorage from '@react-native-community/async-storage';
 const Profile = ({ navigation }) => {
   const [data, getData] = useState([])
 
-
-
   useEffect( async () => {
     let token = await AsyncStorage.getItem('token')
     fetch(`${Ngrok.url}/api/profiledetails/driver/${token}`, {
@@ -49,9 +47,14 @@ const Profile = ({ navigation }) => {
         <Text style={styles.headertext} >Contact</Text>
         <Text style={styles.details}>{data.contact}</Text>
       </View>
+  
       <View style={styles.textview}>
         <Text style={styles.headertext} >Address</Text>
-        <Text style={styles.details}>{data.address}</Text>
+        <Text style={styles.detailsAddress}>{data.address}</Text>
+      </View>
+      <View style={styles.textview}>
+        <Text style={styles.headertext} >License Number </Text>
+        <Text style={styles.detailsAddress}></Text>
       </View>
       <TouchableOpacity style={styles.loginBtn}
       >
@@ -93,7 +96,7 @@ const styles = StyleSheet.create({
 
   },
   body: {
-    marginTop: 50,
+    marginTop: 30,
     alignItems: 'center',
     marginBottom:20,
 
@@ -108,10 +111,10 @@ const styles = StyleSheet.create({
   },
   details: {
     height: 40,
-    backgroundColor: "#fff",
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: '#ff5c8d',
+    backgroundColor: "#d3d3d3",
+    //borderWidth: 1,
+    borderRadius: 12,
+    //borderColor: '#ff5c8d',
     //marginTop: 3,
     width: '85%',
     padding: 8,
@@ -129,6 +132,18 @@ const styles = StyleSheet.create({
   },
   loginText: {
     fontSize: 15,
+  },
+  detailsAddress:{
+    height: 80,
+    backgroundColor: "#d3d3d3",
+    //borderWidth: 1,
+    borderRadius: 12,
+    //borderColor: '#ff5c8d',
+    //marginTop: 3,
+    width: '85%',
+    padding: 8,
+    alignSelf: "center"
+
   }
 
 });
