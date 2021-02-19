@@ -88,12 +88,12 @@ export default function Login({ navigation }) {
           }
         })
         .catch( (error) => {
-          console.log(error.response.status) // 401
+          //console.log(error.response.status) // 401
          // console.log(error.response.data.error) //Please Authenticate or whatever returned from server
-        if(error.responseJson.status == 401){
-          //redirect to login
-          Alert.alert('Phone Number Alredy Exist!')
-        }
+        // if(error.responseJson.status == 401){
+        //   //redirect to login
+        //   Alert.alert('Phone Number Alredy Exist!')
+        // }
      
         })
         /*.catch(err => {

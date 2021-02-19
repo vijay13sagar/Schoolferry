@@ -130,7 +130,7 @@ export default function driver_Details({ route, navigation }){
         />
       </View>
 
-      <View style={{width:"70%"}}>
+      {/* <View style={{width:"70%"}}>
         <Text>Licence Number</Text></View> 
       <View style={styles.inputView}>
         <TextInput
@@ -141,7 +141,7 @@ export default function driver_Details({ route, navigation }){
           secureTextEntry={true}
           onChangeText={(LIC) => setLIC(LIC)}
         />
-      </View>
+      </View> */}
       
 
      

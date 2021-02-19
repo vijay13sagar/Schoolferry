@@ -9,6 +9,7 @@ import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
 import { Item } from 'native-base';
 
+
 const App =({route,navigation}) =>  { 
   const [selectedStartDate, setselectedStartDate] = useState("")
   // constructor(props) {
@@ -87,7 +88,7 @@ const App =({route,navigation}) =>  {
       </View>
       <View style={styles.textview}>
         <Text style={styles.headertext} >School Name</Text>
-        <Text style={styles.inputView}>XXXXX</Text>
+        <Text style={styles.inputView}>{route.params.school}</Text>
         </View>
         <TouchableOpacity style={styles.loginBtn} onPress={()=>navigation.navigate('PaymentScreen')}>
               <Text style={styles.loginText}>Pay</Text>

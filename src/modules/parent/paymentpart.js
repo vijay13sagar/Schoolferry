@@ -18,7 +18,7 @@ import {
 // import { CheckBox } from "react-native-community/checkbo
 //import Ngrok from '../../constants/ngrok';
 
-export default function App() {
+export default function App({navigation}) {
   const [NOC, setNOC] = useState("");
   const [CardN, setCardN] = useState("");
   const [CVV, setCVV] = useState("");
