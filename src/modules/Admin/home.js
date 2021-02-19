@@ -37,7 +37,7 @@ export default class Home_page extends Component  {
         backgroundColor= '#e91e63'     
         //Background color of statusBar only works for Android
         translucent={false}
-      //allowing light, but not detailed shapes
+       //allowing light, but not detailed shapes
 
       />
         <Text style={{alignSelf:"center"}}>Date:- 16/02/2021</Text>
@@ -65,6 +65,14 @@ export default class Home_page extends Component  {
           />
         )}
         </ScrollView>
+        <View>
+        <TouchableOpacity style={styles.loginBtn} >
+            <Text style={styles.loginText}>Start Schedule</Text>
+            
+            
+        </TouchableOpacity>
+        </View>
+
     </View>
       
     );

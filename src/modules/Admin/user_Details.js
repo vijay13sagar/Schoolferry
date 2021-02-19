@@ -34,7 +34,7 @@ export default function user_Details({ route, navigation }){
         <View style={{width:"70%"}}>
         <Text>Name</Text></View> 
         
-      <View style={styles.inputView}>
+      <View style={styles.details}>
       <Text style={styles.TextInput}>
           
           {route.params.item.name}
@@ -45,7 +45,7 @@ export default function user_Details({ route, navigation }){
       <View style={{width:"70%"}}>
         <Text>Email ID</Text></View> 
       
-      <View style={styles.inputView}>
+      <View style={styles.details}>
       <Text style={styles.TextInput}>
           
           {route.params.item.email}
@@ -55,7 +55,7 @@ export default function user_Details({ route, navigation }){
      
       <View style={{width:"70%"}}>
         <Text>Phone Number</Text></View> 
-      <View style={styles.inputView}>
+      <View style={styles.details}>
       <Text style={styles.TextInput}>
           
           {route.params.item.contact}
@@ -65,7 +65,7 @@ export default function user_Details({ route, navigation }){
       <View style={{width:"70%"}}>
         <Text>Address</Text></View> 
      
-      <View style={styles.inputView}>
+      <View style={styles.details}>
       <Text style={styles.TextInput}>
           
           {route.params.item.address}
@@ -107,12 +107,23 @@ const styles = StyleSheet.create({
     marginTop: 5,
     //opacity: 0.5,
   },
+  details:{
+    height: 40,
+    backgroundColor: "#d3d3d3",
+    //borderWidth: 1,
+    borderRadius: 12,
+    //borderColor: '#ff5c8d',
+    //marginTop: 3,
+    width: '85%',
+    padding: 8,
+    alignSelf: "center"
 
+  },
   TextInput: {
     width: "70%",
     height: 50,
     flex: 1,
-    padding: 10,
+    padding: 1,
     marginLeft: 2,
 
   },

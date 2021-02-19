@@ -18,6 +18,7 @@ export default function Add_Driver() {
   const [VH, setVH] = useState("");
   const [Gps, setGps] = useState("");
   const [Model, setModel] = useState("");
+  const [Cap, setCap] = useState("");
   const [Type, setType] = useState();
   const [{ emptyFields }, setemptyFeilds] = useState("");
   const validateEmail = (email) => {
@@ -40,7 +41,7 @@ export default function Add_Driver() {
 
   const validateFunction = () => {
     
-    if (!VH||!Gps || !Model || !Type ) {
+    if (!VH||!Gps || !Model || !Type|| !Cap ) {
       setemptyFeilds({ emptyFields: "Please Enter All The Details" })
        return false
     }
@@ -65,8 +66,10 @@ export default function Add_Driver() {
         },
         data: {
               regno: VH,
-              capacity:Number(Type),
-              gps:Gps
+              capacity:Number(Cap),
+              gps:Gps,
+              type:Type,
+              model:Model
 
         }
       })
@@ -117,6 +120,14 @@ export default function Add_Driver() {
           onChangeText={(Gps) => setGps(Gps)}
         />
       </View>
+      <View style={styles.inputView}>
+        <TextInput
+          style={styles.TextInput}
+          placeholder="Enter Type"
+          placeholderTextColor="#929292"
+          onChangeText={(Type) => setType(Type)}
+        />
+      </View>
        <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
@@ -130,9 +141,10 @@ export default function Add_Driver() {
           style={styles.TextInput}
           placeholder="Capacity"
           placeholderTextColor="#929292"
-          onChangeText={(Type) => setType(Type)}
+          onChangeText={(Cap) => setCap(Cap)}
         />
       </View>
+     
       <Text style={styles.error}>{emptyFields}</Text>
 
         <TouchableOpacity style={styles.loginBtn} onPress={pressHandler}>

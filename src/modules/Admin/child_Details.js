@@ -70,85 +70,70 @@ export default function child_Details({ route, navigation }){
         <View style={{width:"70%"}}>
         <Text>Name</Text></View> 
         
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder=""
-          value={route.params.item.title}
-          placeholderTextColor="black"
-          onChangeText={(name) => setname(name)}
-        />
+        <View style={styles.details}>
+        <Text>
+          
+          {route.params.item.releaseYear}
+          
+        </Text>
       </View>
-     
       <View style={{width:"70%"}}>
         <Text>school</Text></View> 
       
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder=""
-          value={route.params.item.releaseYear}
-          placeholderTextColor="#929292"
-          onChangeText={(sch) => setsch(sch)}
-        />
+      <View style={styles.details}>
+        <Text>
+          
+          {route.params.item.releaseYear}
+          
+        </Text>
       </View>
      
       <View style={{width:"70%"}}>
         <Text>Age</Text></View> 
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder=""
-          keyboardType="numeric"
-          maxLength={2}
-          placeholderTextColor="#929292"
-          onChangeText={(age) => setage(age)}
-        />
+        <View style={styles.details}>
+        <Text>
+          
+          {route.params.item.releaseYear}
+          
+        </Text>
       </View>
       <View style={{width:"70%"}}>
         <Text>Blood Group</Text></View> 
      
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder=""
-          placeholderTextColor="#929292"
-          onChangeText={(BG) => setBG(BG)}
-        />
+        <View style={styles.details}>
+        <Text>
+          
+          {route.params.item.releaseYear}
+          
+        </Text>
       </View>
       <View style={{width:"70%"}}>
         <Text>Pickup Location</Text></View> 
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder=""
-          placeholderTextColor="#929292"
-          secureTextEntry={true}
-          onChangeText={(PL) => setPL(PL)}
-        />
+        <View style={styles.details}>
+        <Text>
+          
+          {route.params.item.releaseYear}
+          
+        </Text>
       </View>
       <View style={{width:"70%"}}>
         <Text>Drop Location</Text></View> 
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder=""
-          placeholderTextColor="#929292"
-          secureTextEntry={true}
-          onChangeText={(DPL) => setDPL(DPL)}
-        />
+        <View style={styles.details}>
+        <Text>
+          
+          {route.params.item.releaseYear}
+          
+        </Text>
       </View>
 
       <View style={{width:"70%"}}>
         <Text>Vehicle Number</Text></View> 
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder=""
-          placeholderTextColor="#929292"
-          secureTextEntry={true}
-          onChangeText={(VID) => setVID(VID)}
-        />
+        <View style={styles.details}>
+        <Text>
+          
+          {route.params.item.releaseYear}
+          
+        </Text>
       </View>
       <View style={{width:"70%"}}>
         <Text>Subscription Details</Text></View> 
@@ -177,6 +162,18 @@ const styles = StyleSheet.create({
   image: {
     marginBottom: 40,
   },
+  details:{
+    height: 40,
+    backgroundColor: "#d3d3d3",
+    //borderWidth: 1,
+    borderRadius: 12,
+    //borderColor: '#ff5c8d',
+    //marginTop: 3,
+    width: '85%',
+    padding: 8,
+    alignSelf: "center"
+
+  },
 
   inputView: {
     borderWidth: 1,
@@ -190,15 +187,16 @@ const styles = StyleSheet.create({
     //opacity: 0.5,
   },
   inputViews: {
-    borderWidth: 1,
-    borderColor: '#b0003a',
-    borderRadius: 10,
-    width: "80%",
+     
     height: 100,
-    alignItems: "center",
-    backgroundColor:"#fff",   //"#C4C4C4",
-    marginTop: 5,
-    //opacity: 0.5,
+    backgroundColor: "#d3d3d3",
+    //borderWidth: 1,
+    borderRadius: 12,
+    //borderColor: '#ff5c8d',
+    //marginTop: 3,
+    width: '85%',
+    padding: 8,
+    alignSelf: "center"
   },
 
   TextInput: {

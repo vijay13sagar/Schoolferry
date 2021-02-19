@@ -34,14 +34,12 @@ export default function nanny_Details({ route, navigation }){
         <View style={{width:"70%"}}>
         <Text>Name</Text></View> 
         
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder=""
-          value={route.params.item.name}
-          placeholderTextColor="black"
-          onChangeText={(name) => setname(name)}
-        />
+        <View style={styles. details}>
+        <Text>
+          
+          {route.params.item.name}
+          
+          </Text>
       </View>
      
       {/* <View style={{width:"70%"}}>
@@ -59,38 +57,31 @@ export default function nanny_Details({ route, navigation }){
      
       <View style={{width:"70%"}}>
         <Text>Phone Number</Text></View> 
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder=""
-          value={route.params.item.contact}
-          keyboardType="numeric"
-          maxLength={10}
-          placeholderTextColor="#929292"
-          onChangeText={(contact) => setcontact(contact)}
-        />
+        <View style={styles. details}>
+        <Text>
+          
+          {route.params.item.contact}
+          
+          </Text>
       </View>
       <View style={{width:"70%"}}>
         <Text>Address</Text></View> 
      
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder=""
-          value={route.params.item.address}
-          placeholderTextColor="#929292"
-          onChangeText={(Address) => setAddress(Address)}
-        />
+        <View style={styles. detailsAddress}>
+        <Text>
+          
+          {route.params.item.address}
+          
+          </Text>
       </View>
       <View style={{width:"70%"}}>
         <Text>Vehicle Number</Text></View> 
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder=""
-          placeholderTextColor="#929292"
-          onChangeText={(VN) => setVN(VN)}
-        />
+        <View style={styles. details}>
+        <Text>
+          
+          AP31ER2558
+          
+          </Text>
       </View>
      
       {/* <View style={{width:"70%"}}>
@@ -141,7 +132,30 @@ const styles = StyleSheet.create({
   image: {
     marginBottom: 40,
   },
+  details:{
+    height: 40,
+    backgroundColor: "#d3d3d3",
+    //borderWidth: 1,
+    borderRadius: 12,
+    //borderColor: '#ff5c8d',
+    //marginTop: 3,
+    width: '85%',
+    padding: 8,
+    alignSelf: "center"
 
+  },
+  detailsAddress:{
+    height: 100,
+    backgroundColor: "#d3d3d3",
+    //borderWidth: 1,
+    borderRadius: 12,
+    //borderColor: '#ff5c8d',
+    //marginTop: 3,
+    width: '85%',
+    padding: 8,
+    alignSelf: "center"
+
+  },
   inputView: {
     borderWidth: 1,
     borderColor: '#b0003a',
