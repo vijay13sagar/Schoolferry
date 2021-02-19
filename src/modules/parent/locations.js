@@ -26,24 +26,28 @@ const location = ({ navigation }) => {
         latitude2: "0",
         longitude2: "0 ",
     })
-    const [distance, setDistance] = usestate("0")
+    const [Distance, setDistance] = useState( )
+    const [schoolAddress, setSchoolAddress] = useState(" ")
+    const [residenceAddress, setResidenceAddress] = useState(" ")
     const [modalVisible, setModalVisible] = useState(false);
     const [{ error }, setError] = useState(" ")
 
-    const fetchCoords = (lat, lng, name) => {
-        console.log(lat, lng, name)
+    const fetchCoords = (lat, lng, name, address, schooladdress) => {
+        console.log(lat, lng)
         setOrigin({
             latitude1: lat,
             longitude1: lng,
         })
+        setSchoolAddress(schooladdress)
     }
 
-    const fetchDestinationCoords = (lat, lng, name, address) => {
-        console.log(lat, lng, address)
+    const fetchDestinationCoords = (lat, lng, name, address, schooladdress) => {
+        console.log(lat, lng)
         setDestination({
             latitude2: lat,
             longitude2: lng,
         })
+        setResidenceAddress(schooladdress)
 
     }
 
@@ -54,45 +58,53 @@ const location = ({ navigation }) => {
 
     const calculateDistance = () => {
         var dis = getDistance(
-          { latitude: origin.latitude1, longitude: origin.longitude1 },
-          { latitude: destination.latitude2, longitude: destination.longitude2 }
+            { latitude: origin.latitude1, longitude: origin.longitude1 },
+            { latitude: destination.latitude2, longitude: destination.longitude2 }
         );
-       // alert(`Distance\n\n${dis} Meter\nOR\n${dis / 1000} KM`);
-        let finalDistance = dis/1000 
-        setDistance(finalDistance) 
-        AsyncStorage.setItem("distance",distance)
-      };
-    
+        // alert(`Distance\n\n${dis} Meter\nOR\n${dis / 1000} KM`);
+        let finalDistance = dis / 1000
+        setDistance(finalDistance)
+        return finalDistance;
+    };
 
-    const submitHandler = () => {
-        calculateDistance();
+    const submitHandler = async () => {
+       const dis = await calculateDistance();
+        console.log("distance", dis)
 
         if (!pincode) {
             setError({ error: 'Please enter pincode' })
         }
-        else {
-            fetch(`${Ngrok.url}/api/locations/${pincode}`, {
-                "method": "GET",
-                "headers": {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json'
+       /* else {
+            navigation.navigate('Subscriptions', {
+                screen: 'Add Child',
+                params: {
+                    distance: dis,
+                    schooladdress: schoolAddress,
+                    homeaddress: residenceAddress,
                 },
             })
+        }*/
+        else {
 
-                .then((response) => {
-                    console.log(response.status);
-                    response.json()
-                    //console.log('resp',response.status);
-                    if (response.status == 200) {
-                        navigation.navigate('Subscriptions')
-
+            const responsePincode = await fetch(`http://dd1e4224d3fa.ngrok.io/api/locations/pincode/${pincode}`);
+            console.log (responsePincode.status)
+            const responseSchool = await fetch(`http://dd1e4224d3fa.ngrok.io/api/locations/schools/${schoolAddress}`);
+            console.log (responseSchool.status)   
+    
+                    if (responsePincode.status == 200 && responseSchool.status ==200){
+                        navigation.navigate('Subscriptions', {
+                            screen: 'Add Child',
+                            params: { 
+                                    distance: dis,
+                                    schooladdress:schoolAddress,
+                                    homeaddress: residenceAddress,
+                                 },
+                          })
+                          
                     } else {
                         setModalVisible(true)
                     }
-                })
-                .catch(err => {
-                    console.log(err);
-                });
+           
         }
 
     }

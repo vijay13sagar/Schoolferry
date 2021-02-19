@@ -13,8 +13,9 @@ const address_pickup = ({
         const lng = details.geometry.location.lng
         const name = data.structured_formatting.main_text
         const address = data.description
+        const schooladdress = data.description
         //fetchAddress (lat, lng, address)
-        fetchAddress (lat, lng, name, address)
+        fetchAddress (lat, lng, name, address,schooladdress)
     }
 
     return (

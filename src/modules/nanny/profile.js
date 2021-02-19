@@ -25,6 +25,7 @@ useEffect( () => {
   }, [])
 
   return (
+
     <View style={styles.container}>
         <StatusBar
          barStyle = "light-content" hidden = {false} backgroundColor = "#e91e63" translucent = {true}
