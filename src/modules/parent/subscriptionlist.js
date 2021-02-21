@@ -1,16 +1,16 @@
 import React, { useState,useEffect } from 'react';
 import { Text, View, StyleSheet,StatusBar, FlatList, TouchableOpacity, ScrollView, Image } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import { NavigationContainer } from '@react-navigation/native';
+import AsyncStorage from '@react-native-community/async-storage';
 import Ngrok from '../../constants/ngrok';
 
-
-const Subscriptions = ({navigation}) => {
+const Subscriptions = ({route, navigation}) => {
   const [data, setData] = useState("")
   const [pickerValue, setPickerValue] = useState("")
+  const [childid,setChild] = useState (route.params.childID)
 
   useEffect ( () => {    
-    fetch(`${Ngrok.url}/api/package/4`, {
+    fetch(`${Ngrok.url}/api/package/${childid}`, {
       "method": "GET",
       "headers": {
         Accept: 'application/json',
@@ -26,6 +26,9 @@ const Subscriptions = ({navigation}) => {
         console.log(err);
       });
   }, [])
+
+
+  
   return (
     <View style={styles.container}>
       <StatusBar
@@ -68,12 +71,21 @@ const Subscriptions = ({navigation}) => {
               
               <View style={{ flexDirection: 'row' }}>
                 <Text style={styles.serviceDetails}>Nanny</Text>
-                <Text style={styles.price}>  {item.nannycost}</Text>
+                <Text style={styles.price}> - {item.nannycost}</Text>
+              </View>
+ 
+              <View style={{ flexDirection: 'row' }}>
+                <Text style={styles.serviceDetails}>Gst</Text>
+                <Text style={styles.price}> - {item.gst}</Text>
+              </View>
+              <View style={{ flexDirection: 'row' }}>
+                <Text style={styles.serviceDetails}>Trip Cost</Text>
+                <Text style={styles.price}> - {item.tripcost}</Text>
               </View>
               
               <View style={{ flexDirection: 'row', marginVertical:5, }}>
-                <Text style={styles.totalText}>Trip Cost</Text>
-                <Text style={styles.totalCost}> - {item.tripcost}</Text>
+                <Text style={styles.totalText}>Total</Text>
+                <Text style={styles.totalCost}> - {item.total}</Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -123,7 +135,7 @@ const styles = StyleSheet.create({
   flatlist: {
     flex:1,
     marginTop: 10,
-    height:100
+    height:150
 
   },
   flatlistContainer: {
@@ -143,7 +155,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: "700",
     alignSelf: 'center',
-    marginVertical:12
+   marginTop:2,
   },
   serviceDetails: {
     fontSize: 18,
@@ -155,15 +167,16 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontSize: 18,
     fontWeight: "700",
+   
   },
   totalText: {
-    fontSize: 25,
+    fontSize: 22,
     fontWeight: "700",
     marginLeft: 10,
 
   },
   totalCost: {
-    fontSize: 25,
+    fontSize: 22,
     fontWeight: "700",
 
   },
@@ -178,7 +191,7 @@ const styles = StyleSheet.create({
   addChildContainer: {
     borderWidth: 1,
     borderRadius: 10,
-    marginTop: 0,
+    marginTop: 10,
     height: 130,
     width: '90%',
     alignSelf: 'center',

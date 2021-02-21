@@ -1,16 +1,16 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet, TouchableOpacity, Linking, StatusBar, FlatList} from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Linking, StatusBar, FlatList } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import {  Card, CardItem, Body } from 'native-base'
+import { Card, CardItem, Body } from 'native-base'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
 const Homescreen = ({ navigation }) => {
 
   const [trip, setTrip] = useState([
-    {id:'1' , number:' Trip - 1'},
-    {id:'2' , number:'Trip - 2'},
-    {id:'3' , number:'Trip - 3'},
+    { id: '1', number: '07:00 AM' },
+    { id: '2', number: '12:00 PM' },
+    { id: '3', number: '02:00 AM' },
 
   ]);
   const [pickerValue, setPickerValue] = useState("")
@@ -33,13 +33,14 @@ const Homescreen = ({ navigation }) => {
       <View style={styles.pendingTrips}>
         <Text style={styles.tripsTitleText}>Today's Trips</Text>
         <View style={styles.tripBox}>
-          <Text style={styles.Text}>Pending Trips - </Text>
-          <Text style={styles.Text}>03</Text>
+          <Text style={styles.Text}>Total Trips - 03 </Text>
+          <Text style={styles.Text}>Pending Trips - 03 </Text>
+
         </View>
       </View>
 
       <Text style={styles.startTripText}>Click to start trip</Text>
-      
+
       <FlatList
         style={styles.flatlist}
         data={trip}
@@ -47,16 +48,20 @@ const Homescreen = ({ navigation }) => {
         renderItem={({ item }) => (
           <Card style={styles.card}>
             <CardItem button onPress={() => navigation.navigate('Trip Details')}>
-              <Body style={{flexDirection:'row'}}>
-                <Text style={{fontSize:17}}>
-                  Start {item.number}
+              <Body style={{ flexDirection: 'row' }}>
+                <Text style={{ fontSize: 17, fontWeight: '700' }}>
+                  Start Time :
                 </Text>
+                <Text style={{ fontSize: 17, marginLeft: 5, fontWeight: '700' }}>
+                  {item.number}
+                </Text>
+
                 <Ionicons name="chevron-forward-outline"
-                        color="#000" size={25}
-                        style={styles.icon}
-      
-                    />
-                
+                  color="#000" size={25}
+                  style={styles.icon}
+
+                />
+
               </Body>
             </CardItem>
           </Card>
@@ -80,7 +85,7 @@ const styles = StyleSheet.create({
   },
   pendingTrips: {
     backgroundColor: "#fff",
-    height: '20%',
+    height: 140,
     marginTop: 50,
     width: '90%',
     alignItems: "center",
@@ -96,8 +101,8 @@ const styles = StyleSheet.create({
   },
   tripBox: {
     flex: 1,
-    flexDirection: 'row',
     marginTop: 20,
+    marginBottom:5,
 
   },
   Text: {
@@ -106,11 +111,11 @@ const styles = StyleSheet.create({
     alignSelf: "center"
 
   },
-  startTripText:{
-    fontSize:22,
-    textAlign:"center",
-    marginTop:50,
-    marginBottom:10,
+  startTripText: {
+    fontSize: 22,
+    textAlign: "center",
+    marginTop: 50,
+    marginBottom: 10,
 
   },
   CallBtn: {
@@ -121,25 +126,25 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#32cd32",
     alignSelf: 'center',
-    marginBottom:50,
+    marginBottom: 50,
   },
   loginText: {
     fontSize: 15,
 
   },
-  card:{
-    width:'75%',
-    alignSelf:'center',
-    height:50,
-    alignItems:'center',
-    justifyContent:'center',
-    
+  card: {
+    width: '80%',
+    alignSelf: 'center',
+    height: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+
   },
-  icon:{
+  icon: {
     //justifyContent:'center',
-   // alignItems:'center',
-   // alignSelf:'flex-end',
-    marginLeft:140,
+    // alignItems:'center',
+    // alignSelf:'flex-end',
+    marginLeft: 93,
   }
 
 })
