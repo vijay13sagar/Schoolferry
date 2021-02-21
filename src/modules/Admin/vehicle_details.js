@@ -16,38 +16,58 @@ export default function vehicle_Details({ route, navigation }){
   console.log("this.props",route.params.item.releaseYear);
   return (
     <View style={styles.container}>
-      <View style={styles.inputView}>
-        <Text style={styles.TextInput}>
+       <View style={{marginRight:30,width:"70%"}}>
+        <Text>Vehicle Number</Text></View> 
+      <View style={styles. details}>
+        <Text >
           
-         Vehicle Number:- {route.params.item.regNo}
+         {route.params.item.regNo}
           
         </Text>
       </View>
-      <View style={styles.inputView}>
+      <View style={{marginRight:30,width:"70%"}}>
+        <Text>GPS Number</Text></View> 
+      <View style={styles. details}>
        
-        <Text style={styles.TextInput}>
+        <Text >
           
-          GPS Number:- {route.params.item.gps}
+           {route.params.item.gps}
           
         </Text>
+       
         
       </View>
-      <View style={styles.inputView}>
+      <View style={{marginRight:30,width:"70%"}}>
+        <Text>Type</Text></View> 
+      <View style={styles. details}>
+      <Text>
+          
+          {route.params.item.type}
+          
+        </Text>
+      </View>
+      <View style={{marginRight:30,width:"70%"}}>
+        <Text>Model</Text></View> 
+      <View style={styles. details}>
        
-       <Text style={styles.TextInput}>
+       <Text>
          
-         Model:- {route.params.item.model}
+        {route.params.item.model}
          
        </Text>
        
      </View>
-      <View style={styles.inputView}>
-      <Text style={styles.TextInput}>
+     <View style={{marginRight:30,width:"70%"}}>
+        <Text>Capacity</Text></View> 
+      <View style={styles. details}>
+      <Text >
           
-         Capacity:- {route.params.item.capacity}
+          {route.params.item.capacity}
           
         </Text>
       </View>
+      
+      
      
       
       
@@ -74,20 +94,18 @@ const styles = StyleSheet.create({
         
       },
     
-      image: {
-        marginBottom: 40,
-      },
+      
+      
+      details:{
+        height: 40,
+        backgroundColor: "#d3d3d3",
+        //borderWidth: 1,
+        borderRadius: 12,
+        //borderColor: '#ff5c8d',
+        width: '85%',
+        padding: 8,
+        alignSelf: "center"
     
-      inputView: {
-        borderWidth: 1,
-        borderColor: '#b0003a',
-        borderRadius: 10,
-        width: "80%",
-        height: 45,
-        alignItems: "center",
-        backgroundColor:"#fff",   //"#C4C4C4",
-        marginTop: 5,
-        //opacity: 0.5,
       },
     
       TextInput: {

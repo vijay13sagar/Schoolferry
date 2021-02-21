@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { ActivityIndicator,TouchableOpacity,StyleSheet, FlatList, Text, View } from 'react-native';
 import { Container, Header, Content, Card, CardItem, Body } from 'native-base';
 import { ScrollView } from 'react-native-gesture-handler';
-export default class userSubscription extends Component  {
+export default class UserSubscription extends Component  {
   constructor(props) {
     super(props);
 
@@ -46,7 +46,7 @@ export default class userSubscription extends Component  {
             
         // </View>
         <Card>
-        <CardItem button onPress = {()=>this.props.navigation.navigate('child_Details',{item:item})}>
+        <CardItem >
               <Body>
                 <Text>
                    {
@@ -68,7 +68,7 @@ export default class userSubscription extends Component  {
 const styles = StyleSheet.create({
   container: {
     padding: 50,
-    flex:1,
+   width:'100%',
       backgroundColor: "#F9F2F2",
       alignItems: "center",
       
