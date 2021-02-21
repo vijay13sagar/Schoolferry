@@ -28,69 +28,70 @@ export default function App({navigation}) {
   const [entry, setentry] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
 
-//   const pressHandler = () => {
-//     if(!UPI){
-//       if (!CardN && !NOC && !CVV && !Expiry) {
-//         setError({value_error: "Fill UPI or Card details" })
-//         return value_error
-//     }
-//     }
-//     if(!UPI){
-//     if (!CardN || !NOC || !CVV || !Expiry) {
-//       setError({value_error: "Fill Card details completely" })
-//       return value_error
-//   }
-//   if(UPI ){
-//     setError({value_error:null})
-//     return value_error
-//   }else if(CardN && NOC && CVV && Expiry){
-//     setError({value_error:null})
-//     return value_error
-//   }
-// }
+  const pressHandler = () => {
+    if(!UPI){
+      if (!CardN && !NOC && !CVV && !Expiry) {
+        setError({value_error: "Fill UPI or Card details" })
+        return value_error
+    }
+    }
+    if(!UPI){
+    if (!CardN || !NOC || !CVV || !Expiry) {
+      setError({value_error: "Fill Card details completely" })
+      return value_error
+  }
+  if(UPI ){
+    setError({value_error:null})
+    return value_error
+  }else if(CardN && NOC && CVV && Expiry){
+    setError({value_error:null})
+    return value_error
+  }
+}
+  }
    
 
 const [isSelected, setSelection] = useState(false);
 
-  const pressHandler = () => {
-    fetch(`${Ngrok.url}/api/payment`, {
-      "method": "POST",
-      "headers": {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        cardno: CardN,
-        cardname:NOC ,
-        cvv: CVV,
-        expiry: Expiry,
-        password: UPI,
-        //save:saved,
-        //childid:token2,
-        //parentid:token,
-      })
-    })
-      .then(response => response.json())
-      .then(responseJson => {
-        console.log(responseJson);
-        if (responseJson.message == "Payment Succesful. Thanks.") {
-          setModalVisible(!modalVisible);
-        }else {
-          alert('sign up failed')
-        }
-        //alert(JSON.stringify(response))
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    }
-    let saved='yes';
-    if(isSelected){
-      saved='yes'
-    }
-    else{
-      saved='no'
-    }
+  // const pressHandler = () => {
+  //   fetch(`${Ngrok.url}/api/payment`, {
+  //     "method": "POST",
+  //     "headers": {
+  //       Accept: 'application/json',
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify({
+  //       cardno: CardN,
+  //       cardname:NOC ,
+  //       cvv: CVV,
+  //       expiry: Expiry,
+  //       password: UPI,
+  //       //save:saved,
+  //       //childid:token2,
+  //       //parentid:token,
+  //     })
+  //   })
+  //     .then(response => response.json())
+  //     .then(responseJson => {
+  //       console.log(responseJson);
+  //       if (responseJson.message == "Payment Succesful. Thanks.") {
+  //         setModalVisible(!modalVisible);
+  //       }else {
+  //         alert('sign up failed')
+  //       }
+  //       //alert(JSON.stringify(response))
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  //   }
+  //   let saved='yes';
+  //   if(isSelected){
+  //     saved='yes'
+  //   }
+  //   else{
+  //     saved='no'
+  //   }
   return (
     
 
@@ -236,6 +237,7 @@ const [isSelected, setSelection] = useState(false);
       <TouchableHighlight
         style={styles.loginBtn}
         onPress={() => {
+          pressHandler();
           setModalVisible(true);
         }}
       >

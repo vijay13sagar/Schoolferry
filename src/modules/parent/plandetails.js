@@ -59,7 +59,7 @@ const App =({route,navigation}) =>  {
 
       />
         <Text style={styles.headertext} >Start Date</Text>
-        <View style={{width:250,alignSelf:'center',margin:10}}>
+        <View style={{backgroundColor:'#ffe4e1',width:250,alignSelf:'center',margin:10}}>
         <CalendarPicker
           startFromMonday={true}
           width={250}

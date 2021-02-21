@@ -63,7 +63,7 @@ export default function addchild({ route, navigation }) {
             school: SA,
             starttime: ST,
             endtime: ET,
-            distance: Number(distanceCal),
+            distance:Number(distanceCal),
             parentid: token,
 
           }

@@ -66,7 +66,7 @@ export default class App extends Component {
         <View style={styles.headertext}>
           <Text style={styles.registerTextStyle}>(Hint: Double-Tap to select One Day)</Text>
         </View>  
-      <View style={{width:250,alignSelf:'center',margin:10}}>
+      <View style={{backgroundColor:'#ffe4e1',width:250,alignSelf:'center',margin:10}}>
         <CalendarPicker
           startFromMonday={true}
           allowRangeSelection={true}

@@ -5,7 +5,7 @@ import PubNubReact from 'pubnub-react';
 //import Geolocation from '@react-native-community/geolocation';
 
 const { width, height } = Dimensions.get('window');
-
+const duration=500;
 const ASPECT_RATIO = width  / height;
 const LATITUDE = 17.8243;
 const LONGITUDE = 83.3564;
@@ -46,7 +46,7 @@ class Tracker extends React.Component {
 
   // code to receive messages sent in a channel
  async componentDidMount() {
-    //await pubnub.init(this);
+   // await this.pubnub.init(this);
     this.subscribeToPubNub();
     
   }
@@ -54,6 +54,7 @@ class Tracker extends React.Component {
   subscribeToPubNub = () => {
     console.log(this)
     const { coordinate } = this.state;
+    console.log(coordinate)
     this.pubnub.subscribe({
       channels: ['location'],
       withPresence: true,
@@ -61,11 +62,12 @@ class Tracker extends React.Component {
     this.pubnub.getMessage('location', msg => {
       console.log(this)
       const { latitude, longitude } = msg.message;
+      console.log(latitude)
       const newCoordinate = { latitude, longitude };
-
+ console.log(newCoordinate);
       if (Platform.OS === 'android') {
         if (this.marker) {
-          this.marker._component.animateMarkerToCoordinate(newCoordinate, 500);
+          this.marker.animateMarkerToCoordinate(newCoordinate, duration);
         }
       } else {
         coordinate.timing(newCoordinate).start();
