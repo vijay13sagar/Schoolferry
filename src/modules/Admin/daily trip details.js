@@ -75,7 +75,7 @@ export default function Trip_Details({ route, navigation }){
       <View style={styles.details}>
         <Text>
           
-          {route.params.item.title}
+          {route.params.item.driver_name}
          
         </Text>
       </View>
@@ -86,7 +86,7 @@ export default function Trip_Details({ route, navigation }){
         <View style={styles.details}>
         <Text>
           
-         {route.params.item.title}
+         {route.params.item.vehicle_regNo}
          
         </Text>
       </View>
@@ -96,7 +96,7 @@ export default function Trip_Details({ route, navigation }){
         <View style={styles.details}>
         <Text>
           
-          {route.params.item.title}
+          {route.params.item.noOfChildren}
          
         </Text>
       </View>
@@ -106,7 +106,7 @@ export default function Trip_Details({ route, navigation }){
         <View style={styles.details}>
         <Text>
           
-          {route.params.item.title}
+          {route.params.item.nanny_id}
          
         </Text>
       </View>
@@ -115,7 +115,7 @@ export default function Trip_Details({ route, navigation }){
         <View style={styles.details}>
         <Text>
           
-         {route.params.item.title}
+         {route.params.item.address}
          
         </Text>
       </View>
@@ -124,7 +124,7 @@ export default function Trip_Details({ route, navigation }){
         <View style={styles.details}>
         <Text>
           
-          {route.params.item.title}
+          {route.params.item.school}
          
         </Text>
       </View>

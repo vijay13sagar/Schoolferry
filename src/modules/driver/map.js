@@ -5,8 +5,9 @@ import PubNubReact from 'pubnub-react';
 import Geolocation from '@react-native-community/geolocation';
 const { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
-const LATITUDE = 18.1067;
-const LONGITUDE = 83.3956;
+const duration=500;
+const LATITUDE = 18.1083;
+const LONGITUDE = 83.3799;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 const pubnub =  new PubNubReact({
@@ -27,8 +28,6 @@ export default class Trackee extends React.Component {
         longitudeDelta: 0,
       }),
     };
-    
-    
   }
   componentDidMount() {
      this.watchLocation();
@@ -43,6 +42,7 @@ export default class Trackee extends React.Component {
         channel: 'location',
       });
     }
+    console.log('hi')
     console.log(this.state.latitude);
   }
   componentWillUnmount() {
@@ -57,10 +57,13 @@ export default class Trackee extends React.Component {
           latitude,
           longitude,
         };
-        console.log(this.state);
+        console.log(newCoordinate)
+        console.log("hiiii")
+        console.log(position.coords);
         if (Platform.OS === 'android') {
+         //coordinate.timing(newCoordinate).start();
           if (this.marker) {
-            this.marker._component.animateMarkerToCoordinate(newCoordinate, 500); // 500 is the duration to animate the marker
+            this.marker.animateMarkerToCoordinate(newCoordinate,duration); // 500 is the duration to animate the marker
           }
         } else {
            coordinate.timing(newCoordinate).start();

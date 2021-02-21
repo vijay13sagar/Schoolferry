@@ -22,7 +22,7 @@ export default function child_Details({ route, navigation }){
   const [{ DPL }, setDPL] = useState("");
   const [{ SD }, setSD] = useState("");
 
-  console.log("this.props",route.params.item.releaseYear);
+ 
 
   
  
@@ -73,7 +73,7 @@ export default function child_Details({ route, navigation }){
         <View style={styles.details}>
         <Text>
           
-          {route.params.item.releaseYear}
+          
           
         </Text>
       </View>
@@ -83,7 +83,7 @@ export default function child_Details({ route, navigation }){
       <View style={styles.details}>
         <Text>
           
-          {route.params.item.releaseYear}
+         
           
         </Text>
       </View>
@@ -93,7 +93,7 @@ export default function child_Details({ route, navigation }){
         <View style={styles.details}>
         <Text>
           
-          {route.params.item.releaseYear}
+         
           
         </Text>
       </View>
@@ -103,7 +103,7 @@ export default function child_Details({ route, navigation }){
         <View style={styles.details}>
         <Text>
           
-          {route.params.item.releaseYear}
+         
           
         </Text>
       </View>
@@ -112,7 +112,7 @@ export default function child_Details({ route, navigation }){
         <View style={styles.details}>
         <Text>
           
-          {route.params.item.releaseYear}
+          
           
         </Text>
       </View>
@@ -121,8 +121,7 @@ export default function child_Details({ route, navigation }){
         <View style={styles.details}>
         <Text>
           
-          {route.params.item.releaseYear}
-          
+         
         </Text>
       </View>
 
@@ -131,7 +130,7 @@ export default function child_Details({ route, navigation }){
         <View style={styles.details}>
         <Text>
           
-          {route.params.item.releaseYear}
+         
           
         </Text>
       </View>
