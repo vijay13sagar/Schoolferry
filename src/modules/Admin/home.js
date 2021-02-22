@@ -116,7 +116,8 @@ export default class Home_page extends Component {
 
           </TouchableOpacity>
         </View>
-
+        <View>
+      
         <ScrollView>
           {isLoading ? <ActivityIndicator /> : (
             <FlatList
@@ -127,6 +128,7 @@ export default class Home_page extends Component {
                   <CardItem button onPress={() => this.props.navigation.navigate('Trip_Details', { item: item })}>
                     <Body>
                       <Text style={{ flexDirection: 'row' }}>
+                      
                         Trip Number:-{
                           item.trip_id
                         }    Driver:-{
@@ -141,6 +143,8 @@ export default class Home_page extends Component {
             />
           )}
         </ScrollView>
+
+        </View>
        
       </View>
 
