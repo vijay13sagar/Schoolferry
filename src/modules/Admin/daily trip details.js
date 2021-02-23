@@ -14,56 +14,14 @@ import { Picker } from '@react-native-picker/picker';
 
 
 export default function Trip_Details({ route, navigation }){
-  const [sch, setsch] = useState("");
-  const [name, setname] = useState("");
-  const [BG, setBG] = useState("");
-  const [age, setage] = useState("");
-  const [PL, setPL] = useState("");
-  const [{ VID }, setVID] = useState("");
-  const [{ DPL }, setDPL] = useState("");
-  const [{ SD }, setSD] = useState("");
+  
   const [pickerValue, setPickerValue] = useState("")
 
   console.log("this.props",route.params.item.releaseYear);
 
   
  
-  // const pressHandler = () => {
-  //   if (validateFunction()) {
-  //     /* const body = {
-  //        id: email,
-  //         password: password
-  //      }*/
-  //     /*let response = await loginApi(body)*/
-  //   fetch("http://eccff4463173.ngrok.io/api/parent/signup", {
-  //     "method": "POST",
-  //     "headers": {
-  //       Accept: 'application/json',
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify({
-  //       firstName: FN,
-  //       lastName:LN ,
-  //       email: email,
-  //       contact: contact,
-  //       password: password
-  //     })
-  //   })
-  //     .then(response => response.json())
-  //     .then(responseJson => {
-  //       console.log(responseJson);
-  //       if (responseJson.message == "registered successfully") {
-  //         alert ('Congratulations..Sign Up Successful')
-  //       }else {
-  //         alert('sign up failed')
-  //       }
-  //       //alert(JSON.stringify(response))
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     });
-  //   }
-  //  }
+
   return (
     
     <ScrollView>

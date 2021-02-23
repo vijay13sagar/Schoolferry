@@ -214,6 +214,7 @@ const styles = StyleSheet.create({
   
 
   },
+  
   error: {
       padding:1,
 

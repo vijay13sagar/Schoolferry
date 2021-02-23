@@ -21,7 +21,7 @@ export default class Home_page extends Component {
 
   componentDidMount() {
     
-    fetch(`${Ngrok.url}/api/admin/today/trips/21-02-2021`)
+    fetch(`${Ngrok.url}/api/admin/today/trips`)
     .then((response) => response.json())
     .then((json) => {
       this.setState({ data: json });
