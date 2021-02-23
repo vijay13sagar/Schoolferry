@@ -8,14 +8,14 @@ import {
   Text,
   View,
   Image,
-  TextInput,
   CheckBox,
+  TextInput,
   Button,
   TouchableHighlight,
   
   TouchableOpacity,
 } from "react-native";
-// import { CheckBox } from "react-native-community/checkbo
+//import { CheckBox } from "@react-native-community/checkbox";
 //import Ngrok from '../../constants/ngrok';
 
 export default function App({navigation}) {
@@ -41,10 +41,12 @@ export default function App({navigation}) {
       return value_error
   }
   if(UPI ){
-    setError({value_error:null})
+    setError({value_error:null});
+    setModalVisible(true);
     return value_error
   }else if(CardN && NOC && CVV && Expiry){
-    setError({value_error:null})
+    setError({value_error:null});
+    setModalVisible(true);
     return value_error
   }
 }
@@ -162,12 +164,7 @@ const [isSelected, setSelection] = useState(false);
         {/* {isSelected ? "👍" : "👎"} */}
         <Text style={{fontSize:15,marginTop:4}}>Save Card Details</Text>
         </View>
-       
-      
-      
-      <View style={styles.textview}>
         <Text style={styles.headertext} > ------------------------------------------OR----------------------------------------- </Text>
-        </View>
       <View style={styles.textview}>
         <Text style={styles.headertext} >Enter UPI ID</Text>
         </View>
@@ -238,7 +235,7 @@ const [isSelected, setSelection] = useState(false);
         style={styles.loginBtn}
         onPress={() => {
           pressHandler();
-          setModalVisible(true);
+          //setModalVisible(true);
         }}
       >
         <Text style={styles.textStyle}>Confirm</Text>
@@ -279,7 +276,8 @@ const styles = StyleSheet.create({
     backgroundColor:"#fff",   //"#C4C4C4",
     marginTop: 5,
     //opacity: 0.5,
-  },textview: {
+  },
+  textview: {
     marginBottom: 7,
     
   },

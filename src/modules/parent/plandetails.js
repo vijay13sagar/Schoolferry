@@ -88,7 +88,7 @@ const App =({route,navigation}) =>  {
       </View>
       <View style={styles.textview}>
         <Text style={styles.headertext} >School Name</Text>
-        <Text style={styles.inputView}>{route.params.school}</Text>
+        <Text style={styles.inputView2}>{route.params.school}</Text>
         </View>
         <TouchableOpacity style={styles.loginBtn} onPress={()=>navigation.navigate('PaymentScreen')}>
               <Text style={styles.loginText}>Pay</Text>
@@ -162,6 +162,19 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: "80%",
     height: 45,
+    alignSelf
+    : "center",
+    
+    backgroundColor: "#fff",   //"#C4C4C4",
+    marginTop: 5,
+    //opacity: 0.5,
+  }, inputView2: {
+    padding:9,
+    borderWidth: 1,
+    borderColor: '#b0003a',
+    borderRadius: 10,
+    width: "80%",
+    height: 100,
     alignSelf
     : "center",
     

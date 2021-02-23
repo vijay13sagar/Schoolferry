@@ -30,6 +30,7 @@ const location = ({ navigation }) => {
     const [schoolAddress, setSchoolAddress] = useState(" ")
     const [residenceAddress, setResidenceAddress] = useState(" ")
     const [modalVisible, setModalVisible] = useState(false);
+    const [modal1Visible, setModal1Visible] = useState(false);
     const [{ error }, setError] = useState(" ")
 
     const fetchCoords = (lat, lng, name, address, schooladdress) => {
@@ -55,6 +56,18 @@ const location = ({ navigation }) => {
         setModalVisible(!modalVisible)
         navigation.navigate("Home")
     }
+    const modal1ButtonHandler = async () =>  {
+        setModal1Visible(!modal1Visible);
+        const dis = await calculateDistance();
+        navigation.navigate('Subscriptions', {
+            screen: 'Add Child',
+            params: { 
+                    distance: dis,
+                    schooladdress:schoolAddress,
+                    homeaddress: residenceAddress,
+                 },
+          })
+    }
 
     const calculateDistance = () => {
         var dis = getDistance(
@@ -68,8 +81,8 @@ const location = ({ navigation }) => {
     };
 
     const submitHandler = async () => {
-       const dis = await calculateDistance();
-        console.log("distance", dis)
+       //const dis = await calculateDistance();
+        //console.log("distance", dis)
 
         if (!pincode) {
             setError({ error: 'Please enter pincode' })
@@ -86,20 +99,21 @@ const location = ({ navigation }) => {
         }*/
         else {
 
-            const responsePincode = await fetch(`http://7fb4485a2a9d.ngrok.io/api/locations/pincode/${pincode}`);
+            const responsePincode = await fetch(`http://schoolferry.eba-syr2z5av.us-east-2.elasticbeanstalk.com/api/locations/pincode/${pincode}`);
             console.log (responsePincode.status)
-            const responseSchool = await fetch(`http://7fb4485a2a9d.ngrok.io/api/locations/schools/${schoolAddress}`);
+            const responseSchool = await fetch(`http://schoolferry.eba-syr2z5av.us-east-2.elasticbeanstalk.com/api/locations/schools/${schoolAddress}`);
             console.log (responseSchool.status)   
     
                     if (responsePincode.status == 200 && responseSchool.status ==200){
-                        navigation.navigate('Subscriptions', {
-                            screen: 'Add Child',
-                            params: { 
-                                    distance: dis,
-                                    schooladdress:schoolAddress,
-                                    homeaddress: residenceAddress,
-                                 },
-                          })
+                        setModal1Visible(true);
+                        // navigation.navigate('Subscriptions', {
+                        //     screen: 'Add Child',
+                        //     params: { 
+                        //             distance: dis,
+                        //             schooladdress:schoolAddress,
+                        //             homeaddress: residenceAddress,
+                        //          },
+                        //   })
                           
                     } else {
                         setModalVisible(true)
@@ -131,6 +145,28 @@ const location = ({ navigation }) => {
 
                         <TouchableOpacity style={styles.closeModal} onPress={modalButtonHandler}>
                             <Text style={{ fontSize: 17, }}>Okay</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modal1Visible}
+            >
+                <View style={styles.modalContainer}>
+                    <Ionicons name="close-circle-outline"
+                        color="#fff" size={30}
+                        style={styles.icon}
+                        onPress={(modal1Visible) => setModal1Visible(!modal1Visible)}
+                    />
+                    <View style={styles.modalBody}>
+
+                        <Text style={styles.message}>Great! Service is available</Text>
+                        <Text style={styles.newsText}>To Avail Service ,kindly add child  details</Text>
+
+                        <TouchableOpacity style={styles.closeModal} onPress={modal1ButtonHandler}>
+                            <Text style={{ fontSize: 17, }}>Add Child</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

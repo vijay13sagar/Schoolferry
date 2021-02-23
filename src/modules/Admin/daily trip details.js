@@ -72,10 +72,10 @@ export default function Trip_Details({ route, navigation }){
         <View style={{width:"70%"}}>
         <Text>Driver Name</Text></View> 
         
-      <View style={styles.inputView}>
+      <View style={styles.details}>
         <Text>
           
-          value={route.params.item.title}
+          {route.params.item.driver_name}
          
         </Text>
       </View>
@@ -83,48 +83,48 @@ export default function Trip_Details({ route, navigation }){
       <View style={{width:"70%"}}>
         <Text>Vehicle Number</Text></View> 
       
-        <View style={styles.inputView}>
+        <View style={styles.details}>
         <Text>
           
-          value={route.params.item.title}
+         {route.params.item.vehicle_regNo}
          
         </Text>
       </View>
      
       <View style={{width:"70%"}}>
         <Text>Number of children</Text></View> 
-        <View style={styles.inputView}>
+        <View style={styles.details}>
         <Text>
           
-          value={route.params.item.title}
+          {route.params.item.noOfChildren}
          
         </Text>
       </View>
       <View style={{width:"70%"}}>
         <Text>Nanny ID</Text></View> 
      
-        <View style={styles.inputView}>
+        <View style={styles.details}>
         <Text>
           
-          value={route.params.item.title}
+          {route.params.item.nanny_id}
          
         </Text>
       </View>
       <View style={{width:"70%"}}>
         <Text>Start Location</Text></View> 
-        <View style={styles.inputView}>
+        <View style={styles.details}>
         <Text>
           
-          value={route.params.item.title}
+         {route.params.item.address}
          
         </Text>
       </View>
       <View style={{width:"70%"}}>
         <Text>End Location</Text></View> 
-        <View style={styles.inputView}>
+        <View style={styles.details}>
         <Text>
           
-          value={route.params.item.title}
+          {route.params.item.school}
          
         </Text>
       </View>
@@ -195,16 +195,17 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
 
-  inputView: {
-    borderWidth: 1,
-    borderColor: '#b0003a',
-    borderRadius: 10,
-    width: "80%",
-    height: 45,
-    alignItems: "center",
-    backgroundColor:"#fff",   //"#C4C4C4",
-    marginTop: 5,
-    //opacity: 0.5,
+  details:{
+    height: 40,
+    backgroundColor: "#d3d3d3",
+    //borderWidth: 1,
+    borderRadius: 12,
+    //borderColor: '#ff5c8d',
+    //marginTop: 3,
+    width: '85%',
+    padding: 8,
+    alignSelf: "center"
+
   },
   Picker: {
     width:"75%",

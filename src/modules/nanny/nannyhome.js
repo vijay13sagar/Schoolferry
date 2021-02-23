@@ -53,7 +53,7 @@ export default class Triplist extends Component  {
             //{/* <Text style={styles.time}>{item.time}</Text> */}
         // </View>onPress = {()=>this.props.navigation.navigate('driver_Details',{item:item})}
         <Card >
-        <CardItem button  onPress onPress = {()=>this.props.navigation.navigate('Tripdetails',{item:item})}>
+        <CardItem button onPress = {()=>this.props.navigation.navigate('Tripdetails',{item:item})}>
               <Body >
                 <Text>
                    {

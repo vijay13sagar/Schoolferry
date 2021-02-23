@@ -156,9 +156,9 @@ const styles = StyleSheet.create({
   details: {
     height: 40,
     backgroundColor: "#C4C4C4",
-    //borderWidth: 1,
+    borderWidth: 1,
     borderRadius: 12,
-    //borderColor: '#4DAFCE',
+    borderColor: '#4DAFCE',
     //marginTop: 3,
     width: '85%',
     padding: 8,

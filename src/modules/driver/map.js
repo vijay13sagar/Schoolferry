@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Platform, Dimensions, SafeAreaView } from 'react-native';
+import { StyleSheet,Text,TouchableOpacity, View, Platform, Dimensions, SafeAreaView } from 'react-native';
 import MapView, { Marker, AnimatedRegion } from 'react-native-maps';
 import PubNubReact from 'pubnub-react';
 import Geolocation from '@react-native-community/geolocation';
@@ -105,6 +105,9 @@ export default class Trackee extends React.Component {
               coordinate={this.state.coordinate}
             />
           </MapView>
+          <TouchableOpacity style={styles.loginBtn} onPress={()=>this.props.navigation.navigate('Home',{refresh:true})}>
+              <Text>End Trip</Text>
+            </TouchableOpacity>
         </View>
       </SafeAreaView>
     );
@@ -113,10 +116,26 @@ export default class Trackee extends React.Component {
 const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-start',
     alignItems: 'center',
   },
   map: {
-    ...StyleSheet.absoluteFillObject,
+    // ...StyleSheet.absoluteFillObject,
+    width:"80%",
+    height:"75%",
+    alignSelf:'center',
+    marginVertical:20,
+    justifyContent:'flex-start',
+  },
+  loginBtn: {
+    width: "50%",
+    borderRadius: 10,
+    height: 38,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#ff5c8d",
+    alignSelf: "center",
+    marginTop: 20,
+    marginBottom:20,
   },
 });

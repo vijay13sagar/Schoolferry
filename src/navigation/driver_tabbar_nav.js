@@ -5,13 +5,15 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import Home from '../modules/driver/homepage';
-import Map from '../modules/driver/map';
+// import Map from '../modules/driver/map';
 import Checklist from '../modules/driver/checklist';
 import Notifications from '../modules/driver/notification';
 import Profile_Driver from '../modules/driver/profile';
 import changePassword from '../components/changepassword';
 import updateProfile from '../modules/driver/updateprofile';
 import tripDetails from '../modules/driver/tripdetails'
+import Trackee from '../modules/driver/map';
+import Notstarted from '../modules/driver/notstarted';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -70,6 +72,52 @@ function Profile() {
     </Stack.Navigator>
   );
 }
+function Map() {
+  return (
+    <Stack.Navigator
+      initialRouteName="Tripnotstarted"
+      screenOptions={{
+        headerStyle: { backgroundColor: '#fff' },
+        headerTintColor: 'black',
+        headerTitleStyle: { fontWeight: 'bold' },
+        headerTitleAlign: 'center'
+        //headerShown: false
+      }}>
+      <Stack.Screen
+        name="Tripnotstarted"
+        component={Notstarted}
+      options={{ title: 'Map' }}
+      />
+      <Stack.Screen
+        name="Trackee"
+        component={Trackee}
+      options={{title: 'Map' }}
+      />
+      
+    </Stack.Navigator>
+  );
+}
+function Notices() {
+  return (
+    <Stack.Navigator
+      initialRouteName="notifications"
+      screenOptions={{
+        headerStyle: { backgroundColor: '#fff' },
+        headerTintColor: 'black',
+        headerTitleStyle: { fontWeight: 'bold' },
+        headerTitleAlign: 'center'
+        //headerShown: false
+      }}>
+      <Stack.Screen
+        name="notifications"
+        component={Notifications}
+      options={{ title: 'Notifications' }}
+      />
+      
+    </Stack.Navigator>
+  );
+}
+
 
 
 const DriverTab = () => {
@@ -106,7 +154,7 @@ const DriverTab = () => {
       <Tab.Screen name="Home" component={Homepage} />
       <Tab.Screen name="Map" component={Map} />
       <Tab.Screen name="Checklist" component={Checklist} />
-      <Tab.Screen name="Notifications" component={Notifications} />
+      <Tab.Screen name="Notifications" component={Notices} />
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );

@@ -72,7 +72,6 @@ class Tracker extends React.Component {
       } else {
         coordinate.timing(newCoordinate).start();
       }
-
       this.setState({
         latitude,
         longitude,
@@ -88,7 +87,6 @@ class Tracker extends React.Component {
     latitudeDelta: LATITUDE_DELTA,
     longitudeDelta: LONGITUDE_DELTA,
   });
-
   render() {
     return (
       <SafeAreaView style={{ flex: 1 }}>

@@ -29,7 +29,7 @@ const subscription = ({navigation}) =>  {
               <Text style={styles.content}>With a team of highly experienced drivers and advanced location tracking app, schoolferry provide you safety like never before. Nannies are also here for taking care of your little ones.</Text>
             </View>
             <Text style={styles.body} >To see plans, add the child details</Text>
-            <TouchableOpacity style={styles.loginBtn} onPress={()=>navigation.navigate('Add Child',{refresh:true})}>
+            <TouchableOpacity style={styles.loginBtn} onPress={()=>navigation.navigate('Subscription_list',{refresh:true})}>
               <Text style={styles.loginText}>Add Child</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.loginBtn} onPress={()=>navigation.navigate('Cancel Rides')}>

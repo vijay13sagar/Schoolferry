@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const Checklist = () => {
+const Checklist = ({navigation}) => {
     const [data, setData] = useState([
         { id: '1', name: 'akash singh' },
         { id: '2', name: 'vidya sagar' },
@@ -82,11 +82,14 @@ const Checklist = () => {
                 <Text style={styles.textTitle}>Trip Number - 1</Text>
                 <View style={styles.detailsBox}>
                     <Text style={styles.textDetails}>Destination: Srv international School </Text>
-                    <Text style={styles.textDetails}>Total no. of Children - 20</Text>
                     <Text style={styles.textDetails}>Total Present - 18</Text>
-                    <Text style={styles.textDetails}>Total Absent- 02</Text>
+                    <Text style={styles.textDetails}>Children marked Absent - 02</Text>
                 </View>
             </View>
+            
+            <TouchableOpacity style={styles.loginBtn} onPress={()=>navigation.navigate('Trackee',{refresh:true})}>
+              <Text>Live location</Text>
+            </TouchableOpacity>
             <FlatList
                 data={data}
                 renderItem={({ item }) => (
@@ -117,6 +120,17 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginVertical: 15,
     },
+    loginBtn: {
+        width: "50%",
+        borderRadius: 10,
+        height: 38,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#ff5c8d",
+        alignSelf: "center",
+        marginTop: 20,
+        marginBottom:20,
+      },
     textTitle: {
         fontSize: 25,
         fontWeight: 'bold',
