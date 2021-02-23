@@ -64,9 +64,6 @@ export default function App() {
 
   }
 
-
-
-
   const pressHandler = () => {
     if (validateFunction()) {
 
@@ -99,7 +96,7 @@ export default function App() {
             console.log(error.response.data.error) //Please Authenticate or whatever returned from server
             if (error.response.status == 401) {
               //redirect to login
-              Alert.alert('Phone Number Alredy Exist!')
+              Alert.alert('Already Exists, pleae try with a new number')
             }
 
           })

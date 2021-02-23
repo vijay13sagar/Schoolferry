@@ -9,19 +9,17 @@ import axios from 'axios';
 const Subscriptions = ({ route, navigation }) => {
   const [data, setData] = useState("")
   const [modalVisible, setModalVisible] = useState(false);
-  const [pickerValue, setPickerValue] = useState({
-    values: [],
-    selectedValue: ''
-  })
+  const [pickerValue, setPickerValue] = useState()
+  const [selectedValue,setValue] = useState()
 
-  //const [childid,setChild] = useState (route.params.childID)
-  const skool = route.params.school;
+  const [childid,setChild] = useState (route.params.childID)
+   const skool = route.params.school;
   const Homeaddress = route.params.homeaddress;
-  const distance = route.params.distance
+  const distance = route.params.distance 
 
-  /*  useEffect ( () => {   
+    useEffect ( () => {   
      GetData(); 
-     fetch(`http://a21a909d9c06.ngrok.io/api/package/C024`, {
+     fetch(`${Ngrok.url}/api/package/${selectedValue.id}`, {
        "method": "GET",
        "headers": {
          Accept: 'application/json',
@@ -36,20 +34,20 @@ const Subscriptions = ({ route, navigation }) => {
        .catch(err => {
          console.log(err);
        });
-   }, []) */
+   }, [])
 
-  /*  useEffect(() => {
+   /* useEffect( () => {
      GetData();
  
-   }, [])
+   }, []) */
  
    const GetData = async () => {
      let token = await AsyncStorage.getItem('token')
      try {
        axios({
          method: 'GET',
-         // url: `http://a21a909d9c06.ngrok.io/api/parent/childlist/P006`,
-         url: 'https://jsonplaceholder.typicode.com/users?_limit=2',
+          url: `${Ngrok.url}/api/parent/childlist/P002`,
+        // url: 'https://jsonplaceholder.typicode.com/users?_limit=2',
          "headers": {
            Accept: 'application/json',
            'Content-Type': 'application/json'
@@ -57,9 +55,8 @@ const Subscriptions = ({ route, navigation }) => {
  
        })
          .then(function (response) {
-           // console.log(response.data)
            // console.log(response.status)
-           setPickerValue({ values: response.data })
+           setPickerValue(response.data.childList)
  
          })
      }
@@ -69,16 +66,15 @@ const Subscriptions = ({ route, navigation }) => {
    }
  
    const myUsers = () => {
-     const array = JSON.stringify(pickerValue.values)
-     console.log(array)
- 
-     /*    return array.map((myValue, myIndex) => {
+     console.log(pickerValue)
+    
+          return pickerValue && pickerValue.map((myValue) => {
           return (
             <Picker.Item label={myValue.name}
-              value={myValue} key={myIndex} />
+              value={myValue} key={myValue.id}/>
           )
-        });   
-   }*/
+        }); 
+   }
 
   const verifyHandler = () => {
     setModalVisible(false)
@@ -94,7 +90,7 @@ const Subscriptions = ({ route, navigation }) => {
     })
   }
 
-  
+
   return (
     <View style={styles.container}>
       <StatusBar
@@ -143,13 +139,13 @@ const Subscriptions = ({ route, navigation }) => {
 
       <View style={styles.firstBox}>
         <Text style={styles.planTitleText}>Subscription Plans  </Text>
+
         <Picker
-          selectedValue={pickerValue.selectedValue}
+          selectedValue={selectedValue}
           style={styles.Picker}
-          onValueChange={(value) =>
-            setPickerValue({ selectedValue: value })
-          }>
-          {/* {myUsers()} */}
+          onValueChange={(value) => setValue( value)}>
+          
+          {myUsers()}
 
         </Picker>
       </View>
@@ -224,11 +220,13 @@ const styles = StyleSheet.create({
     height: '5%',
     flexDirection: 'row',
     marginTop: 30,
+    width:'100%',
   },
   Picker: {
     height: 30,
-    width: "30%",
-    marginLeft: 50
+    width: 140,
+    marginLeft:30,  
+  
   },
   planTitleText: {
     fontSize: 23,

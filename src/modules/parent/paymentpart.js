@@ -17,6 +17,7 @@ import {
 } from "react-native";
 //import { CheckBox } from "@react-native-community/checkbox";
 //import Ngrok from '../../constants/ngrok';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default function App({navigation}) {
   const [NOC, setNOC] = useState("");
@@ -194,6 +195,7 @@ const [isSelected, setSelection] = useState(false);
               style={{ ...styles.openButtono, backgroundColor: "#2196F3" }}
               onPress={() => {
                 setModalVisible(!modalVisible);
+                AsyncStorage.setItem("payment", true)
                 navigation.navigate('Subscription_list');
               }}
             >

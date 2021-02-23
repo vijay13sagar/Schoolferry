@@ -18,7 +18,7 @@ const subscription = ({navigation}) =>  {
       
           <View style={styles.body}>
             <View style={styles.slogans}>
-              <Text style={{fontWeight:'bold',fontSize:18,alignSelf:'center'}}>We Provide</Text>
+              <Text style={{fontWeight:'bold',fontSize:19,alignSelf:'center',marginTop:10,}}>We Provide</Text>
               <Text style={styles.sidehead}>Easy Tracking</Text>
               <Text style={styles.content}>With advanced tracking algorithms, you can now track live location of the cab taking your little one to school, also always stay updated about the current status.</Text>
               <Text style={styles.sidehead}>Highly Flexible</Text>
@@ -28,12 +28,9 @@ const subscription = ({navigation}) =>  {
               <Text style={styles.sidehead}>Highly Safe</Text>
               <Text style={styles.content}>With a team of highly experienced drivers and advanced location tracking app, schoolferry provide you safety like never before. Nannies are also here for taking care of your little ones.</Text>
             </View>
-            <Text style={styles.body} >To see plans, add the child details</Text>
-            <TouchableOpacity style={styles.loginBtn} onPress={()=>navigation.navigate('Subscription_list',{refresh:true})}>
-              <Text style={styles.loginText}>Add Child</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.loginBtn} onPress={()=>navigation.navigate('Cancel Rides')}>
-              <Text style={styles.loginText}>Cancel ride</Text>
+            <Text style={{fontSize:18,marginTop:15,}} >To subscribe to a plan , Please verify location </Text>
+            <TouchableOpacity style={styles.loginBtn} onPress={()=>navigation.navigate('location')}>
+              <Text style={styles.loginText}>Verify</Text>
             </TouchableOpacity>
             
           </View>
@@ -50,7 +47,7 @@ const styles = StyleSheet.create({
   },
   avatar: {
     width: 120,
-    height: 120,
+    height: 180,
     borderRadius: 63,
     borderWidth: 1,
     borderColor: "black",
@@ -64,27 +61,27 @@ const styles = StyleSheet.create({
     fontWeight:'bold',
     marginLeft:8,
     alignSelf:'flex-start',
-    justifyContent:'space-around'
+    justifyContent:'space-around',
+    fontSize:18
   },
   content:{
     marginLeft:13,
     alignSelf:'flex-start',
-    justifyContent:'space-around'
+    justifyContent:'space-around',
+    marginVertical:2,
+    fontSize:15
+
   },
   slogans:{
     borderWidth: 1,
       borderColor: '#b0003a',
       borderRadius: 10,
-      width: "80%",
-      height: 400,
+      width: "85%",
+      height: 460,
       padding:2,
-      // alignItems: "center",
-      // justifyContent:'center',
-      // alignContent:'center',
-      // alignSelf:'center',
       backgroundColor:'#ffe4e1',   //"#C4C4C4",
-      marginVertical: 15,
-      //opacity: 0.5,
+      marginVertical: 5,
+
   },
   name: {
     fontSize: 22,
@@ -95,8 +92,9 @@ const styles = StyleSheet.create({
   body: {
     justifyContent:'center',
     alignContent:'center',
-    //marginTop: 180,
-    alignItems: 'center'
+    marginTop: 5,
+    alignItems: 'center',
+  
 
   },
   textview: {
@@ -137,7 +135,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#ff5c8d",
     alignSelf: "center",
-    marginTop: 20,
+    marginTop: 15,
   },
 
 });
