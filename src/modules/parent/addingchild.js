@@ -157,6 +157,7 @@ export default function addchild({ route, navigation }) {
         translucent={false}
       //allowing light, but not detailed shapes
       />
+      
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
@@ -218,6 +219,8 @@ export default function addchild({ route, navigation }) {
         />
 
       </View>
+      
+       
       <Text style={styles.error}>{value_error}</Text>
       <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center' }, styles.loginBtn}
         onPress={handlePress} >

@@ -31,30 +31,28 @@ useEffect( () => {
          barStyle = "light-content" hidden = {false} backgroundColor = "#e91e63" translucent = {true}
 
       />
+      <ScrollView>
       <TouchableOpacity style={styles.edit}>
         <Text style={styles.loginText} onPress={()=> navigation.navigate("Updateprof")}>EDIT</Text>
       </TouchableOpacity>
       <View style={styles.body}>
         <Text style={styles.name}>Hello Nanny</Text>
       </View>
-      <View style={styles.textview}>
-        <Text style={styles.headertext} >Name</Text>
-        <Text style={styles.inputView}>{data.name}</Text>
-      </View>
-      <View style={styles.textview}>
-        <Text style={styles.headertext} >User Id</Text>
-        <Text style={styles.inputView}>{data.id}</Text>
-      </View>
-      <View style={styles.textview}>
-        <Text style={styles.headertext} >Mobile Number</Text>
-        <Text style={styles.inputView}>{data.contact}</Text>
-      </View>
-      <View style={styles.textview}>
-        <Text style={styles.headertext} >Address</Text>
-        <Text style={styles.inputView} >{data.address}</Text>
-      </View>
-      
-        <Text style={styles.headertext} >Id Proof</Text>
+
+        <Text style={styles.headertext} >Name:</Text>
+        <Text style={styles.details}>{data.name}</Text>
+
+
+        <Text style={styles.headertext} >User Id:</Text>
+        <Text style={styles.details}>{data.id}</Text>
+
+
+        <Text style={styles.headertext} >Mobile Number:</Text>
+        <Text style={styles.details}>{data.contact}</Text>
+
+        <Text style={styles.headertext} >Address:</Text>
+        <Text style={styles.detailsAddress}>{data.address}</Text>
+        <Text style={styles.headertext} >Id Proof:</Text>
         {/* <Image >{data.idProofUrl}</Image> */}
         <View style={styles.imageview}>
         <Image style={styles.id} source={{ uri: 'https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg' }} />
@@ -65,7 +63,7 @@ useEffect( () => {
       <TouchableOpacity style={styles.loginBtn} onPress={() => { Linking.openURL('tel:8777111223') }}  >
         <Text style={styles.loginText}>Contact Admin</Text>
       </TouchableOpacity>
-      
+      </ScrollView>
     </View>
   );
 }
@@ -91,32 +89,55 @@ const styles = StyleSheet.create({
     //borderColor:'black',
     borderRadius:12,
   },
-  inputView: {
-    borderWidth: 1,
-    borderColor: '#b0003a',
-    borderRadius: 10,
-    width: "80%",
-    padding:8,
-    height: 35,
-    alignSelf:'center',
-    backgroundColor:"#fff",   //"#C4C4C4",
-    marginTop: 5,
-    //opacity: 0.5,
-  },
   imageview:{
     marginBottom:150,
   },
   id: {
     width: 300,
     height: 160,
-    // borderRadius: 63,
     borderWidth: 1,
     borderColor: "black",
     marginBottom: 10,
     alignSelf: 'center',
     position: 'absolute',
-    //justifyContent: 'flex-start',
-    marginTop: 5
+    marginTop: 5,
+    marginBottom:10
+  },
+  showcase:{
+    padding:10,
+    marginLeft:20,
+    flexDirection:'row',
+    
+  },
+  sidehead:{
+    fontWeight:'bold',
+    marginLeft:8,
+    alignSelf:'flex-start',
+    justifyContent:'space-around'
+  },
+  details:{
+    height: 40,
+    backgroundColor: "#d3d3d3",
+    //borderWidth: 1,
+    borderRadius: 12,
+    //borderColor: '#ff5c8d',
+    //marginTop: 3,
+    width: '85%',
+    padding: 8,
+    alignSelf: "center"
+
+  },
+  detailsAddress:{
+    height: 100,
+    backgroundColor: "#d3d3d3",
+    //borderWidth: 1,
+    borderRadius: 12,
+    //borderColor: '#ff5c8d',
+    //marginTop: 3,
+    width: '85%',
+    padding: 8,
+    alignSelf: "center"
+
   },
   name: {
     fontSize: 22,
@@ -136,17 +157,6 @@ const styles = StyleSheet.create({
   headertext: {
     fontSize: 13,
     marginLeft: 35,
-  },
-  details: {
-    height: 40,
-    backgroundColor: "#C4C4C4",
-    borderWidth: 1,
-    borderRadius: 12,
-    borderColor: '#4DAFCE',
-    //marginTop: 3,
-    width: '85%',
-    padding: 8,
-    alignSelf: "center"
   },
   loginBtn: {
     width: "50%",

@@ -53,7 +53,7 @@ export default class Triplist extends Component  {
             //{/* <Text style={styles.time}>{item.time}</Text> */}
         // </View>onPress = {()=>this.props.navigation.navigate('driver_Details',{item:item})}
         <Card >
-        <CardItem button  onPress onPress = {()=>this.props.navigation.navigate('Tripdetails',{item:item})}>
+        <CardItem button onPress = {()=>this.props.navigation.navigate('Tripdetails',{item:item})}>
               <Body >
                 <Text>
                    {
@@ -67,6 +67,17 @@ export default class Triplist extends Component  {
           />
         )}
         </ScrollView>
+        <View style={styles.cardbox}>
+          <Text style={{fontSize:20,fontWeight:'bold',marginBottom:10,alignSelf:'center'}}>Performance</Text>
+          <Card>
+            <CardItem>
+            <Text>Total Rides Completed--</Text>
+            </CardItem>
+            <CardItem>
+            <Text>Rides Remaining--</Text>
+            </CardItem>
+          </Card>
+        </View>
       </View>
     );
   }
@@ -78,6 +89,14 @@ const styles = StyleSheet.create({
       backgroundColor: "#F9F2F2",
       alignItems: "center",
     },
+    cardbox:{
+      padding: 8,
+      width:"80%",
+      height:"30%",
+      flex:1,
+      //backgroundColor: "#F9F2F2",
+        alignSelf: "center",
+      },
     TextInput: {
       height: 50,
       alignItems:"center",

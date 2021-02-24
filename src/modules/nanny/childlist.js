@@ -16,7 +16,7 @@ const nannyhome = ({navigation}) =>  {
 
       />
           <View style={styles.textview}>
-            <Text style={styles.headertext} >Child list</Text>
+            <Text style={styles.sidehead} >Child list</Text>
             <TouchableOpacity style={styles.loginBtn} onPress={()=>navigation.navigate('Child Details')}>
               <Text style={styles.loginText}>Child1 name,Age</Text>
             </TouchableOpacity>
@@ -46,6 +46,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#F9F2F2",
 
+  },
+  sidehead:{
+    fontWeight:'bold',
+    marginLeft:8,
+    alignSelf:'flex-start',
+    justifyContent:'space-around'
   },
   avatar: {
     width: 120,

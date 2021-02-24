@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, KeyboardAvoidingView, TextInput, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, KeyboardAvoidingView, TextInput, StatusBar, Modal } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import Ngrok from '../../constants/ngrok';
-
+import Subhome from '../parent/subhome';
 
 const HomeScreen = ({ navigation }) => {
 

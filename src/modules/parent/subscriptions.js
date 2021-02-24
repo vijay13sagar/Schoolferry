@@ -15,9 +15,21 @@ const subscription = ({navigation}) =>  {
       //allowing light, but not detailed shapes
 
       />
+      
           <View style={styles.body}>
+            <View style={styles.slogans}>
+              <Text style={{fontWeight:'bold',fontSize:18,alignSelf:'center'}}>We Provide</Text>
+              <Text style={styles.sidehead}>Easy Tracking</Text>
+              <Text style={styles.content}>With advanced tracking algorithms, you can now track live location of the cab taking your little one to school, also always stay updated about the current status.</Text>
+              <Text style={styles.sidehead}>Highly Flexible</Text>
+              <Text style={styles.content}>Schoolferry is not like regular school bus service provided by schools, we provide you flexible booking and cancellation options. You can cancel anytime even for one way.</Text>
+              <Text style={styles.sidehead}>Low Cost</Text>
+              <Text style={styles.content}>In the world of price hikes on everything, we are here with exceptionally low price packages, join today for jaw-dropping value for money packages.</Text>
+              <Text style={styles.sidehead}>Highly Safe</Text>
+              <Text style={styles.content}>With a team of highly experienced drivers and advanced location tracking app, schoolferry provide you safety like never before. Nannies are also here for taking care of your little ones.</Text>
+            </View>
             <Text style={styles.body} >To see plans, add the child details</Text>
-            <TouchableOpacity style={styles.loginBtn} onPress={()=>navigation.navigate('Add Child',{refresh:true})}>
+            <TouchableOpacity style={styles.loginBtn} onPress={()=>navigation.navigate('Subscription_list',{refresh:true})}>
               <Text style={styles.loginText}>Add Child</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.loginBtn} onPress={()=>navigation.navigate('Cancel Rides')}>
@@ -48,6 +60,32 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     marginTop: 50
   },
+  sidehead:{
+    fontWeight:'bold',
+    marginLeft:8,
+    alignSelf:'flex-start',
+    justifyContent:'space-around'
+  },
+  content:{
+    marginLeft:13,
+    alignSelf:'flex-start',
+    justifyContent:'space-around'
+  },
+  slogans:{
+    borderWidth: 1,
+      borderColor: '#b0003a',
+      borderRadius: 10,
+      width: "80%",
+      height: 400,
+      padding:2,
+      // alignItems: "center",
+      // justifyContent:'center',
+      // alignContent:'center',
+      // alignSelf:'center',
+      backgroundColor:'#ffe4e1',   //"#C4C4C4",
+      marginVertical: 15,
+      //opacity: 0.5,
+  },
   name: {
     fontSize: 22,
     color: "black",
@@ -55,7 +93,9 @@ const styles = StyleSheet.create({
 
   },
   body: {
-    marginTop: 180,
+    justifyContent:'center',
+    alignContent:'center',
+    //marginTop: 180,
     alignItems: 'center'
 
   },
