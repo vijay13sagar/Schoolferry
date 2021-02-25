@@ -1,3 +1,4 @@
+
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { Provider } from 'react-redux'
@@ -12,8 +13,7 @@ import NannyNav from './src/navigation/nanny_tabbar_nav';
 export default function App() {
   return (
     <NavigationContainer>
-         < ParentNav/>
+         < Onboarding/>
     </NavigationContainer>
   );
 } 
-

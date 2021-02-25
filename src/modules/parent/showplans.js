@@ -6,72 +6,43 @@ import AsyncStorage from '@react-native-community/async-storage';
 import Ngrok from '../../constants/ngrok';
 import axios from 'axios';
 
-const Subscriptions = ({ route, navigation }) => {
-  const [data, setData] = useState("")
+const showplanScreen = ({ route, navigation, childid }) => {
+  const [data, setData] = useState("") 
   const [modalVisible, setModalVisible] = useState(false);
   const [pickerValue, setPickerValue] = useState()
   const [selectedValue,setValue] = useState()
 
-  const [childid,setChild] = useState (route.params.childID)
-  const skool = route.params.school;
+  const [childID,setChild] = useState (childid)
+ /* const skool = route.params.school;
   const Homeaddress = route.params.homeaddress;
-  const distance = route.params.distance 
+  const distance = route.params.distance */
+  
 
-    useEffect (  () => { 
+    useEffect ( () => { 
      
-     async function fetchData () { 
-      let token = await childid  
-     fetch(`${Ngrok.url}/api/package/${token}`, {
-       "method": "GET",
-       "headers": {
-         Accept: 'application/json',
-         'Content-Type': 'application/json'
-       },
-     })
-       .then(response => response.json())
-       .then(responseJson => {
-        // console.log(responseJson);
-         setData(responseJson)
-       })
-       .catch(err => {
-         console.log(err);
-       });
-      }
+       fetchData();
+      
+   },[])
 
-      fetchData();
-   }, [])
-  
+   const fetchData = async () =>{
+    let token = await AsyncStorage.getItem('token')
+    console.log('childid',childID)
 
-  
- 
-   /*const GetData = async () => {
-     let token = await AsyncStorage.getItem('token')
-     console.log(token)
-     try {
-       axios({
-         method: 'GET',
-          url: `${Ngrok.url}/api/parent/childlist/P007`,
-        // url: 'https://jsonplaceholder.typicode.com/users?_limit=2',
-         "headers": {
-           Accept: 'application/json',
-           'Content-Type': 'application/json'
-         }
- 
-       })
-         .then(function (response) {
-            console.log(response.data.childList)
-           setPickerValue(response.data.childList)
-           
+    try{
+    const res = await axios(`${Ngrok.url}/api/package/${childid}`)
+   
+    console.log(res.data)
 
-           
- 
-         })
-     }
-     catch (error) {
-       console.log("errordetails", error);
-     }
-   }
- 
+   // console.log(res.data)
+    setData(res.data)
+
+  }
+  catch (error) {
+    console.error(error);
+  }
+
+  }
+
    const myUsers = () => {
     // console.log(pickerValue)
     
@@ -81,7 +52,7 @@ const Subscriptions = ({ route, navigation }) => {
               value={myValue} key={myValue.id}/>
           )
         }); 
-   }*/
+   }
 
   const verifyHandler = () => {
     setModalVisible(false)
@@ -90,17 +61,16 @@ const Subscriptions = ({ route, navigation }) => {
 
   const onpressSame = () => {
       setModalVisible(false)
-      navigation.navigate('Add Child', {
+      navigation.navigate('Add Child', /*{
       distance: distance,
       schooladdress: skool,
       homeaddress: Homeaddress,
-    })
+    }*/)
   }
 
 
   return (
-    <View style={styles.container}>
-      <ScrollView>
+    <ScrollView style={styles.container}>
       <Modal
         animationType="slide"
         transparent={true}
@@ -137,8 +107,16 @@ const Subscriptions = ({ route, navigation }) => {
       <View style={styles.firstBox}>
         <Text style={styles.planTitleText}>Subscription Plans  </Text>
 
+        <Picker
+          selectedValue={selectedValue}
+          style={styles.Picker}
+          onValueChange={(value) => setValue( value)}>
+          
+          {myUsers()}
+
+        </Picker>
       </View>
-      <View style={{ height: 350, marginTop:15, }}>
+      <View style={{ height: 320 }}>
         <FlatList
           style={styles.flatlist}
           horizontal={true}
@@ -147,11 +125,12 @@ const Subscriptions = ({ route, navigation }) => {
           keyExtractor={item => item.id}
           renderItem={({ item }) => (
             <View style={{ flex: 1, }}>
-              <TouchableOpacity style={styles.flatlistContainer} onPress={() => navigation.navigate('Plan Details', {
+              <TouchableOpacity style={styles.flatlistContainer} onPress={() => navigation.navigate('Plan Details'
+              /*,{
                 item: item,
-                schooladdress: skool,
+               // schooladdress: skool,
 
-              })}>
+              }*/)}>
                 <Image style={styles.avatar} source={{ uri: 'https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg' }} />
 
                 <Text style={styles.typeOfSubscription}>{item.term}</Text>
@@ -189,13 +168,16 @@ const Subscriptions = ({ route, navigation }) => {
             Add child</Text>
         </TouchableOpacity>
       </View>
-      </ScrollView>
-    </View>
+      <TouchableOpacity style={styles.unsubscribeBtn} onPress={() => navigation.navigate('Pause Plan')}>
+        <Text style={{ fontSize: 15, }} >
+          Pause subscription</Text>
+      </TouchableOpacity>
+    </ScrollView>
 
   );
 }
 
-export default Subscriptions;
+export default showplanScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -205,8 +187,14 @@ const styles = StyleSheet.create({
   firstBox: {
     height: '5%',
     flexDirection: 'row',
-    marginTop: 20,
+    marginTop: 30,
     width:'100%',
+  },
+  Picker: {
+    height: 30,
+    width: 140,
+    marginLeft:30,  
+  
   },
   planTitleText: {
     fontSize: 23,
@@ -215,6 +203,8 @@ const styles = StyleSheet.create({
   },
   flatlist: {
     flex: 1,
+    marginTop: 10,
+    height: 150
 
   },
   flatlistContainer: {
@@ -234,7 +224,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: "700",
     alignSelf: 'center',
-    marginTop: 8,
+    marginTop: 2,
   },
   serviceDetails: {
     fontSize: 18,
@@ -265,12 +255,12 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontWeight: '700',
     color: "red",
-    marginTop: 5
+    marginVertical: 5
   },
   addChildContainer: {
     borderWidth: 1,
     borderRadius: 10,
-    marginTop: 25,
+    marginTop: 10,
     height: 130,
     width: '90%',
     alignSelf: 'center',

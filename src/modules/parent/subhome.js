@@ -1,3 +1,4 @@
+
 import React, { useState,useEffect } from 'react';
 import {
   StyleSheet,ScrollView,
@@ -19,8 +20,8 @@ const subscribedHome = ({ route, navigation }) => {
   const maxDate = new Date(2021, 10, 1);
   const startDate = moment(selectedStartDate).format('DD-MM-YYYY');
   const endDate = moment(selectedEndDate).format('DD-MM-YYYY');
-  const [pickerValue, setPickerValue] = useState()
-  const [selectedValue,setValue] = useState()
+  const [pickerValue, setPickerValue] = useState([ ])
+  const [selectedValue,setValue] = useState("")
 
 
   const onDateChange = (date, type) => {
@@ -33,40 +34,47 @@ const subscribedHome = ({ route, navigation }) => {
   }
 
   useEffect(() => {
-    async function getData() {
-      let token = await AsyncStorage.getItem('token')
-      try {
-        axios({
-          method: 'GET',
-           url: `${Ngrok.url}/api/parent/childlist/${token}`,
-         // url: '',
-        })
-          .then(function (response) {
-            // console.log(response.status)
-            setPickerValue(response.data.childList)
-  
-          })
-      }
-      catch (error) {
-        console.log("errordetails", error);
-      }
-
-
-    }
+   
       getData();
 
-  }, [])
+  },[])
+
+ const getData = async () => {
+    let token = await AsyncStorage.getItem('token')
+
+    try {
+
+    const response = await axios(`${Ngrok.url}/api/parent/childlist/${token}`)
+
+    setPickerValue(response.data.childList)
+    setValue(response.data.childList[0].name)
+    console.log('data',response.data.childList[0].name, selectedValue)
+
+  }
+    catch (error) {
+      console.log("errordetails", error);
+    }
+  }
 
   const myUsers = () => {
-    console.log(pickerValue)
-   
+   // console.log(pickerValue)
+   //console.log(selectedValue.tenure)
+
          return pickerValue && pickerValue.map((myValue) => {
          return (
            <Picker.Item label={myValue.name}
-             value={myValue} key={myValue.id}/>
+             value={myValue.name} key={myValue.id}/>
          )
        }); 
   }
+  const value1 = pickerValue.length && selectedValue ? pickerValue.filter((item) => {
+
+    console.log('check value',pickerValue, selectedValue)
+     return item.name.toLowerCase().includes(selectedValue.toLowerCase())})
+  : [] 
+
+ console.log('value1', value1)
+
   return (
 
     <ScrollView>
@@ -83,7 +91,8 @@ const subscribedHome = ({ route, navigation }) => {
      <Picker
           selectedValue={selectedValue}
           style={styles.Picker}
-          onValueChange={(value) => setValue( value)}>
+          onValueChange={(value) =>{ console.log('pickervalue', value); setValue( value)}}
+          >
           
           {myUsers()}
 
@@ -96,25 +105,34 @@ const subscribedHome = ({ route, navigation }) => {
         <Text style={styles.registerTextStyle}>Plan Tenure</Text>
       </View>
       <View style={styles.details}>
-        <Text >
-          {selectedValue.tenure}
-        </Text>
+     
+        {Boolean(value1.length) && (
+            <Text >
+              {value1[0].tenure}
+            </Text>
+        )}
+       
+    
       </View>
       <View style={styles.headertext}>
         <Text style={styles.registerTextStyle}>Date of Subscription:</Text>
       </View>
       <View style={styles.details}>
-        <Text >
-          {selectedValue.startDate}
-        </Text>
+      {Boolean(value1.length) && (
+            <Text >
+              {value1[0].startDate}
+            </Text>
+        )}
       </View>
       <View style={styles.headertext}>
         <Text style={styles.registerTextStyle}>End date of Subscription:</Text>
       </View>
       <View style={styles.details}>
-        <Text >
-        {selectedValue.endDate}
-        </Text>
+      {Boolean(value1.length) && (
+            <Text >
+              {value1[0].endDate}
+            </Text>
+        )}
       </View>
       <View style={styles.headertext}>
         <Text style={styles.registerTextStyle}>Pick up location:</Text>
@@ -124,9 +142,7 @@ const subscribedHome = ({ route, navigation }) => {
       
         </Text>
       </View>
-      <TouchableOpacity style={styles.loginBtn}>
-        <Text style={{ alignSelf: "center", marginLeft: 7 }}>Extend plan</Text>
-      </TouchableOpacity>
+
       <View style={{ marginLeft: 20, alignSelf: 'flex-start', justifyContent: 'center' }}>
         <Text style={{ fontWeight: 'bold', fontSize: 20 }} >Cancelation of Ride:</Text>
       </View>
@@ -146,14 +162,14 @@ const subscribedHome = ({ route, navigation }) => {
           width={250}
           height={250}
           maxRangeDuration={10}
-          todayBackgroundColor="#F2E6FF"
+          todayBackgroundColor="#F2E"
           selectedDayColor="#ff5c8d"
           selectedDayTextColor="#FFFFFF"
           onDateChange={onDateChange}
         />
         <View>
-          <Text style={styles.registerTextStyle}>Selected Start Date:{startDate}</Text>
-          <Text style={styles.registerTextStyle}>Selected End Date:{endDate}</Text>
+          <Text style={styles.registerTextStyle}>Selected Start Date:  {startDate}</Text>
+          <Text style={styles.registerTextStyle}>Selected End Date:  {endDate}</Text>
         </View>
       </View>
       <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center' }, styles.loginBtn} >
@@ -201,11 +217,8 @@ const styles = StyleSheet.create({
   },
   details: {
     height: 40,
-    backgroundColor: "#C4C4C4",
-    //borderWidth: 1,
+    backgroundColor: "#d3d3d3",
     borderRadius: 10,
-    //borderColor: '#4DAFCE',
-    //marginTop: 3,
     width: '85%',
     padding: 8,
     alignSelf: "center"
@@ -219,6 +232,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FF5C8D",
     alignSelf: "center",
     marginTop: 20,
+    marginBottom:20
   },
   Picker: {
     width: "45%",

@@ -1,28 +1,36 @@
-import AsyncStorage from '@react-native-community/async-storage';
-import React, { useState ,useEffect} from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, KeyboardAvoidingView, TextInput, StatusBar, Modal } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import Ngrok from '../../constants/ngrok';
 import Subhome from './subhome';
 import Unsubhome from './unsubscribedhome';
+import Ngrok from '../../constants/ngrok';
+import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
 
-const HomeScreen = ({navigation}) => {
-  const [payment,setPayment] = useState(false)
+const HomeScreen = ({ navigation }) => {
+  const [userType, setUserType] = useState(false)
 
-   useEffect(() => {
-    async function getData() {
-      let paymentToken = await AsyncStorage.getItem('payment') 
-      setPayment(paymentToken)
+  useEffect(() => {
+
+    async function fetchData() {
+     let token = await AsyncStorage.getItem('token')
+      let response = await axios(`${Ngrok.url}/api/parent/subscription/${token}`)
+
+      console.log(response.data.payment)
+      let data = response.data.payment
+
+      if (data == "subscribed") {
+        setUserType(true);
+      }
     }
-      getData();
 
+    fetchData();
   }, [])
-
-
 
   return (
     <View style={styles.container}>
-    {payment ? < Subhome /> :< Unsubhome navigation={navigation} /> }
+      {userType ? < Subhome navigation={navigation} /> : < Unsubhome navigation={navigation} />}
     </View>
 
   );
@@ -35,36 +43,5 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F9F2F2',
   },
-  map: {
-    height: '68%',
-
-    // marginBottom: 20,
-  },
-  textview: {
-
-  },
-  text: {
-    fontSize: 20,
-    alignSelf: 'center',
-    marginVertical: 30,
-    paddingHorizontal: 10,
-    textAlign: 'center'
-  },
-  loginBtn: {
-    width: "60%",
-    borderRadius: 10,
-    height: 40,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#ff5c8d",
-    alignSelf: "center",
-    backgroundColor: "#ff5c8d",
-    // marginVertical: 20
-  },
-  loginText: {
-    color: 'black',
-    fontSize: 15,
-    // fontWeight:'700'
-  }
 
 })
