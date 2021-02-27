@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, StatusBar, FlatList, TouchableOpacity, ScrollView, Image, Modal } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
@@ -6,53 +7,51 @@ import AsyncStorage from '@react-native-community/async-storage';
 import Ngrok from '../../constants/ngrok';
 import axios from 'axios';
 
-const showplanScreen = ({ route, navigation, childid }) => {
-  const [data, setData] = useState("") 
+const showplanScreen = ({ route, navigation }) => {
+  const [data, setData] = useState("")
   const [modalVisible, setModalVisible] = useState(false);
-  const [pickerValue, setPickerValue] = useState()
-  const [selectedValue,setValue] = useState()
+  const [pickerValue, setPickerValue] = useState([])
+  const [selectedValue, setValue] = useState("")
 
-  const [childID,setChild] = useState (childid)
- /* const skool = route.params.school;
-  const Homeaddress = route.params.homeaddress;
-  const distance = route.params.distance */
-  
+  useEffect(() => {
 
-    useEffect ( () => { 
-     
-       fetchData();
-      
-   },[])
+    fetchData();
 
-   const fetchData = async () =>{
+  }, [])
+
+  const fetchData = async () => {
     let token = await AsyncStorage.getItem('token')
-    console.log('childid',childID)
 
-    try{
-    const res = await axios(`${Ngrok.url}/api/package/${childid}`)
-   
-    console.log(res.data)
+    try {
+      const res = await axios(`${Ngrok.url}/api/parent/detail/childlist/${token}`)
+      setPickerValue(res.data)
+      setValue(res.data[0].childName)
+      // console.log('selectedvalue:', selectedValue)
 
-   // console.log(res.data)
-    setData(res.data)
-
-  }
-  catch (error) {
-    console.error(error);
-  }
+    }
+    catch (error) {
+      console.error(error);
+    }
 
   }
 
-   const myUsers = () => {
-    // console.log(pickerValue)
-    
-          return pickerValue && pickerValue.map((myValue) => {
-          return (
-            <Picker.Item label={myValue.name}
-              value={myValue} key={myValue.id}/>
-          )
-        }); 
-   }
+  const myUsers = () => {
+
+    return pickerValue && pickerValue.map((myValue) => {
+      return (
+        <Picker.Item label={myValue.childName}
+          value={myValue.childName} key={myValue.childId} />
+      )
+    });
+  }
+
+  const value1 = pickerValue.length && selectedValue ? pickerValue.filter((item) => {
+
+    //console.log('check value',pickerValue, selectedValue)
+    return item.childName.toLowerCase().includes(selectedValue.toLowerCase())
+  }) : []
+
+  //console.log('value1', value1[0])
 
   const verifyHandler = () => {
     setModalVisible(false)
@@ -60,14 +59,13 @@ const showplanScreen = ({ route, navigation, childid }) => {
   }
 
   const onpressSame = () => {
-      setModalVisible(false)
-      navigation.navigate('Add Child', /*{
-      distance: distance,
-      schooladdress: skool,
-      homeaddress: Homeaddress,
-    }*/)
+    setModalVisible(false)
+    navigation.navigate('Add Child', {
+      distance: Boolean(value1.length) && (value1[0].distance),
+      schooladdress: Boolean(value1.length) && (value1[0].address),
+      // homeaddress: Homeaddress,
+    })
   }
-
 
   return (
     <ScrollView style={styles.container}>
@@ -110,27 +108,27 @@ const showplanScreen = ({ route, navigation, childid }) => {
         <Picker
           selectedValue={selectedValue}
           style={styles.Picker}
-          onValueChange={(value) => setValue( value)}>
-          
+          onValueChange={(value) => { setValue(value) }}>
+
           {myUsers()}
 
         </Picker>
+
       </View>
-      <View style={{ height: 320 }}>
+      <View style={{ height: 340 }}>
         <FlatList
           style={styles.flatlist}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
-          data={data}
-          keyExtractor={item => item.id}
+          data={Boolean(value1.length) && (value1[0].plans)}
+          keyExtractor={item => item.childId}
           renderItem={({ item }) => (
             <View style={{ flex: 1, }}>
-              <TouchableOpacity style={styles.flatlistContainer} onPress={() => navigation.navigate('Plan Details'
-              /*,{
-                item: item,
-               // schooladdress: skool,
+              <TouchableOpacity style={styles.flatlistContainer} onPress={() => navigation.navigate('Plan Details',{
+                  item: item.total,
+                  schooladdress: Boolean(value1.length) && (value1[0].address),
 
-              }*/)}>
+                })}>
                 <Image style={styles.avatar} source={{ uri: 'https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg' }} />
 
                 <Text style={styles.typeOfSubscription}>{item.term}</Text>
@@ -168,10 +166,15 @@ const showplanScreen = ({ route, navigation, childid }) => {
             Add child</Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.unsubscribeBtn} onPress={() => navigation.navigate('Pause Plan')}>
+      <TouchableOpacity style={styles.unsubscribeBtn}
+        onPress={() => navigation.navigate('Pause Plan')}
+        disabled={Boolean(value1.length) && (value1[0].status == "subscribed" )? false : true}
+      >
         <Text style={{ fontSize: 15, }} >
           Pause subscription</Text>
+
       </TouchableOpacity>
+
     </ScrollView>
 
   );
@@ -181,20 +184,20 @@ export default showplanScreen;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,//#F9F2F2
+    flex: 1,
     backgroundColor: "#F9F2F2",
   },
   firstBox: {
-    height: '5%',
+    height: 32,
     flexDirection: 'row',
-    marginTop: 30,
-    width:'100%',
+    marginTop: 20,
+    width: '100%',
   },
   Picker: {
     height: 30,
     width: 140,
-    marginLeft:30,  
-  
+    marginLeft: 30,
+
   },
   planTitleText: {
     fontSize: 23,
@@ -203,7 +206,7 @@ const styles = StyleSheet.create({
   },
   flatlist: {
     flex: 1,
-    marginTop: 10,
+    marginTop: 15,
     height: 150
 
   },
@@ -334,3 +337,5 @@ const styles = StyleSheet.create({
 
 
 })
+
+

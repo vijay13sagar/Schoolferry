@@ -1,7 +1,7 @@
 
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-  StyleSheet,ScrollView,
+  StyleSheet, ScrollView,
   Text, StatusBar, TouchableOpacity,
   View
 } from 'react-native';
@@ -20,8 +20,8 @@ const subscribedHome = ({ route, navigation }) => {
   const maxDate = new Date(2021, 10, 1);
   const startDate = moment(selectedStartDate).format('DD-MM-YYYY');
   const endDate = moment(selectedEndDate).format('DD-MM-YYYY');
-  const [pickerValue, setPickerValue] = useState([ ])
-  const [selectedValue,setValue] = useState("")
+  const [pickerValue, setPickerValue] = useState([])
+  const [selectedValue, setValue] = useState("")
 
 
   const onDateChange = (date, type) => {
@@ -34,113 +34,113 @@ const subscribedHome = ({ route, navigation }) => {
   }
 
   useEffect(() => {
-   
-      getData();
 
-  },[])
+    getData();
 
- const getData = async () => {
+  }, [])
+
+  const getData = async () => {
     let token = await AsyncStorage.getItem('token')
 
     try {
 
-    const response = await axios(`${Ngrok.url}/api/parent/childlist/${token}`)
+      const response = await axios(`${Ngrok.url}/api/parent/childlist/${token}`)
 
-    setPickerValue(response.data.childList)
-    setValue(response.data.childList[0].name)
-    console.log('data',response.data.childList[0].name, selectedValue)
+      setPickerValue(response.data.childList)
+      setValue(response.data.childList[0].name)
+      // console.log('data',response.data.childList[0].name, selectedValue)
 
-  }
+    }
     catch (error) {
       console.log("errordetails", error);
     }
   }
 
   const myUsers = () => {
-   // console.log(pickerValue)
-   //console.log(selectedValue.tenure)
 
-         return pickerValue && pickerValue.map((myValue) => {
-         return (
-           <Picker.Item label={myValue.name}
-             value={myValue.name} key={myValue.id}/>
-         )
-       }); 
+    return pickerValue && pickerValue.map((myValue) => {
+      return (
+        <Picker.Item label={myValue.name}
+          value={myValue.name} key={myValue.id} />
+      )
+    });
   }
+
   const value1 = pickerValue.length && selectedValue ? pickerValue.filter((item) => {
 
-    console.log('check value',pickerValue, selectedValue)
-     return item.name.toLowerCase().includes(selectedValue.toLowerCase())})
-  : [] 
+    //console.log('check value', pickerValue, selectedValue)
+    return item.name.toLowerCase().includes(selectedValue.toLowerCase())
+  }) : []
 
- console.log('value1', value1)
+  //console.log('value1', value1)
 
   return (
 
     <ScrollView>
       <StatusBar
         barStyle="dark-content"
-        // dark-content, light-content and default
         hidden={false}
-        //To hide statusBar
         backgroundColor="#E91E63"
         //Background color of statusBar only works for Android
         translucent={false}
-      //allowing light, but not detailed shapes
       />
-     <Picker
-          selectedValue={selectedValue}
-          style={styles.Picker}
-          onValueChange={(value) =>{ console.log('pickervalue', value); setValue( value)}}
-          >
-          
-          {myUsers()}
-
-        </Picker>
+      <Picker
+        selectedValue={selectedValue}
+        style={styles.Picker}
+        onValueChange={(value) => /*{ console.log('pickervalue', value);*/ setValue(value)}
+      >
+        {myUsers()}
+      </Picker>
 
       <View style={{ marginLeft: 20, alignSelf: 'flex-start', justifyContent: 'center' }}>
-        <Text style={{ fontWeight: 'bold', fontSize: 20 }} >Plan Details:</Text>
+        <Text style={{ fontWeight: 'bold', fontSize: 21 }} >Plan Details  -</Text>
       </View>
       <View style={styles.headertext}>
         <Text style={styles.registerTextStyle}>Plan Tenure</Text>
       </View>
       <View style={styles.details}>
-     
+
         {Boolean(value1.length) && (
-            <Text >
-              {value1[0].tenure}
-            </Text>
+          <Text >
+            {value1[0].tenure}
+          </Text>
         )}
-       
-    
+
       </View>
       <View style={styles.headertext}>
         <Text style={styles.registerTextStyle}>Date of Subscription:</Text>
       </View>
       <View style={styles.details}>
-      {Boolean(value1.length) && (
-            <Text >
-              {value1[0].startDate}
-            </Text>
+
+        {Boolean(value1.length) && (
+          <Text >
+            {value1[0].startDate}
+          </Text>
         )}
+
       </View>
       <View style={styles.headertext}>
         <Text style={styles.registerTextStyle}>End date of Subscription:</Text>
       </View>
       <View style={styles.details}>
-      {Boolean(value1.length) && (
-            <Text >
-              {value1[0].endDate}
-            </Text>
+
+        {Boolean(value1.length) && (
+          <Text >
+            {value1[0].endDate}
+          </Text>
         )}
       </View>
+
       <View style={styles.headertext}>
-        <Text style={styles.registerTextStyle}>Pick up location:</Text>
+        <Text style={styles.registerTextStyle}>Total Cost</Text>
       </View>
       <View style={styles.details}>
-        <Text >
-      
-        </Text>
+
+          {Boolean(value1.length) && (
+            <Text >
+              {value1[0].cost}
+            </Text>
+          )}
       </View>
 
       <View style={{ marginLeft: 20, alignSelf: 'flex-start', justifyContent: 'center' }}>
@@ -187,18 +187,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F9F2F2",
     justifyContent: 'center'
   },
-  avatar: {
-    width: 120,
-    height: 120,
-    borderRadius: 63,
-    borderWidth: 1,
-    borderColor: "black",
-    //marginBottom: 10,
-    alignSelf: 'center',
-    position: 'absolute',
-    justifyContent: 'flex-start',
-    marginTop: 50
-  },
+
   name: {
     fontSize: 22,
     color: "black",
@@ -232,7 +221,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FF5C8D",
     alignSelf: "center",
     marginTop: 20,
-    marginBottom:20
+    marginBottom: 20
   },
   Picker: {
     width: "45%",

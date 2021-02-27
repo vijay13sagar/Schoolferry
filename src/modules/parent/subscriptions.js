@@ -9,7 +9,6 @@ import AsyncStorage from '@react-native-community/async-storage';
 const subscription = ({navigation}) =>  {
 
   const [childinfo,setChildInfo] = useState()
-  const [childid, setchildID] = useState()
 
   useEffect( () => {
     async function fetchData () {
@@ -21,7 +20,6 @@ const subscription = ({navigation}) =>  {
        let id = response.data.childId
        if (data == "registered"){
          setChildInfo(true);
-         setchildID(id)
         
        }
        else{
@@ -36,10 +34,9 @@ const subscription = ({navigation}) =>  {
  /*const getchildID = (id) =>{
    setchildID(id)
  }*/
-console.log('childid in home',childid)
     return (
       <View style={styles.container} >
-        {childinfo && childid ? < Showplans childid={childid} navigation = {navigation} /> : <Addsubscription navigation = {navigation} /> }
+        {childinfo ? < Showplans navigation = {navigation} /> : <Addsubscription navigation = {navigation} /> }
             
       
       </View>
