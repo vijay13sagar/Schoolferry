@@ -26,7 +26,7 @@ const location = ({ navigation }) => {
         latitude2: "0",
         longitude2: "0 ",
     })
-    const [Distance, setDistance] = useState( )
+    const [Distance, setDistance] = useState(0)
     const [schoolAddress, setSchoolAddress] = useState(" ")
     const [residenceAddress, setResidenceAddress] = useState(" ")
     const [modalVisible, setModalVisible] = useState(false);
@@ -56,18 +56,7 @@ const location = ({ navigation }) => {
         setModalVisible(!modalVisible)
         navigation.navigate("Home")
     }
-    const modal1ButtonHandler = async () =>  {
-        setModal1Visible(!modal1Visible);
-        const dis = await calculateDistance();
-        navigation.navigate('Subscriptions', {
-            screen: 'Add Child',
-            params: { 
-                    distance: dis,
-                    schooladdress:schoolAddress,
-                    homeaddress: residenceAddress,
-                 },
-          })
-    }
+    
 
     const calculateDistance = () => {
         var dis = getDistance(
@@ -81,22 +70,12 @@ const location = ({ navigation }) => {
     };
 
     const submitHandler = async () => {
-       //const dis = await calculateDistance();
-        //console.log("distance", dis)
+      // const dis = await calculateDistance();
+       // console.log(dis);
 
         if (!pincode) {
             setError({ error: 'Please enter pincode' })
         }
-       /* else {
-            navigation.navigate('Subscriptions', {
-                screen: 'Add Child',
-                params: {
-                    distance: dis,
-                    schooladdress: schoolAddress,
-                    homeaddress: residenceAddress,
-                },
-            })
-        }*/
         else {
 
             const responsePincode = await fetch(`http://schoolferry.eba-syr2z5av.us-east-2.elasticbeanstalk.com/api/locations/pincode/${pincode}`);
@@ -121,6 +100,23 @@ const location = ({ navigation }) => {
            
         }
 
+    }
+
+    const modal1ButtonHandler = async () =>  {
+          
+        const dis = await calculateDistance();
+        console.log("distance", dis)
+
+        navigation.navigate('Subscriptions', {
+            screen: 'Add Child',
+            params: { 
+                    distance: dis,
+                    schooladdress:schoolAddress,
+                    homeaddress: residenceAddress,
+                 },
+          })
+
+          setModal1Visible(!modal1Visible);
     }
 
     return (

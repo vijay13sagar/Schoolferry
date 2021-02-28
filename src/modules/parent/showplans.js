@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, StatusBar, FlatList, TouchableOpacity, ScrollView, Image, Modal } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
@@ -6,82 +7,51 @@ import AsyncStorage from '@react-native-community/async-storage';
 import Ngrok from '../../constants/ngrok';
 import axios from 'axios';
 
-const Subscriptions = ({ route, navigation }) => {
+const showplanScreen = ({ route, navigation }) => {
   const [data, setData] = useState("")
   const [modalVisible, setModalVisible] = useState(false);
-  const [pickerValue, setPickerValue] = useState()
-  const [selectedValue,setValue] = useState()
+  const [pickerValue, setPickerValue] = useState([])
+  const [selectedValue, setValue] = useState("")
 
-  const [childid,setChild] = useState (route.params.childID)
-  const skool = route.params.school;
-  const Homeaddress = route.params.homeaddress;
-  const distance = route.params.distance 
+  useEffect(() => {
 
-    useEffect (  () => { 
-     
-     async function fetchData () { 
-      let token = await childid  
-     fetch(`${Ngrok.url}/api/package/${token}`, {
-       "method": "GET",
-       "headers": {
-         Accept: 'application/json',
-         'Content-Type': 'application/json'
-       },
-     })
-       .then(response => response.json())
-       .then(responseJson => {
-        // console.log(responseJson);
-         setData(responseJson)
-       })
-       .catch(err => {
-         console.log(err);
-       });
-      }
+    fetchData();
 
-      fetchData();
-   }, [])
-  
+  }, [])
 
-  
- 
-   /*const GetData = async () => {
-     let token = await AsyncStorage.getItem('token')
-     console.log(token)
-     try {
-       axios({
-         method: 'GET',
-          url: `${Ngrok.url}/api/parent/childlist/P007`,
-        // url: 'https://jsonplaceholder.typicode.com/users?_limit=2',
-         "headers": {
-           Accept: 'application/json',
-           'Content-Type': 'application/json'
-         }
- 
-       })
-         .then(function (response) {
-            console.log(response.data.childList)
-           setPickerValue(response.data.childList)
-           
+  const fetchData = async () => {
+    let token = await AsyncStorage.getItem('token')
 
-           
- 
-         })
-     }
-     catch (error) {
-       console.log("errordetails", error);
-     }
-   }
- 
-   const myUsers = () => {
-    // console.log(pickerValue)
-    
-          return pickerValue && pickerValue.map((myValue) => {
-          return (
-            <Picker.Item label={myValue.name}
-              value={myValue} key={myValue.id}/>
-          )
-        }); 
-   }*/
+    try {
+      const res = await axios(`${Ngrok.url}/api/parent/detail/childlist/${token}`)
+      setPickerValue(res.data)
+      setValue(res.data[0].childName)
+      // console.log('selectedvalue:', selectedValue)
+
+    }
+    catch (error) {
+      console.error(error);
+    }
+
+  }
+
+  const myUsers = () => {
+
+    return pickerValue && pickerValue.map((myValue) => {
+      return (
+        <Picker.Item label={myValue.childName}
+          value={myValue.childName} key={myValue.childId} />
+      )
+    });
+  }
+
+  const value1 = pickerValue.length && selectedValue ? pickerValue.filter((item) => {
+
+    //console.log('check value',pickerValue, selectedValue)
+    return item.childName.toLowerCase().includes(selectedValue.toLowerCase())
+  }) : []
+
+  //console.log('value1', value1[0])
 
   const verifyHandler = () => {
     setModalVisible(false)
@@ -89,18 +59,16 @@ const Subscriptions = ({ route, navigation }) => {
   }
 
   const onpressSame = () => {
-      setModalVisible(false)
-      navigation.navigate('Add Child', {
-      distance: distance,
-      schooladdress: skool,
-      homeaddress: Homeaddress,
+    setModalVisible(false)
+    navigation.navigate('Add Child', {
+      distance: Boolean(value1.length) && (value1[0].distance),
+      schooladdress: Boolean(value1.length) && (value1[0].address),
+      // homeaddress: Homeaddress,
     })
   }
 
-
   return (
-    <View style={styles.container}>
-      <ScrollView>
+    <ScrollView style={styles.container}>
       <Modal
         animationType="slide"
         transparent={true}
@@ -137,21 +105,30 @@ const Subscriptions = ({ route, navigation }) => {
       <View style={styles.firstBox}>
         <Text style={styles.planTitleText}>Subscription Plans  </Text>
 
+        <Picker
+          selectedValue={selectedValue}
+          style={styles.Picker}
+          onValueChange={(value) => { setValue(value) }}>
+
+          {myUsers()}
+
+        </Picker>
+
       </View>
-      <View style={{ height: 350, marginTop:15, }}>
+      <View style={{ height: 340 }}>
         <FlatList
           style={styles.flatlist}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
-          data={data}
-          keyExtractor={item => item.id}
+          data={Boolean(value1.length) && (value1[0].plans)}
+          keyExtractor={item => item.childId}
           renderItem={({ item }) => (
             <View style={{ flex: 1, }}>
-              <TouchableOpacity style={styles.flatlistContainer} onPress={() => navigation.navigate('Plan Details', {
-                item: item,
-                schooladdress: skool,
+              <TouchableOpacity style={styles.flatlistContainer} onPress={() => navigation.navigate('Plan Details',{
+                  item: item.total,
+                  schooladdress: Boolean(value1.length) && (value1[0].address),
 
-              })}>
+                })}>
                 <Image style={styles.avatar} source={{ uri: 'https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg' }} />
 
                 <Text style={styles.typeOfSubscription}>{item.term}</Text>
@@ -189,24 +166,38 @@ const Subscriptions = ({ route, navigation }) => {
             Add child</Text>
         </TouchableOpacity>
       </View>
-      </ScrollView>
-    </View>
+      <TouchableOpacity style={styles.unsubscribeBtn}
+        onPress={() => navigation.navigate('Pause Plan')}
+        disabled={Boolean(value1.length) && (value1[0].status == "subscribed" )? false : true}
+      >
+        <Text style={{ fontSize: 15, }} >
+          Pause subscription</Text>
+
+      </TouchableOpacity>
+
+    </ScrollView>
 
   );
 }
 
-export default Subscriptions;
+export default showplanScreen;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,//#F9F2F2
+    flex: 1,
     backgroundColor: "#F9F2F2",
   },
   firstBox: {
-    height: '5%',
+    height: 32,
     flexDirection: 'row',
     marginTop: 20,
-    width:'100%',
+    width: '100%',
+  },
+  Picker: {
+    height: 30,
+    width: 140,
+    marginLeft: 30,
+
   },
   planTitleText: {
     fontSize: 23,
@@ -215,6 +206,8 @@ const styles = StyleSheet.create({
   },
   flatlist: {
     flex: 1,
+    marginTop: 15,
+    height: 150
 
   },
   flatlistContainer: {
@@ -234,7 +227,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: "700",
     alignSelf: 'center',
-    marginTop: 8,
+    marginTop: 2,
   },
   serviceDetails: {
     fontSize: 18,
@@ -265,12 +258,12 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontWeight: '700',
     color: "red",
-    marginTop: 5
+    marginVertical: 5
   },
   addChildContainer: {
     borderWidth: 1,
     borderRadius: 10,
-    marginTop: 25,
+    marginTop: 10,
     height: 130,
     width: '90%',
     alignSelf: 'center',
@@ -344,3 +337,5 @@ const styles = StyleSheet.create({
 
 
 })
+
+
