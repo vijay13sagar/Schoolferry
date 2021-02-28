@@ -1,28 +1,52 @@
-import React, { Component } from 'react';
-import { ActivityIndicator,StatusBar,TouchableOpacity,StyleSheet, FlatList, Text, View } from 'react-native';
-import { Container, Header, Content, Card, CardItem, Body } from 'native-base';
+import React, { Component ,useState} from 'react';
+import { ActivityIndicator,StatusBar,StyleSheet, FlatList, Text, View, Modal } from 'react-native';
+import { Card, CardItem, Body } from 'native-base';
 import { ScrollView } from 'react-native-gesture-handler';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import Ngrok from '../../constants/ngrok';
+import AsyncStorage from '@react-native-community/async-storage';
+
 export default class Notificationlist extends Component  {
+  // const [modalVisible, setModalVisible] = useState(false);
+  
   constructor(props) {
     super(props);
     this.state = {
       data: [],
-      isLoading: true
+      isLoading: true,
+      modalVisible:false,
+      //selectedData:'',
     };
   }
-  componentDidMount() {
-    fetch('https://reactnative.dev/movies.json')
+  componentDidMount=async()=> {
+    let token = await AsyncStorage.getItem('token')
+    fetch(`${Ngrok.url}/api/notices/${token}`)
       .then((response) => response.json())
       .then((json) => {
-        this.setState({ data: json.movies });
+        this.setState({ data: json });
       })
       .catch((error) => console.error(error))
       .finally(() => {
         this.setState({ isLoading: false });
       });
   }
+ setModalVisible = (visible) => {
+    this.setState({ modalVisible: visible });
+  }  
+  _selectedItem = (data) => {
+    this.setState({selectedData: data});
+    this.setModalVisible(true);
+  }
   render() {
     const { data, isLoading } = this.state;
+    
+    const { modalVisible } = this.state;
+    // const setmodal =() =>{
+    //   modalVisible=true;
+    // }
+    // const nullmodal =() =>{
+    //   modalVisible=false;
+    // }
     <StatusBar
         barStyle="light-content"
         // dark-content, light-content and default
@@ -37,6 +61,7 @@ export default class Notificationlist extends Component  {
     
     return (
       <View style={{ flex: 1, padding: 3 ,backgroundColor: "#F9F2F2",}}>
+       
         <ScrollView>
         {isLoading ? <ActivityIndicator/> : (
           <FlatList
@@ -52,7 +77,9 @@ export default class Notificationlist extends Component  {
             //{/* <Text style={styles.time}>{item.time}</Text> */}
         // </View>onPress = {()=>this.props.navigation.navigate('driver_Details',{item:item})}
         <Card>
-        <CardItem button >
+        <CardItem button onPress={() => {
+                  this._selectedItem(item.title);
+                }}>
               <Body>
                 <Text>
                    {
@@ -60,15 +87,37 @@ export default class Notificationlist extends Component  {
                    }
                 </Text>
               </Body>
-            </CardItem>
-            </Card>
+          </CardItem>
+          </Card> 
             
             )}
           />
           
         )}
         </ScrollView>
-        
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+            this.setModalVisible(!modalVisible);
+          }}
+        >
+          <View style={styles.modalContainer}>
+          <Ionicons name="close-circle-outline"
+            color="#fff" size={30}
+            style={styles.icon}
+            onPress={(modalVisible) => this.setModalVisible(!modalVisible)}
+          />
+          <View style={styles.modalBody}>
+          
+            <Text style={styles.message}>Content of {this.state.selectedData} Notification</Text>
+          
+
+          </View>
+        </View>
+        </Modal>
         
       </View>
     );
@@ -124,5 +173,43 @@ const styles = StyleSheet.create({
       color:'black',
       fontSize:15,
      // fontWeight:'700'
-    }
+    },
+    modalContainer: {
+      backgroundColor: '#000000aa',
+      flex: 1,
+      //height: '50%',
+      justifyContent: 'center'
+    },
+    icon: {
+      alignSelf: 'flex-end',
+      marginRight: 10
+    },
+    modalBody: {
+      backgroundColor: '#fff',
+      borderRadius: 10,
+      height: 280,
+      width: '90%',
+      alignSelf: 'center',
+      justifyContent: 'center'
+  
+    },
+    message: {
+      fontSize: 22,
+      textAlign: 'center',
+      //marginTop: 30
+      color: '#000',
+      fontWeight: '600',
+      padding: 7,
+    },
+  
+    closeModal: {
+      borderRadius: 10,
+      width: 180,
+      height: 40,
+      marginTop: 40,
+      backgroundColor: '#ff5c8d',
+      alignSelf: 'center',
+      alignItems: 'center',
+      justifyContent: 'center'
+    },
 });

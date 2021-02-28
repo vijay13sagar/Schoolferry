@@ -3,25 +3,25 @@ import { Text, View, StyleSheet, StatusBar, FlatList, TouchableOpacity, ScrollVi
 import { Picker } from '@react-native-picker/picker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-community/async-storage';
-//import Ngrok from '../../constants/ngrok';
+import Ngrok from '../../constants/ngrok';
 import axios from 'axios';
 
 const Subscriptions = ({ route, navigation }) => {
   const [data, setData] = useState("")
   const [modalVisible, setModalVisible] = useState(false);
-  const [pickerValue, setPickerValue] = useState({
-    values: [],
-    selectedValue: ''
-  })
+  const [pickerValue, setPickerValue] = useState()
+  const [selectedValue,setValue] = useState()
 
-  //const [childid,setChild] = useState (route.params.childID)
+  const [childid,setChild] = useState (route.params.childID)
   const skool = route.params.school;
   const Homeaddress = route.params.homeaddress;
-  const distance = route.params.distance
+  const distance = route.params.distance 
 
-  /*  useEffect ( () => {   
-     GetData(); 
-     fetch(`http://a21a909d9c06.ngrok.io/api/package/C024`, {
+    useEffect (  () => { 
+     
+     async function fetchData () { 
+      let token = await childid  
+     fetch(`${Ngrok.url}/api/package/${token}`, {
        "method": "GET",
        "headers": {
          Accept: 'application/json',
@@ -30,26 +30,28 @@ const Subscriptions = ({ route, navigation }) => {
      })
        .then(response => response.json())
        .then(responseJson => {
-         console.log(responseJson);
+        // console.log(responseJson);
          setData(responseJson)
        })
        .catch(err => {
          console.log(err);
        });
-   }, []) */
+      }
 
-  /*  useEffect(() => {
-     GetData();
- 
+      fetchData();
    }, [])
+  
+
+  
  
-   const GetData = async () => {
+   /*const GetData = async () => {
      let token = await AsyncStorage.getItem('token')
+     console.log(token)
      try {
        axios({
          method: 'GET',
-         // url: `http://a21a909d9c06.ngrok.io/api/parent/childlist/P006`,
-         url: 'https://jsonplaceholder.typicode.com/users?_limit=2',
+          url: `${Ngrok.url}/api/parent/childlist/P007`,
+        // url: 'https://jsonplaceholder.typicode.com/users?_limit=2',
          "headers": {
            Accept: 'application/json',
            'Content-Type': 'application/json'
@@ -57,9 +59,11 @@ const Subscriptions = ({ route, navigation }) => {
  
        })
          .then(function (response) {
-           // console.log(response.data)
-           // console.log(response.status)
-           setPickerValue({ values: response.data })
+            console.log(response.data.childList)
+           setPickerValue(response.data.childList)
+           
+
+           
  
          })
      }
@@ -69,15 +73,14 @@ const Subscriptions = ({ route, navigation }) => {
    }
  
    const myUsers = () => {
-     const array = JSON.stringify(pickerValue.values)
-     console.log(array)
- 
-     /*    return array.map((myValue, myIndex) => {
+    // console.log(pickerValue)
+    
+          return pickerValue && pickerValue.map((myValue) => {
           return (
             <Picker.Item label={myValue.name}
-              value={myValue} key={myIndex} />
+              value={myValue} key={myValue.id}/>
           )
-        });   
+        }); 
    }*/
 
   const verifyHandler = () => {
@@ -94,20 +97,10 @@ const Subscriptions = ({ route, navigation }) => {
     })
   }
 
-  
+
   return (
     <View style={styles.container}>
-      <StatusBar
-        barStyle="light-content"
-        // dark-content, light-content and default
-        hidden={false}
-        //To hide statusBar
-        backgroundColor="#e91e63"
-        //Background color of statusBar only works for Android
-        translucent={false}
-      //allowing light, but not detailed shapes
-
-      />
+      <ScrollView>
       <Modal
         animationType="slide"
         transparent={true}
@@ -143,17 +136,9 @@ const Subscriptions = ({ route, navigation }) => {
 
       <View style={styles.firstBox}>
         <Text style={styles.planTitleText}>Subscription Plans  </Text>
-        <Picker
-          selectedValue={pickerValue.selectedValue}
-          style={styles.Picker}
-          onValueChange={(value) =>
-            setPickerValue({ selectedValue: value })
-          }>
-          {/* {myUsers()} */}
 
-        </Picker>
       </View>
-      <View style={{ height: 320 }}>
+      <View style={{ height: 350, marginTop:15, }}>
         <FlatList
           style={styles.flatlist}
           horizontal={true}
@@ -204,10 +189,7 @@ const Subscriptions = ({ route, navigation }) => {
             Add child</Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.unsubscribeBtn} onPress={() => navigation.navigate('Pause Plan')}>
-        <Text style={{ fontSize: 15, }} >
-          Pause subscription</Text>
-      </TouchableOpacity>
+      </ScrollView>
     </View>
 
   );
@@ -223,12 +205,8 @@ const styles = StyleSheet.create({
   firstBox: {
     height: '5%',
     flexDirection: 'row',
-    marginTop: 30,
-  },
-  Picker: {
-    height: 30,
-    width: "30%",
-    marginLeft: 50
+    marginTop: 20,
+    width:'100%',
   },
   planTitleText: {
     fontSize: 23,
@@ -237,8 +215,6 @@ const styles = StyleSheet.create({
   },
   flatlist: {
     flex: 1,
-    marginTop: 10,
-    height: 150
 
   },
   flatlistContainer: {
@@ -258,7 +234,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: "700",
     alignSelf: 'center',
-    marginTop: 2,
+    marginTop: 8,
   },
   serviceDetails: {
     fontSize: 18,
@@ -289,12 +265,12 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontWeight: '700',
     color: "red",
-    marginVertical: 5
+    marginTop: 5
   },
   addChildContainer: {
     borderWidth: 1,
     borderRadius: 10,
-    marginTop: 10,
+    marginTop: 25,
     height: 130,
     width: '90%',
     alignSelf: 'center',

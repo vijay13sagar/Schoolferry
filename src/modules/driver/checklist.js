@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { CheckBox, Text, StyleSheet, View } from "react-native";
 import moment from 'moment';
 import { ScrollView } from "react-native-gesture-handler";
+import Ngrok from '../../constants/ngrok';
+import AsyncStorage from '@react-native-community/async-storage';
+
 const today = new Date();
 const TD = moment(today).format('DD-MM-YYYY');
+
 const App = () => {
   const [fule, setfule] = useState(false);
   const [engine, setengine] = useState(false);
@@ -12,17 +16,42 @@ const App = () => {
   const [cleanliness, setcleanliness] = useState(false);
   const [brake, setbrake] = useState(false);
   const [tyre, settyre] = useState(false);
+  const [data,getData] = useState();
+  const [item,getitem] = useState([]);
+  useEffect( async () => {
+    let token = await AsyncStorage.getItem('token')
+    fetch(`${Ngrok.url}/api/driver/tripdetails/${token}`, {
+      "method": "GET",
+      "headers": {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        console.log('response',responseJson);
+        getData( responseJson)
+        console.log('responsedata',data);
+        getitem(item);
+        console.log(item);
+      })
+      .catch(err => {
+        console.log('error',err);
+      });
+    }, [])
   return (
     <View style={styles.container}>
-             <Text style={{alignSelf:"center"}}>{TD}</Text>
+             <Text style={styles.datestyle}>{TD}</Text>
              <ScrollView style={{alignSelf:"center",width:"100%"}}>
       <View style={styles.pendingTrips}>
       <Text style={{marginLeft:35,fontSize: 25,
-    marginTop: 10,
+    marginVertical: 10,
     fontWeight: "bold"}}>Vehicle Details</Text>
-      <Text  style={styles.subText}>Vehicle Number :</Text>
-      <Text  style={styles.subText}>Vehicle Type :</Text>
-      <Text  style={styles.subText}>Vehicle Capacity :</Text>
+
+        
+      <Text  style={styles.sidehead}>Vehicle Number :</Text>
+      <Text  style={styles.sidehead}>Vehicle Type :</Text>
+      <Text  style={styles.sidehead}>Vehicle Capacity :</Text>
       </View>
       <Text style={{fontSize:20,alignSelf:"center",marginTop:20,}}> Daily Routine Checklist</Text>
       <View style={styles.checkboxContainer}>
@@ -91,6 +120,12 @@ const styles = StyleSheet.create({
     alignItems:"flex-start",
     backgroundColor: "#F9F2F2",
   },
+  sidehead:{
+    fontWeight:'bold',
+    marginLeft:8,
+    alignSelf:'flex-start',
+    justifyContent:'space-around'
+  },
   pendingTrips: {
     backgroundColor: "#fff",
     height: 140,
@@ -100,6 +135,10 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     borderWidth: 1,
     borderRadius: 10
+  },
+  datestyle:{
+    alignSelf:'center',
+    fontSize:25
   },
   checkboxContainer: {
     flexDirection: "row",

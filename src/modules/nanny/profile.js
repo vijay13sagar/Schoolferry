@@ -1,12 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import { Text, View, ScrollView,TouchableOpacity,StatusBar,Linking, StyleSheet, Image } from 'react-native';
 import Ngrok from '../../constants/ngrok'
+import AsyncStorage from '@react-native-community/async-storage';
 
 const Profile = ({navigation}) => {
   const [data,getData] = useState([])
 
-useEffect( () => { 
-  fetch(`${Ngrok.url}/api/profiledetails/nanny/N001`, {
+useEffect( async() => { 
+  let token = await AsyncStorage.getItem('token')
+  fetch(`${Ngrok.url}/api/profiledetails/nanny/${token}`, {
     "method": "GET",
     "headers": {
       Accept: 'application/json',

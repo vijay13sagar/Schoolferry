@@ -105,7 +105,10 @@ export default class Trackee extends React.Component {
               coordinate={this.state.coordinate}
             />
           </MapView>
-          <TouchableOpacity style={styles.loginBtn} onPress={()=>this.props.navigation.navigate('Home',{refresh:true})}>
+          <TouchableOpacity style={styles.loginBtn} onPress={()=>{//this.props.navigation.replace('Home',{refresh:true})
+        this.props.navigation.navigate('Homey',{refresh:true})
+        //this.props.navigation.navigate('Tripnotstarted',{refresh:true})
+      }}>
               <Text>End Trip</Text>
             </TouchableOpacity>
         </View>

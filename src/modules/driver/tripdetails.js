@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
     Text,
     View,
-    ScrollView,
+    ScrollView,Alert,
     StyleSheet,
     FlatList,
     TouchableOpacity,
@@ -10,35 +10,67 @@ import {
     Switch,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import axios from 'axios';
+import Ngrok from '../../constants/ngrok';
 
-const Checklist = ({navigation}) => {
-    const [data, setData] = useState([
-        { id: '1', name: 'akash singh' },
-        { id: '2', name: 'vidya sagar' },
-        { id: '3', name: 'sai kumar' },
-        { id: '4', name: 'john green' }
-    ])
+const Checklist = ({ route, navigation }) => {
     const [modalVisible, setModalVisible] = useState(false);
-    const [switchValue, setSwitchValue] = useState(false);
-
-    /* useEffect(() => {
-         fetch(`https://jsonplaceholder.typicode.com/users`, {
-             "method": "GET",
-             "headers": {
-                 Accept: 'application/json',
-                 'Content-Type': 'application/json'
+    const [att,setAtt] = useState("");
+    let [k,setK]= useState("");
+    let v=route.params.item.trip_id;
+    const [item1, setItem1] = useState([]);
+    const [item2, setItem2] = useState(route.params.item.childList.map(child=>({...child,attend:false})));
+    // console.log('hahah', route.params);
+    // console.log('hahasdkhdh', route.params.item);
+    // console.log('hshhash', route.params.item.nannyInfo.nannyId);
+    // console.log('hahah', route.params.item.childList.childId);
+    // console.log('sdugfryweigfwi', item1.childId);
+    const setSwitchValue = (item,value) => {
+        const data1 = item2.map(child => {
+            if (child.childId === item.childId) {
+                return { ...child, attend: !child.attend }
+            }
+            return child
+        })
+        console.log("item1",k);
+        console.log("why",data1);
+        setItem2(data1)
+        try {
+            console.log("working",value)
+            axios({
+              method: 'POST',
+              url: `${Ngrok.url}/api/driver/attendance`,
+              "headers": {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+              },
+              data: {
+                childid:k,//item1.childId
+                tripid:v,//route.params.item.trip_id
+                attendance:value
+              }
+            })
+              .then(function (response) {
+                if (response.data.message == "attendance marked") {
+                  Alert.alert("Attendance")
+                  setAtt(response.data.totalMarkedAbsent);
+                }
+                // if (response.status == 200) {
+                //     Alert.alert("Attendance Marked")
+                //     setAtt(response.data.totalMarkedAbsent);
+                //   }
+                // if (response.totalMarkedAbsent) {
+                //     Alert.alert(Total Marked absent {response.totalMarkedAbsent})
+                //   }
+                console.log("ssss",response.data.totalMarkedAbsent);
+                  console.log("attendess",att);
+                console.log("response", response.status);
+              })
+          }
+             catch(error){
+              console.log("errordetails",error);
              }
-         })
-             .then(response => response.json())
-             .then(responseJson => {
-                // setData({ data: responseJson[0].name })
-                 console.log(responseJson[0].name);
-             })
-             .catch(err => {
-                 console.log(err);
-             });
-        
-         }, []);*/
+          }
 
     return (
         <View style={styles.container}>
@@ -54,52 +86,58 @@ const Checklist = ({navigation}) => {
                         onPress={(modalVisible) => setModalVisible(!modalVisible)}
                     />
                     <View style={styles.modalBody}>
-
                         <Text style={styles.message}>Child Details</Text>
-                        <Text style={styles.newsText}>Name - xxx</Text>
-                        <Text style={styles.newsText}>Age - xxx</Text>
-                        <Text style={styles.newsText}>Blood Group - xxx</Text>
-                        <Text style={styles.newsText}>Parent's Contact - xxx</Text>
-                        <Text style={styles.newsText}>Address - xxx</Text>
-
-                        <View style={{ flexDirection: 'row', marginTop:20, alignSelf:'center', }}>
-                            <Text style={styles.absent}>Mark as Absent</Text>
-                            <Switch
-                                value={switchValue}
-                                //trackColor={{ true: "red" }}
-                                onValueChange={()=> setSwitchValue(!switchValue)}
-                                style={{marginLeft:10,}}
-                            />
-
-                        </View>
-
+                        <Text style={styles.newsText}>Name - {item1.childName} </Text>
+                        <Text style={styles.newsText}>Age - {item1.age}</Text>
+                        <Text style={styles.newsText}>Blood Group - {item1.bloodGroup}</Text>
+                        <Text style={styles.newsText}>Parent's Contact - {item1.parentsContact}</Text>
+                        <Text style={styles.newsText}>Address - {item1.address}</Text>
+                        <Text style={styles.newsText}>School - {item1.school}</Text>
                     </View>
                 </View>
             </Modal>
 
-
-            <View style={styles.firstbox} >
-                <Text style={styles.textTitle}>Trip Number - 1</Text>
-                <View style={styles.detailsBox}>
-                    <Text style={styles.textDetails}>Destination: Srv international School </Text>
-                    <Text style={styles.textDetails}>Total Present - 18</Text>
-                    <Text style={styles.textDetails}>Children marked Absent - 02</Text>
+            <ScrollView>
+                <View style={styles.firstbox} >
+                    <Text style={styles.textTitle}>Trip Number - 1</Text>
+                    <View style={styles.detailsBox}>
+                        <Text style={styles.textDetails}>Destination: {route.params.item.destination} </Text>
+                        <Text style={styles.textDetails}>Total Present - {route.params.item.noOfChildren}</Text>
+                        <Text style={styles.textDetails}>Nanny Id - {route.params.item.nannyInfo.nannyId}</Text>
+                        <Text style={styles.textDetails}>Nanny Name - {route.params.item.nannyInfo.nannyName}</Text>
+                        <Text style={styles.textDetails}>Nanny Contact - {route.params.item.nannyInfo.nannyContact}</Text>
+                        <Text style={styles.textDetails}>Total Absent - {att}</Text>
+                    </View>
                 </View>
-            </View>
-            
-            <TouchableOpacity style={styles.loginBtn} onPress={()=>navigation.navigate('Trackee',{refresh:true})}>
-              <Text>Live location</Text>
-            </TouchableOpacity>
-            <FlatList
-                data={data}
-                renderItem={({ item }) => (
-                    <TouchableOpacity style={styles.card} onPress={() => setModalVisible(!modalVisible)}>
-                        <Text style={styles.itemText}>{item.name}</Text>
-                    </TouchableOpacity>
-                )}
-                keyExtractor={item => item.id}
-            />
-
+                <TouchableOpacity style={styles.loginBtn} >
+                    <Text>Start Trip</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('Trackee', { refresh: true })}>
+                    <Text>Live location</Text>
+                </TouchableOpacity>
+                <Text style={styles.absent}>Mark as Absent</Text>
+                <FlatList
+                    data={item2}
+                    renderItem={({ item }) => (
+                        <View style={{ flexDirection: 'row', marginTop: 20, alignSelf: 'center', }}>
+                            <TouchableOpacity style={styles.card} onPress={() => {
+                                setModalVisible(!modalVisible)
+                                setItem1(item)
+                            }}>
+                                <Text style={styles.itemText}>{item.childName},{item.childId}</Text>
+                            </TouchableOpacity>
+                            <Switch
+                                value={item.attend}
+                                // //trackColor={{ true: "red" }}
+                                onValueChange={(value) => {console.log("navv",value) ,setK(item.childId),setSwitchValue(item,value)}}
+                                
+                                style={{ marginLeft: 10, }}
+                            />
+                        </View>
+                    )}
+                    keyExtractor={item => item.id}
+                />
+            </ScrollView>
         </View>
     );
 }
@@ -128,9 +166,8 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         backgroundColor: "#ff5c8d",
         alignSelf: "center",
-        marginTop: 20,
-        marginBottom:20,
-      },
+        marginVertical: 10,
+    },
     textTitle: {
         fontSize: 25,
         fontWeight: 'bold',
@@ -153,12 +190,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#32cd32',
         borderRadius: 10,
         //borderWidth: 1,
-        marginBottom: 15,
+        marginBottom: 5,
+        marginRight: 15,
         //backgroundColor: '#fff',
         alignSelf: 'center',
         justifyContent: 'center',
         alignItems: 'center',
-        width: '90%',
+        width: '70%',
         height: 70,
         shadowColor: '#000',
         shadowOpacity: 1,
@@ -215,13 +253,14 @@ const styles = StyleSheet.create({
     },
     icon: {
         alignSelf: 'flex-end',
-        marginRight: 5
+        marginRight: 5,
+
     },
-    absent:{
-        marginLeft:10,
-        fontSize:23,
+    absent: {
+        alignSelf: 'flex-end',
+        fontSize: 15,
         //marginTop:10,
-        color:'red',
+        color: 'red',
     }
 
 })

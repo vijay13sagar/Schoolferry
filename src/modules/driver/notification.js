@@ -14,6 +14,7 @@ export default class Notificationlist extends Component  {
       data: [],
       isLoading: true,
       modalVisible:false,
+      selectedData:'',
     };
   }
   componentDidMount() {
@@ -33,8 +34,6 @@ export default class Notificationlist extends Component  {
   _selectedItem = (data) => {
     this.setState({selectedData: data});
     this.setModalVisible(true);
-    console.log(data);
-    console.log(data.item.id)
   }
   render() {
     const { data, isLoading } = this.state;
@@ -77,7 +76,7 @@ export default class Notificationlist extends Component  {
         // </View>onPress = {()=>this.props.navigation.navigate('driver_Details',{item:item})}
         <Card>
         <CardItem button onPress={() => {
-                  this._selectedItem({item});
+                  this._selectedItem(item.title);
                 }}>
               <Body>
                 <Text>
@@ -111,7 +110,7 @@ export default class Notificationlist extends Component  {
           />
           <View style={styles.modalBody}>
           
-            <Text style={styles.message}>Petrol Price is Rised.Be Economic While Using it </Text>
+            <Text style={styles.message}>Content of {this.state.selectedData} Notification</Text>
           
 
           </View>
