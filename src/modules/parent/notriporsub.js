@@ -1,52 +1,64 @@
-import React,{useState} from 'react';
-import { Text, View,StatusBar, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Text, View, StatusBar, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { sub } from 'react-native-reanimated';
+import Ngrok from '../../constants/ngrok';
+import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
 
 
+const oldmap = ({ navigation }) => {
+  let [flag, setflag] = useState(true);
+  const [userType, setUserType] = useState()
 
-const oldmap = ({navigation}) =>  {
-  let [flag,setflag]=useState(false);
-  const Subs=() =>{
-    return(
-  <View style={{flex:1,justifyContent:'center',alignContent:'center'}}>
-            <View style={styles.body}>
-               <Text style={styles.name}>No Trips</Text>
-            </View>
-              <Text style={styles.centerview} >You did not avail Any Service or Added Child</Text>
-              <Text style={styles.centerview} >To Add Child ,Check Service Availability First</Text>
-              <TouchableOpacity style={styles.loginBtn} onPress={()=>navigation.navigate('Home',{refresh:true})}>
-                <Text>Check</Text>
-              </TouchableOpacity>
-    </View>
-    );
-  }
-  const Nosubs=() =>{
-    return(
-  <View style={{flex:1,justifyContent:'center',alignContent:'center'}}>
-       <View style={styles.body}>
-               <Text style={styles.name}>No Trips</Text>
-            </View>
-        <Text style={styles.centerview} >There are No Active Trips Today</Text>
-          </View>
-    );
-  }
+  useEffect(() => {
+    async function fetchData() {
+      let token = await AsyncStorage.getItem('token')
+      let response = await axios(`${Ngrok.url}/api/parent/subscription/${token}`)
+
+      console.log(response.data.payment)
+      let data = response.data.payment
+
+      if (data == "subscribed") {
+        setUserType(true);
+      }
+      else{
+        setUserType(false)
+      }
+    }
+
+    fetchData();
+  }, [])
+
+
+  const Nosubs = () => {
     return (
-      <View style={styles.container} >
-        <StatusBar
-        barStyle="light-content"
-        // dark-content, light-content and default
-        hidden={false}
-        //To hide statusBar
-        backgroundColor="#e91e63"
-        //Background color of statusBar only works for Android
-        translucent={false}
-      //allowing light, but not detailed shapes
-
-      />
-        {flag ? <Subs/> : <Nosubs/>}
+      <View style={{ flex: 1, justifyContent: 'center', alignContent: 'center' }}>
+        <View style={styles.body}>
+          <Text style={styles.name}>Add subscription</Text>
+        </View>
+        <Text style={styles.centerview} >To subscribe to a plan , please verify location </Text>
+        <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('location', { refresh: true })}>
+          <Text style={{ fontSize: 17 }}>Verify</Text>
+        </TouchableOpacity>
       </View>
     );
   }
+  const Subs = () => {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignContent: 'center' }}>
+        <View style={styles.body}>
+          <Text style={styles.name}>No Trips</Text>
+        </View>
+        <Text style={styles.centerview} >There are No Active Trips Today</Text>
+      </View>
+    );
+  }
+  return (
+    <View style={styles.container} >
+      {userType ? <Subs /> : <Nosubs />}
+    </View>
+  );
+}
 
 export default oldmap;
 const styles = StyleSheet.create({
@@ -57,30 +69,31 @@ const styles = StyleSheet.create({
   },
 
   centerview: {
-    justifyContent:'center',
-    marginVertical:10,
-    alignSelf:'center'
+    justifyContent: 'center',
+    marginVertical: 10,
+    alignSelf: 'center',
+    fontSize: 17,
 
   },
   name: {
     fontSize: 22,
     color: "black",
-    fontWeight: '600',
+    fontWeight: '700',
 
   },
   body: {
 
-    marginVertical:40,
-    alignSelf:'center'
+    marginVertical: 40,
+    alignSelf: 'center'
 
   },
   headertext: {
     fontSize: 13,
-    marginTop:15,
+    marginTop: 15,
     marginLeft: 35,
-    alignItems:'center'
+    alignItems: 'center'
   },
- 
+
   loginBtn: {
     width: "50%",
     borderRadius: 10,

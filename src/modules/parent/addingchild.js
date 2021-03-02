@@ -72,6 +72,7 @@ export default function addchild({ route, navigation }) {
             console.log(response.status);
             if (response.status == 200) {
               console.log(response.data)
+             // alert("successfull")
               navigation.navigate('Subscription_list', {
                 childID: response.data,
                 school: SA
