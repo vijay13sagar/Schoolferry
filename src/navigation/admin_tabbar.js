@@ -21,6 +21,17 @@ import { Icon } from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Home_page from '../modules/Admin/home';
 import Trip_Details from '../modules/Admin/daily trip details';
+
+import dailyChildtrip_list from '../modules/Admin/dailyChildtrip_list';
+import remove_Child from '../modules/Admin/remove child';
+import freeChildtrip_list from '../modules/Admin/freeChildtrip_list ';
+import add_Child from '../modules/Admin/add child';
+import freeDrivertrip_list from '../modules/Admin/freeDrivertrip_list ';
+import Edit_Driver from '../modules/Admin/Edit driver';
+import freeNannytrip_list from '../modules/Admin/freeNannytrip_list';
+import Edit_Nanny from '../modules/Admin/Edit nanny';
+import freeVehicletrip_list from '../modules/Admin/freeVehicletrip_list';
+import Edit_Vehicle from '../modules/Admin/Edit vehicle';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 function Homestack() {
@@ -43,7 +54,56 @@ function Homestack() {
         component={Trip_Details}
         options={{ title: 'Trip Details' }}
       />
-      
+      <Stack.Screen
+        name="dailyChildtrip_list"
+        component={dailyChildtrip_list}
+        options={{ title: 'Child List' }}
+      />
+      <Stack.Screen
+        name="freeChildtrip_list"
+        component={freeChildtrip_list}
+        options={{ title: 'Free Child List' }}
+      />
+      <Stack.Screen
+        name="remove_Child"
+        component={remove_Child}
+        options={{ title: 'Child List' }}
+      />
+      <Stack.Screen
+        name="add_Child"
+        component={add_Child}
+        options={{ title: 'Child List' }}
+      />
+      <Stack.Screen
+        name="freeDrivertrip_list"
+        component={freeDrivertrip_list}
+        options={{ title: 'Driver List' }}
+      />
+      <Stack.Screen
+        name="Edit_Driver"
+        component={Edit_Driver}
+        options={{ title: 'Driver Details' }}
+      />
+      <Stack.Screen
+        name="freeNannytrip_list"
+        component={freeNannytrip_list}
+        options={{ title: 'nanny List' }}
+      />
+      <Stack.Screen
+        name="Edit_Nanny"
+        component={Edit_Nanny}
+        options={{ title: 'Nanny Details' }}
+      />
+       <Stack.Screen
+        name="freeVehicletrip_list"
+        component={freeVehicletrip_list}
+        options={{ title: 'Vehicle List' }}
+      />
+      <Stack.Screen
+        name="Edit_Vehicle"
+        component={Edit_Vehicle}
+        options={{ title: 'Vehicle Details' }}
+      />
      
     </Stack.Navigator>
   );
@@ -169,7 +229,7 @@ function VehicleStack() {
 function WebsiteStack() {
     return (
       <Stack.Navigator
-        initialRouteName="website"
+        initialRouteName="Notifications"
         screenOptions={{
           headerStyle: { backgroundColor: '#FFFFFF' },
           headerTintColor: '#000000',
@@ -179,7 +239,7 @@ function WebsiteStack() {
         <Stack.Screen
           name="website"
           component={Website}
-          options={{ title: 'website' }}
+          options={{ title: 'Notification' }}
         />
         
        
@@ -209,7 +269,7 @@ function App() {
           else if (route.name === 'Vehicle') {
             iconName = focused ? 'bus' : 'bus';
           }
-          else if (route.name === 'Website') {
+          else if (route.name === 'Notification') {
             iconName = focused ? 'logo-web-component' : 'logo-web-component';
           }
        

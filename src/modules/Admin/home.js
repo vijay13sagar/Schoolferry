@@ -83,14 +83,7 @@ export default class Home_page extends Component {
   render() {
     const { data, isLoading } = this.state;
     
-  //   const ConvertDate =(date)=> {
-  //     var yyyy = date.getFullYear().toString();
-  //     var mm = (date.getMonth() + 1).toString();
-  //     var dd = date.getDate().toString();
-  //     var mmChars = mm.split('');
-  //     var ddChars = dd.split('');
-  //    return yyyy + '-' + (mmChars[1] ? mm : "0" + mmChars[0]) + '-' + (ddChars[1] ? dd : "0" + ddChars[0]);
-  // }
+  
   
 
     return (
@@ -116,7 +109,8 @@ export default class Home_page extends Component {
 
           </TouchableOpacity>
         </View>
-
+        <View>
+      
         <ScrollView>
           {isLoading ? <ActivityIndicator /> : (
             <FlatList
@@ -127,6 +121,7 @@ export default class Home_page extends Component {
                   <CardItem button onPress={() => this.props.navigation.navigate('Trip_Details', { item: item })}>
                     <Body>
                       <Text style={{ flexDirection: 'row' }}>
+                      
                         Trip Number:-{
                           item.trip_id
                         }    Driver:-{
@@ -141,6 +136,8 @@ export default class Home_page extends Component {
             />
           )}
         </ScrollView>
+
+        </View>
        
       </View>
 
