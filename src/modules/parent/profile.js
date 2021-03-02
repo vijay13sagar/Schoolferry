@@ -6,52 +6,39 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 const Profile = ({navigation}) => {
   const [data, getData] = useState([])
-  const [tokenvalue,setTokenValue] = useState (" ")
 
-  /*const saveData = async () => {
+  const saveData = async () => {
     try {
-     let token = await AsyncStorage.setItem('token')
-     setTokenValue(token)
+      let token = await AsyncStorage.getItem('token') 
+      fetch(`${Ngrok.url}/api/profiledetails/parent/${token}`, {
+        "method": "GET",
+        "headers": {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+      })
+        .then(response => response.json())
+        .then(responseJson => {
+          console.log(responseJson);
+          getData(responseJson)
+        })
+        .catch(err => {
+          console.log(err);
+        });
      
     } catch (e) {
       //alert('Failed to save the data to the storage')
     }
-  }*/
+  }
   
-  useEffect ( async () => { 
-    //saveData()   
-   
-      let token = await AsyncStorage.getItem('token') 
-    fetch(`${Ngrok.url}/api/profiledetails/parent/${token}`, {
-      "method": "GET",
-      "headers": {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-    })
-      .then(response => response.json())
-      .then(responseJson => {
-        console.log(responseJson);
-        getData(responseJson)
-      })
-      .catch(err => {
-        console.log(err);
-      });
+  useEffect ( () => { 
+
+    saveData()        
   }, [])
 
   return (
     <View style={styles.container}>
-       <StatusBar
-        barStyle="light-content"
-        // dark-content, light-content and default
-        hidden={false}
-        //To hide statusBar
-        backgroundColor= '#e91e63' 
-        //Background color of statusBar only works for Android
-        translucent={false}
-      //allowing light, but not detailed shapes
 
-      />
       <TouchableOpacity style={styles.edit} onPress={()=> navigation.navigate("Update profile")}>
         <Text style={styles.loginText} >Edit</Text>
       </TouchableOpacity>
@@ -122,19 +109,17 @@ const styles = StyleSheet.create({
     marginBottom: 7,
   },
   headertext: {
-    fontSize: 13,
+    fontSize: 16,
     marginLeft: 30,
   },
   details: {
     height: 40,
     backgroundColor: "#d3d3d3",
-    //borderWidth: 1,
     borderRadius: 12,
-    //borderColor: '#ff5c8d',
-    //marginTop: 3,
     width: '85%',
     padding: 8,
-    alignSelf: "center"
+    alignSelf: "center",
+    fontSize: 16,
   },
   loginBtn: {
     width: "50%",
@@ -154,10 +139,7 @@ const styles = StyleSheet.create({
   detailsAddress:{
     height: 100,
     backgroundColor: "#d3d3d3",
-    //borderWidth: 1,
     borderRadius: 12,
-    //borderColor: '#ff5c8d',
-    //marginTop: 3,
     width: '85%',
     padding: 8,
     alignSelf: "center"

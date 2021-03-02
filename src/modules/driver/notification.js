@@ -1,12 +1,12 @@
-import React, { Component ,useState} from 'react';
-import { ActivityIndicator,StatusBar,TouchableOpacity,StyleSheet, FlatList, Text, View, Modal } from 'react-native';
-import { Container, Header, Content, Card, CardItem, Body } from 'native-base';
+import React, { Component} from 'react';
+import { ActivityIndicator,StatusBar,StyleSheet, FlatList, Text, View, Modal } from 'react-native';
+import { Card, CardItem, Body } from 'native-base';
 import { ScrollView } from 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { sexagesimalToDecimal } from 'geolib';
+import Ngrok from '../../constants/ngrok';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default class Notificationlist extends Component  {
-  // const [modalVisible, setModalVisible] = useState(false);
   
   constructor(props) {
     super(props);
@@ -17,11 +17,18 @@ export default class Notificationlist extends Component  {
       selectedData:'',
     };
   }
-  componentDidMount() {
-    fetch('https://reactnative.dev/movies.json')
+  componentDidMount=async()=> {
+    let token = await AsyncStorage.getItem('token')
+    fetch(`${Ngrok.url}/api/notices/${token}`, {
+      "method": "GET",
+      "headers": {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
       .then((response) => response.json())
       .then((json) => {
-        this.setState({ data: json.movies });
+        this.setState({ data: json });
       })
       .catch((error) => console.error(error))
       .finally(() => {
@@ -37,14 +44,7 @@ export default class Notificationlist extends Component  {
   }
   render() {
     const { data, isLoading } = this.state;
-    
     const { modalVisible } = this.state;
-    // const setmodal =() =>{
-    //   modalVisible=true;
-    // }
-    // const nullmodal =() =>{
-    //   modalVisible=false;
-    // }
     <StatusBar
         barStyle="light-content"
         // dark-content, light-content and default
@@ -66,23 +66,13 @@ export default class Notificationlist extends Component  {
             data={data}
             keyExtractor={({ id }, index) => id}
             renderItem={({ item }) => (
-              //<Text>{item.title}, {item.releaseYear}</Text>
-              // <TouchableOpacity style={styles.loginBtn} onPress = {()=>this.props.navigation.navigate('driver_Details',{item:item})}>
-              // <Text style={styles.loginText}>{item.title}</Text>
-          // </TouchableOpacity>
-          // <View style={styles.card}>
-            //{/* <Text style={styles.title}>{item.title}</Text> */}
-            //{/* <Text style={styles.time}>{item.time}</Text> */}
-        // </View>onPress = {()=>this.props.navigation.navigate('driver_Details',{item:item})}
         <Card>
         <CardItem button onPress={() => {
-                  this._selectedItem(item.title);
+                  this._selectedItem(item.message);
                 }}>
               <Body>
                 <Text>
-                   {
-                     item.title
-                   }
+                     Date of Notice:{item.date}
                 </Text>
               </Body>
           </CardItem>
@@ -109,10 +99,7 @@ export default class Notificationlist extends Component  {
             onPress={(modalVisible) => this.setModalVisible(!modalVisible)}
           />
           <View style={styles.modalBody}>
-          
-            <Text style={styles.message}>Content of {this.state.selectedData} Notification</Text>
-          
-
+            <Text style={styles.message}>{this.state.selectedData}</Text>
           </View>
         </View>
         </Modal>

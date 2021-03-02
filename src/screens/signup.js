@@ -64,9 +64,6 @@ export default function App() {
 
   }
 
-
-
-
   const pressHandler = () => {
     if (validateFunction()) {
 
@@ -99,14 +96,10 @@ export default function App() {
             console.log(error.response.data.error) //Please Authenticate or whatever returned from server
             if (error.response.status == 401) {
               //redirect to login
-              Alert.alert('Phone Number Alredy Exist!')
+              Alert.alert('Already Exists, pleae try with a new number')
             }
 
           })
-        // .catch(function (error) {
-        //   // handle error
-        //   console.log("errordetails",error);
-        // })
       }
       catch (error) {
         console.log("errordetails", error);
@@ -207,31 +200,24 @@ const styles = StyleSheet.create({
     marginTop: 5,
     //opacity: 0.5,
   },
-
   TextInput: {
     height: 50,
     flex: 1,
     padding: 10,
-    marginLeft: 20,
-
   },
   error: {
     padding: 1,
-
     color: '#dc143c',
     fontSize: 11,
     alignItems: 'flex-start',
     justifyContent: 'center'
   },
-
-
   forgot_button: {
     height: 30,
     marginBottom: 15,
     color: '#1e90ff',
 
   },
-
   loginBtn: {
     width: "50%",
     borderRadius: 10,
