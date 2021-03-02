@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { Text, StyleSheet,View ,Linking } from 'react-native';
+import { Text, StyleSheet,View ,Linking, ScrollView } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Support = () =>  {
     return (
-      <View style={{ flex: 1,marginLeft:20,padding:10,justifyContent:'space-between'}}>
+      <View style={styles.container}>
+      
         <View >
           {/* <View style={{marginTop:40,flexDirection:'row'}}>
           <Ionicons name="person-circle"
@@ -15,33 +16,40 @@ const Support = () =>  {
             Support
           </Text>
           </View> */}
-          <Text style={{marginTop:20,fontSize:20,alignSelf:'center'}}>If you have any complains regarding
-our services,feel free to mail us.</Text>
+          <Text style={{fontSize:20, textAlign:'center',marginHorizontal:10}}>If you have any complaint/query regarding
+          our services, feel free to mail.</Text>
         </View>
        <TouchableOpacity style={styles.loginBtn} onPress={() => Linking.openURL('mailto:AdminSchoolferry@example.com?subject=SendMail&body=Hi Admin,') }
       title="AdminSchoolferry@example.com" >
-        <Text style={{fontSize:25,fontWeight:'bold',color:'white'}}>Complain</Text>
+        <Text style={{fontSize:19,color:'white'}}> Write a Mail</Text>
       </TouchableOpacity>
-      <View style={{marginTop:180}}>
-      <Text style={{marginVertical:20,fontSize:20,alignSelf:'center',}}>For More details, Call Admin</Text>
+      <View style={{marginTop:50}}>
+      <Text style={{marginVertical:20,fontSize:20,alignSelf:'center',}}>Or you can call us </Text>
       <TouchableOpacity style={styles.CallBtn} onPress={() => { Linking.openURL('tel:8777111223') }}  >
-        <Text style={styles.loginText}>Call Admin</Text>
+        <Text style={{fontSize:18, color:'#000'}}>Make a Call </Text>
       </TouchableOpacity>
       </View>
+  
       </View>
     );
   }
 
 export default Support;
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#F9F2F2',  
+    justifyContent: "center",
+  },
+
 loginBtn: {
-  width: "60%",
+  width: "80%",
   borderRadius: 10,
   height: 41,
   alignSelf:'center',
   alignItems: "center",
   justifyContent: "center",
-  marginTop: 31,
+  marginTop: 20,
   backgroundColor: "#ff5c8d",
 
 },

@@ -1,4 +1,3 @@
-import { NavigationContainer } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
@@ -7,10 +6,8 @@ import {
   View,
   Image,
   TextInput,
-  Button,
   TouchableOpacity,
 } from "react-native";
-//import forgotPassword from "./forgotPassword";
 import Ngrok from '../../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
@@ -26,6 +23,7 @@ export default function addchild({ route, navigation }) {
   const [{ value_error }, setError] = useState("");
 
   const distanceCal = route.params.distance;
+  console.log('distance',route.params.distance)
 
   const validateFunction = () => {
     if (!CN || !CA || !CB || !ST || !ET || !SA || !HA) {
@@ -34,19 +32,21 @@ export default function addchild({ route, navigation }) {
     } else {
       return true
     }
-    /*if (CN && CA && CB && SA && ST && ET && HA ) {
-      setError({ value_error: null })
-      //navigation.navigate('Subscription_list')
-    }*/
   }
 
+  useEffect(() => {
+    const fetchData = navigation.addListener('focus', async () => {
+      let token = await AsyncStorage.getItem('token');
+      console.log('token:', token)
+    })
+
+    fetchData;  
+  }, [])
 
   const handlePress = async () => {
-    // console.log('responseclick');
-    let token = await AsyncStorage.getItem('token');
-    //console.log()
-    if (validateFunction()) {
 
+    let token = await AsyncStorage.getItem('token');
+    if (validateFunction()) {
       try {
         axios({
           method: 'POST',
@@ -70,9 +70,9 @@ export default function addchild({ route, navigation }) {
         })
           .then(function (response) {
             console.log(response.status);
+
             if (response.status == 200) {
-              console.log(response.data)
-             // alert("successfull")
+             // console.log(response.data)
               navigation.navigate('Subscription_list', {
                 childID: response.data,
                 school: SA
@@ -85,79 +85,18 @@ export default function addchild({ route, navigation }) {
           })
           .catch(function (error) {
             console.log(error)
-            //console.log(error.response.status) // 401
-            // console.log(error.response.data.error) //Please Authenticate or whatever returned from server
-            /*if(error.response.status == 401){
-              //redirect to login
-              Alert.alert('Phone Number Alredy Exist!')
-            }*/
 
           })
       }
       catch (error) {
         console.log("errordetails", error);
       }
-
-      /* const body = {
-         id: email,
-          password: password
-       }*/
-      /*let response = await loginApi(body)*/
-      /*fetch(`${Ngrok.url}/api/child`, {
-        "method": "POST",
-        "headers": {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: {
-          name: CN,
-          age: CA,
-          bloodgroup: CB,
-          address:HA,
-          school:SA,
-          starttime:ST,
-          endtime:ET,
-          distance:Number(route.params.distance),
-          parentid: token,
-        }
-      })
-        .then((response) => {
-          console.log('response:', response.status);
-          response.json()
-          console.log(response)
-          //console.log('resp', response.status);
-          if (response.status == 200) {
-           /* navigation.navigate('Subscription_list',{
-              childID: response,
-              school:route.params.schooladdress
-            })*/
-      /* alert("Login Sucessful")
-       console.log('child', response)
-     } else {
-       alert('failed ')
-     }
-   })*/
-      //})
-      // .catch(err => {
-      //   console.log(err);
-      // });
-      //}
-      // const [count, setCount] = useState(0);
+  
     }
   }
   return (
     <View style={styles.container}>
       {/* <Image style={styles.image} source={require("../assets/Logo.png")} /> */}
-      <StatusBar
-        barStyle="dark-content"
-        // dark-content, light-content and default
-        hidden={false}
-        //To hide statusBar
-        backgroundColor="#E91E63"
-        //Background color of statusBar only works for Android
-        translucent={false}
-      //allowing light, but not detailed shapes
-      />
       
       <View style={styles.inputView}>
         <TextInput

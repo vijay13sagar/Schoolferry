@@ -67,7 +67,8 @@ export default function Login({ navigation }) {
       })
         .then(response => response.json())
         .then(responseJson => {
-          console.log("main",responseJson[1]);
+          console.log('response',responseJson)
+          
           if (responseJson[1] == "Parent") {
             AsyncStorage.setItem("token", responseJson[0])
             navigation.replace('Parent Interface')
@@ -88,7 +89,7 @@ export default function Login({ navigation }) {
           }
         })
         .catch( (error) => {
-          //console.log(error.response.status) // 401
+          console.log('error',error) // 401
          // console.log(error.response.data.error) //Please Authenticate or whatever returned from server
         // if(error.responseJson.status == 401){
         //   //redirect to login
