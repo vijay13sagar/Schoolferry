@@ -87,7 +87,7 @@ export default function App({ route,navigation }) {
           'Content-Type': 'application/json'
         },
         data: {
-          childid:"C043",//token of child id
+          childid:route.params.childid,//token of child id
           startdate:route.params.maxDate,
           enddate:route.params.tomorrow,
           tenure:route.params.f,
@@ -163,7 +163,7 @@ export default function App({ route,navigation }) {
                 onPress={() => {
                   setModalVisible(!modalVisible);
                   sendplan();
-                  navigation.navigate('Subscription_list');
+                  navigation.navigate('New_sub_screen');
                 }}
               >
                 <Text style={styles.textStyle}>OK</Text>

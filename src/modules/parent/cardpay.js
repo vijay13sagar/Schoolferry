@@ -89,7 +89,7 @@ export default function App({ route,navigation }) {
             expiry: Expiry,
             password: UPI,
             save:saved,
-            childid:"C043",
+            childid:route.params.childid,
             parentid:token,
 
           }
@@ -256,7 +256,7 @@ export default function App({ route,navigation }) {
                 onPress={() => {
                   setModalVisible(!modalVisible);
                   sendplan();
-                  navigation.navigate('Subscription_list');
+                  navigation.navigate('New_sub_screen');
                 }}
               >
                 <Text style={styles.textStyle}>OK</Text>

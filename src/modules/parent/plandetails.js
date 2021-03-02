@@ -18,6 +18,8 @@ const App =({route,navigation}) =>  {
     const s=route.params.schooladdress
     let tomorrow = selectedStartDate;
     const f=route.params.item.term;
+    console.log("cost",route.params.item);
+    console.log("childid",route.params.cost);
     let e;
     if(f =='Monthly'){
       e=30;
@@ -94,7 +96,7 @@ const App =({route,navigation}) =>  {
       </View>
       <View style={styles.textview}>
         <Text style={styles.headertext} >Cost</Text>
-        <Text style={styles.inputView}>{route.params.item.tripcost}</Text>
+        <Text style={styles.inputView}>{route.params.item.total}  {route.params.childid}</Text>
       </View>
       <View style={styles.textview}>
         <Text style={styles.headertext} >School Name</Text>
@@ -105,6 +107,7 @@ const App =({route,navigation}) =>  {
           tomorrow: tomorrow,
           f:f,
           costly: route.params.item.tripcost,
+          childid:route.params.childid
         })}>
               <Text style={styles.loginText}>Pay</Text>
             </TouchableOpacity>

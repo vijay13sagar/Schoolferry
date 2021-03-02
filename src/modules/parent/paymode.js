@@ -5,7 +5,7 @@ import { Card, CardItem, Body } from 'native-base'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Homescreen = ({ route,navigation }) => {
-
+  const childid= route.params.childid;
   return (
     <View style={styles.container}>
       <StatusBar
@@ -50,7 +50,8 @@ const Homescreen = ({ route,navigation }) => {
               maxDate:route.params.maxDate,
               tomorrow:route.params.tomorrow,
               f:route.params.f,
-              costly:route.params.costly,})}}>
+              costly:route.params.costly,
+              childid:childid})}}>
               <Body style={{ flexDirection: 'row' }}>
               <Image  style={styles.payicon} source={require('../../assets/card.png')} />
                 <Text style={{ fontSize: 17, fontWeight: '700',marginLeft:100 }}>

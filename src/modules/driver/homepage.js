@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     //justifyContent:'center',
     // alignItems:'center',
     // alignSelf:'flex-end',
-    marginLeft: 160,
+    marginLeft: 100,
   }
 
 })
