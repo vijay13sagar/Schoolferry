@@ -67,7 +67,7 @@ export default function Login({ navigation }) {
       })
         .then(response => response.json())
         .then(responseJson => {
-          console.log(responseJson);
+          console.log("main",responseJson[1]);
           if (responseJson[1] == "Parent") {
             AsyncStorage.setItem("token", responseJson[0])
             navigation.replace('Parent Interface')

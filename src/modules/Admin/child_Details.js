@@ -67,80 +67,81 @@ export default function child_Details({ route, navigation }){
     <ScrollView>
     <View style={styles.container}>
       <StatusBar style="auto" />
-        <View style={{width:"70%"}}>
+        <View style={{width:"70%",marginRight:50}}>
         <Text>Name</Text></View> 
         
         <View style={styles.details}>
         <Text>
           
-          
+          {route.params.item.childName}
           
         </Text>
       </View>
-      <View style={{width:"70%"}}>
+      <View style={{width:"70%",marginRight:50}}>
         <Text>school</Text></View> 
       
       <View style={styles.details}>
         <Text>
           
-         
+        {route.params.item.school}
           
         </Text>
       </View>
      
-      <View style={{width:"70%"}}>
+      <View style={{width:"70%",marginRight:50}}>
         <Text>Age</Text></View> 
         <View style={styles.details}>
         <Text>
           
-         
+        {route.params.item.age}
           
         </Text>
       </View>
-      <View style={{width:"70%"}}>
+      <View style={{width:"70%",marginRight:50}}>
         <Text>Blood Group</Text></View> 
      
         <View style={styles.details}>
         <Text>
           
-         
+        {route.params.item.bloodGroup}
           
         </Text>
       </View>
-      <View style={{width:"70%"}}>
+      <View style={{width:"70%",marginRight:50}}>
         <Text>Pickup Location</Text></View> 
         <View style={styles.details}>
         <Text>
           
-          
+        {route.params.item.address} 
           
         </Text>
       </View>
-      <View style={{width:"70%"}}>
+      <View style={{width:"70%",marginRight:50}}>
         <Text>Drop Location</Text></View> 
         <View style={styles.details}>
         <Text>
-          
+        {route.params.item.school}  
          
         </Text>
       </View>
 
-      <View style={{width:"70%"}}>
+      {/* <View style={{width:"70%",marginRight:50}}>
         <Text>Vehicle Number</Text></View> 
         <View style={styles.details}>
         <Text>
           
-         
+        {route.params.item.school}
           
         </Text>
-      </View>
-      <View style={{width:"70%"}}>
+      </View> */}
+      <View style={{width:"70%",marginRight:50}}>
         <Text>Subscription Details</Text></View> 
       <View style={styles.inputViews}>
-      <Text  style={styles.subText}>Start Date:-</Text>
-      <Text  style={styles.subText}>End Date:-</Text>
-      <Text  style={styles.subText}>Tenure:-</Text>
-      <Text  style={styles.subText}>Subscription ID:-</Text>
+      <Text  style={styles.subText}>Start Date:- {route.params.item.startDate} </Text>
+      <Text  style={styles.subText}>End Date:- {route.params.item.endDate} </Text>
+      <Text  style={styles.subText}>Tenure:- {route.params.item.tenure} </Text>
+      <Text  style={styles.subText}>Cost:- {route.params.item.cost} </Text>
+      {/* <Text  style={styles.subText}>Subscription ID:-{route.params.item.school} </Text> */}
       </View>
 
     </View>
@@ -214,6 +215,7 @@ const styles = StyleSheet.create({
   
 
   },
+  
   error: {
       padding:1,
 

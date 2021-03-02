@@ -35,16 +35,6 @@ export default class UserSubscription extends Component  {
             data={data}
             keyExtractor={({ id }, index) => id}
             renderItem={({ item }) => (
-              //<Text>{item.title}, {item.releaseYear}</Text>
-              // <TouchableOpacity style={styles.loginBtn} onPress = {()=>this.props.navigation.navigate('driver_Details',{item:item})}>
-              // <Text style={styles.loginText}>{item.title}</Text>
-              
-          // </TouchableOpacity>
-          // <View style={styles.card}>
-            //{/* <Text style={styles.title}>{item.title}</Text> */}
-            //{/* <Text style={styles.time}>{item.time}</Text> */}
-            
-        // </View>
         <Card>
         <CardItem >
               <Body>

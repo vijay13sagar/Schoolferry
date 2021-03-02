@@ -1,5 +1,4 @@
-
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import {
   StyleSheet,
   Alert,
@@ -12,48 +11,84 @@ import {
   TextInput,
   Button,
   TouchableHighlight,
-  
+
   TouchableOpacity,
 } from "react-native";
 //import { CheckBox } from "@react-native-community/checkbox";
-//import Ngrok from '../../constants/ngrok';
+import Ngrok from '../../constants/ngrok';
+//import AsyncStorage from '@react-native-community/async-storage';
 
-export default function App({navigation}) {
+export default function App({ navigation }) {
   const [NOC, setNOC] = useState("");
   const [CardN, setCardN] = useState("");
   const [CVV, setCVV] = useState("");
   const [Expiry, setExpiry] = useState("");
   const [UPI, setUPI] = useState("");
-  const [{value_error},setError] = useState ("");
+  const [{ value_error }, setError] = useState("");
   const [entry, setentry] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
-
-  const pressHandler = () => {
-    if(!UPI){
+  let saved = "no";
+ 
+  // useEffect( async () => {
+  //   let token = await AsyncStorage.getItem('token')
+  //   fetch(`${Ngrok.url}/api/profiledetails/driver/${token}`, {
+  //     "method": "GET",
+  //     "headers": {
+  //       Accept: 'application/json',
+  //       'Content-Type': 'application/json'
+  //     },
+  //   })
+  //     .then(response => response.json())
+  //     .then(responseJson => {
+  //       //console.log(responseJson);
+  //       getData(responseJson)
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // }, [])
+  const pressHandler1 = () => {
+    if (!UPI) {
       if (!CardN && !NOC && !CVV && !Expiry) {
-        setError({value_error: "Fill UPI or Card details" })
+        setError({ value_error: "Fill UPI or Card details" })
         return value_error
+      }
     }
+    if (!UPI) {
+      if (!CardN || !NOC || !CVV || !Expiry) {
+        setError({ value_error: "Fill Card details completely" })
+        return value_error
+      }
+      if (UPI) {
+        if (isSelected === false) {
+          saved = "no";
+          console.log("save",saved);
+        } else {
+          saved = "yes";
+          console.log("save",saved);
+        }
+        setError({ value_error: null });
+        setModalVisible(true);
+        return value_error
+      } else if (CardN && NOC && CVV && Expiry) {
+        if (isSelected === false) {
+          saved = "no";
+          console.log("save",saved);
+        } else {
+          saved = "yes";
+          console.log("save",saved);
+        }
+        setError({ value_error: null });
+        setModalVisible(true);
+        return value_error
+      }
     }
-    if(!UPI){
-    if (!CardN || !NOC || !CVV || !Expiry) {
-      setError({value_error: "Fill Card details completely" })
-      return value_error
   }
-  if(UPI ){
-    setError({value_error:null});
-    setModalVisible(true);
-    return value_error
-  }else if(CardN && NOC && CVV && Expiry){
-    setError({value_error:null});
-    setModalVisible(true);
-    return value_error
-  }
-}
-  }
-   
 
-const [isSelected, setSelection] = useState(false);
+
+  const [isSelected, setSelection] = useState(false);
+  
+   
 
   // const pressHandler = () => {
   //   fetch(`${Ngrok.url}/api/payment`, {
@@ -94,8 +129,63 @@ const [isSelected, setSelection] = useState(false);
   //   else{
   //     saved='no'
   //   }
+  const pressHandler = () => {
+    if (pressHandler1()) {
+
+
+      try {
+        axios({
+          method: 'POST',
+          url: `${Ngrok.url}/api/payment/upi`,
+          "headers": {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          data: {
+            childid: "C001",
+            upi: UPI,
+            // contact: contact,
+            // password: password
+            // cardno: CardN,
+            // cardname: NOC,
+            // cvv: CVV,
+            // expiry: Expiry,
+            // password: UPI,
+            // save:saved,
+            // childid:"C001",
+            // parentid:"P001",
+
+          }
+        })
+          .then(function (response) {
+            if (response.status == 200) {
+              setModalVisible(!modalVisible);
+            }
+
+            console.log("response", response.status);
+          })
+          .catch(function (error) {
+            console.log(error.response.status) // 401
+            console.log(error.response.data.error) //Please Authenticate or whatever returned from server
+            if (error.response.status == 401) {
+              //redirect to login
+              Alert.alert('payment unsucessful')
+            }
+
+          })
+        // .catch(function (error) {
+        //   // handle error
+        //   console.log("errordetails",error);
+        // })
+      }
+      catch (error) {
+        console.log("errordetails", error);
+      }
+
+    }
+  }
   return (
-    
+
 
     <View style={styles.container}>
       <StatusBar
@@ -112,7 +202,7 @@ const [isSelected, setSelection] = useState(false);
 
       <View style={styles.textview}>
         <Text style={styles.headertext} >Name on Card</Text>
-        </View>
+      </View>
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
@@ -123,7 +213,7 @@ const [isSelected, setSelection] = useState(false);
       </View>
       <View style={styles.textview}>
         <Text style={styles.headertext} >Card Number</Text>
-        </View>
+      </View>
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
@@ -134,7 +224,7 @@ const [isSelected, setSelection] = useState(false);
       </View>
       <View style={styles.textview}>
         <Text style={styles.headertext} >CVV</Text>
-        </View>
+      </View>
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
@@ -146,7 +236,7 @@ const [isSelected, setSelection] = useState(false);
       </View>
       <View style={styles.textview}>
         <Text style={styles.headertext} >Expiry Date</Text>
-        </View>
+      </View>
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
@@ -155,57 +245,67 @@ const [isSelected, setSelection] = useState(false);
           onChangeText={(Expiry) => setExpiry(Expiry)}
         />
       </View>
-      <View style={{flexDirection:'row'}}>
-      <CheckBox
+      <View style={{ flexDirection: 'row' }}>
+        <CheckBox
           value={isSelected}
           onValueChange={setSelection}
           style={styles.check}
         />
         {/* {isSelected ? "👍" : "👎"} */}
-        <Text style={{fontSize:15,marginTop:4}}>Save Card Details</Text>
-        </View>
-        <Text style={styles.headertext} > ------------------------------------------OR----------------------------------------- </Text>
+        <Text style={{ fontSize: 15, marginTop: 4 }}>Save Card Details</Text>
+      </View>
+      
+      <TouchableHighlight
+        style={styles.loginBtn}
+        onPress={() => {
+          pressHandler();
+          //setModalVisible(true);
+        }}
+      >
+        <Text style={styles.textStyle}>Confirm</Text>
+      </TouchableHighlight>
+      <Text style={styles.headertext} > ------------------------------------------OR----------------------------------------- </Text>
       <View style={styles.textview}>
         <Text style={styles.headertext} >Enter UPI ID</Text>
-        </View>
+      </View>
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
           placeholder="UPI ID"
           placeholderTextColor="#929292"
-          
+
           onChangeText={(UPI) => setUPI(UPI)}
         />
       </View>
-       <View style={styles.centeredView}>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={{
-    marginBottom: 15,
-    textAlign: "center",
-  }}>Payment Successful</Text>
+      <View style={styles.centeredView}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={{
+                marginBottom: 15,
+                textAlign: "center",
+              }}>Payment Successful</Text>
 
-            <TouchableHighlight
-              style={{ ...styles.openButtono, backgroundColor: "#2196F3" }}
-              onPress={() => {
-                setModalVisible(!modalVisible);
-                navigation.navigate('Subscription_list');
-              }}
-            >
-              <Text style={styles.textStyle}>OK</Text>
-            </TouchableHighlight>
+              <TouchableHighlight
+                style={{ ...styles.openButtono, backgroundColor: "#2196F3" }}
+                onPress={() => {
+                  setModalVisible(!modalVisible);
+                  navigation.navigate('Subscription_list');
+                }}
+              >
+                <Text style={styles.textStyle}>OK</Text>
+              </TouchableHighlight>
+            </View>
           </View>
-        </View>
-      </Modal>
+        </Modal>
 
-     
-    </View>
-    {/* <View style={styles.centeredView}>
+
+      </View>
+      {/* <View style={styles.centeredView}>
       <Modal
         animationType="slide"
         transparent={true}
@@ -233,10 +333,10 @@ const [isSelected, setSelection] = useState(false);
       <Text style={styles.error}>{value_error}</Text>
       <TouchableHighlight
         style={styles.loginBtn}
-        onPress={() => {
-          pressHandler();
-          //setModalVisible(true);
-        }}
+        // onPress={() => {
+        //   pressHandler();
+        //   //setModalVisible(true);
+        // }}
       >
         <Text style={styles.textStyle}>Confirm</Text>
       </TouchableHighlight>
@@ -246,14 +346,15 @@ const [isSelected, setSelection] = useState(false);
   );
 }
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F9F2F2",
     justifyContent: "center",
   },
-  check:{
- marginLeft:35,
+  check: {
+    marginLeft: 35,
   },
 
   image: {
@@ -262,8 +363,8 @@ const styles = StyleSheet.create({
   error: {
     color: '#dc143c',
     fontSize: 11,
-    marginTop:2,
-  alignSelf:'center',
+    marginTop: 2,
+    alignSelf: 'center',
   },
 
   inputView: {
@@ -271,19 +372,19 @@ const styles = StyleSheet.create({
     borderColor: '#b0003a',
     borderRadius: 10,
     width: "80%",
-    height: 45,alignSelf: "center",
+    height: 45, alignSelf: "center",
     alignItems: "center",
-    backgroundColor:"#fff",   //"#C4C4C4",
+    backgroundColor: "#fff",   //"#C4C4C4",
     marginTop: 5,
     //opacity: 0.5,
   },
   textview: {
     marginBottom: 7,
-    
+
   },
   headertext: {
     fontSize: 13,
-    marginTop:15,
+    marginTop: 15,
     marginLeft: 35,
   },
 
@@ -316,7 +417,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     color: 'black',
     fontSize: 13,
-    alignSelf:"center",
+    alignSelf: "center",
   },
   modalView: {
     margin: 20,
@@ -334,12 +435,12 @@ const styles = StyleSheet.create({
     elevation: 5
   },
   openButton: {
-    width:'70%',
+    width: '70%',
     backgroundColor: "#4DAFCE",
     borderRadius: 15,
     padding: 10,
     elevation: 2,
-    marginBottom:180,
+    marginBottom: 180,
   },
   openButtono: {
     backgroundColor: "#4DAFCE",
@@ -355,7 +456,7 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: "center",
-    color:"red",
+    color: "red",
   },
   centeredView: {
     flex: 1,
