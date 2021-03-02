@@ -1,100 +1,80 @@
-import React, { Component ,useState} from 'react';
-import { ActivityIndicator,StatusBar,TouchableOpacity,StyleSheet, FlatList, Text, View, Modal } from 'react-native';
+import React, { Component } from 'react';
+import { ActivityIndicator, Modal ,TouchableOpacity,StyleSheet, FlatList, Text, View } from 'react-native';
 import { Container, Header, Content, Card, CardItem, Body } from 'native-base';
 import { ScrollView } from 'react-native-gesture-handler';
+import Ngrok from '../../constants/ngrok';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { sexagesimalToDecimal } from 'geolib';
 
-export default class Notificationlist extends Component  {
-  // const [modalVisible, setModalVisible] = useState(false);
-  
+
+export default class freeVehicletrip_list extends Component  {
   constructor(props) {
     super(props);
+
     this.state = {
       data: [],
       isLoading: true,
-      modalVisible:false,
+      //modalVisible:false,
+      //selectedData:'',
     };
   }
+ 
   componentDidMount() {
-    fetch('https://reactnative.dev/movies.json')
+   ;
+    
+    fetch(`${Ngrok.url}/api/admin/trip/available/vehicles`)
       .then((response) => response.json())
       .then((json) => {
-        this.setState({ data: json.movies });
+        this.setState({ data: json });
+       
       })
       .catch((error) => console.error(error))
       .finally(() => {
         this.setState({ isLoading: false });
       });
   }
- setModalVisible = (visible) => {
-    this.setState({ modalVisible: visible });
-  }  
-  _selectedItem = (data) => {
-    this.setState({selectedData: data});
-    this.setModalVisible(true);
-    console.log(data);
-    console.log(data.item.id)
-  }
+  // setModalVisible = (visible) => {
+  //   this.setState({ modalVisible: visible });
+  // }
+  // _selectedItem = (data) => {
+  //   this.setState({selectedData: data});
+  //   this.setModalVisible(true);
+  // }
+
   render() {
     const { data, isLoading } = this.state;
-    
     const { modalVisible } = this.state;
-    // const setmodal =() =>{
-    //   modalVisible=true;
-    // }
-    // const nullmodal =() =>{
-    //   modalVisible=false;
-    // }
-    <StatusBar
-        barStyle="light-content"
-        // dark-content, light-content and default
-        hidden={false}
-        //To hide statusBar
-        backgroundColor="#e91e63"
-        //Background color of statusBar only works for Android
-        translucent={false}
-      //allowing light, but not detailed shapes
-
-      />
+    const tripid1 = this.props.route.params.s;
+  console.log("sfsdffasdas", tripid1);
     
     return (
-      <View style={{ flex: 1, padding: 3 ,backgroundColor: "#F9F2F2",}}>
-       
+      <View style={styles.Container}>
+         
         <ScrollView>
+       
         {isLoading ? <ActivityIndicator/> : (
           <FlatList
             data={data}
             keyExtractor={({ id }, index) => id}
             renderItem={({ item }) => (
-              //<Text>{item.title}, {item.releaseYear}</Text>
-              // <TouchableOpacity style={styles.loginBtn} onPress = {()=>this.props.navigation.navigate('driver_Details',{item:item})}>
-              // <Text style={styles.loginText}>{item.title}</Text>
-          // </TouchableOpacity>
-          // <View style={styles.card}>
-            //{/* <Text style={styles.title}>{item.title}</Text> */}
-            //{/* <Text style={styles.time}>{item.time}</Text> */}
-        // </View>onPress = {()=>this.props.navigation.navigate('driver_Details',{item:item})}
-        <Card>
-        <CardItem button onPress={() => {
-                  this._selectedItem({item});
-                }}>
+              <View >  
+        <Card >
+        <CardItem button onPress = {()=>this.props.navigation.navigate('Edit_Vehicle',{tripid1:tripid1,item:item})}>
               <Body>
                 <Text>
-                   {
-                     item.title
-                   }
+                Vehicle Number:-{item.regNo}
                 </Text>
+                
               </Body>
-          </CardItem>
-          </Card> 
-            
+            </CardItem>
+            </Card>
+           
+             
+           </View>
             )}
           />
-          
         )}
         </ScrollView>
-        <Modal
+        {/* <Modal
           animationType="slide"
           transparent={true}
           visible={modalVisible}
@@ -110,44 +90,51 @@ export default class Notificationlist extends Component  {
             onPress={(modalVisible) => this.setModalVisible(!modalVisible)}
           />
           <View style={styles.modalBody}>
-          
-            <Text style={styles.message}>Petrol Price is Rised.Be Economic While Using it </Text>
-          
-
+            <Text style={styles.message}>Name:-{this.state.selectedData.childName}</Text>
+            <Text style={styles.message}>Age:-{this.state.selectedData.age}</Text>
+            <Text style={styles.message}>School:-{this.state.selectedData.school}</Text>
+            <Text style={styles.message}>Home:-{this.state.selectedData.address}</Text>
+            <Text style={styles.message}>Phone NO:-{this.state.selectedData.parentsContact}</Text>
+            <Text style={styles.message}>Blood Group:-{this.state.selectedData.bloodGroup}</Text>
           </View>
         </View>
-        </Modal>
-        
+        </Modal> */}
       </View>
     );
   }
 };
+
 const styles = StyleSheet.create({
   container: {
     padding: 50,
     flex:1,
-    backgroundColor: "#F9F2F2",
+      backgroundColor: "#F9F2F2",
       alignItems: "center",
+      
     },
-    
-
     TextInput: {
       height: 50,
       alignItems:"center",
       justifyContent:"center",
       padding: 10,
       marginLeft:10,
-    },
+  
+    },  
     loginBtn: {
-      width: "50%",
+      width: "35%",
       borderRadius: 10,
-      height: 38,
-      alignItems: "center",
-      justifyContent: "center",
+      height: 40,
+     alignSelf:"flex-end",
       backgroundColor: "#ff5c8d",
-      alignSelf: "center",
-      marginTop: 20,
     },
+      loginBtns: {
+        width: "35%",
+        borderRadius: 10,
+        height: 40,
+       alignSelf:"flex-end",
+        
+        backgroundColor: "#ff5c8d",
+      },
       title:{
         position:'absolute',
         marginTop:65,
@@ -168,11 +155,6 @@ const styles = StyleSheet.create({
         borderRadius:20,
         marginLeft: 20
     },
-    loginText:{
-      color:'black',
-      fontSize:15,
-     // fontWeight:'700'
-    },
     modalContainer: {
       backgroundColor: '#000000aa',
       flex: 1,
@@ -190,7 +172,6 @@ const styles = StyleSheet.create({
       width: '90%',
       alignSelf: 'center',
       justifyContent: 'center'
-  
     },
     message: {
       fontSize: 22,
@@ -200,13 +181,12 @@ const styles = StyleSheet.create({
       fontWeight: '600',
       padding: 7,
     },
-  
     closeModal: {
       borderRadius: 10,
       width: 180,
       height: 40,
       marginTop: 40,
-      backgroundColor: '#ff5c8d',
+      backgroundColor: '#FF5C8D',
       alignSelf: 'center',
       alignItems: 'center',
       justifyContent: 'center'

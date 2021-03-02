@@ -17,7 +17,10 @@ import Plandetails from '../modules/parent/plandetails';
 import Payment from '../modules/parent/paymentpart';
 import Subscriptionlist from '../modules/parent/subscriptionlist';
 import changePassword from '../components/changepassword';
-import updateProfile from '../modules/parent/updateprofile'
+import updateProfile from '../modules/parent/updateprofile';
+import Notrips from '../modules/parent/notriporsub';
+import Subhome from '../modules/parent/subhome';
+
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator()
 function Subscriptions() {
@@ -45,7 +48,7 @@ function Subscriptions() {
       <Stack.Screen
         name="Subscription_list"
         component={Subscriptionlist}
-        options={{ title: 'Subscription list' }}
+        options={{ title: 'Subscription list' ,}} // headerShown: false
       />
       <Stack.Screen
         name="Pause Plan"
@@ -73,6 +76,32 @@ function Subscriptions() {
   );
 }
 
+function Mappage() {
+  return (
+    <Stack.Navigator
+      initialRouteName="NoTrips"
+      screenOptions={{
+        headerStyle: { backgroundColor: "#fff" },
+        headerTintColor: 'black',
+        headerTitleStyle: { fontWeight: 'bold' },
+        headerTitleAlign: 'center'
+      }}
+    >
+      <Stack.Screen
+        name="NoTrips"
+        component={Notrips}
+        options={{ title: 'Vehicle Tracking ' }}
+      />
+      <Stack.Screen
+        name="Track"
+        component={Vehicle_Tracking}
+        options={{ title: 'Vehicle Tracking' }}
+      />
+
+    </Stack.Navigator>
+  );
+}
+
 function Homepage() {
   return (
     <Stack.Navigator
@@ -94,7 +123,11 @@ function Homepage() {
         component={location_details}
         options={{ title: 'Enter Location' }}
       />
-
+      <Stack.Screen
+        name="subscribedhome"
+        component={Subhome}
+        options={{ title: 'Home' }}
+      />
     </Stack.Navigator>
   );
 }
@@ -162,7 +195,7 @@ const TabNavigator = () => {
       }}
     >
       <Tab.Screen name="Home" component={Homepage} />
-      <Tab.Screen name="Track" component={Vehicle_Tracking} />
+      <Tab.Screen name="Track" component={Mappage} />
       <Tab.Screen name="Subscriptions" component={Subscriptions} />
       <Tab.Screen name="Support" component={Support} />
       <Tab.Screen name="Profile" component={Profiles} />

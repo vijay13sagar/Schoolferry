@@ -14,18 +14,33 @@ const nannyhome = () =>  {
         translucent={false}
       //allowing light, but not detailed shapes
 
-      />
-          <View style={styles.textview}>
-            <Text style={styles.headertext} >Child details</Text>
-            <View style={styles.details2}>
-              <Text style={styles.inputView}>child name</Text>
-              <Text style={styles.inputView}>child age</Text>
-              <Text style={styles.inputView}>child school</Text>
-              <Text style={styles.inputView}>child bloodgroup</Text>
-              <Text style={styles.inputView}>Parent Contact Number</Text>
+      /> 
+      <View style={styles.textview}>
+            <Text style={styles.sidehead} >Child details:</Text>
+         
+              <Text style={styles.headertext}>child name:</Text>
+              <Text style={styles.details}>XXXXXXX</Text>
+              
+              <Text style={styles.headertext}>child age:</Text>
+              <Text style={styles.details}>XXXXXXX</Text>
+              
+              <Text style={styles.headertext}>child school:</Text>
+              <Text style={styles.details}>XXXXXXX</Text>
+             
+                <Text style={styles.headertext}>child bloodgroup:</Text>
+                <Text style={styles.details}>XXXXXXX</Text>
+              
+                <Text style={styles.headertext}>Parent Contact Number:</Text>
+                <Text style={styles.details}>XXXXXXX</Text>
+                
+                <Text style={styles.headertext}>Child ID:</Text>
+               
+              <View style={styles.imageview}>
+                 <Image style={styles.id} source={{ uri: 'https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg' }} />
+              </View> 
             </View>
-          </View>
-      </View>
+            </View>
+         
     );
   }
 
@@ -47,6 +62,29 @@ const styles = StyleSheet.create({
     position: 'absolute',
     justifyContent: 'flex-start',
     marginTop: 50
+  },id: {
+    width: 300,
+    height: 160,
+    // borderRadius: 63,
+    borderWidth: 1,
+    borderColor: "black",
+    marginBottom: 10,
+    alignSelf: 'center',
+    position: 'absolute',
+    //justifyContent: 'flex-start',
+    marginTop: 5
+  },
+  showcase:{
+    padding:10,
+    marginLeft:20,
+    flexDirection:'row',
+    
+  },
+  sidehead:{
+    fontWeight:'bold',
+    marginLeft:8,
+    alignSelf:'flex-start',
+    justifyContent:'space-around'
   },
   inputView: {
     borderWidth: 1,
@@ -79,17 +117,17 @@ const styles = StyleSheet.create({
     fontSize: 13,
     marginLeft: 30,
   },
-  details: {
+  details:{
     height: 40,
-    margin:10,
-    backgroundColor: "#C4C4C4",
-    borderWidth: 1,
+    backgroundColor: "#d3d3d3",
+    //borderWidth: 1,
     borderRadius: 12,
-    borderColor: '#4DAFCE',
+    //borderColor: '#ff5c8d',
     //marginTop: 3,
     width: '85%',
     padding: 8,
     alignSelf: "center"
+
   },
   details2: {
     height: 340,

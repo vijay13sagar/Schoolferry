@@ -1,29 +1,44 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
   View,
-  Image,
-  StatusBar,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
+  StatusBar, ActivityIndicator, FlatList
+} from 'react-native';
+import { Card, CardList, Body, ListItem } from 'native-base';
 import { ScrollView } from "react-native-gesture-handler";
-import { event } from "react-native-reanimated";
-import UserSubscription from "./usersubscription";
+import AsyncStorage from '@react-native-community/async-storage';
+import Ngrok from '../../constants/ngrok'
 
 
 
 export default function user_Details({ route, navigation }) {
-  const [email, setEmail] = useState("");
-  const [name, setname] = useState("");
-  const [Address, setAddress] = useState("");
-  const [contact, setcontact] = useState("");
-  const [VN, setVN] = useState("");
-  const [{ LIC }, setLIC] = useState("");
-  const [{ EXP }, setEXP] = useState("");
+  
 
+  const [childlists, getData] = useState()
   console.log("this.props", route.params.item);
+
+
+  useEffect(() => {
+    let take1 = route.params.item.id
+    console.log("token", take1);
+    fetch(`${Ngrok.url}/api/parent/detail/childlist/${take1}`, {
+      "method": "GET",
+      "headers": {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        console.log("cl", typeof (responseJson));
+        console.log("cl", responseJson);
+        getData(responseJson)
+      })
+      .catch(err => {
+
+      });
+  }, [])
 
 
 
@@ -33,7 +48,8 @@ export default function user_Details({ route, navigation }) {
     <ScrollView>
       <View style={styles.container}>
         <StatusBar style="auto" />
-        <View style={{ width: "70%" }}>
+
+        <View style={{ width: "70%",marginLeft:35  }}>
           <Text>Name</Text></View>
 
         <View style={styles.details}>
@@ -44,7 +60,7 @@ export default function user_Details({ route, navigation }) {
           </Text>
         </View>
 
-        <View style={{ width: "70%" }}>
+        <View style={{ width: "70%",marginLeft:35  }}>
           <Text>Email ID</Text></View>
 
         <View style={styles.details}>
@@ -55,7 +71,7 @@ export default function user_Details({ route, navigation }) {
           </Text>
         </View>
 
-        <View style={{ width: "70%" }}>
+        <View style={{ width: "70%",marginLeft:35 }}>
           <Text>Phone Number</Text></View>
         <View style={styles.details}>
           <Text >
@@ -64,7 +80,7 @@ export default function user_Details({ route, navigation }) {
 
           </Text>
         </View>
-        <View style={{ width: "70%" }}>
+        <View style={{ width: "70%",marginLeft:35  }}>
           <Text>Address</Text></View>
 
         <View style={styles.details}>
@@ -75,20 +91,30 @@ export default function user_Details({ route, navigation }) {
           </Text>
         </View>
 
-        {/* <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('userSubscription')}  >
-          <Text style={styles.loginText}>Child Details</Text>
+        <Text style={{fontSize:15,marginTop:5}} >
 
-        </TouchableOpacity> */}
-        {/* <UserSubscription /> */}
-        <TouchableOpacity style={styles.loginBtn2} onPress={() => navigation.navigate('child_Details')}  >
-          <Text style={{alignSelf:"flex-start",marginLeft:7}}>child 1</Text>
+Child Details
 
-        </TouchableOpacity> 
-        <TouchableOpacity style={styles.loginBtn2} onPress={() => navigation.navigate('child_Details')}  >
-          <Text style={{alignSelf:"flex-start",marginLeft:7}}>child 2</Text>
+</Text>
+        
+          <FlatList
+            data={childlists}
+            keyExtractor={item => item.id}
+            renderItem={({ item }) => (
+              // <Card style={{width:"100%",marginTop:5}}>
+                <ListItem style={{backgroundColor:"white",width:"100%",marginTop:5}}
+                 onPress= { () => navigation.navigate('child_Details',{item:item})}>
+                  <Text>
+                    {
+                      item.childName
+                    }
+                  </Text>
+                </ListItem>
+              // </Card>
 
-        </TouchableOpacity> 
-
+            )}
+          />
+        
       </View>
     </ScrollView>
 
@@ -97,15 +123,14 @@ export default function user_Details({ route, navigation }) {
 }
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex:1,
     backgroundColor: "#F9F2F2",
-    alignItems: "center",
-    justifyContent: "center",
+   
   },
 
   contain: {
     flex: 1,
-    width:"100%",
+    width: "100%",
     backgroundColor: "#F9F2F2",
     alignItems: "center",
     justifyContent: "center",
@@ -187,7 +212,7 @@ const styles = StyleSheet.create({
   },
   loginBtn2: {
     width: "95%",
-    
+
     height: 39,
     alignItems: "center",
     justifyContent: "center",
@@ -200,24 +225,25 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 13,
   },
-  title:{
-    position:'absolute',
-    marginTop:65,
-    marginBottom:0,
-    marginHorizontal:20,
+  title: {
+    position: 'absolute',
+    marginTop: 65,
+    marginBottom: 0,
+    marginHorizontal: 20,
     fontSize: 30,
-    color:'white',
-    fontWeight:'bold'
-}, time:{
-    width:'20%',
+    color: 'white',
+    fontWeight: 'bold'
+  }, time: {
+    width: '20%',
     marginVertical: 20,
-    position:'absolute',
-    backgroundColor:'green',
-    color:'white',
+    position: 'absolute',
+    backgroundColor: 'green',
+    color: 'white',
     fontSize: 25,
-    fontWeight:'bold',
-    bottom:0,
-    borderRadius:20,
+    fontWeight: 'bold',
+    bottom: 0,
+    borderRadius: 20,
     marginLeft: 20
-}
+  }
+
 });

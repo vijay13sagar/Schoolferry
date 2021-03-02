@@ -66,10 +66,10 @@ export default function driver_Details({ route, navigation }){
     <ScrollView>
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <TouchableOpacity style={styles.editBtn}  >
+      {/* <TouchableOpacity style={styles.editBtn}  >
         <Text style={{alignSelf:"center", marginTop: 8,}}>Edit</Text>
 
-      </TouchableOpacity> 
+      </TouchableOpacity>  */}
         <View style={{width:"70%"}}>
         <Text>Name</Text></View> 
         
@@ -142,14 +142,14 @@ export default function driver_Details({ route, navigation }){
       
 
      
-      <TouchableOpacity style={styles.loginBtn}  >
+      {/* <TouchableOpacity style={styles.loginBtn}  >
         <Text style={styles.loginText}>De-Activate</Text>
 
       </TouchableOpacity>
       <TouchableOpacity style={styles.loginBtn}  >
         <Text style={styles.loginText}>Statistics</Text>
 
-      </TouchableOpacity>
+      </TouchableOpacity> */}
      
 
     </View>
