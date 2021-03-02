@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { ActivityIndicator,StatusBar,TouchableOpacity,StyleSheet, FlatList, Text, View } from 'react-native';
 import { Container, Header, Content, Card, CardItem, Body } from 'native-base';
 import { ScrollView } from 'react-native-gesture-handler';
+import Ngrok from '../../constants/ngrok';
+import AsyncStorage from '@react-native-community/async-storage';
+
 export default class Triplist extends Component  {
   constructor(props) {
     super(props);
@@ -10,11 +13,12 @@ export default class Triplist extends Component  {
       isLoading: true
     };
   }
-  componentDidMount() {
-    fetch('https://reactnative.dev/movies.json')
+  async componentDidMount() {
+    let token = await AsyncStorage.getItem('token')
+    fetch(`${Ngrok.url}/api/nanny/tripdetails/${token}`)
       .then((response) => response.json())
       .then((json) => {
-        this.setState({ data: json.movies });
+        this.setState({ data: json });
       })
       .catch((error) => console.error(error))
       .finally(() => {
@@ -37,8 +41,15 @@ export default class Triplist extends Component  {
     return (
       
       <View style={{ flex: 1, padding: 3 ,backgroundColor: "#F9F2F2",}}>
-        <Text style={styles.datestyle}>List of Trips</Text>
         <ScrollView>
+        <View style={styles.cardbox}>
+          <Card>
+            <CardItem>
+            <Text>Rides Remaining--</Text>
+            <Text>1</Text>
+            </CardItem>
+          </Card>
+        </View>
         {isLoading ? <ActivityIndicator/> : (
           <FlatList
             data={data}
@@ -57,7 +68,7 @@ export default class Triplist extends Component  {
               <Body >
                 <Text>
                    {
-                     item.title
+                     item.trip_id
                    }
                 </Text>
               </Body>
@@ -71,13 +82,14 @@ export default class Triplist extends Component  {
           <Text style={{fontSize:20,fontWeight:'bold',marginBottom:10,alignSelf:'center'}}>Performance</Text>
           <Card>
             <CardItem>
-            <Text>Total Rides Completed--</Text>
+            <Text>Total Successful Rides-- 342</Text>
             </CardItem>
             <CardItem>
-            <Text>Rides Remaining--</Text>
+            <Text>Total Unsuccessful Rides-- 4</Text>
             </CardItem>
           </Card>
         </View>
+        
       </View>
     );
   }

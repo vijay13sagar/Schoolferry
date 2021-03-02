@@ -125,9 +125,9 @@ const showplanScreen = ({ route, navigation }) => {
           renderItem={({ item }) => (
             <View style={{ flex: 1, }}>
               <TouchableOpacity style={styles.flatlistContainer} onPress={() => navigation.navigate('Plan Details',{
-                  item: item.total,
+                  item: item,
                   schooladdress: Boolean(value1.length) && (value1[0].address),
-
+                  childid:Boolean(value1.length) && (value1[0].childId)
                 })}>
                 <Image style={styles.avatar} source={{ uri: 'https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg' }} />
 

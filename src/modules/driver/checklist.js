@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import { CheckBox, Text, StyleSheet,TextInput, View } from "react-native";
 import moment from 'moment';
 import { ScrollView } from "react-native-gesture-handler";
+import Ngrok from '../../constants/ngrok';
+import AsyncStorage from '@react-native-community/async-storage';
+
 const today = new Date();
 const TD = moment(today).format('DD-MM-YYYY');
+
 const App = () => {
   const [fule, setfule] = useState(false);
   const [engine, setengine] = useState(false);
@@ -29,7 +33,7 @@ const App = () => {
              
        {/* <View style={styles.pendingTrips}>
       <Text style={{marginLeft:35,fontSize: 25,
-    marginTop: 10,
+    marginVertical: 10,
     fontWeight: "bold"}}>Vehicle Details</Text>
       <Text  style={styles.subText}>Vehicle Number :</Text>
       <Text  style={styles.subText}>Vehicle Type :</Text>
@@ -102,6 +106,12 @@ const styles = StyleSheet.create({
     flex: 1,
     
     backgroundColor: "#F9F2F2",
+  },
+  sidehead:{
+    fontWeight:'bold',
+    marginLeft:8,
+    alignSelf:'flex-start',
+    justifyContent:'space-around'
   },
   pendingTrips: {
     backgroundColor: "#fff",

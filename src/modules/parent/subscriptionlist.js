@@ -150,10 +150,9 @@ const Subscriptions = ({ route, navigation }) => {
               <TouchableOpacity style={styles.flatlistContainer} onPress={() => navigation.navigate('Plan Details', {
                 item: item,
                 schooladdress: skool,
-
+                childid:route.params.childID,
               })}>
                 <Image style={styles.avatar} source={{ uri: 'https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg' }} />
-
                 <Text style={styles.typeOfSubscription}>{item.term}</Text>
 
 

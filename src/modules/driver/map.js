@@ -1,20 +1,14 @@
 import React from 'react';
-import { StyleSheet,Text,TouchableOpacity, View, Platform, Dimensions, SafeAreaView } from 'react-native';
+import { StyleSheet,Text,TouchableOpacity,Alert, View, Platform, Dimensions, SafeAreaView } from 'react-native';
 import MapView, { Marker, AnimatedRegion } from 'react-native-maps';
-import PubNubReact from 'pubnub-react';
 import Geolocation from '@react-native-community/geolocation';
 const { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
 const duration=500;
 const LATITUDE = 18.1083;
 const LONGITUDE = 83.3799;
-const LATITUDE_DELTA = 0.0922;
+const LATITUDE_DELTA = 0.0051;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
-const pubnub =  new PubNubReact({
-  publishKey: 'pub-c-2743f615-6897-4dd1-b191-2bf5073277ea',
-  subscribeKey: 'sub-c-597ec1f0-7036-11eb-9994-e2667f94577d',
-});
-pubnub.init(this);
 export default class Trackee extends React.Component {
   constructor(props) {
     super(props);
@@ -31,22 +25,25 @@ export default class Trackee extends React.Component {
   }
   componentDidMount() {
      this.watchLocation();
+     this.updateloc();
+    this.interval = setInterval(() => this.updateloc(), 10000)
   }
-  componentDidUpdate(prevProps, prevState) {
-    if (this.props.latitude !== prevState.latitude) {
-      pubnub.publish({
-        message: {
-          latitude: this.state.latitude,
-          longitude: this.state.longitude,
-        },
-        channel: 'location',
-      });
-    }
-    console.log('hi')
-    console.log(this.state.latitude);
-  }
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (this.props.latitude !== prevState.latitude) {
+  //     pubnub.publish({
+  //       message: {
+  //         latitude: this.state.latitude,
+  //         longitude: this.state.longitude,
+  //       },
+  //       channel: 'location',
+  //     });
+  //   }
+  //   console.log('hi')
+  //   console.log(this.state.latitude);
+  // }
   componentWillUnmount() {
     Geolocation.clearWatch(this.watchID);
+    clearInterval(this.interval)
   }
   watchLocation = () => {
      const {coordinate } = this.state;
@@ -57,9 +54,8 @@ export default class Trackee extends React.Component {
           latitude,
           longitude,
         };
-        console.log(newCoordinate)
-        console.log("hiiii")
-        console.log(position.coords);
+        console.log("newcoo",newCoordinate)
+        console.log("pos.coord",position.coords);
         if (Platform.OS === 'android') {
          //coordinate.timing(newCoordinate).start();
           if (this.marker) {
@@ -72,9 +68,9 @@ export default class Trackee extends React.Component {
           latitude,
           longitude,
         });
-        console.log(this.state.LATITUDE);
+        console.log("this.state.lat",this.state.latitude);
       },
-      error => console.log(error),
+      error => console.log("123line",error),
       {
         enableHighAccuracy: true,
         timeout: 20000,
@@ -89,7 +85,60 @@ export default class Trackee extends React.Component {
     latitudeDelta: LATITUDE_DELTA,
     longitudeDelta: LONGITUDE_DELTA,
   });
+  updateloc=()=>{
+    console.log("up",this.state.latitude);
+    try {
+    // axios({
+    // method: 'POST',
+    // url: `http://5f9e2c95b0b1.ngrok.io/api/driver/tracking`,
+    // "headers": {
+    // Accept: 'application/json',
+    // 'Content-Type': 'application/json'
+    // },
+    // data:{
+    // driverid:"D001",
+    // tripid:"T001", 
+    // latitude: "hihiid",
+    // longitude: "hahahah"
+    // }
+    // })
+    fetch("http://5f9e2c95b0b1.ngrok.io/api/driver/tracking", {
+    "method": "POST",
+    "headers": {
+    Accept: 'application/json',
+    'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+    driverid:"D001",
+    tripid:"T001", 
+    latitude: Number(this.state.latitude),
+    longitude:Number(this.state.longitude)
+    })
+    })
+    .then(function (response) {
+    if (response.status == 200) {
+    //Alert.alert('Location Updated')
+    }
+    
+    console.log("response", response.status);
+    })
+    .catch(function (error) {
+    // console.log(error.response.status) // 401
+    // console.log(error.response.data.error) //Please Authenticate or whatever returned from server
+    // if (error.response.status == 401) {
+    // //redirect to login
+    // Alert.alert('Trip Generation Failed!')
+    // }
+    console.log("ERROR",error);
+    
+    })
+    }
+    catch (error) {
+    console.log("errordetails", error);
+    }
+    };
   render() {
+    //console.log(coordinate);
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.container}>
@@ -98,14 +147,19 @@ export default class Trackee extends React.Component {
           followUserLocation
           loadingEnabled
           region={this.getMapRegion()}>
-            <Marker.Animated
+             <Marker coordinate={this.getMapRegion()} />
+            {/* <Marker.Animated
               ref={marker => {
                 this.marker = marker;
               }}
+              
               coordinate={this.state.coordinate}
-            />
+            /> */}
           </MapView>
-          <TouchableOpacity style={styles.loginBtn} onPress={()=>this.props.navigation.navigate('Home',{refresh:true})}>
+          <TouchableOpacity style={styles.loginBtn} onPress={()=>{//this.props.navigation.replace('Home',{refresh:true})
+        this.props.navigation.navigate('Homey',{refresh:true})
+        //this.props.navigation.navigate('Tripnotstarted',{refresh:true})
+      }}>
               <Text>End Trip</Text>
             </TouchableOpacity>
         </View>

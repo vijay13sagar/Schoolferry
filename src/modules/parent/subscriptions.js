@@ -1,5 +1,5 @@
 import React,{ useState, useEffect } from 'react';
-import { Text, View, StyleSheet} from 'react-native';
+import { Text, View,StatusBar,StyleSheet} from 'react-native';
 import Addsubscription from './addsubscription';
 import Showplans from './showplans';
 import Ngrok from '../../constants/ngrok';
@@ -36,6 +36,7 @@ const subscription = ({navigation}) =>  {
  }*/
     return (
       <View style={styles.container} >
+        
         {childinfo ? < Showplans navigation = {navigation} /> : <Addsubscription navigation = {navigation} /> }
             
       

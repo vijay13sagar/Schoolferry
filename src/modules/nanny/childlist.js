@@ -1,125 +1,104 @@
-import * as React from 'react';
-import { Text, View, TouchableOpacity, StatusBar,StyleSheet, Image } from 'react-native';
-
-const nannyhome = ({navigation}) =>  {
+import React, { Component } from 'react';
+import { ActivityIndicator,TouchableOpacity,StyleSheet, FlatList, Text, View } from 'react-native';
+import { Container, Header, Content, Card, CardItem, Body } from 'native-base';
+import { ScrollView } from 'react-native-gesture-handler';
+import Ngrok from '../../constants/ngrok';
+export default class ChildList extends Component  {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: [],
+      isLoading: true
+    };
+  }
+  // componentDidMount() {
+  //   fetch(`${Ngrok.url}/api/nanny/tripdetails/N002`)
+  //     .then((response) => response.json())
+  //     .then((json) => {
+  //       this.setState({ data: json });
+  //     })
+  //     .catch((error) => console.error(error))
+  //     .finally(() => {
+  //       this.setState({ isLoading: false });
+  //     });
+  // }
+  render() {
+    const { data, isLoading } = this.state;
+    console.log("json",this.props.route.params.childList[0].childId);
     return (
-      <View style={styles.container} >
-        <StatusBar
-        barStyle="light-content"
-        // dark-content, light-content and default
-        hidden={false}
-        //To hide statusBar
-        backgroundColor="#e91e63"
-        //Background color of statusBar only works for Android
-        translucent={false}
-      //allowing light, but not detailed shapes
-
-      />
-          <View style={styles.textview}>
-            <Text style={styles.sidehead} >Child list</Text>
-            <TouchableOpacity style={styles.loginBtn} onPress={()=>navigation.navigate('Child Details')}>
-              <Text style={styles.loginText}>Child1 name,Age</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.loginBtn} onPress={()=>navigation.navigate('Child Details')}>
-              <Text style={styles.loginText}>Child2 name,Age</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.loginBtn}onPress={()=>navigation.navigate('Child Details')} >
-              <Text style={styles.loginText}>Child3 name,Age</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.loginBtn}onPress={()=>navigation.navigate('Child Details')} >
-              <Text style={styles.loginText}>Child4 name,Age</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.loginBtn} onPress={()=>navigation.navigate('Child Details')}>
-              <Text style={styles.loginText}>Child5 name,Age</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.loginBtn}onPress={()=>navigation.navigate('Child Details')} >
-              <Text style={styles.loginText}>Child5 name,Age</Text>
-            </TouchableOpacity> 
-          </View>
+      <View style={styles.container}>
+        
+            <Text style={styles.sidehead} >Child details:</Text>
+          <FlatList
+            data={this.props.route.params.childList}
+            keyExtractor={({ id }, index) => id}
+            renderItem={({ item }) => (
+        <TouchableOpacity style={styles.loginBtn} onPress = {()=>this.props.navigation.navigate('Child Details',{item:item})}>
+          <Text>{ item.childId }</Text>
+        </TouchableOpacity>
+            )}
+          />
       </View>
+     
     );
   }
-
-export default nannyhome;
+};
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#F9F2F2",
-
-  },
-  sidehead:{
-    fontWeight:'bold',
-    marginLeft:8,
-    alignSelf:'flex-start',
-    justifyContent:'space-around'
-  },
-  avatar: {
-    width: 120,
-    height: 120,
-    borderRadius: 63,
-    borderWidth: 1,
-    borderColor: "black",
-    //marginBottom: 10,
-    alignSelf: 'center',
-    position: 'absolute',
-    justifyContent: 'flex-start',
-    marginTop: 50
-  },
-  name: {
-    fontSize: 22,
-    color: "black",
-    fontWeight: '600',
-
-  },
-  body: {
-    marginTop: 180,
-    alignItems: 'center'
-
-  },
-  textview: {
-    margin: 20,
-  },
-  headertext: {
-    fontSize: 13,
-    marginLeft: 30,
-  },
-  details: {
-    height: 40,
-    margin:10,
-    backgroundColor: "#C4C4C4",
-    borderWidth: 1,
-    borderRadius: 12,
-    borderColor: '#4DAFCE',
-    //marginTop: 3,
-    width: '85%',
-    padding: 8,
-    alignSelf: "center"
-  },
-  details2: {
-    height: 200,
-    backgroundColor: "grey",
-    borderWidth: 1,
-    borderRadius: 12,
-    borderColor: '#4DAFCE',
-    //marginTop: 3,
-    width: '85%',
-    padding: 8,
-    alignSelf: "center"
-  },
-  loginBtn: {
-    width: "50%",
-    borderRadius: 10,
-    height: 38,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#ff5c8d",
-    alignSelf: "center",
-    marginTop: 20,
-  },
-  loginText:{
-    color:'black',
-    fontSize:15,
-   // fontWeight:'700'
-  }
-
+    padding: 20,
+    flex:1,
+      backgroundColor: "#F9F2F2",
+      //alignItems: "center",
+    },
+    TextInput: {
+      height: 50,
+      alignItems:"center",
+      justifyContent:"center",
+      padding: 10,
+      marginLeft:10,
+    },
+    loginBtn: {
+      width: "50%",
+      borderRadius: 10,
+      height: 38,
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: "#FF5C8D",
+      alignSelf: "center",
+      marginTop: 20,
+    },
+      title:{
+        position:'absolute',
+        marginTop:65,
+        marginBottom:0,
+        marginHorizontal:20,
+        fontSize: 30,
+        color:'white',
+        fontWeight:'bold'
+    }, time:{
+        width:'20%',
+        marginVertical: 20,
+        position:'absolute',
+        backgroundColor:'green',
+        color:'white',
+        fontSize: 25,
+        fontWeight:'bold',
+        bottom:0,
+        borderRadius:20,
+        marginLeft: 20
+    },
+    textview: {
+      margin: 20,
+    },
+    sidehead:{
+      fontWeight:'bold',
+      marginLeft:8,
+      alignSelf:'flex-start',
+      justifyContent:'space-around'
+    },
 });
+
+
+
+
+
