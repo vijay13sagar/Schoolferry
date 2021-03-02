@@ -47,10 +47,10 @@ style={ {
   justifyContent:'flex-start',
 }}
 initialRegion={{
-latitude: 37.42215078611507,
-longitude: -122.08427209309676,
-latitudeDelta: 0.0011,
-longitudeDelta:0.0011
+latitude: lat,
+longitude: lon,
+latitudeDelta: 0.0011 *5,
+longitudeDelta:0.0011 *3
 }} > 
 <Marker
 coordinate={{ latitude:lat, longitude: lon}}

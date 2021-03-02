@@ -16,6 +16,7 @@ import Ngrok from '../../constants/ngrok';
 const Checklist = ({ route, navigation }) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [att,setAtt] = useState("");
+    const [but,setBut] = useState('Start Trip')
     let [k,setK]= useState("");
     let v=route.params.item.trip_id;
     const [item1, setItem1] = useState([]);
@@ -109,10 +110,10 @@ const Checklist = ({ route, navigation }) => {
                         <Text style={styles.textDetails}>Total Absent - {att}</Text>
                     </View>
                 </View>
-                <TouchableOpacity style={styles.loginBtn} >
-                    <Text>Start Trip</Text>
+                <TouchableOpacity style={styles.loginBtn} onPress={()=>setBut("Trip Inprogress")}>
+                    <Text>{but}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('Trackee', { refresh: true })}>
+                <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('Trackee')}>
                     <Text>Live location</Text>
                 </TouchableOpacity>
                 <Text style={styles.absent}>Mark as Absent</Text>
@@ -150,7 +151,7 @@ const styles = StyleSheet.create({
     },
     firstbox: {
         width: '90%',
-        height: 200,
+        height: 230,
         borderRadius: 10,
         borderWidth: 1,
         borderColor: 'black',
