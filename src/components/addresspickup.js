@@ -35,7 +35,7 @@ const address_pickup = ({
                     key: API_KEY.key,
                     language: 'en',
                     location: "12.943140750715235, 77.6157813963218",
-                    radius: "300",
+                    radius: "150",
                 }}
                 style={{
                     textInputContainer: styles.containerStyle,
