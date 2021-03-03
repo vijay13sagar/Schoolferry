@@ -16,7 +16,26 @@ import { Picker } from '@react-native-picker/picker';
 export default function Trip_Details({ route, navigation }) {
 
   const [pickerValue, setPickerValue] = useState("")
+ 
+  let NID = null;
+  let BD =false;
+
+ 
   const s = route.params.item.trip_id
+  const nannyid = route.params.item.nanny_id
+ 
+  if (nannyid == null) {
+    // alert ('Congratulations..Sign Up Successful')
+    
+   NID = "no nanny provided"
+   BD = true
+   
+  
+  }else {
+    NID= nannyid
+    
+  }
+ 
 
 
 
@@ -60,13 +79,15 @@ export default function Trip_Details({ route, navigation }) {
 
           </Text>
         </View>
+        
         <View style={{ width: "70%" }}>
           <Text>Nanny ID</Text></View>
 
         <View style={styles.details}>
+          
           <Text>
-
-            {route.params.item.nanny_id}
+           
+            {NID}
 
           </Text>
         </View>
@@ -94,7 +115,7 @@ export default function Trip_Details({ route, navigation }) {
         <TouchableOpacity style={styles.loginBtns} onPress={() => navigation.navigate('freeDrivertrip_list', { s: s })} >
           <Text style={styles.loginText}>Change Driver</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.loginBtns} onPress={() => navigation.navigate('freeNannytrip_list', { s: s })} >
+        <TouchableOpacity disabled={BD}  style={styles.loginBtns} onPress={() => navigation.navigate('freeNannytrip_list', { s: s })} >
           <Text style={styles.loginText}>Change Nanny</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.loginBtns} onPress={() => navigation.navigate('freeVehicletrip_list', { s: s })} >
@@ -134,11 +155,23 @@ const styles = StyleSheet.create({
     width: "75%",
     borderRadius: 10,
     height: 40,
+    
     alignItems: "center",
     justifyContent: "center",
     marginTop: 20,
 
     backgroundColor: "#ff5c8d",
+  },
+  disable: {
+    width: "75%",
+    borderRadius: 10,
+    height: 40,
+    
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 20,
+
+    backgroundColor: "#c9adb6",
   },
 
   details: {

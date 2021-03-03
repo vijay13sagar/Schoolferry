@@ -3,6 +3,7 @@ import {
   StyleSheet,
   Text,
   View,
+  Alert,
   Image,
   StatusBar,
   TextInput,
@@ -76,9 +77,9 @@ export default function Edit_Driver({ route }) {
       .then(responseJson => {
         console.log(responseJson);
         if (responseJson.message == "driver changed") {
-          alert('Changed Successfully')
+          Alert.alert('Changed Successfully')
         } else {
-          alert('Try again!')
+          Alert.alert('Try again!')
         }
         //alert(JSON.stringify(response))
       })
@@ -127,7 +128,7 @@ return (
       </View>
       <TouchableOpacity style={styles.loginBtn}
         onPress={pressHandler} >
-        <Text style={styles.loginText}>Add driver</Text>
+        <Text style={styles.loginText}>Assign driver</Text>
       </TouchableOpacity>
 
     </View>

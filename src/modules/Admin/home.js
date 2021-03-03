@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     justifyContent:"center",
   
     backgroundColor: "#ff5c8d",
-    alignSelf:"flex-end",
+    alignSelf:"center",
     marginTop: 20,
   },
   title: {
