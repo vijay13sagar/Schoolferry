@@ -18,8 +18,6 @@ const App =({route,navigation}) =>  {
     const s=route.params.schooladdress
     let tomorrow = selectedStartDate;
     const f=route.params.item.term;
-    console.log("cost",route.params.item);
-    console.log("childid",route.params.cost);
     let e;
     if(f =='Monthly'){
       e=30;

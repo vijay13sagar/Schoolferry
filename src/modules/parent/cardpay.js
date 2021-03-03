@@ -66,14 +66,16 @@ export default function App({ route,navigation }) {
           console.log("save",saved);
         }
         setError({ value_error: null });
-        setModalVisible(true);
+        console.log("preshandler loki veltundi");
+        pressHandler();
+        //setModalVisible(true);
         return value_error
       }
   }
   const pressHandler = async () => {
-    if (pressHandler1()) {
+    console.log("entering");
       let token = await AsyncStorage.getItem('token')
-
+      console.log("hit payment",token)
       try {
         axios({
           method: 'POST',
@@ -87,7 +89,6 @@ export default function App({ route,navigation }) {
             cardname: NOC,
             cvv: CVV,
             expiry: Expiry,
-            password: UPI,
             save:saved,
             childid:route.params.childid,
             parentid:token,
@@ -96,7 +97,9 @@ export default function App({ route,navigation }) {
         })
           .then(function (response) {
             if (response.status == 200) {
-              setModalVisible(!modalVisible);
+              console.log("payment success");
+              setModalVisible(true);
+              //setModalVisible(!modalVisible);
             }
 
             console.log("response", response.status);
@@ -118,8 +121,6 @@ export default function App({ route,navigation }) {
       catch (error) {
         console.log("errordetails", error);
       }
-
-    }
   }
   const sendplan = () => {
 
@@ -132,7 +133,7 @@ export default function App({ route,navigation }) {
             'Content-Type': 'application/json'
           },
           data: {
-            childid:"C043",
+            childid:route.params.childid,
             startdate:route.params.maxDate,
             enddate:route.params.tomorrow,
             tenure:route.params.f,
@@ -296,7 +297,7 @@ export default function App({ route,navigation }) {
       <TouchableHighlight
         style={styles.loginBtn}
         onPress={() => {
-          pressHandler();
+          pressHandler1();
           //setModalVisible(true);
         }}
       >

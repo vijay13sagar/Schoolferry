@@ -52,11 +52,11 @@ function Homepage() {
         component={Home}
       options={{ title: 'Home' }}
       />
-      { <Stack.Screen
+       <Stack.Screen
         name="Trip Details"
         component={tripDetails}
         options={{ title: 'Trip Details' }}
-      />}
+      />
     </Stack.Navigator>
   );
 }
