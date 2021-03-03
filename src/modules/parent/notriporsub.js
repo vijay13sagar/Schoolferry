@@ -4,7 +4,7 @@ import { sub } from 'react-native-reanimated';
 import Ngrok from '../../constants/ngrok';
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
-
+import Tracking from './vehicleTracking';
 
 const oldmap = ({ navigation }) => {
   let [flag, setflag] = useState(true);
@@ -25,7 +25,6 @@ const oldmap = ({ navigation }) => {
         setUserType(false)
       }
     })
-    
 
     fetchData;
   }, [navigation])
@@ -47,16 +46,16 @@ const oldmap = ({ navigation }) => {
   const Subs = () => {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignContent: 'center' }}>
-        <View style={styles.body}>
+        {/* <View style={styles.body}>
           <Text style={styles.name}>No Trips</Text>
         </View>
-        <Text style={styles.centerview} >There are No Active Trips Today</Text>
+        <Text style={styles.centerview} >There are No Active Trips Today</Text> */}
       </View>
     );
   }
   return (
     <View style={styles.container} >
-      {userType ? <Subs /> : <Nosubs />}
+      {userType ? <Tracking /> : <Nosubs />}
     </View>
   );
 }

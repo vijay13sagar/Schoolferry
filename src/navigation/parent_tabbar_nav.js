@@ -91,7 +91,7 @@ function Subscriptions() {
 function Mappage() {
   return (
     <Stack.Navigator
-      initialRouteName="Track"
+      initialRouteName="NoTrips"
       screenOptions={{
         headerStyle: { backgroundColor: "#fff" },
         headerTintColor: 'black',
