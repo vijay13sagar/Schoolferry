@@ -33,14 +33,12 @@ export default function App({ route,navigation }) {
       }
       if (UPI) {
         setError({ value_error: null });
-        setModalVisible(true);
+        pressHandler();
+        //setModalVisible(true);
         return value_error
       } 
     }
   const pressHandler = () => {
-    if (pressHandler1()) {
-
-
       try {
         axios({
           method: 'POST',
@@ -50,7 +48,7 @@ export default function App({ route,navigation }) {
             'Content-Type': 'application/json'
           },
           data: {
-            childid: "C040",
+            childid: route.params.childid,
             upi: UPI,
           }
         })
@@ -73,8 +71,6 @@ export default function App({ route,navigation }) {
       catch (error) {
         console.log("errordetails", error);
       }
-
-    }
   }
   const sendplan = () => {
 
@@ -178,7 +174,7 @@ export default function App({ route,navigation }) {
       <TouchableHighlight
         style={styles.loginBtn}
         onPress={() => {
-          pressHandler();
+          pressHandler1();
           //setModalVisible(true);
         }}
       >
