@@ -51,7 +51,7 @@ const showplanScreen = ({ route, navigation }) => {
     return item.childName.toLowerCase().includes(selectedValue.toLowerCase())
   }) : []
 
-  //console.log('value1', value1[0])
+ // console.log('value1', value1[0])
 
   const verifyHandler = () => {
     setModalVisible(false)

@@ -6,35 +6,35 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 const Profile = ({navigation}) => {
   const [data, getData] = useState([])
-
-  const saveData = async () => {
-    try {
-      let token = await AsyncStorage.getItem('token') 
-      fetch(`${Ngrok.url}/api/profiledetails/parent/${token}`, {
-        "method": "GET",
-        "headers": {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-      })
-        .then(response => response.json())
-        .then(responseJson => {
-          console.log(responseJson);
-          getData(responseJson)
-        })
-        .catch(err => {
-          console.log(err);
-        });
-     
-    } catch (e) {
-      //alert('Failed to save the data to the storage')
-    }
-  }
   
   useEffect ( () => { 
 
-    saveData()        
-  }, [])
+    const fetchData = navigation.addListener('focus', async () => {
+      try {
+        let token = await AsyncStorage.getItem('token') 
+        fetch(`${Ngrok.url}/api/profiledetails/parent/${token}`, {
+          "method": "GET",
+          "headers": {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            console.log(responseJson);
+            getData(responseJson)
+          })
+          .catch(err => {
+            console.log(err);
+          });
+       
+      } catch (e) {
+        //alert('Failed to save the data to the storage')
+      }
+    })
+
+    fetchData;        
+  }, [navigation])
 
   return (
     <View style={styles.container}>

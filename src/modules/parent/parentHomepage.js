@@ -11,10 +11,10 @@ import AsyncStorage from '@react-native-community/async-storage';
 const HomeScreen = ({ navigation }) => {
   const [userType, setUserType] = useState(false)
 
-  useEffect(() => {
+  useEffect( () => {
 
-    async function fetchData() {
-     let token = await AsyncStorage.getItem('token')
+    const fetchData = navigation.addListener('focus', async() => {
+      let token = await AsyncStorage.getItem('token')
       let response = await axios(`${Ngrok.url}/api/parent/subscription/${token}`)
 
       console.log(response.data.payment)
@@ -23,10 +23,10 @@ const HomeScreen = ({ navigation }) => {
       if (data == "subscribed") {
         setUserType(true);
       }
-    }
-
-    fetchData();
-  }, [])
+    })
+    fetchData;
+    
+  }, [navigation])
 
   return (
     <View style={styles.container}>
