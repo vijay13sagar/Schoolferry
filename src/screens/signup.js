@@ -89,7 +89,7 @@ export default function App() {
               Alert.alert('Signup Successful')
             }
 
-            console.log("response", response.status);
+            console.log("response", response);
           })
           .catch(function (error) {
             console.log(error.response.status) // 401

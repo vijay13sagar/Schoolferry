@@ -11,11 +11,12 @@ const subscription = ({navigation}) =>  {
   const [childinfo,setChildInfo] = useState()
 
   useEffect( () => {
-    async function fetchData () {
+    const fetchData = navigation.addListener('focus', async() => {
       let token = await AsyncStorage.getItem('token')
       let response = await axios(`${Ngrok.url}/api/parent/registeration/${token}`)
        
-      //console.log(response.data.childId)
+      console.log('status:', response.data.payment)
+      
        let data = response.data.payment
        let id = response.data.childId
        if (data == "registered"){
@@ -26,14 +27,11 @@ const subscription = ({navigation}) =>  {
         setChildInfo(false);
        }
      
-    }
+    })
     
-    fetchData();
-  },[])
+    fetchData;
+  },[navigation])
  
- /*const getchildID = (id) =>{
-   setchildID(id)
- }*/
     return (
       <View style={styles.container} >
         
