@@ -15,7 +15,7 @@ import Ngrok from '../../constants/ngrok';
 import axios from 'axios';
 
 
-export default function Edit_Vehicle({ route }) {
+export default function Edit_Vehicle({ route ,navigation}) {
 
   let c = route.params.tripid1;
   console.log("sfsdffasdas", c);
@@ -77,7 +77,7 @@ export default function Edit_Vehicle({ route }) {
       .then(responseJson => {
         console.log(responseJson);
         if (responseJson.message == "vehicle changed") {
-          Alert.alert('Changed Successfully')
+          Alert.alert('Changed Successfully','', [{text: 'Proceed', onPress:() => navigation.navigate('Home_page')}])
         } else {
           Alert.alert('Try again!')
         }

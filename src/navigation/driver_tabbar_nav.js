@@ -5,7 +5,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import Home from '../modules/driver/homepage';
-// import Map from '../modules/driver/map';
 import Checklist from '../modules/driver/checklist';
 import Notifications from '../modules/driver/notification';
 import Profile_Driver from '../modules/driver/profile';
@@ -18,10 +17,29 @@ import Notstarted from '../modules/driver/notstarted';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
+// function Check() {
+//   return (
+//     <Stack.Navigator
+//       initialRouteName="Check_list"
+//       screenOptions={{
+//         headerStyle: { backgroundColor: '#fff' },
+//         headerTintColor: 'black',
+//         headerTitleStyle: { fontWeight: 'bold' },
+//         headerTitleAlign: 'center'
+//         //headerShown: false
+//       }}>
+//       <Stack.Screen
+//         name="Check_list"
+//         component={Checklist}
+//       options={{ title: 'CheckList' }}
+//       />
+//     </Stack.Navigator>
+//   );
+// }
 function Homepage() {
   return (
     <Stack.Navigator
-      initialRouteName="Home"
+      initialRouteName="Homey"
       screenOptions={{
         headerStyle: { backgroundColor: '#fff' },
         headerTintColor: 'black',
@@ -30,7 +48,7 @@ function Homepage() {
         //headerShown: false
       }}>
       <Stack.Screen
-        name="Home"
+        name="Homey"
         component={Home}
       options={{ title: 'Home' }}
       />
@@ -39,10 +57,15 @@ function Homepage() {
         component={tripDetails}
         options={{ title: 'Trip Details' }}
       />}
+       <Stack.Screen
+        name="Check_list"
+        component={Checklist}
+      options={{ title: 'CheckList' }}
+      />
     </Stack.Navigator>
+    
   );
 }
-
 function Profile() {
   return (
     <Stack.Navigator
@@ -133,9 +156,9 @@ const DriverTab = () => {
           else if (route.name === 'Map') {
             iconName = focused ? 'map' : 'ios-map-outline';
           }
-          else if (route.name === 'Checklist') {
-            iconName = focused ? 'checkbox' : 'ios-checkbox-outline';
-          }
+          // else if (route.name === 'Checklist') {
+          //   iconName = focused ? 'checkbox' : 'ios-checkbox-outline';
+          // }
           else if (route.name === 'Notifications') {
             iconName = focused ? 'notifications' : 'ios-notifications-outline';
           }
@@ -153,7 +176,7 @@ const DriverTab = () => {
     >
       <Tab.Screen name="Home" component={Homepage} />
       <Tab.Screen name="Map" component={Map} />
-      <Tab.Screen name="Checklist" component={Checklist} />
+      {/* <Tab.Screen name="Checklist" component={Check} /> */}
       <Tab.Screen name="Notifications" component={Notices} />
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>

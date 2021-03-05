@@ -14,12 +14,14 @@ import Addchild from '../modules/parent/addingchild';
 import Pauseplan from '../modules/parent/pauseplan';
 import Cancelrides from '../modules/parent/cancelride';
 import Plandetails from '../modules/parent/plandetails';
-import Payment from '../modules/parent/paymentpart';
+import Payment from '../modules/parent/cardpay';
 import Subscriptionlist from '../modules/parent/subscriptionlist';
 import changePassword from '../components/changepassword';
 import updateProfile from '../modules/parent/updateprofile';
 import Notrips from '../modules/parent/notriporsub';
 import Subhome from '../modules/parent/subhome';
+import Paymode from '../modules/parent/paymode';
+import Upipay from '../modules/parent/upipay';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator()
@@ -66,8 +68,18 @@ function Subscriptions() {
         options={{ title: 'Plan Details' }}
       />
       <Stack.Screen
+        name="Pay Mode"
+        component={Paymode}
+        options={{ title: 'Payment Mode' }}
+      />
+      <Stack.Screen
         name="PaymentScreen"
         component={Payment}
+        options={{ title: 'Payment Screen' }}
+      />
+      <Stack.Screen
+        name="Upiscreen"
+        component={Upipay}
         options={{ title: 'Payment Screen' }}
       />
       
@@ -79,7 +91,7 @@ function Subscriptions() {
 function Mappage() {
   return (
     <Stack.Navigator
-      initialRouteName="NoTrips"
+      initialRouteName="Track"
       screenOptions={{
         headerStyle: { backgroundColor: "#fff" },
         headerTintColor: 'black',
@@ -101,7 +113,26 @@ function Mappage() {
     </Stack.Navigator>
   );
 }
+function Supportpage() {
+  return (
+    <Stack.Navigator
+      initialRouteName="support"
+      screenOptions={{
+        headerStyle: { backgroundColor: "#fff" },
+        headerTintColor: 'black',
+        headerTitleStyle: { fontWeight: 'bold' },
+        headerTitleAlign: 'center'
+      }}
+    >
+      <Stack.Screen
+        name="support"
+        component={Support}
+        options={{ title: 'Support' }}
+      />
 
+    </Stack.Navigator>
+  );
+}
 function Homepage() {
   return (
     <Stack.Navigator
@@ -197,7 +228,7 @@ const TabNavigator = () => {
       <Tab.Screen name="Home" component={Homepage} />
       <Tab.Screen name="Track" component={Mappage} />
       <Tab.Screen name="Subscriptions" component={Subscriptions} />
-      <Tab.Screen name="Support" component={Support} />
+      <Tab.Screen name="Support" component={Supportpage} />
       <Tab.Screen name="Profile" component={Profiles} />
     </Tab.Navigator>
 

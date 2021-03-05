@@ -11,11 +11,11 @@ const oldmap = ({ navigation }) => {
   const [userType, setUserType] = useState()
 
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = navigation.addListener('focus', async () => { 
       let token = await AsyncStorage.getItem('token')
       let response = await axios(`${Ngrok.url}/api/parent/subscription/${token}`)
 
-      console.log(response.data.payment)
+      console.log('tracking page:',response.data.payment)
       let data = response.data.payment
 
       if (data == "subscribed") {
@@ -24,10 +24,11 @@ const oldmap = ({ navigation }) => {
       else{
         setUserType(false)
       }
-    }
+    })
+    
 
-    fetchData();
-  }, [])
+    fetchData;
+  }, [navigation])
 
 
   const Nosubs = () => {

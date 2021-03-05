@@ -1,5 +1,5 @@
 import React,{ useState, useEffect } from 'react';
-import { Text, View, StyleSheet} from 'react-native';
+import { Text, View,StatusBar,StyleSheet} from 'react-native';
 import Addsubscription from './addsubscription';
 import Showplans from './showplans';
 import Ngrok from '../../constants/ngrok';
@@ -11,11 +11,12 @@ const subscription = ({navigation}) =>  {
   const [childinfo,setChildInfo] = useState()
 
   useEffect( () => {
-    async function fetchData () {
+    const fetchData = navigation.addListener('focus', async() => {
       let token = await AsyncStorage.getItem('token')
       let response = await axios(`${Ngrok.url}/api/parent/registeration/${token}`)
        
-      //console.log(response.data.childId)
+      console.log('status:', response.data.payment)
+      
        let data = response.data.payment
        let id = response.data.childId
        if (data == "registered"){
@@ -26,16 +27,14 @@ const subscription = ({navigation}) =>  {
         setChildInfo(false);
        }
      
-    }
+    })
     
-    fetchData();
-  },[])
+    fetchData;
+  },[navigation])
  
- /*const getchildID = (id) =>{
-   setchildID(id)
- }*/
     return (
       <View style={styles.container} >
+        
         {childinfo ? < Showplans navigation = {navigation} /> : <Addsubscription navigation = {navigation} /> }
             
       

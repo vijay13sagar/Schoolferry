@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, } from 'react-native';
 import Ngrok from '../../constants/ngrok'
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -18,7 +18,7 @@ const updateProfile = () => {
       setError({ error: "Please fill all details" })
     }
     else if (!regex_phone.test(contact)) {
-      Alert.alert("Please enter valid contact number")
+      alert("Please enter valid contact number")
     }
     else {
       fetch(`${Ngrok.url}/api/profileupdate/parent`, {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -9,37 +9,109 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-
+import Ngrok from '../../constants/ngrok';
 import { Picker } from '@react-native-picker/picker';
+import axios from 'axios';
+import { set } from "react-native-reanimated";
+
 
 
 export default function Trip_Details({ route, navigation }) {
 
-  const [pickerValue, setPickerValue] = useState("")
- 
-  let NID = null;
-  let BD =false;
-
- 
+  // const [pickerValue, setPickerValue] = useState("")
+  // const [drivername, setdrivername] = useState("")
+  // const [data, getData] = useState()
+  // const [nanny, setNanny] = useState("");
   const s = route.params.item.trip_id
+  let NID = null;
+// let bf = false;
+  //  useEffect(() => {
+
+    
+// // let responseJson = axios.get(`${Ngrok.url}/api/trip/child/age/${s}`) 
+// // let value = responseJson.data.nannyRequired;
+// // console.log("response",responseJson.data.nannyRequired);
+// // // setNanny(responseJson.data.nannyRequired)
+
+
+// // if(!value){
+// // setNanny(false)
+// // }
+// // else{
+// //   setNanny(true)
+// // }
+// // console.log("nanny",nanny);
+      // fetch(`${Ngrok.url}/api/trip/child/age/${s}`, {
+      //   "method": "GET",
+      //   "headers": {
+      //     Accept: 'application/json',
+      //     'Content-Type': 'application/json'
+      //   },
+      // })
+      //   .then(response => response.json())
+      //   .then(responseJson => {
+      //     console.log("cl", typeof(responseJson));
+      //     console.log("cl", responseJson.nannyRequired);
+
+
+      //     getData(responseJson)
+      //     if(data == true){
+      //       console.log("sai");
+      //       bf=false
+      //     }
+
+      //     else{
+      //       console.log("kumar");
+      //     bf=true
+      //     }
+      //  console.log("nanny",bf);
+
+      //   })
+      //   .catch(err => {
+
+      //   });
+      // })
+    
+
+//   },[])
+//   // const presshandler=() => {
+//   //   fetch(`${Ngrok.url}/api/trip/child/age/${s}`, {
+//   //     "method": "GET",
+//   //     "headers": {
+//   //       Accept: 'application/json',
+//   //       'Content-Type': 'application/json'
+//   //     },
+//   //   })
+//   //     .then(response => response.json())
+//   //     .then(responseJson => {
+//   //       console.log("cl", typeof (responseJson));
+//   //       console.log("cl", responseJson.nannyRequired);
+
+
+//   //       getData(responseJson)
+//   //       console.log("nanny", data);
+
+//   //     })
+//   //     .catch(err => {
+
+//   //     });
+
+//   // }
+
   const nannyid = route.params.item.nanny_id
- 
+//let bd = false;
+
   if (nannyid == null) {
-    // alert ('Congratulations..Sign Up Successful')
-    
-   NID = "no nanny provided"
-   BD = true
-   
-  
-  }else {
-    NID= nannyid
-    
-  }
- 
+    NID = "no nanny provided"
+    //  bd = true
+  } else {
+    NID = nannyid
+  } 
 
 
 
-  console.log("item", s);
+
+  // console.log("item", data.nannyRequired);
 
   return (
 
@@ -79,21 +151,21 @@ export default function Trip_Details({ route, navigation }) {
 
           </Text>
         </View>
-        
+
         <View style={{ width: "70%" }}>
           <Text>Nanny ID</Text></View>
 
         <View style={styles.details}>
-          
+
           <Text>
-           
+
             {NID}
 
           </Text>
         </View>
         <View style={{ width: "70%" }}>
           <Text>Start Location</Text></View>
-        <View style={styles.details}>
+        <View style={styles.details1}>
           <Text>
 
             {route.params.item.address}
@@ -102,8 +174,8 @@ export default function Trip_Details({ route, navigation }) {
         </View>
         <View style={{ width: "70%" }}>
           <Text>End Location</Text></View>
-        <View style={styles.details}>
-          <Text>
+        <View style={styles.details1}>
+          <Text >
 
             {route.params.item.school}
 
@@ -115,7 +187,7 @@ export default function Trip_Details({ route, navigation }) {
         <TouchableOpacity style={styles.loginBtns} onPress={() => navigation.navigate('freeDrivertrip_list', { s: s })} >
           <Text style={styles.loginText}>Change Driver</Text>
         </TouchableOpacity>
-        <TouchableOpacity disabled={BD}  style={styles.loginBtns} onPress={() => navigation.navigate('freeNannytrip_list', { s: s })} >
+        <TouchableOpacity  style={styles.loginBtns} onPress={() => navigation.navigate('freeNannytrip_list', { s: s })} >
           <Text style={styles.loginText}>Change Nanny</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.loginBtns} onPress={() => navigation.navigate('freeVehicletrip_list', { s: s })} >
@@ -155,7 +227,7 @@ const styles = StyleSheet.create({
     width: "75%",
     borderRadius: 10,
     height: 40,
-    
+
     alignItems: "center",
     justifyContent: "center",
     marginTop: 20,
@@ -166,7 +238,7 @@ const styles = StyleSheet.create({
     width: "75%",
     borderRadius: 10,
     height: 40,
-    
+
     alignItems: "center",
     justifyContent: "center",
     marginTop: 20,
@@ -176,6 +248,18 @@ const styles = StyleSheet.create({
 
   details: {
     height: 40,
+    backgroundColor: "#d3d3d3",
+    //borderWidth: 1,
+    borderRadius: 12,
+    //borderColor: '#ff5c8d',
+    //marginTop: 3,
+    width: '85%',
+    padding: 8,
+    alignSelf: "center"
+
+  },
+  details1: {
+    height: 100,
     backgroundColor: "#d3d3d3",
     //borderWidth: 1,
     borderRadius: 12,

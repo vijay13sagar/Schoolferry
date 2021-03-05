@@ -20,7 +20,8 @@ export default class Home_page extends Component {
   
 
   componentDidMount() {
-    
+    this._unsubscribe = this.props.navigation.addListener('focus', () => {
+
     fetch(`${Ngrok.url}/api/admin/today/trips`)
     .then((response) => response.json())
     .then((json) => {
@@ -31,7 +32,11 @@ export default class Home_page extends Component {
     .finally(() => {
       this.setState({ isLoading: false });
       });
-
+      
+    });
+  }
+  componentWillUnmount() {
+    this._unsubscribe();
   }
    onpressHandler = () => {
     try {
@@ -43,7 +48,7 @@ export default class Home_page extends Component {
           'Content-Type': 'application/json'
         },
          data: {
-           date :TD,
+          //  date :TD,
         //   name: name,
         //   email: email,
         //   contact: contact,
@@ -58,7 +63,7 @@ export default class Home_page extends Component {
       })
         .then(function (response) {
           if (response.status == 200) {
-            Alert.alert('Trip Generation Successful')
+            Alert.alert('Trip Generation Successful',)
           }
 
           console.log("response", response.status);
@@ -82,6 +87,7 @@ export default class Home_page extends Component {
 
   render() {
     const { data, isLoading } = this.state;
+    
     
   
   

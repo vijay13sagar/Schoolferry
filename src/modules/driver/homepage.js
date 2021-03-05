@@ -1,18 +1,39 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Text, View, StyleSheet, TouchableOpacity, Linking, StatusBar, FlatList } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { Card, CardItem, Body } from 'native-base'
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
+import Ngrok from '../../constants/ngrok';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const Homescreen = ({ navigation }) => {
+  
+  const [data,getData] = useState([])
+  useEffect( async () => {
+    let token = await AsyncStorage.getItem('token')
+    fetch(`${Ngrok.url}/api/driver/tripdetails/${token}`, {
+      "method": "GET",
+      "headers": {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        console.log('response',responseJson);
+        getData( responseJson)
+        console.log('responsedata',data);
+      })
+      .catch(err => {
+        console.log('error',err);
+      });
+    }, [])
+  // const [trip, setTrip] = useState([
+  //   { id: '1', number: '07:00 AM' },
+  //   { id: '2', number: '12:00 PM' },
+  //   { id: '3', number: '02:00 AM' },
 
-  const [trip, setTrip] = useState([
-    { id: '1', number: '07:00 AM' },
-    { id: '2', number: '12:00 PM' },
-    { id: '3', number: '02:00 AM' },
-
-  ]);
+  // ]);
   const [pickerValue, setPickerValue] = useState("")
 
 
@@ -33,27 +54,27 @@ const Homescreen = ({ navigation }) => {
       <View style={styles.pendingTrips}>
         <Text style={styles.tripsTitleText}>Today's Trips</Text>
         <View style={styles.tripBox}>
-          <Text style={styles.Text}>Total Trips - 03 </Text>
-          <Text style={styles.Text}>Pending Trips - 03 </Text>
+          <Text style={styles.Text}>Total Trips - 01 </Text>
+          <Text style={styles.Text}>Pending Trips - 01 </Text>
 
         </View>
       </View>
 
-      <Text style={styles.startTripText}>Click to start trip</Text>
+      <Text style={styles.startTripText}>Click to see Trip details</Text>
 
       <FlatList
         style={styles.flatlist}
-        data={trip}
+        data={data}
         keyExtractor={item => item.id}
         renderItem={({ item }) => (
           <Card style={styles.card}>
-            <CardItem button onPress={() => navigation.navigate('Trip Details')}>
+            <CardItem button onPress={() => navigation.navigate('Trip Details',{item:item})}>
               <Body style={{ flexDirection: 'row' }}>
                 <Text style={{ fontSize: 17, fontWeight: '700' }}>
-                  Start Time :
+                Trip Id :
                 </Text>
                 <Text style={{ fontSize: 17, marginLeft: 5, fontWeight: '700' }}>
-                  {item.number}
+                {item.trip_id}
                 </Text>
 
                 <Ionicons name="chevron-forward-outline"
@@ -144,7 +165,7 @@ const styles = StyleSheet.create({
     //justifyContent:'center',
     // alignItems:'center',
     // alignSelf:'flex-end',
-    marginLeft: 93,
+    marginLeft: 100,
   }
 
 })

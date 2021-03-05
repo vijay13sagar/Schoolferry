@@ -62,8 +62,6 @@ const Profile = ({ navigation }) => {
         >
           Change Password</Text>
       </TouchableOpacity>
-
-
     </View>
   );
 }
