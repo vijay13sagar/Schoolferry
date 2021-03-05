@@ -7,6 +7,7 @@ import {
   StatusBar,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { event } from "react-native-reanimated";
@@ -14,15 +15,17 @@ import Ngrok from '../../constants/ngrok';
 import axios from 'axios';
 
 
-export default function add_Child({ route }) {
+
+export default function add_Child({ route,navigation}) {
 
   let c = route.params.tripid1;
   console.log("sfsdffasdas", c);
   let childid = route.params.item.childId;
   console.log("apistarts", childid)
-
+let age = route.params.item.age
   const pressHandler = () => {
-
+   
+    
     // try {
     //   axios({
     //     method: 'POST',
@@ -76,9 +79,9 @@ export default function add_Child({ route }) {
       .then(responseJson => {
         console.log(responseJson);
         if (responseJson.message == "child added") {
-          alert('Added Successfully')
+         Alert. alert('Added Successfully','', [{text: 'Proceed', onPress:() => navigation.navigate('Home_page',)}])
         } else {
-          alert('Try again!')
+         Alert. alert('Try again!')
         }
         //alert(JSON.stringify(response))
       })

@@ -62,12 +62,12 @@ function Homestack() {
       <Stack.Screen
         name="freeChildtrip_list"
         component={freeChildtrip_list}
-        options={{ title: 'Free Child List' }}
+        options={{ title: ' Child List' }}
       />
       <Stack.Screen
         name="remove_Child"
         component={remove_Child}
-        options={{ title: 'Child List' }}
+        options={{ title: 'Child Details' }}
       />
       <Stack.Screen
         name="add_Child"

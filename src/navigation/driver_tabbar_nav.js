@@ -19,10 +19,10 @@ import Endtripdetails from '../modules/driver/endtripdetails';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function Check() {
+function History() {
   return (
     <Stack.Navigator
-      initialRouteName="Check_list"
+      initialRouteName="Trip_history"
       screenOptions={{
         headerStyle: { backgroundColor: '#fff' },
         headerTintColor: 'black',
@@ -30,11 +30,6 @@ function Check() {
         headerTitleAlign: 'center'
         //headerShown: false
       }}>
-      <Stack.Screen
-        name="Check_list"
-        component={Checklist}
-      options={{ title: 'CheckList' }}
-      />
       <Stack.Screen
         name="Trip_history"
         component={Triphistory}
@@ -69,7 +64,13 @@ function Homepage() {
         component={tripDetails}
         options={{ title: 'Trip Details' }}
       />
+       <Stack.Screen
+        name="Check_list"
+        component={Checklist}
+      options={{ title: 'CheckList' }}
+      />
     </Stack.Navigator>
+    
   );
 }
 function Profile() {
@@ -162,8 +163,8 @@ const DriverTab = () => {
           else if (route.name === 'Map') {
             iconName = focused ? 'map' : 'ios-map-outline';
           }
-          else if (route.name === 'Checklist') {
-            iconName = focused ? 'checkbox' : 'ios-checkbox-outline';
+          else if (route.name === 'History') {
+            iconName = focused ? 'clipboard' : 'clipboard-outline';
           }
           else if (route.name === 'Notifications') {
             iconName = focused ? 'notifications' : 'ios-notifications-outline';
@@ -182,7 +183,7 @@ const DriverTab = () => {
     >
       <Tab.Screen name="Home" component={Homepage} />
       <Tab.Screen name="Map" component={Map} />
-      <Tab.Screen name="Checklist" component={Check} />
+      <Tab.Screen name="History" component={History} /> 
       <Tab.Screen name="Notifications" component={Notices} />
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>

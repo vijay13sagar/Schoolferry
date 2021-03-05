@@ -11,10 +11,11 @@ import {
 } from "react-native";
 import Ngrok from '../constants/ngrok';
 import axios from 'axios';
+import Login from './login'
 
 
 
-export default function App() {
+export default function App({navigation}) {
   const [email, setEmail] = useState("");
   const [Name, setName] = useState("");
 
@@ -86,7 +87,7 @@ export default function App() {
         })
           .then(function (response) {
             if (response.status == 200) {
-              Alert.alert('Signup Successful')
+              Alert.alert('Signup Successful, Please Login','', [{text: 'Proceed', onPress: () => navigation.navigate('Login')}])
             }
 
             console.log("response", response);
@@ -96,7 +97,7 @@ export default function App() {
             console.log(error.response.data.error) //Please Authenticate or whatever returned from server
             if (error.response.status == 401) {
               //redirect to login
-              Alert.alert('Already Exists, pleae try with a new number')
+              Alert.alert('Contact Already Exists, pleae try with a new Contact')
             }
 
           })

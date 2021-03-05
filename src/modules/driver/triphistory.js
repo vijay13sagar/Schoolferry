@@ -1,13 +1,15 @@
 import React, { useState,useEffect } from "react";
-import { Text, View, StyleSheet, TouchableOpacity, Linking, StatusBar, FlatList } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Linking, StatusBar, FlatList, Settings } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { Card, CardItem, Body } from 'native-base'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Ngrok from '../../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
+import symbolicateStackTrace from "react-native/Libraries/Core/Devtools/symbolicateStackTrace";
+import { ScrollView } from "react-native-gesture-handler";
 
 const Homescreen = ({ navigation }) => {
-  
+  const [stat,setStat] = useState(null)
   const [data,getData] = useState([])
   useEffect( () => {
     const fetchData = navigation.addListener('focus', async () => {
@@ -24,6 +26,11 @@ const Homescreen = ({ navigation }) => {
         console.log('response',responseJson);
         getData( responseJson)
         console.log('responsedata',data);
+        if(data[0].endedTripAt===false){
+          setStat(false)
+        }else{
+          setStat(true)
+        }
       })
       .catch(err => {
         console.log('error',err);
@@ -47,8 +54,8 @@ const Homescreen = ({ navigation }) => {
 
       />
 
-      <Text style={styles.startTripText}>Click to see Trip details</Text>
-
+      <Text style={styles.startTripText}>{stat ?<Text>Click to see Trip details</Text>:<Text>No Completed Trips</Text>}</Text>
+<ScrollView style={{marginVertical:20}}>
       <FlatList
         style={styles.flatlist}
         data={data}
@@ -77,7 +84,7 @@ const Homescreen = ({ navigation }) => {
         </View>
         )}
       />
-
+</ScrollView>
     </View>
   );
 }

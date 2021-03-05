@@ -13,23 +13,25 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
 import Ngrok from '../../constants/ngrok';
 import { Picker } from '@react-native-picker/picker';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const Checklist = ({ route, navigation }) => {
     const [modalVisible, setModalVisible] = useState(false);
-    //const [att,setAtt] = useState("");
+    const [att,setAtt] = useState("");
     const [nannyID, setNannyid] = useState(route.params.item.nannyInfo.nannyId);
     const [but, setBut] = useState('Start Trip')
     const [details, setDet] = useState([]);
-    const v = route.params.item.trip_id;
     const [item1, setItem1] = useState([]);
-    //let [childId,setChildId]= useState(item1.childId);
     const [childId, setChildId] = useState("");
     const [item2, setItem2] = useState(route.params.item.childList);
-    const [selectedValue, setValue] = useState("")
+    const [selectedValue, setValue] = useState("");
+    let TripID=route.params.item.trip_id;
+    let VehicleID=route.params.item.vehilce;
     // useEffect( () => {
     //     const fetchData = navigation.addListener('focus', async () => {
-    //     //let trip = await v
-    //     fetch(`${Ngrok.url}/api/driver/tripdetails/${v}`, {
+    //         console.log('hahah', route.params.item.trip_id);
+    //         let Trip = route.params.item.trip_id;
+    //     fetch(`${Ngrok.url}/api/driver/tripdetails/${TripID}`, {
     //       "method": "GET",
     //       "headers": {
     //         Accept: 'application/json',
@@ -41,6 +43,7 @@ const Checklist = ({ route, navigation }) => {
     //         console.log('responsehshshs',responseJson);
     //         setDet( responseJson)
     //         console.log('details',details);
+    //         console.log('details',details.location);
     //       })
     //       .catch(err => {
     //         console.log('error',err);
@@ -48,7 +51,22 @@ const Checklist = ({ route, navigation }) => {
     //     })
     //     fetchData
     //     }, [navigation])
-    const setSwitchValue = (value) => {
+    const Allinone=(value)=>{
+        setValue(value);
+        console.log("hihiih", item2);
+        SetSwitchValue(value);
+        console.log('pickervalue', selectedValue)
+    }
+    const SetSwitchValue = (value) => {
+        // const data1 = item2.map(child => {
+        //     if (child.childId === item.childId) {
+        //         return { ...child, attend: !child.attend }
+        //     }
+        //     return child
+        // })
+        // //console.log("item1",k);
+        // console.log("why",data1);
+        // setItem2(data1)
         try {
             //console.log("working", selectedValue)
             axios({
@@ -60,17 +78,18 @@ const Checklist = ({ route, navigation }) => {
                 },
                 data: {
                     childid: value,//item1.childId
-                    tripid: v,//route.params.item.trip_id
+                    tripid: TripID,//route.params.item.trip_id
                     attendance: true
                 }
             })
                 .then(function (response) {
                     if (response.data.message == "attendance marked") {
                         Alert.alert("Attendance")
-                        //setAtt(response.data.totalMarkedAbsent);
+                        setAtt(response.data.totalMarkedAbsent);
+                        console.log("att",att);
                     }
                     console.log("ssss", response.data.totalMarkedAbsent);
-                    //console.log("attendess",att);
+                    console.log("attendess",att);
                     console.log("response", response.status);
                 })
         }
@@ -167,12 +186,16 @@ const Checklist = ({ route, navigation }) => {
                 <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('Trackee', { refresh: true, tripid: route.params.item.trip_id })}>
                     <Text>Live location</Text>
                 </TouchableOpacity>
+                <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('Check_list',{TripID:TripID,VehicleID:VehicleID})}>
+                    <Text>Check List</Text>
+                </TouchableOpacity>
                 <View style={{flexDirection:'column'}}>
                     <Text style={{marginLeft:15,alignSelf:'center',fontSize:18}}>Select Child to Mark Absent</Text>
                 <Picker
                     selectedValue={selectedValue}
                     style={styles.Picker}
-                    onValueChange={(value) => { setValue(value), console.log("hihiih", item2), setSwitchValue(value), console.log('pickervalue', value) }}
+                    onValueChange={(value) => {Allinone(value)}}
+                    //onValueChange={(value) => { setValue(value), console.log("hihiih", item2), SetSwitchValue(value), console.log('pickervalue', selectedValue) }}
                 >
                     {myUsers()}
                 </Picker>
@@ -206,7 +229,6 @@ const Checklist = ({ route, navigation }) => {
         </View>
     );
 }
-
 export default Checklist;
 
 const styles = StyleSheet.create({
@@ -268,7 +290,7 @@ const styles = StyleSheet.create({
         height: 30,
         borderWidth: 1,
         alignContent: "center",
-        alignSelf: "flex-end",
+        alignSelf: "center",
     },
     card: {
         backgroundColor: '#32cd32',
@@ -345,6 +367,6 @@ const styles = StyleSheet.create({
         fontSize: 15,
         //marginTop:10,
         color: 'red',
-    }
-
-})
+    },
+}
+)
