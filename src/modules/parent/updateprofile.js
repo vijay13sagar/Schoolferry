@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity,Alert } from 'react-native';
 import Ngrok from '../../constants/ngrok'
 import AsyncStorage from '@react-native-community/async-storage';
 
-const updateProfile = () => {
-
-  const [contact, setContact] = useState("")
-  const [email, setEmail] = useState("")
-  const [address, setAddress] = useState("")
+const updateProfile = ({route, navigation}) => {
+  const [name,setName] =  useState(route.params.name)
+  const [contact, setContact] = useState(route.params.contact)
+  const [email, setEmail] = useState(route.params.email)
+  const [address, setAddress] = useState(route.params.address)
   const [{ error }, setError] = useState(" ")
 
   const presshandler = async () => {
@@ -38,7 +38,11 @@ const updateProfile = () => {
         .then(responseJson => {
           console.log(responseJson);
           if (responseJson.message == "data updated successfully") {
-            alert('Profile Updated Successfully')
+            //Alert.alert('Profile Updated Successfully')
+            navigation.goBack()
+          }
+          else {
+            Alert.alert("Failed. Please Try Again ")
           }
         })
         .catch(err => {
@@ -50,7 +54,16 @@ const updateProfile = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Enter your new details</Text>
+      <Text style={styles.text}>Enter details to be changed</Text>
+      <View style={styles.inputView} >
+        <TextInput
+          style={styles.TextInput}
+          placeholder="Contact"
+          placeholderTextColor="#929292"
+          onChangeText={(name) => setName(name)}
+          value = {name}
+        />
+      </View>
       <View style={styles.inputView} >
         <TextInput
           keyboardType="numeric"
@@ -58,6 +71,7 @@ const updateProfile = () => {
           placeholder="Contact"
           placeholderTextColor="#929292"
           onChangeText={(contact) => setContact(contact)}
+          value = {contact}
         />
       </View>
       <View style={styles.inputView} >
@@ -67,6 +81,7 @@ const updateProfile = () => {
           placeholder="Email"
           placeholderTextColor="#929292"
           onChangeText={(email) => setEmail(email)}
+          value = {email}
         />
       </View>
 
@@ -76,6 +91,7 @@ const updateProfile = () => {
           placeholder="Address"
           placeholderTextColor="#929292"
           onChangeText={(address) => setAddress(address)}
+          value = {address}
         />
 
       </View>

@@ -94,7 +94,7 @@ const App =({route,navigation}) =>  {
       </View>
       <View style={styles.textview}>
         <Text style={styles.headertext} >Cost</Text>
-        <Text style={styles.inputView}>{route.params.item.total}  {route.params.childid}</Text>
+        <Text style={styles.inputView}>{route.params.item.total}</Text>
       </View>
       <View style={styles.textview}>
         <Text style={styles.headertext} >School Name</Text>

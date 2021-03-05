@@ -25,6 +25,7 @@ import Upipay from '../modules/parent/upipay';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator()
+
 function Subscriptions() {
   return (
     <Stack.Navigator

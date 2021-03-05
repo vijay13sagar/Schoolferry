@@ -34,27 +34,21 @@ const subscribedHome = ({ route, navigation }) => {
   }
 
   useEffect(() => {
-
-    getData();
-
-  }, [])
-
-  const getData = async () => {
-    let token = await AsyncStorage.getItem('token')
-
-    try {
+    
+    const refreshData = navigation.addListener('focus', async () =>{
+      let token = await AsyncStorage.getItem('token')
 
       const response = await axios(`${Ngrok.url}/api/parent/childlist/${token}`)
 
       setPickerValue(response.data.childList)
       setValue(response.data.childList[0].name)
       // console.log('data',response.data.childList[0].name, selectedValue)
+      console.log('refresh subhome:',response.data.childList[0].name )
+      console.log('child data: ',response.data)
+    })
+    refreshData;
 
-    }
-    catch (error) {
-      console.log("errordetails", error);
-    }
-  }
+  }, [navigation])
 
   const myUsers = () => {
 

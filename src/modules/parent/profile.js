@@ -39,7 +39,12 @@ const Profile = ({navigation}) => {
   return (
     <View style={styles.container}>
 
-      <TouchableOpacity style={styles.edit} onPress={()=> navigation.navigate("Update profile")}>
+      <TouchableOpacity style={styles.edit} onPress={()=> navigation.navigate("Update profile",{
+        name: data.name,
+        contact: data.contact,
+        email: data.email,
+        address: data.address
+      })}>
         <Text style={styles.loginText} >Edit</Text>
       </TouchableOpacity>
       <View style={styles.body}>

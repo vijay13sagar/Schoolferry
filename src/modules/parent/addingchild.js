@@ -11,22 +11,27 @@ import {
 import Ngrok from '../../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
+import { Picker } from '@react-native-picker/picker';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import moment from 'moment'
 
 export default function addchild({ route, navigation }) {
   const [CN, setCN] = useState("");
   const [CA, setCA] = useState("");
-  const [CB, setCB] = useState("");
   const [ST, setST] = useState("");
   const [ET, setET] = useState("");
   const [SA, setSA] = useState(route.params.schooladdress);
   const [HA, setHA] = useState(route.params.homeaddress);
   const [{ value_error }, setError] = useState("");
+  const [pickerValue, setPickerValue]= useState()
+  const [visible, setVisible] = useState(false)
+  const [timerValue, setTimerValue] = useState(0)
 
   const distanceCal = route.params.distance;
   console.log('distance',route.params.distance)
 
   const validateFunction = () => {
-    if (!CN || !CA || !CB || !ST || !ET || !SA || !HA) {
+    if (!CN || !CA || !ST || !ET || !SA || !HA) {
       setError({ value_error: "Fields Cannot be Empty" })
       return false
     } else {
@@ -58,7 +63,7 @@ export default function addchild({ route, navigation }) {
           data: {
             name: CN,
             age: CA,
-            bloodgroup: CB,
+            bloodgroup: pickerValue,
             address: HA,
             school: SA,
             starttime: ST,
@@ -69,10 +74,13 @@ export default function addchild({ route, navigation }) {
           }
         })
           .then(function (response) {
-            console.log(response.status);
+            console.log('status',response.status);
 
             if (response.status == 200) {
              // console.log(response.data)
+             setCN("")
+             setCA("")
+             setPickerValue("")
               navigation.navigate('Subscription_list', {
                 childID: response.data,
                 school: SA
@@ -84,8 +92,7 @@ export default function addchild({ route, navigation }) {
 
           })
           .catch(function (error) {
-            console.log(error)
-
+            console.log(error);
           })
       }
       catch (error) {
@@ -94,16 +101,42 @@ export default function addchild({ route, navigation }) {
   
     }
   }
+
+  const handleConfirm = (date) => {
+    console.log("time: ", moment(date).format('HH:mm'));
+
+    if(timerValue == "1"){
+      setST(moment(date).format('HH:mm'))
+     setTimerValue(0)
+    }
+    else if (timerValue == "2"){
+      setET(moment(date).format('HH:mm'))
+     setTimerValue(0)
+    }
+
+    setVisible(false)
+  };
+
   return (
     <View style={styles.container}>
       {/* <Image style={styles.image} source={require("../assets/Logo.png")} /> */}
-      
-      <View style={styles.inputView}>
+      <DateTimePickerModal
+        isVisible={visible}
+        mode="time"
+        onConfirm={handleConfirm}
+        onCancel={()=> setVisible(false)}
+        is24Hour={true}
+        display="spinner"
+      />
+  
+     <View style={{marginTop:60}}>
+      <View style={styles.inputView }>
         <TextInput
           style={styles.TextInput}
           placeholder="Child Name"
           placeholderTextColor="#929292"
           onChangeText={(CN) => setCN(CN)}
+          value= {CN}
         />
       </View>
       <View style={styles.inputView}>
@@ -113,34 +146,12 @@ export default function addchild({ route, navigation }) {
           keyboardType="numeric"
           placeholderTextColor="#929292"
           onChangeText={(CA) => setCA(CA)}
-        />
-      </View>
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Blood Group"
-          placeholderTextColor="#929292"
-          onChangeText={(CB) => setCB(CB)}
-        />
-      </View>
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="School Start Time"
-          placeholderTextColor="#929292"
-          onChangeText={(ST) => setST(ST)}
-        />
-      </View>
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="School End Time"
-          placeholderTextColor="#929292"
-          onChangeText={(ET) => setET(ET)}
+          value={CA}
         />
       </View>
       <View style={styles.inputaddress}>
         <TextInput
+          
           style={styles.TextInput}
           placeholder="School"
           placeholderTextColor="#929292"
@@ -157,15 +168,45 @@ export default function addchild({ route, navigation }) {
           onChangeText={(HA) => setHA(HA)}
           value={HA}
         />
-
       </View>
-      
-       
+      </View>
+
+      <View style={{flexDirection:'row', justifyContent:'space-evenly',marginHorizontal:30}}>
+      <TouchableOpacity style={styles.pickerBtn}
+        onPress={()=>{
+          setVisible(true), setTimerValue(1) } }>
+        <Text style={styles.Text}>School Start Time</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.pickerBtn}
+        onPress={()=>{
+          setVisible(true), setTimerValue(2) }}  >
+        <Text style={styles.Text}>School End Time</Text>
+      </TouchableOpacity>
+      </View>
+      <Picker
+        selectedValue={pickerValue}
+        style={styles.Picker}
+        onValueChange={(value) => setPickerValue(value)} 
+        
+        >
+          <Picker.Item label="Select a blood group" value={0} />
+           <Picker.Item label="A +ve" value="A+" />
+           <Picker.Item label="A -ve" value="A-" />
+           <Picker.Item label="B +ve" value="B+" />
+           <Picker.Item label="B -ve" value="B-" />
+           <Picker.Item label="AB +ve" value="AB+" />
+           <Picker.Item label="AB -ve" value="AB-" />
+           <Picker.Item label="O +ve" value="O+" />
+           <Picker.Item label="O -ve" value="O-" />     
+      </Picker>
+          
       <Text style={styles.error}>{value_error}</Text>
       <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center' }, styles.loginBtn}
         onPress={handlePress} >
         <Text style={styles.loginText}>Add Child</Text>
       </TouchableOpacity>
+
 
 
     </View>
@@ -175,11 +216,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F9F2F2",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  image: {
-    marginBottom: 40,
   },
   inputView: {
     borderWidth: 1,
@@ -188,13 +224,9 @@ const styles = StyleSheet.create({
     width: "80%",
     height: 45,
     padding: 2,
-    // alignItems: "center",
-    // justifyContent:'center',
-    // alignContent:'center',
-    // alignSelf:'center',
     backgroundColor: "#fff",   //"#C4C4C4",
-    marginTop: 5,
-    //opacity: 0.5,
+    marginTop: 7,
+    alignSelf:'center'
   },
   TextInput: {
     flex: 1,
@@ -208,39 +240,58 @@ const styles = StyleSheet.create({
   },
   error: {
     color: '#DC143C',
-    fontSize: 11,
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start'
-  },
-  forgot_button: {
-    height: 30,
-    marginBottom: 15,
-    color: '#1E90FF',
+    fontSize: 13,
+    alignSelf:'center',
+    marginTop:5
   },
   loginBtn: {
     width: "50%",
     borderRadius: 10,
-    height: 38,
+    height: 40,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#FF5C8D",
     alignSelf: "center",
-    marginTop: 20,
+    marginTop: 30,
   },
-  registerTextStyle: {
-    marginTop: 10,
-    color: 'black',
-    fontSize: 13,
+  loginText:{
+    fontSize:14
   },
   inputaddress: {
     borderWidth: 1,
     borderColor: '#B0003A',
     borderRadius: 10,
     width: "80%",
-    height: 50,
+    height: 45,
     padding: 2,
     backgroundColor: "#fff",   //"#C4C4C4",
-    marginTop: 5,
+    marginTop: 7,
+    alignSelf:'center'
+  },
+  Picker: {
+    width: "70%",
+    marginTop: 7,
+    borderRadius: 10,
+    height: 45,
+    borderWidth: 2,
+    alignContent: "center",
+    alignSelf: "center",
+  },
+  pickerBtn:{
+    width: 150,
+    borderRadius: 10,
+    borderWidth:1,
+    borderColor:'#B0003A',
+    height: 45,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#fff",
+    alignSelf: "center",
+    marginTop: 10,
 
+  },
+  text:{
+    fontSize:16,
+    color:'#B0003A'
   }
 });

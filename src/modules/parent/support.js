@@ -16,17 +16,17 @@ const Support = () =>  {
             Support
           </Text>
           </View> */}
-          <Text style={{fontSize:20, textAlign:'center',marginHorizontal:10}}>If you have any complaint/query regarding
+          <Text style={{fontSize:19, textAlign:'center',marginHorizontal:10}}>If you have any complaint/query regarding
           our services, feel free to mail.</Text>
         </View>
        <TouchableOpacity style={styles.loginBtn} onPress={() => Linking.openURL('mailto:AdminSchoolferry@example.com?subject=SendMail&body=Hi Admin,') }
       title="AdminSchoolferry@example.com" >
-        <Text style={{fontSize:19,color:'white'}}> Write a Mail</Text>
+        <Text style={{fontSize:17,color:'#000'}}> Write a Mail</Text>
       </TouchableOpacity>
-      <View style={{marginTop:50}}>
-      <Text style={{marginVertical:20,fontSize:20,alignSelf:'center',}}>Or you can call us </Text>
+      <View style={{marginTop:70}}>
+      <Text style={{fontSize:19,alignSelf:'center',}}>Or you can call us </Text>
       <TouchableOpacity style={styles.CallBtn} onPress={() => { Linking.openURL('tel:8777111223') }}  >
-        <Text style={{fontSize:18, color:'#000'}}>Make a Call </Text>
+        <Text style={{fontSize:17, color:'#000'}}>Make a Call </Text>
       </TouchableOpacity>
       </View>
   
@@ -56,11 +56,12 @@ loginBtn: {
 CallBtn: {
   width: "80%",
   borderRadius: 10,
-  height: 40,
+  height: 41,
   alignItems: "center",
   justifyContent: "center",
   backgroundColor: "#32cd32",
   alignSelf: 'center',
+  marginTop: 20,
   marginBottom: 50,
 },
 });

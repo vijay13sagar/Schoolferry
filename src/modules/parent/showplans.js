@@ -15,11 +15,25 @@ const showplanScreen = ({ route, navigation }) => {
 
   useEffect(() => {
 
-    fetchData();
+    //fetchData();
+    const fetchData = navigation.addListener('focus', async () => {
+      let token = await AsyncStorage.getItem('token')
+    try {
+      const res = await axios(`${Ngrok.url}/api/parent/detail/childlist/${token}`)
+      setPickerValue(res.data)
+      setValue(res.data[0].childName)
+      // console.log('selectedvalue:', selectedValue)
+      console.log('subsciption refresh:',res.data[0].childName )
+    }
+    catch (error) {
+      console.error(error);
+    }
+    })
 
+    fetchData;
   }, [])
 
-  const fetchData = async () => {
+ /* const fetchData = async () => {
     let token = await AsyncStorage.getItem('token')
 
     try {
@@ -33,7 +47,7 @@ const showplanScreen = ({ route, navigation }) => {
       console.error(error);
     }
 
-  }
+  }*/
 
   const myUsers = () => {
 
