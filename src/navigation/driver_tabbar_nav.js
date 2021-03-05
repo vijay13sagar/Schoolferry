@@ -13,6 +13,8 @@ import updateProfile from '../modules/driver/updateprofile';
 import tripDetails from '../modules/driver/tripdetails'
 import Trackee from '../modules/driver/map';
 import Notstarted from '../modules/driver/notstarted';
+import Triphistory from '../modules/driver/triphistory';
+import Endtripdetails from '../modules/driver/endtripdetails';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -32,6 +34,16 @@ function Check() {
         name="Check_list"
         component={Checklist}
       options={{ title: 'CheckList' }}
+      />
+      <Stack.Screen
+        name="Trip_history"
+        component={Triphistory}
+      options={{ title: 'Trip History' }}
+      />
+      <Stack.Screen
+        name="Endtrip_details"
+        component={Endtripdetails}
+      options={{ title: 'Trip Details' }}
       />
     </Stack.Navigator>
   );

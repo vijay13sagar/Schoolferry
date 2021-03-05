@@ -15,6 +15,7 @@ export default class Notificationlist extends Component  {
       isLoading: true,
       modalVisible:false,
       selectedData:'',
+      selectedDate:'',
     };
   }
   componentDidMount=async()=> {
@@ -38,8 +39,8 @@ export default class Notificationlist extends Component  {
  setModalVisible = (visible) => {
     this.setState({ modalVisible: visible });
   }  
-  _selectedItem = (data) => {
-    this.setState({selectedData: data});
+  _selectedItem = (data,data2) => {
+    this.setState({selectedData: data,selectedDate:data2});
     this.setModalVisible(true);
   }
   render() {
@@ -68,11 +69,11 @@ export default class Notificationlist extends Component  {
             renderItem={({ item }) => (
         <Card>
         <CardItem button onPress={() => {
-                  this._selectedItem(item.message);
+                  this._selectedItem(item.message,item.date);
                 }}>
               <Body>
                 <Text>
-                     Date of Notice:{item.date}
+                     {item.message}
                 </Text>
               </Body>
           </CardItem>
@@ -99,6 +100,7 @@ export default class Notificationlist extends Component  {
             onPress={(modalVisible) => this.setModalVisible(!modalVisible)}
           />
           <View style={styles.modalBody}>
+            <Text style={styles.modalheading}>Date of Notice: {this.state.selectedDate}</Text>
             <Text style={styles.message}>{this.state.selectedData}</Text>
           </View>
         </View>
@@ -181,9 +183,16 @@ const styles = StyleSheet.create({
     message: {
       fontSize: 22,
       textAlign: 'center',
-      //marginTop: 30
       color: '#000',
       fontWeight: '600',
+      padding: 7,
+    },
+    modalheading:{
+      fontSize: 22,
+      textAlign: 'center',
+      marginBottom: 10,
+      color: '#000',
+      fontWeight: '700',
       padding: 7,
     },
   

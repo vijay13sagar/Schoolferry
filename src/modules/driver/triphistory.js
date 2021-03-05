@@ -32,6 +32,7 @@ const Homescreen = ({ navigation }) => {
     fetchData
     }, [navigation])
   const [pickerValue, setPickerValue] = useState("")
+
   return (
     <View style={styles.container}>
       <StatusBar
@@ -46,15 +47,6 @@ const Homescreen = ({ navigation }) => {
 
       />
 
-      <View style={styles.pendingTrips}>
-        <Text style={styles.tripsTitleText}>Today's Trips</Text>
-        <View style={styles.tripBox}>
-          <Text style={styles.Text}>Total Trips - 01 </Text>
-          <Text style={styles.Text}>Pending Trips - 01 </Text>
-
-        </View>
-      </View>
-
       <Text style={styles.startTripText}>Click to see Trip details</Text>
 
       <FlatList
@@ -62,8 +54,10 @@ const Homescreen = ({ navigation }) => {
         data={data}
         keyExtractor={item => item.trip_id}
         renderItem={({ item }) => (
-          <Card style= { item.endedTripAt ? styles.card2 :styles.card}>
-            <CardItem style={item.endedTripAt ? {backgroundColor:'lightgrey'}:{backgroundColor:'white'}} button disabled={item.endedTripAt ? true : false} onPress={() => navigation.navigate('Trip Details',{item:item})}>
+            <View>
+            {item.endedTripAt ?
+              <Card style= { styles.card} >
+            <CardItem style={{backgroundColor:'white'}} button onPress={() => navigation.navigate('Endtrip_details',{item:item})}>
               <Body style={{ flexDirection: 'row' }}>
                 <Text style={{ fontSize: 17, fontWeight: '700' }}>
                 Trip Id :
@@ -71,22 +65,18 @@ const Homescreen = ({ navigation }) => {
                 <Text style={{ fontSize: 17, marginLeft: 5, fontWeight: '700' }}>
                 {item.trip_id}
                 </Text>
-                <Text style={{marginLeft:50}}>
-                  {item.endedTripAt ?<Text style={{color:'white',fontWeight:'700',fontSize:17}}>Trip Completed</Text> : null}
-                </Text>
-                {item.endedTripAt ? null : <Ionicons name="chevron-forward-outline"
+                <Text style={{marginLeft:50}}></Text>
+                <Ionicons name="chevron-forward-outline"
                   color="#000" size={25}
                   style={styles.icon}
-                />}
-
+                />
               </Body>
             </CardItem>
           </Card>
+           : null}
+        </View>
         )}
       />
-      <TouchableOpacity style={styles.CallBtn} onPress={() => { Linking.openURL('tel:8777111223') }}  >
-        <Text style={styles.loginText}>Call Admin</Text>
-      </TouchableOpacity>
 
     </View>
   );

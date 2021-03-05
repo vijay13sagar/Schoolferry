@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { CheckBox, Text, StyleSheet,TextInput, View } from "react-native";
+import { CheckBox, Text, StyleSheet,TextInput, View, TouchableOpacity } from "react-native";
 import moment from 'moment';
 import { ScrollView } from "react-native-gesture-handler";
 import Ngrok from '../../constants/ngrok';
@@ -8,7 +8,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 const today = new Date();
 const TD = moment(today).format('DD-MM-YYYY');
 
-const App = () => {
+const App = ({navigation}) => {
   const [fule, setfule] = useState(false);
   const [engine, setengine] = useState(false);
   const [firstaid, setfirstaid] = useState(false);
@@ -72,22 +72,6 @@ const App = () => {
         />
         <Text style={styles.label}>Extinguisher</Text>
       </View>
-      {/* <View style={styles.checkboxContainer}>
-        <CheckBox
-          value={cleanliness}
-          onValueChange={setcleanliness}
-          style={styles.checkbox}
-        />
-        <Text style={styles.label}>Cleanliness</Text>
-      </View> */}
-      {/* <View style={styles.checkboxContainer}>
-        <CheckBox
-          value={brake}
-          onValueChange={setbrake}
-          style={styles.checkbox}
-        />
-        <Text style={styles.label}>Brakes</Text>
-      </View> */}
       <View style={styles.checkboxContainer}>
         <CheckBox
           value={tyre}
@@ -97,6 +81,11 @@ const App = () => {
         <Text style={styles.label}>Tyre Pressure</Text>
       </View>
       </ScrollView>
+    </View>
+    <View style={{alignItems:'center'}}>
+    <TouchableOpacity style={styles.loginBtn} onPress = {()=> navigation.navigate('Trip_history')} >
+            <Text style={styles.loginText}>Trip History</Text>
+    </TouchableOpacity>
     </View>
     </View>
   );
@@ -162,6 +151,16 @@ const styles = StyleSheet.create({
   },
   label: {
     margin: 8,
+  },
+  loginBtn: {
+    width: "60%",
+    borderRadius: 10,
+    height: 41,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 31,
+    backgroundColor: "#ff5c8d",
+
   },
 });
 export default App;
