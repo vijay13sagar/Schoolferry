@@ -6,6 +6,7 @@ import {
   Image,
   StatusBar,
   TextInput,
+  Alert,
   TouchableOpacity,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
@@ -14,7 +15,7 @@ import Ngrok from '../../constants/ngrok';
 import axios from 'axios';
 
 
-export default function remove_Child({ route }) {
+export default function remove_Child({ route,navigation }) {
 
   let c = route.params.tripid;
   console.log("sfsdffasdas", c);
@@ -76,9 +77,9 @@ export default function remove_Child({ route }) {
       .then(responseJson => {
         console.log(responseJson);
         if (responseJson.message == "child removed from the trip") {
-          alert('Removed Successfully')
+          Alert.alert('Removed Successfully','', [{text: 'Proceed', onPress:() => navigation.navigate('Home_page')}])
         } else {
-          alert('Try again!')
+          Alert.alert('Try again!')
         }
         //alert(JSON.stringify(response))
       })

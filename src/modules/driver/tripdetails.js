@@ -21,7 +21,10 @@ const Checklist = ({ route, navigation }) => {
     let v=route.params.item.trip_id;
     const [item1, setItem1] = useState([]);
     const [item2, setItem2] = useState(route.params.item.childList.map(child=>({...child,attend:false})));
-    // console.log('hahah', route.params);
+    let TripID=route.params.item.trip_id;
+    let VehicleID=route.params.item.vehilce;
+
+    console.log('hahah', route.params.item.trip_id);
     // console.log('hahasdkhdh', route.params.item);
     // console.log('hshhash', route.params.item.nannyInfo.nannyId);
     // console.log('hahah', route.params.item.childList.childId);
@@ -115,6 +118,9 @@ const Checklist = ({ route, navigation }) => {
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('Trackee',{refresh:true})}>
                     <Text>Live location</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('Check_list',{TripID:TripID,VehicleID:VehicleID})}>
+                    <Text>Check List</Text>
                 </TouchableOpacity>
                 <Text style={styles.absent}>Mark as Absent</Text>
                 <FlatList

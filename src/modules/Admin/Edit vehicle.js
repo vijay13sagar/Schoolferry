@@ -3,6 +3,7 @@ import {
   StyleSheet,
   Text,
   View,
+  Alert,
   Image,
   StatusBar,
   TextInput,
@@ -14,7 +15,7 @@ import Ngrok from '../../constants/ngrok';
 import axios from 'axios';
 
 
-export default function Edit_Vehicle({ route }) {
+export default function Edit_Vehicle({ route ,navigation}) {
 
   let c = route.params.tripid1;
   console.log("sfsdffasdas", c);
@@ -76,9 +77,9 @@ export default function Edit_Vehicle({ route }) {
       .then(responseJson => {
         console.log(responseJson);
         if (responseJson.message == "vehicle changed") {
-          alert('Changed Successfully')
+          Alert.alert('Changed Successfully','', [{text: 'Proceed', onPress:() => navigation.navigate('Home_page')}])
         } else {
-          alert('Try again!')
+          Alert.alert('Try again!')
         }
         //alert(JSON.stringify(response))
       })
@@ -155,7 +156,7 @@ return (
       </View>
       <TouchableOpacity style={styles.loginBtn}
         onPress={pressHandler} >
-        <Text style={styles.loginText}>Add Vehicle</Text>
+        <Text style={styles.loginText}>Assign Vehicle</Text>
       </TouchableOpacity>
 
     </View>
