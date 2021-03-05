@@ -13,9 +13,7 @@ const oldmap = ({navigation}) =>  {
         //Background color of statusBar only works for Android
         translucent={false}
       //allowing light, but not detailed shapes
-
       />
-      
           <View style={{flex:1,justifyContent:'center',alignContent:'center'}}>
             
             <Text style={styles.centerview} >To Check location on map, Please Start a Trip</Text>

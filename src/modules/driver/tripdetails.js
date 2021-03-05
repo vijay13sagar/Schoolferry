@@ -107,16 +107,16 @@ const Checklist = ({ route, navigation }) => {
                     <View style={styles.detailsBox}>
                         <Text style={styles.textDetails}>Destination: {route.params.item.destination} </Text>
                         <Text style={styles.textDetails}>Total Present - {route.params.item.noOfChildren}</Text>
-                        <Text style={styles.textDetails}>Nanny Id - {route.params.item.nannyInfo.nannyId}</Text>
-                        <Text style={styles.textDetails}>Nanny Name - {route.params.item.nannyInfo.nannyName}</Text>
-                        <Text style={styles.textDetails}>Nanny Contact - {route.params.item.nannyInfo.nannyContact}</Text>
+                        <Text style={styles.textDetails}>Nanny Id - {route.params.item.nannyInfo.nannyId ?<Text>{route.params.item.nannyInfo.nannyId}</Text> : <Text>Not Applicable</Text>}</Text>
+                        <Text style={styles.textDetails}>Nanny Name - {route.params.item.nannyInfo.nannyName ?<Text>{route.params.item.nannyInfo.nannyName}</Text> : <Text>Not Applicable</Text>}</Text>
+                        <Text style={styles.textDetails}>Nanny Contact - {route.params.item.nannyInfo.nannyContact ? <Text>{route.params.item.nannyInfo.nannyContact}</Text> : <Text>Not Applicable</Text>}</Text>
                         <Text style={styles.textDetails}>Total Absent - {att}</Text>
                     </View>
                 </View>
-                <TouchableOpacity style={styles.loginBtn} onPress={()=>setBut("Trip Inprogress")}>
+                <TouchableOpacity style={styles.loginBtn}  onPress={()=>setBut("Trip Inprogress")}>
                     <Text>{but}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('Trackee')}>
+                <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('Trackee',{refresh:true})}>
                     <Text>Live location</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('Check_list',{TripID:TripID,VehicleID:VehicleID})}>

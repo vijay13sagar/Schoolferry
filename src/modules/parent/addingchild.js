@@ -34,14 +34,14 @@ export default function addchild({ route, navigation }) {
     }
   }
 
-  useEffect(() => {
-    const fetchData = navigation.addListener('focus', async () => {
-      let token = await AsyncStorage.getItem('token');
-      console.log('token:', token)
-    })
+  // useEffect(() => {
+  //   const fetchData = navigation.addListener('focus', async () => {
+  //     let token = await AsyncStorage.getItem('token');
+  //     console.log('token:', token)
+  //   })
 
-    fetchData;  
-  }, [])
+  //   fetchData;  
+  // }, [])
 
   const handlePress = async () => {
 
