@@ -13,8 +13,6 @@ const App = ({ route, navigation }) => {
   const [engine, setengine] = useState(false);
   const [firstaid, setfirstaid] = useState(false);
   const [extinguisher, setextinguisher] = useState(false);
-  // const [cleanliness, setcleanliness] = useState(false);
-  // const [brake, setbrake] = useState(false);
   const [data, getData] = useState()
   const [tyre, settyre] = useState(false);
   console.log("dsg", route.params.TripID);
@@ -81,25 +79,8 @@ const App = ({ route, navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={{ alignSelf: "center" }}>{TD}</Text>
-      {/* <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Vehicle Number"
-          placeholderTextColor="#929292"
-          onChangeText={(VN) => setVN(VN)}
-        />
-      </View> */}
       <View style={{ alignItems: "flex-start", }}>
         <ScrollView style={{ alignSelf: "center", width: "100%" }}>
-
-          {/* <View style={styles.pendingTrips}>
-      <Text style={{marginLeft:35,fontSize: 25,
-    marginVertical: 10,
-    fontWeight: "bold"}}>Vehicle Details</Text>
-      <Text  style={styles.subText}>Vehicle Number :</Text>
-      <Text  style={styles.subText}>Vehicle Type :</Text>
-      <Text  style={styles.subText}>Vehicle Capacity :</Text>
-      </View> */}
           <Text style={{ fontSize: 20, alignSelf: "center", marginTop: 20, }}> Daily Routine Checklist</Text>
           <View style={styles.checkboxContainer}>
             <CheckBox
@@ -157,10 +138,17 @@ const App = ({ route, navigation }) => {
             />
             <Text style={styles.label}>Tyre Pressure</Text>
           </View>
+          
           <TouchableOpacity style={styles.loginBtn} onPress={pressHandler} >
             <Text style={styles.loginText}>Submit</Text>
 
           </TouchableOpacity>
+          
+          {/* <View style={{alignItems:'center'}}>
+    <TouchableOpacity style={styles.loginBtn} onPress = {()=> navigation.navigate('Trip_history')} >
+            <Text style={styles.loginText}>Trip History</Text>
+    </TouchableOpacity>
+    </View> */}
         </ScrollView>
       </View>
     </View>
@@ -178,16 +166,16 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     justifyContent: 'space-around'
   },
-  loginBtn: {
-    width: "50%",
-    borderRadius: 10,
-    height: 38,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#ff5c8d",
-    alignSelf: "center",
-    marginTop: 20,
-  },
+  // loginBtn: {
+  //   width: "50%",
+  //   borderRadius: 10,
+  //   height: 38,
+  //   alignItems: "center",
+  //   justifyContent: "center",
+  //   backgroundColor: "#ff5c8d",
+  //   alignSelf: "center",
+  //   marginTop: 20,
+  // },
   pendingTrips: {
     backgroundColor: "#fff",
     height: 140,
@@ -237,6 +225,17 @@ const styles = StyleSheet.create({
   },
   label: {
     margin: 8,
+  },
+  loginBtn: {
+    width: "60%",
+    borderRadius: 10,
+    height: 41,
+    alignItems: "center",
+    justifyContent: "center",
+    alignSelf:'center',
+    marginTop: 31,
+    backgroundColor: "#ff5c8d",
+
   },
 });
 export default App;
