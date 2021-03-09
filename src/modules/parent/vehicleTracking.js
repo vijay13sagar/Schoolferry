@@ -2,15 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { Text, View, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import MapView, { Marker, AnimatedRegion } from 'react-native-maps';
 import axios from 'axios';
+import Ngrok from '../../constants/ngrok';
 
-const Driver = () => {
-const [lat, setLatitude] = useState(37.42215078611507)
-const [lon, setLongitude]= useState(-122.08427209309676)
+const Driver = ({route}) => {
+const [lat, setLatitude] = useState(18.1083)
+const [lon, setLongitude]= useState(83.3799)
+ 
 
 const fetchApi = async() => {
   //let token = await AsyncStorage.getItem('token')
+   let tripid = await  route.params.tripId
+   console.log('trip ID:', tripid)
   axios
-    .get(`${Ngrok.url}/api/driver/tracking/T001`)
+    .get(`${Ngrok.url}/api/driver/tracking/T004`)
     .then(function (response) {
       console.log("dat",response.data);
       setLatitude(response.data.latitude);
@@ -40,7 +44,7 @@ return (
 
 style={ {
   // ...StyleSheet.absoluteFillObject,
-  width:"80%",
+  width:"100%",
   height:"75%",
   alignSelf:'center',
   marginVertical:20,

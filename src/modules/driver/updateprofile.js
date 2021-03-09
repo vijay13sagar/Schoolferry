@@ -53,6 +53,7 @@ const Checklist = () => {
         <TextInput
           keyboardType="numeric"
           style={styles.TextInput}
+          maxLength={10}
           placeholder="Contact"
           placeholderTextColor="#929292"
           onChangeText={(contact) => setContact(contact)}

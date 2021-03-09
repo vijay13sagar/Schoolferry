@@ -84,7 +84,7 @@ const Checklist = ({ route, navigation }) => {
                         //Alert.alert("Attendance Marked")
                         Alert.alert(
                             "Child Attendance",
-                            "                  Attendance Marked               ",
+                            "Attendance Marked",
                             [
                               { text: "OK", onPress: () => onRefresh() }
                             ],
@@ -104,7 +104,7 @@ const Checklist = ({ route, navigation }) => {
         }
     }
 
-    const starting = () => {
+    const starting = async () => {
         setBut("Trip Inprogress");
         try {
             axios({
@@ -115,7 +115,7 @@ const Checklist = ({ route, navigation }) => {
                     'Content-Type': 'application/json'
                 },
                 data: {
-                    tripid: route.params.item.trip_id
+                    tripid: route.params.item.trip_id,
                 }
             })
                 .then(function (response) {
@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
     },
     firstbox: {
         width: '90%',
-        height: 300,
+        height: 310,
         borderRadius: 10,
         borderWidth: 1,
         borderColor: 'black',
@@ -249,7 +249,7 @@ const styles = StyleSheet.create({
     },
     secondbox: {
         width: '95%',
-        height: 200,
+        height: 210,
         borderRadius: 10,
         borderWidth: 1,
         borderColor: 'black',

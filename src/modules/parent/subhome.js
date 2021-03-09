@@ -1,28 +1,31 @@
-
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
-  StyleSheet, ScrollView,
-  Text, StatusBar, TouchableOpacity,
-  View
+  StyleSheet,
+  ScrollView,
+  Text,
+  StatusBar,
+  TouchableOpacity,
+  View,
+  ActivityIndicator,
 } from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
-import { Picker } from '@react-native-picker/picker';
+import {Picker} from '@react-native-picker/picker';
 import axios from 'axios';
 import Ngrok from '../../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
+import {useFocusEffect} from '@react-navigation/native';
 
-const subscribedHome = ({ route, navigation }) => {
-
-  const [selectedStartDate, setselectedStartDate] = useState("")
-  const [selectedEndDate, setselectedEndDate] = useState("")
+const subscribedHome = ({route, navigation}) => {
+  const [selectedStartDate, setselectedStartDate] = useState('');
+  const [selectedEndDate, setselectedEndDate] = useState('');
   const minDate = new Date(); // Today
   const maxDate = new Date(2021, 10, 1);
   const startDate = moment(selectedStartDate).format('DD-MM-YYYY');
   const endDate = moment(selectedEndDate).format('DD-MM-YYYY');
-  const [pickerValue, setPickerValue] = useState([])
-  const [selectedValue, setValue] = useState("")
-
+  const [pickerValue, setPickerValue] = useState([]);
+  const [selectedValue, setValue] = useState('');
+  const [isLoading, setLoading] = useState(true);
 
   const onDateChange = (date, type) => {
     if (type === 'END_DATE') {
@@ -31,128 +34,133 @@ const subscribedHome = ({ route, navigation }) => {
       setselectedStartDate(date);
       setselectedEndDate();
     }
-  }
+  };
 
-  useEffect(() => {
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchUser = async () => {
+        try {
+          let token = await AsyncStorage.getItem('token');
 
-    getData();
+          const response = await axios(
+            `${Ngrok.url}/api/parent/childlist/${token}`,
+          );
 
-  }, [])
+          setPickerValue(response.data.childList);
+          setValue(response.data.childList[0].name);
+          // console.log('data',response.data.childList[0].name, selectedValue)
+          console.log('refresh subhome:', response.data.childList[0].name);
+         // console.log('child data: ', response.data);
+          setLoading(false);
+        } catch (e) {
+          // Handle error
+        }
+      };
 
-  const getData = async () => {
-    let token = await AsyncStorage.getItem('token')
+      fetchUser();
 
-    try {
-
-      const response = await axios(`${Ngrok.url}/api/parent/childlist/${token}`)
-
-      setPickerValue(response.data.childList)
-      setValue(response.data.childList[0].name)
-      // console.log('data',response.data.childList[0].name, selectedValue)
-
-    }
-    catch (error) {
-      console.log("errordetails", error);
-    }
-  }
+      //return null;
+    }, []),
+  );
 
   const myUsers = () => {
+    return (
+      pickerValue &&
+      pickerValue.map((myValue) => {
+        return (
+          <Picker.Item
+            label={myValue.name}
+            value={myValue.name}
+            key={myValue.id}
+          />
+        );
+      })
+    );
+  };
 
-    return pickerValue && pickerValue.map((myValue) => {
-      return (
-        <Picker.Item label={myValue.name}
-          value={myValue.name} key={myValue.id} />
-      )
-    });
-  }
-
-  const value1 = pickerValue.length && selectedValue ? pickerValue.filter((item) => {
-
-    //console.log('check value', pickerValue, selectedValue)
-    return item.name.toLowerCase().includes(selectedValue.toLowerCase())
-  }) : []
+  const value1 =
+    pickerValue.length && selectedValue
+      ? pickerValue.filter((item) => {
+          //console.log('check value', pickerValue, selectedValue)
+          return item.name.toLowerCase().includes(selectedValue.toLowerCase());
+        })
+      : [];
 
   //console.log('value1', value1)
 
-  return (
-
+  return isLoading ? null : (
     <ScrollView>
-      <StatusBar
-        barStyle="dark-content"
-        hidden={false}
-        backgroundColor="#E91E63"
-        //Background color of statusBar only works for Android
-        translucent={false}
-      />
+
       <Picker
         selectedValue={selectedValue}
         style={styles.Picker}
-        onValueChange={(value) => /*{ console.log('pickervalue', value);*/ setValue(value)}
-      >
+        onValueChange={(value) =>
+          /*{ console.log('pickervalue', value);*/ setValue(value)
+        }>
         {myUsers()}
       </Picker>
 
-      <View style={{ marginLeft: 20, alignSelf: 'flex-start', justifyContent: 'center' }}>
-        <Text style={{ fontWeight: 'bold', fontSize: 21 }} >Plan Details  -</Text>
+      <View
+        style={{
+          marginLeft: 20,
+          alignSelf: 'flex-start',
+          justifyContent: 'center',
+        }}>
+        <Text style={{fontWeight: 'bold', fontSize: 21}}>Plan Details -</Text>
       </View>
       <View style={styles.headertext}>
         <Text style={styles.registerTextStyle}>Plan Tenure</Text>
       </View>
       <View style={styles.details}>
-
-        {Boolean(value1.length) && (
-          <Text >
-            {value1[0].tenure}
-          </Text>
-        )}
-
+        {Boolean(value1.length) && <Text>{value1[0].tenure}</Text>}
       </View>
       <View style={styles.headertext}>
         <Text style={styles.registerTextStyle}>Date of Subscription:</Text>
       </View>
       <View style={styles.details}>
-
-        {Boolean(value1.length) && (
-          <Text >
-            {value1[0].startDate}
-          </Text>
-        )}
-
+        {Boolean(value1.length) && <Text>{value1[0].startDate}</Text>}
       </View>
       <View style={styles.headertext}>
         <Text style={styles.registerTextStyle}>End date of Subscription:</Text>
       </View>
       <View style={styles.details}>
-
-        {Boolean(value1.length) && (
-          <Text >
-            {value1[0].endDate}
-          </Text>
-        )}
+        {Boolean(value1.length) && <Text>{value1[0].endDate}</Text>}
       </View>
 
       <View style={styles.headertext}>
         <Text style={styles.registerTextStyle}>Total Cost</Text>
       </View>
       <View style={styles.details}>
-
-          {Boolean(value1.length) && (
-            <Text >
-              {value1[0].cost}
-            </Text>
-          )}
+        {Boolean(value1.length) && <Text>{value1[0].cost}</Text>}
       </View>
 
-      <View style={{ marginLeft: 20, alignSelf: 'flex-start', justifyContent: 'center' }}>
-        <Text style={{ fontWeight: 'bold', fontSize: 20 }} >Cancelation of Ride:</Text>
+      <View
+        style={{
+          marginLeft: 20,
+          alignSelf: 'flex-start',
+          justifyContent: 'center',
+        }}>
+        <Text style={{fontWeight: 'bold', fontSize: 20}}>
+          Cancelation of Ride:
+        </Text>
       </View>
       <View style={styles.headertext}>
-        <Text style={styles.registerTextStyle}>Select the Days of Cancelation</Text>
+        <Text style={styles.registerTextStyle}>
+          Select the Days of Cancelation
+        </Text>
       </View>
       <View style={styles.headertext}>
-        <Text style={styles.registerTextStyle}>(Hint: Double-Tap to select One Day)</Text>
+        <Text style={styles.registerTextStyle}>
+          (Hint: Double-Tap to select One Day)
+        </Text>
       </View>
-      <View style={{ backgroundColor: '#ffe4e1', width: 250, alignSelf: 'center', margin: 10 }}>
+      <View
+        style={{
+          backgroundColor: '#ffe4e1',
+          width: 250,
+          alignSelf: 'center',
+          margin: 10,
+        }}>
         <CalendarPicker
           startFromMonday={true}
           allowRangeSelection={true}
@@ -168,34 +176,40 @@ const subscribedHome = ({ route, navigation }) => {
           onDateChange={onDateChange}
         />
         <View>
-          <Text style={styles.registerTextStyle}>Selected Start Date:  {startDate}</Text>
-          <Text style={styles.registerTextStyle}>Selected End Date:  {endDate}</Text>
+          <Text style={styles.registerTextStyle}>
+            Selected Start Date: {startDate}
+          </Text>
+          <Text style={styles.registerTextStyle}>
+            Selected End Date: {endDate}
+          </Text>
         </View>
       </View>
-      <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center' }, styles.loginBtn} >
+      <TouchableOpacity
+        style={
+          ({alignItems: 'center', justifyContent: 'center'}, styles.loginBtn)
+        }>
         <Text style={styles.loginText}>APPLY</Text>
       </TouchableOpacity>
     </ScrollView>
-
   );
-}
+};
 // }
 export default subscribedHome;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F9F2F2",
-    justifyContent: 'center'
+    backgroundColor: '#F9F2F2',
+    justifyContent: 'center',
   },
 
   name: {
     fontSize: 22,
-    color: "black",
+    color: 'black',
     fontWeight: '600',
   },
   body: {
     marginTop: 180,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   textview: {
     marginBottom: 7,
@@ -206,40 +220,40 @@ const styles = StyleSheet.create({
   },
   details: {
     height: 40,
-    backgroundColor: "#d3d3d3",
+    backgroundColor: '#d3d3d3',
     borderRadius: 10,
     width: '85%',
     padding: 8,
-    alignSelf: "center"
+    alignSelf: 'center',
   },
   loginBtn: {
-    width: "50%",
+    width: '50%',
     borderRadius: 10,
     height: 38,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#FF5C8D",
-    alignSelf: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#FF5C8D',
+    alignSelf: 'center',
     marginTop: 20,
-    marginBottom: 20
+    marginBottom: 20,
   },
   Picker: {
-    width: "45%",
+    width: '45%',
     marginVertical: 10,
     borderRadius: 10,
     height: 30,
     borderWidth: 1,
-    alignContent: "center",
-    alignSelf: "flex-end",
+    alignContent: 'center',
+    alignSelf: 'flex-end',
   },
   inputViews: {
     borderWidth: 1,
     borderColor: '#B0003A',
     borderRadius: 10,
-    width: "80%",
+    width: '80%',
     height: 100,
-    alignItems: "center",
-    backgroundColor: "#fff",   //"#C4C4C4",
+    alignItems: 'center',
+    backgroundColor: '#fff', //"#C4C4C4",
     marginTop: 5,
     //opacity: 0.5,
   },

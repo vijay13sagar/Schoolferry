@@ -117,6 +117,7 @@ const location = ({ navigation }) => {
           })
 
           setModal1Visible(!modal1Visible);
+          navigation.pop();
     }
 
     return (

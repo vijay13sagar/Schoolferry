@@ -51,7 +51,7 @@ export default function Otpscreen() {
             </View>
             <Text style={{ marginVertical: 20, fontWeight: "300" }}>Didn't receive otp?</Text>
             <TouchableOpacity style={styles.loginBtn}>
-                <Text>Resend OTP</Text>
+                <Text style={{textDecorationLine: 'underline'}}>Resend OTP</Text>
             </TouchableOpacity>
         </View>
     );

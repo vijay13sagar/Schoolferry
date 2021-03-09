@@ -69,7 +69,8 @@ const Unsubhomescreen = ({ navigation }) => {
                 />
             </MapView>
             <View style={styles.textview}>
-                <Text style={styles.text}>Click to check service availability at your area</Text>
+            <Text style={styles.note}>* Click on icons to see schools we cater service to </Text>
+                <Text style={styles.text}>Check service availability at your area</Text>
             </View>
             <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate("location")}>
                 <Text style={styles.loginText}>Check Availability</Text>
@@ -86,9 +87,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#F9F2F2',
     },
     map: {
-        height: '68%',
-
-        // marginBottom: 20,
+        height: '70%',
     },
     textview: {
 
@@ -96,9 +95,9 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 20,
         alignSelf: 'center',
-        marginVertical: 30,
         paddingHorizontal: 10,
-        textAlign: 'center'
+        textAlign: 'center',
+        marginTop:35
     },
     loginBtn: {
         width: "60%",
@@ -109,12 +108,19 @@ const styles = StyleSheet.create({
         backgroundColor: "#ff5c8d",
         alignSelf: "center",
         backgroundColor: "#ff5c8d",
-        // marginVertical: 20
+         marginTop: 20
     },
     loginText: {
         color: 'black',
-        fontSize: 15,
+        fontSize: 16,
         // fontWeight:'700'
+    },
+    note:{
+        fontSize:16,
+        marginHorizontal:5,
+        //textAlign:'center',
+        color:'grey'
+
     }
 
 })
