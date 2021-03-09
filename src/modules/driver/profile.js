@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { Text,Alert, View, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import Ngrok from '../../constants/ngrok'
 import AsyncStorage from '@react-native-community/async-storage';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const Profile = ({ navigation }) => {
   const [data, getData] = useState([])
 
-  useEffect( async () => {
+
+    useEffect(() => {
+      (async () => {
     let token = await AsyncStorage.getItem('token')
     fetch(`${Ngrok.url}/api/profiledetails/driver/${token}`, {
       "method": "GET",
@@ -23,10 +26,26 @@ const Profile = ({ navigation }) => {
       .catch(err => {
         console.log(err);
       });
+    })();
   }, [])
+  const onPressLogout = async () => {
+    try {
+      const keys = await AsyncStorage.getAllKeys();
+      await AsyncStorage.multiRemove(keys);
+      console.log("working");
+      navigation.replace('Login');
+    Alert.alert('You have been logged out');
+  } catch (error) {
+      console.error('Error clearing app data.');
+  }
+    //AsyncStorage.removeItem('token');
+    //window.localStorage.clear();
+    //AsyncStorage.clear()
+    
+  }
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <TouchableOpacity style={styles.edit} onPress={()=> navigation.navigate("Update profile")}>
         <Text style={styles.loginText} >Edit</Text>
       </TouchableOpacity>
@@ -62,7 +81,10 @@ const Profile = ({ navigation }) => {
         >
           Change Password</Text>
       </TouchableOpacity>
-    </View>
+      <TouchableOpacity style={styles.loginBtn} onPress={() => onPressLogout()}  >
+        <Text style={styles.loginText}>Log Out</Text>
+      </TouchableOpacity>
+    </ScrollView>
   );
 }
 

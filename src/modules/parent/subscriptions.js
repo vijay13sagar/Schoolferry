@@ -11,6 +11,7 @@ const subscription = ({navigation}) =>  {
   const [childinfo,setChildInfo] = useState()
 
   useEffect( () => {
+    (async () => {
     const fetchData = navigation.addListener('focus', async() => {
       let token = await AsyncStorage.getItem('token')
       let response = await axios(`${Ngrok.url}/api/parent/registeration/${token}`)
@@ -30,7 +31,8 @@ const subscription = ({navigation}) =>  {
     })
     
     fetchData;
-  },[navigation])
+  })();
+},[navigation])
  
     return (
       <View style={styles.container} >

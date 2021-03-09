@@ -14,43 +14,24 @@ const App =({route,navigation}) =>  {
   const [selectedStartDate, setselectedStartDate] = useState("")
     const minDate=new Date();//Today
     const maxDate = moment(selectedStartDate).format('DD-MM-YYYY'); 
-    const kost=route.params.item.tripcost;
-    const s=route.params.schooladdress
     let tomorrow = selectedStartDate;
     const f=route.params.item.term;
-    const [stay,setStay] = useState("");
+    const [stay,setStay] = useState(true);
     let e;
-    if(f =='Monthly'){
-      e=30;
-    }else if(f =='Quarterly'){
-      e=91;
-    }else if(f=='Half Yearly'){
-      e=182;
-    }else if(f=="Yearly"){
-      e=365;
-    }
-    tomorrow = moment(tomorrow).add(e, 'day').format('DD-MM-YYYY');
-    console.log("type",typeof(tomorrow));
-    console.log("tom",tomorrow);
-    const payhandler=()=>{
-    if (tomorrow="Invalid date"){
-            setStay(true);
-            console.log("stay",stay);
-          }else {
-            setStay(false);
-          }
+    const payhandler=(selectedStartDate)=>{
+      setselectedStartDate(selectedStartDate);
+      setStay(false);
+        if(f =='Monthly'){
+          e=30;
+        }else if(f =='Quarterly'){
+          e=91;
+        }else if(f=='Half Yearly'){
+          e=182;
+        }else if(f=="Yearly"){
+          e=365;
         }
-    // useEffect( () => {
-    //   const fetchData = navigation.addListener('focus', async () => {
-    //     if ({tomorrow}="Invalid date"){
-    //       setStay(true);
-    //       console.log("stay",stay);
-    //     }else {
-    //       setStay(false);
-    //     }
-    //   })
-    //   fetchData
-    //   }, [navigation])
+      }
+    tomorrow = moment(tomorrow).add(e, 'day').format('DD-MM-YYYY');
     return (
       <View style={styles.container}>
         <StatusBar
@@ -75,7 +56,7 @@ const App =({route,navigation}) =>  {
           selectedDayColor="#ff5c8d"
           selectedDayTextColor="#FFFFFF"
           // onDateChange={this.onDateChange}
-          onDateChange={(selectedStartDate) => setselectedStartDate(selectedStartDate)}
+          onDateChange={(selectedStartDate) => payhandler(selectedStartDate)}
         />
         </View>
         <View>
@@ -93,7 +74,7 @@ const App =({route,navigation}) =>  {
         <Text style={styles.headertext} >School Name</Text>
         <Text style={styles.inputView2}>{route.params.schooladdress}</Text>
         </View>
-        <TouchableOpacity style={styles.loginBtn} disable={stay} onPress={()=>navigation.navigate('Pay Mode',{
+        <TouchableOpacity style={styles.loginBtn} disabled={stay} onPress={()=>navigation.navigate('Pay Mode',{
           maxDate: maxDate,
           tomorrow: tomorrow,
           f:f,

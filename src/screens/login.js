@@ -120,7 +120,7 @@ export default function Login({ navigation }) {
           keyboardType="numeric"
           style={styles.TextInput}
           placeholder="Email/Phone"
-          keyboardType="numeric"
+          maxLength={10}
           placeholderTextColor="#929292"
           onChangeText={(email) => setEmail(email)}
         />

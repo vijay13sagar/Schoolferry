@@ -12,6 +12,7 @@ const Homescreen = ({ navigation }) => {
   const [stat,setStat] = useState(null)
   const [data,getData] = useState([])
   useEffect( () => {
+    (async () => {
     const fetchData = navigation.addListener('focus', async () => {
     let token = await AsyncStorage.getItem('token')
     fetch(`${Ngrok.url}/api/driver/tripdetails/${token}`, {
@@ -37,7 +38,8 @@ const Homescreen = ({ navigation }) => {
       });
     })
     fetchData
-    }, [navigation])
+    })();
+  }, [navigation])
   const [pickerValue, setPickerValue] = useState("")
 
   return (

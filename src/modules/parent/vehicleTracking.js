@@ -10,7 +10,7 @@ const [lon, setLongitude]= useState(-122.08427209309676)
 const fetchApi = async() => {
   //let token = await AsyncStorage.getItem('token')
   axios
-    .get(`http://5f9e2c95b0b1.ngrok.io/api/driver/tracking/T001`)
+    .get(`${Ngrok.url}/api/driver/tracking/T001`)
     .then(function (response) {
       console.log("dat",response.data);
       setLatitude(response.data.latitude);

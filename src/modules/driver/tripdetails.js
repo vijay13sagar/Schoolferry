@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import {
+import {RefreshControl,
+    SafeAreaView,
     Text,
     View,
     ScrollView, Alert,
@@ -15,10 +16,13 @@ import Ngrok from '../../constants/ngrok';
 import { Picker } from '@react-native-picker/picker';
 import AsyncStorage from '@react-native-community/async-storage';
 
+const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  }
 const Checklist = ({ route, navigation }) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [att,setAtt] = useState("");
-    const [nannyID, setNannyid] = useState(route.params.item.nannyInfo.nannyId);
+    const nannyID=route.params.item.nannyInfo.nannyId;
     const [but, setBut] = useState('Start Trip')
     const [details, setDet] = useState([]);
     const [item1, setItem1] = useState([]);
@@ -27,46 +31,39 @@ const Checklist = ({ route, navigation }) => {
     const [selectedValue, setValue] = useState("");
     let TripID=route.params.item.trip_id;
     let VehicleID=route.params.item.vehilce;
-    // useEffect( () => {
-    //     const fetchData = navigation.addListener('focus', async () => {
-    //         console.log('hahah', route.params.item.trip_id);
-    //         let Trip = route.params.item.trip_id;
-    //     fetch(`${Ngrok.url}/api/driver/tripdetails/${TripID}`, {
-    //       "method": "GET",
-    //       "headers": {
-    //         Accept: 'application/json',
-    //         'Content-Type': 'application/json'
-    //       },
-    //     })
-    //       .then(response => response.json())
-    //       .then(responseJson => {
-    //         console.log('responsehshshs',responseJson);
-    //         setDet( responseJson)
-    //         console.log('details',details);
-    //         console.log('details',details.location);
-    //       })
-    //       .catch(err => {
-    //         console.log('error',err);
-    //       });
-    //     })
-    //     fetchData
-    //     }, [navigation])
-    const Allinone=(value)=>{
-        setValue(value);
-        console.log("hihiih", item2);
-        SetSwitchValue(value);
-        console.log('pickervalue', selectedValue)
-    }
-    const SetSwitchValue = (value) => {
-        // const data1 = item2.map(child => {
-        //     if (child.childId === item.childId) {
-        //         return { ...child, attend: !child.attend }
-        //     }
-        //     return child
-        // })
-        // //console.log("item1",k);
-        // console.log("why",data1);
-        // setItem2(data1)
+    const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
+    Children();
+  }, []);
+
+  const Children=()=>{
+    fetch(`${Ngrok.url}/api/driver/trip/${TripID}`, {
+        "method": "GET",
+        "headers": {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+      })
+        .then(response => response.json())
+        .then(responseJson => {
+          console.log('responsehshshs',responseJson);
+          console.log('lists',responseJson.childList);
+          setDet( responseJson.childList)
+          //console.log('details',details);
+        })
+        .catch(err => {
+          console.log('error',err);
+        });
+  }
+    useEffect( () => {
+        Children();
+        }, [])
+        console.log("details",details);
+    const SetSwitchValue = (id,value) => {
+       
         try {
             //console.log("working", selectedValue)
             axios({
@@ -77,17 +74,26 @@ const Checklist = ({ route, navigation }) => {
                     'Content-Type': 'application/json'
                 },
                 data: {
-                    childid: value,//item1.childId
+                    childid: id,//item1.childId
                     tripid: TripID,//route.params.item.trip_id
-                    attendance: true
+                    attendance: value
                 }
             })
                 .then(function (response) {
                     if (response.data.message == "attendance marked") {
-                        Alert.alert("Attendance")
-                        setAtt(response.data.totalMarkedAbsent);
-                        console.log("att",att);
+                        //Alert.alert("Attendance Marked")
+                        Alert.alert(
+                            "Child Attendance",
+                            "                  Attendance Marked               ",
+                            [
+                              { text: "OK", onPress: () => onRefresh() }
+                            ],
+                            { cancelable: false }
+                          );
+                      
                     }
+                    setAtt(response.data.totalMarkedAbsent);
+                    console.log("att",att);
                     console.log("ssss", response.data.totalMarkedAbsent);
                     console.log("attendess",att);
                     console.log("response", response.status);
@@ -123,15 +129,15 @@ const Checklist = ({ route, navigation }) => {
             console.log("errordetails", error);
         }
     }
-    const myUsers = () => {
-        //console.log("item2",item2[0].childId);
-        return item2 && item2.map((myValue) => {
-            return (
-                <Picker.Item label={myValue.childName}
-                    value={myValue.childId} key={myValue.childId} />
-            )
-        });
-    }
+    // const myUsers = () => {
+    //     //console.log("item2",item2[0].childId);
+    //     return item2 && item2.map((myValue) => {
+    //         return (
+    //             <Picker.Item label={myValue.childName}
+    //                 value={myValue.childId} key={myValue.childId} />
+    //         )
+    //     });
+    // }
     const Nannyprofile = () => {
         return (
             <View style={styles.detailsBox}>
@@ -142,7 +148,7 @@ const Checklist = ({ route, navigation }) => {
         );
     }
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <Modal
                 animationType="slide"
                 transparent={true}
@@ -166,7 +172,14 @@ const Checklist = ({ route, navigation }) => {
                 </View>
             </Modal>
 
-            <ScrollView>
+            <ScrollView ontentContainerStyle={styles.scrollView}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }
+      >
                 <View style={nannyID ? styles.firstbox : styles.secondbox} >
                     <Text style={styles.textTitle}>Trip ID - {route.params.item.trip_id}</Text>
                     <View style={styles.detailsBox}>
@@ -174,7 +187,7 @@ const Checklist = ({ route, navigation }) => {
                         <Text style={styles.textDetails}>Start Location: {route.params.item.location}</Text>
                         <Text style={styles.textDetails}>Vehicle ID: {route.params.item.vehilce}</Text>
                         <Text style={styles.textDetails}>Total Children: {route.params.item.noOfChildren}</Text>
-                        {/* <Text style={styles.textDetails}>Total Absent - {att}</Text> */}
+                        <Text style={styles.textDetails}>Total Absent - {att}</Text>
                         {route.params.item.nannyInfo.nannyId ? <Nannyprofile /> : null}
                     </View>
                 </View>
@@ -189,20 +202,9 @@ const Checklist = ({ route, navigation }) => {
                 <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('Check_list',{TripID:TripID,VehicleID:VehicleID})}>
                     <Text>Check List</Text>
                 </TouchableOpacity>
-                <View style={{flexDirection:'column'}}>
-                    <Text style={{marginLeft:15,alignSelf:'center',fontSize:18}}>Select Child to Mark Absent</Text>
-                <Picker
-                    selectedValue={selectedValue}
-                    style={styles.Picker}
-                    onValueChange={(value) => {Allinone(value)}}
-                    //onValueChange={(value) => { setValue(value), console.log("hihiih", item2), SetSwitchValue(value), console.log('pickervalue', selectedValue) }}
-                >
-                    {myUsers()}
-                </Picker>
-                </View>
                 <Text style={styles.absent}>Marked Absent</Text>
                 <FlatList
-                    data={item2} //item2
+                    data={details} //item2
                     renderItem={({ item }) => (
                         <View style={{ flexDirection: 'row', marginTop: 20, alignSelf: 'center', }}>
                             <TouchableOpacity style={styles.card} onPress={() => {
@@ -218,7 +220,7 @@ const Checklist = ({ route, navigation }) => {
                                 // setChildId(item.childId)
                                 // setSwitchValue(value)}}
                                 //onPress={()=>{setChildId(item.childId)}}
-                                //onValueChange={(value) => { setChildId(item.childId), console.log("child", childId), setSwitchValue(!item.attendance), console.log("value", value) }}
+                                onValueChange={(value) => { SetSwitchValue(item.childId,value) }}
                                 style={{ marginLeft: 10, }}
                             />
                         </View>
@@ -226,7 +228,7 @@ const Checklist = ({ route, navigation }) => {
                     keyExtractor={item => item.id}
                 />
             </ScrollView>
-        </View>
+        </SafeAreaView>
     );
 }
 export default Checklist;
@@ -237,7 +239,7 @@ const styles = StyleSheet.create({
     },
     firstbox: {
         width: '90%',
-        height: 280,
+        height: 300,
         borderRadius: 10,
         borderWidth: 1,
         borderColor: 'black',
@@ -247,7 +249,7 @@ const styles = StyleSheet.create({
     },
     secondbox: {
         width: '95%',
-        height: 175,
+        height: 200,
         borderRadius: 10,
         borderWidth: 1,
         borderColor: 'black',

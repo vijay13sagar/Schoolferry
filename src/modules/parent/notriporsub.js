@@ -11,6 +11,7 @@ const oldmap = ({ navigation }) => {
   const [userType, setUserType] = useState()
 
   useEffect(() => {
+    (async () => {
     const fetchData = navigation.addListener('focus', async () => { 
       let token = await AsyncStorage.getItem('token')
       let response = await axios(`${Ngrok.url}/api/parent/subscription/${token}`)
@@ -27,7 +28,8 @@ const oldmap = ({ navigation }) => {
     })
 
     fetchData;
-  }, [navigation])
+  })();
+}, [navigation])
 
 
   const Nosubs = () => {

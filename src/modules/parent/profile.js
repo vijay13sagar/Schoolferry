@@ -35,6 +35,17 @@ const Profile = ({navigation}) => {
 
     fetchData;        
   }, [navigation])
+  const onPressLogout = async () => {
+    try {
+      const keys = await AsyncStorage.getAllKeys();
+      await AsyncStorage.multiRemove(keys);
+      console.log("working");
+      navigation.replace('Login');
+    Alert.alert('You have been logged out');
+  } catch (error) {
+      console.error('Error clearing app data.');
+  }
+  }
 
   return (
     <View style={styles.container}>
@@ -66,7 +77,9 @@ const Profile = ({navigation}) => {
       >
         <Text style={styles.loginText}>Change Password</Text>
       </TouchableOpacity>
-
+      <TouchableOpacity style={styles.loginBtn} onPress={() => onPressLogout()}  >
+        <Text style={styles.loginText}>Log Out</Text>
+      </TouchableOpacity>
 
     </View>
   );
