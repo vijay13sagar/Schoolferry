@@ -13,6 +13,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import { Picker } from '@react-native-picker/picker';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import DateTimePicker from "react-native-modal-datetime-picker";
 import moment from 'moment'
 
 export default function addchild({ route, navigation }) {
@@ -26,6 +27,10 @@ export default function addchild({ route, navigation }) {
   const [pickerValue, setPickerValue]= useState()
   const [visible, setVisible] = useState(false)
   const [timerValue, setTimerValue] = useState(0)
+  const [textflag, setTextFlag] = useState(false)
+  const [textflag2, setTextFlag2] = useState(false)
+  const [datePickerVisible, setDatePickerVisible] = useState(false)
+  const [dateFlag, setDateFlag] = useState(false)
 
   const distanceCal = route.params.distance;
   console.log('distance',route.params.distance)
@@ -62,7 +67,7 @@ export default function addchild({ route, navigation }) {
           },
           data: {
             name: CN,
-            age: CA,
+            dob: CA,
             bloodgroup: pickerValue,
             address: HA,
             school: SA,
@@ -81,6 +86,12 @@ export default function addchild({ route, navigation }) {
              setCN("")
              setCA("")
              setPickerValue("")
+             setError("")
+             setST("")
+             setET("")
+             setTextFlag(false)
+             setTextFlag2(false)
+             setDateFlag(false)
               navigation.navigate('Subscription_list', {
                 childID: response.data,
                 school: SA
@@ -108,13 +119,22 @@ export default function addchild({ route, navigation }) {
     if(timerValue == "1"){
       setST(moment(date).format('HH:mm'))
      setTimerValue(0)
+     setTextFlag(true)
     }
     else if (timerValue == "2"){
       setET(moment(date).format('HH:mm'))
      setTimerValue(0)
+     setTextFlag2(true)
     }
 
     setVisible(false)
+  };
+
+ const handleDatePicked = date => {
+    console.log("A date has been picked: ", moment(date).format('DD-MM-yyyy'));
+    setCA(moment(date).format('DD-MM-yyyy'))
+    setDateFlag(true)
+    setDatePickerVisible(false)
   };
 
   return (
@@ -128,6 +148,14 @@ export default function addchild({ route, navigation }) {
         is24Hour={true}
         display="spinner"
       />
+       <DateTimePicker
+          isVisible={datePickerVisible}
+          onConfirm={handleDatePicked}
+          onCancel={() => setDatePickerVisible(false)}
+          display="spinner"
+          maximumDate={new Date(2021, 11, 31)}
+          minimumDate={new Date(2002, 0, 1)}
+        />
   
      <View style={{marginTop:60}}>
       <View style={styles.inputView }>
@@ -139,16 +167,13 @@ export default function addchild({ route, navigation }) {
           value= {CN}
         />
       </View>
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Child Age"
-          keyboardType="numeric"
-          placeholderTextColor="#929292"
-          onChangeText={(CA) => setCA(CA)}
-          value={CA}
-        />
-      </View>
+
+      <TouchableOpacity style={styles.inputView}
+        onPress={()=> setDatePickerVisible(true) }>
+        <Text style={[styles.dobText, dateFlag? styles.bg1 : styles.bg2 ]}>
+        {dateFlag? CA :"Date of birth"}</Text>
+      </TouchableOpacity>
+
       <View style={styles.inputaddress}>
         <TextInput
           
@@ -175,13 +200,13 @@ export default function addchild({ route, navigation }) {
       <TouchableOpacity style={styles.pickerBtn}
         onPress={()=>{
           setVisible(true), setTimerValue(1) } }>
-        <Text style={styles.Text}>School Start Time</Text>
+        <Text style={[styles.Text, textflag ? styles.bg1 : styles.bg2]}>{textflag? ST :"School Start Time"}</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.pickerBtn}
         onPress={()=>{
           setVisible(true), setTimerValue(2) }}  >
-        <Text style={styles.Text}>School End Time</Text>
+        <Text style={[styles.Text, textflag2 ? styles.bg1 : styles.bg2]}>{textflag2? ET :"School End Time"}</Text>
       </TouchableOpacity>
       </View>
       <Picker
@@ -206,8 +231,9 @@ export default function addchild({ route, navigation }) {
         onPress={handlePress} >
         <Text style={styles.loginText}>Add Child</Text>
       </TouchableOpacity>
-
-
+          <Text style= {styles.serviceText}>
+            * Nanny service is only provided for children of age below 9 years.
+          </Text>
 
     </View>
   );
@@ -230,10 +256,7 @@ const styles = StyleSheet.create({
   },
   TextInput: {
     flex: 1,
-    //height: 40,
-    borderRadius: 12,
-    //borderColor: '#ff5c8d',
-    //marginTop: 3,  
+    borderRadius: 12, 
     padding: 8,
     alignSelf: "center"
 
@@ -293,5 +316,22 @@ const styles = StyleSheet.create({
   text:{
     fontSize:16,
     color:'#B0003A'
+  },
+  dobText:{
+    padding:8, 
+    alignSelf:'center',
+  },
+  bg1:{
+    color:'#000'
+  },
+  bg2:{
+    color:'#929292'
+  },
+  serviceText:{
+    color:'red',
+    fontSize:16,
+    marginTop:15,
+    marginLeft:10,
+    //marginRight:5,
   }
 });

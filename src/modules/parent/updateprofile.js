@@ -41,6 +41,9 @@ const updateProfile = ({route, navigation}) => {
             //Alert.alert('Profile Updated Successfully')
             navigation.goBack()
           }
+          else if ( responseJson.status == 401 ){
+            Alert.alert("Contact already exists. please try with a different contact number")
+          }
           else {
             Alert.alert("Failed. Please Try Again ")
           }

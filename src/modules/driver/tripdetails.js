@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
     Text,
     View,
-    ScrollView,Alert,
+    ScrollView, Alert,
     StyleSheet,
     FlatList,
     TouchableOpacity,
@@ -12,67 +12,135 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
 import Ngrok from '../../constants/ngrok';
+import { Picker } from '@react-native-picker/picker';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const Checklist = ({ route, navigation }) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [att,setAtt] = useState("");
-    const [but,setBut] = useState('Start Trip')
-    let [k,setK]= useState("");
-    let v=route.params.item.trip_id;
+    const [nannyID, setNannyid] = useState(route.params.item.nannyInfo.nannyId);
+    const [but, setBut] = useState('Start Trip')
+    const [details, setDet] = useState([]);
     const [item1, setItem1] = useState([]);
-    const [item2, setItem2] = useState(route.params.item.childList.map(child=>({...child,attend:false})));
-    // console.log('hahah', route.params);
-    // console.log('hahasdkhdh', route.params.item);
-    // console.log('hshhash', route.params.item.nannyInfo.nannyId);
-    // console.log('hahah', route.params.item.childList.childId);
-    // console.log('sdugfryweigfwi', item1.childId);
-    const setSwitchValue = (item,value) => {
-        const data1 = item2.map(child => {
-            if (child.childId === item.childId) {
-                return { ...child, attend: !child.attend }
-            }
-            return child
-        })
-        console.log("item1",k);
-        console.log("why",data1);
-        setItem2(data1)
+    const [childId, setChildId] = useState("");
+    const [item2, setItem2] = useState(route.params.item.childList);
+    const [selectedValue, setValue] = useState("");
+    let TripID=route.params.item.trip_id;
+    let VehicleID=route.params.item.vehilce;
+    // useEffect( () => {
+    //     const fetchData = navigation.addListener('focus', async () => {
+    //         console.log('hahah', route.params.item.trip_id);
+    //         let Trip = route.params.item.trip_id;
+    //     fetch(`${Ngrok.url}/api/driver/tripdetails/${TripID}`, {
+    //       "method": "GET",
+    //       "headers": {
+    //         Accept: 'application/json',
+    //         'Content-Type': 'application/json'
+    //       },
+    //     })
+    //       .then(response => response.json())
+    //       .then(responseJson => {
+    //         console.log('responsehshshs',responseJson);
+    //         setDet( responseJson)
+    //         console.log('details',details);
+    //         console.log('details',details.location);
+    //       })
+    //       .catch(err => {
+    //         console.log('error',err);
+    //       });
+    //     })
+    //     fetchData
+    //     }, [navigation])
+    const Allinone=(value)=>{
+        setValue(value);
+        console.log("hihiih", item2);
+        SetSwitchValue(value);
+        console.log('pickervalue', selectedValue)
+    }
+    const SetSwitchValue = (value) => {
+        // const data1 = item2.map(child => {
+        //     if (child.childId === item.childId) {
+        //         return { ...child, attend: !child.attend }
+        //     }
+        //     return child
+        // })
+        // //console.log("item1",k);
+        // console.log("why",data1);
+        // setItem2(data1)
         try {
-            console.log("working",value)
+            //console.log("working", selectedValue)
             axios({
-              method: 'POST',
-              url: `${Ngrok.url}/api/driver/attendance`,
-              "headers": {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-              },
-              data: {
-                childid:k,//item1.childId
-                tripid:v,//route.params.item.trip_id
-                attendance:value
-              }
-            })
-              .then(function (response) {
-                if (response.data.message == "attendance marked") {
-                  Alert.alert("Attendance")
-                  setAtt(response.data.totalMarkedAbsent);
+                method: 'POST',
+                url: `${Ngrok.url}/api/driver/attendance`,
+                "headers": {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                data: {
+                    childid: value,//item1.childId
+                    tripid: TripID,//route.params.item.trip_id
+                    attendance: true
                 }
-                // if (response.status == 200) {
-                //     Alert.alert("Attendance Marked")
-                //     setAtt(response.data.totalMarkedAbsent);
-                //   }
-                // if (response.totalMarkedAbsent) {
-                //     Alert.alert(Total Marked absent {response.totalMarkedAbsent})
-                //   }
-                console.log("ssss",response.data.totalMarkedAbsent);
-                  console.log("attendess",att);
-                console.log("response", response.status);
-              })
-          }
-             catch(error){
-              console.log("errordetails",error);
-             }
-          }
+            })
+                .then(function (response) {
+                    if (response.data.message == "attendance marked") {
+                        Alert.alert("Attendance")
+                        setAtt(response.data.totalMarkedAbsent);
+                        console.log("att",att);
+                    }
+                    console.log("ssss", response.data.totalMarkedAbsent);
+                    console.log("attendess",att);
+                    console.log("response", response.status);
+                })
+        }
+        catch (error) {
+            console.log("errordetails", error);
+        }
+    }
 
+    const starting = async () => {
+        setBut("Trip Inprogress");
+        try {
+            axios({
+                method: 'POST',
+                url: `${Ngrok.url}/api/driver/trip/start`,
+                "headers": {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                data: {
+                    tripid: route.params.item.trip_id,
+                }
+            })
+                .then(function (response) {
+                    if (response.status == 200) {
+                        Alert.alert("Trip started")
+                    }
+                    console.log("response for starttrip", response.status);
+                })
+        }
+        catch (error) {
+            console.log("errordetails", error);
+        }
+    }
+    const myUsers = () => {
+        //console.log("item2",item2[0].childId);
+        return item2 && item2.map((myValue) => {
+            return (
+                <Picker.Item label={myValue.childName}
+                    value={myValue.childId} key={myValue.childId} />
+            )
+        });
+    }
+    const Nannyprofile = () => {
+        return (
+            <View style={styles.detailsBox}>
+                <Text style={styles.textDetails}>Nanny Id - {route.params.item.nannyInfo.nannyId}</Text>
+                <Text style={styles.textDetails}>Nanny Name - {route.params.item.nannyInfo.nannyName} </Text>
+                <Text style={styles.textDetails}>Nanny Contact - {route.params.item.nannyInfo.nannyContact}</Text>
+            </View>
+        );
+    }
     return (
         <View style={styles.container}>
             <Modal
@@ -99,26 +167,42 @@ const Checklist = ({ route, navigation }) => {
             </Modal>
 
             <ScrollView>
-                <View style={styles.firstbox} >
-                    <Text style={styles.textTitle}>Trip Number - 1</Text>
+                <View style={nannyID ? styles.firstbox : styles.secondbox} >
+                    <Text style={styles.textTitle}>Trip ID - {route.params.item.trip_id}</Text>
                     <View style={styles.detailsBox}>
                         <Text style={styles.textDetails}>Destination: {route.params.item.destination} </Text>
-                        <Text style={styles.textDetails}>Total Present - {route.params.item.noOfChildren}</Text>
-                        <Text style={styles.textDetails}>Nanny Id - {route.params.item.nannyInfo.nannyId ?<Text>{route.params.item.nannyInfo.nannyId}</Text> : <Text>Not Applicable</Text>}</Text>
-                        <Text style={styles.textDetails}>Nanny Name - {route.params.item.nannyInfo.nannyName ?<Text>{route.params.item.nannyInfo.nannyName}</Text> : <Text>Not Applicable</Text>}</Text>
-                        <Text style={styles.textDetails}>Nanny Contact - {route.params.item.nannyInfo.nannyContact ? <Text>{route.params.item.nannyInfo.nannyContact}</Text> : <Text>Not Applicable</Text>}</Text>
-                        <Text style={styles.textDetails}>Total Absent - {att}</Text>
+                        <Text style={styles.textDetails}>Start Location: {route.params.item.location}</Text>
+                        <Text style={styles.textDetails}>Vehicle ID: {route.params.item.vehilce}</Text>
+                        <Text style={styles.textDetails}>Total Children: {route.params.item.noOfChildren}</Text>
+                        {/* <Text style={styles.textDetails}>Total Absent - {att}</Text> */}
+                        {route.params.item.nannyInfo.nannyId ? <Nannyprofile /> : null}
                     </View>
                 </View>
-                <TouchableOpacity style={styles.loginBtn}  onPress={()=>setBut("Trip Inprogress")}>
+                <TouchableOpacity style={styles.loginBtn} onPress={() => {
+                    starting()
+                }}>
                     <Text>{but}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('Trackee',{refresh:true})}>
+                <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('Trackee', { refresh: true, tripid: route.params.item.trip_id })}>
                     <Text>Live location</Text>
                 </TouchableOpacity>
-                <Text style={styles.absent}>Mark as Absent</Text>
+                <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('Check_list',{TripID:TripID,VehicleID:VehicleID})}>
+                    <Text>Check List</Text>
+                </TouchableOpacity>
+                <View style={{flexDirection:'column'}}>
+                    <Text style={{marginLeft:15,alignSelf:'center',fontSize:18}}>Select Child to Mark Absent</Text>
+                <Picker
+                    selectedValue={selectedValue}
+                    style={styles.Picker}
+                    onValueChange={(value) => {Allinone(value)}}
+                    //onValueChange={(value) => { setValue(value), console.log("hihiih", item2), SetSwitchValue(value), console.log('pickervalue', selectedValue) }}
+                >
+                    {myUsers()}
+                </Picker>
+                </View>
+                <Text style={styles.absent}>Marked Absent</Text>
                 <FlatList
-                    data={item2}
+                    data={item2} //item2
                     renderItem={({ item }) => (
                         <View style={{ flexDirection: 'row', marginTop: 20, alignSelf: 'center', }}>
                             <TouchableOpacity style={styles.card} onPress={() => {
@@ -128,10 +212,13 @@ const Checklist = ({ route, navigation }) => {
                                 <Text style={styles.itemText}>{item.childName},{item.childId}</Text>
                             </TouchableOpacity>
                             <Switch
-                                value={item.attend}
-                                // //trackColor={{ true: "red" }}
-                                onValueChange={(value) => {console.log("navv",value) ,setK(item.childId),setSwitchValue(item,value)}}
-                                
+                                value={item.attendance}
+                                //onValueChange={(value) => {console.log("navv",value) ,setK(item.childId),setSwitchValue(item,value)}}
+                                // onValueChange={(value)=>{console.log("value",value)
+                                // setChildId(item.childId)
+                                // setSwitchValue(value)}}
+                                //onPress={()=>{setChildId(item.childId)}}
+                                //onValueChange={(value) => { setChildId(item.childId), console.log("child", childId), setSwitchValue(!item.attendance), console.log("value", value) }}
                                 style={{ marginLeft: 10, }}
                             />
                         </View>
@@ -142,7 +229,6 @@ const Checklist = ({ route, navigation }) => {
         </View>
     );
 }
-
 export default Checklist;
 
 const styles = StyleSheet.create({
@@ -151,7 +237,17 @@ const styles = StyleSheet.create({
     },
     firstbox: {
         width: '90%',
-        height: 230,
+        height: 280,
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: 'black',
+        backgroundColor: '#fff',
+        alignSelf: 'center',
+        marginVertical: 15,
+    },
+    secondbox: {
+        width: '95%',
+        height: 175,
         borderRadius: 10,
         borderWidth: 1,
         borderColor: 'black',
@@ -186,6 +282,15 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: '600',
         marginTop: 4,
+    },
+    Picker: {
+        width: "40%",
+        marginVertical: 0,
+        borderRadius: 10,
+        height: 30,
+        borderWidth: 1,
+        alignContent: "center",
+        alignSelf: "center",
     },
     card: {
         backgroundColor: '#32cd32',
@@ -262,6 +367,6 @@ const styles = StyleSheet.create({
         fontSize: 15,
         //marginTop:10,
         color: 'red',
-    }
-
-})
+    },
+}
+)

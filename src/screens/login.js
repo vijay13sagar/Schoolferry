@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from 'react';
 import {
   StyleSheet,
   StatusBar,
@@ -9,45 +9,48 @@ import {
   Button,
   TouchableOpacity,
   Alert,
-} from "react-native";
+} from 'react-native';
 
 import Ngrok from '../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
 
-
-export default function Login({ navigation }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [{ emailError }, setEmailError] = useState("");
-  const [{ passwordError }, setPasswordError] = useState("");
+export default function Login({navigation}) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [{emailError}, setEmailError] = useState('');
+  const [{passwordError}, setPasswordError] = useState('');
   const pressHandler = () => {
     navigation.navigate('Sign up');
-  }
+  };
   validateEmail = (email) => {
     //var regex_mail = /^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)$/;
-    var regex_phone = /^((\+91)?|91)?[789][0-9]{9}/
+    var regex_phone = /^((\+91)?|91)?[789][0-9]{9}/;
     //return regex_mail.test(email)
     if (regex_phone.test(email)) {
-      return true
+      return true;
     }
-    return false
+    return false;
   };
   const validateFunction = () => {
     if (!email) {
-      setEmailError({ emailError: "Email/Phone Field Cannot be Empty" })
-      return false
+      setEmailError({emailError: 'Email/Phone Field Cannot be Empty'});
+      return false;
     }
     if (!validateEmail(email)) {
-      setEmailError({ emailError: "Enter Valid Email/Phone" })
-      return false
+      setEmailError({emailError: 'Enter Valid Email/Phone'});
+      return false;
     }
     if (!password) {
-      setPasswordError({ passwordError: "Password Cannot be Empty" })
-      return false
+      setPasswordError({passwordError: 'Password Cannot be Empty'});
+      return false;
     }
-    return true
-  }
-  const handleSubmitpPress = () => {
+    return true;
+  };
+
+  const handleSubmitpPress = async () => {
+    let firebaseToken = await AsyncStorage.getItem('FBtoken');
+    console.log('FB token', firebaseToken);
+
     if (validateFunction()) {
       /* const body = {
          id: email,
@@ -55,67 +58,67 @@ export default function Login({ navigation }) {
        }*/
       /*let response = await loginApi(body)*/
       fetch(`${Ngrok.url}/api/login`, {
-        "method": "POST",
-        "headers": {
+        method: 'POST',
+        headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           id: email,
-          password: password
-        })
+          password: password,
+          token: firebaseToken,
+        }),
       })
-        .then(response => response.json())
-        .then(responseJson => {
-          console.log('response',responseJson)
-          
-          if (responseJson[1] == "Parent") {
-            AsyncStorage.setItem("token", responseJson[0])
-            navigation.replace('Parent Interface')
-          } else if (responseJson[1] == "Driver") {
-            AsyncStorage.setItem("token", responseJson[0])
-            navigation.replace('Driver Interface')
+        .then((response) => response.json())
+        .then((responseJson) => {
+          console.log('response', responseJson);
+
+          if (responseJson[1] == 'Parent') {
+            AsyncStorage.setItem('token', responseJson[0]);
+            navigation.replace('Parent Interface');
+          } else if (responseJson[1] == 'Driver') {
+            AsyncStorage.setItem('token', responseJson[0]);
+            navigation.replace('Driver Interface');
+          } else if (responseJson[1] == 'Admin') {
+            AsyncStorage.setItem('token', responseJson[0]);
+            navigation.replace('Admin Interface');
+          } else if (responseJson[1] == 'Nanny') {
+            AsyncStorage.setItem('token', responseJson[0]);
+            navigation.replace('Nanny Interface');
+          } else if ((responseJson.message = 'Invalid contact/password')) {
+            Alert.alert('Incorrect contact/password');
           }
-          else if (responseJson[1] == "Admin") {
-            AsyncStorage.setItem("token", responseJson[0])
-            navigation.replace('Admin Interface')
-          }
-          else if (responseJson[1] == "Nanny") {
-            AsyncStorage.setItem("token", responseJson[0])
-            navigation.replace('Nanny Interface')
-          }
-          else if (responseJson.message = "Invalid contact/password"){
-            Alert.alert("Incorrect contact/password")
-          }
+           else if(responseJson.message = "Token not provided"){
+           Alert.alert("Token not sent")
+         }
         })
-        .catch( (error) => {
-          console.log('error',error) // 401
-         // console.log(error.response.data.error) //Please Authenticate or whatever returned from server
-        // if(error.responseJson.status == 401){
-        //   //redirect to login
-        //   Alert.alert('Phone Number Alredy Exist!')
-        // }
-     
-        })
-        /*.catch(err => {
+        .catch((error) => {
+          console.log('error', error); // 401
+          // console.log(error.response.data.error) //Please Authenticate or whatever returned from server
+          // if(error.responseJson.status == 401){
+          //   //redirect to login
+          //   Alert.alert('Phone Number Alredy Exist!')
+          // }
+        });
+      /*.catch(err => {
           console.log(err);
         });*/
     }
-  }
+  };
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={require("../assets/Logo.png")} />
+      <Image style={styles.image} source={require('../assets/Logo.png')} />
       <StatusBar
         barStyle="light-content"
         // dark-content, light-content and default
         hidden={false}
         //To hide statusBar
-        backgroundColor='#e91e63'
+        backgroundColor="#e91e63"
         //Background color of statusBar only works for Android
         translucent={false}
-      //allowing light, but not detailed shapes
+        //allowing light, but not detailed shapes
       />
-      <View style={styles.inputView} >
+      <View style={styles.inputView}>
         <TextInput
           keyboardType="numeric"
           style={styles.TextInput}
@@ -136,21 +139,20 @@ export default function Login({ navigation }) {
         />
       </View>
       <Text style={styles.error}>{passwordError}</Text>
-      <TouchableOpacity onPress={() => navigation.navigate('Forgot Password')}  >
+      <TouchableOpacity onPress={() => navigation.navigate('Forgot Password')}>
         <Text style={styles.forgot_button}>Forgot Password?</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.loginBtn}
-        onPress={handleSubmitpPress} >
+      <TouchableOpacity style={styles.loginBtn} onPress={handleSubmitpPress}>
         <Text style={styles.loginText}>LOGIN</Text>
       </TouchableOpacity>
-      <Text
-        style={styles.registerTextStyle}>
-        Don't Have An Account?
-       </Text>
+      <Text style={styles.registerTextStyle}>Don't Have An Account?</Text>
       <TouchableOpacity onPress={pressHandler}>
-        <Text style={{
-          color: '#1E90FF', textDecorationLine: 'underline', fontSize: 13,
-        }}>
+        <Text
+          style={{
+            color: '#1E90FF',
+            textDecorationLine: 'underline',
+            fontSize: 13,
+          }}>
           Sign Up
         </Text>
       </TouchableOpacity>
@@ -160,9 +162,9 @@ export default function Login({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F9F2F2",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: '#F9F2F2',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   image: {
     marginBottom: 40,
@@ -171,10 +173,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#B0003A',
     borderRadius: 10,
-    width: "80%",
+    width: '80%',
     height: 45,
-    alignItems: "center",
-    backgroundColor: "#fff",
+    alignItems: 'center',
+    backgroundColor: '#fff',
     marginTop: 5,
     //opacity: 0.5,
   },
@@ -187,20 +189,20 @@ const styles = StyleSheet.create({
     color: '#DC143C',
     fontSize: 11,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   forgot_button: {
     height: 30,
     color: '#1E90FF',
   },
   loginBtn: {
-    width: "60%",
+    width: '60%',
     borderRadius: 10,
     height: 40,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 60,
-    backgroundColor: "#ff5c8d",
+    backgroundColor: '#ff5c8d',
   },
   registerTextStyle: {
     marginTop: 10,

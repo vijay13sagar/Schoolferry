@@ -206,6 +206,7 @@ export default function App({ route,navigation }) {
         <TextInput
           style={styles.TextInput}
           placeholder="Card Number"
+          keyboardType="numeric"
           value={CardN}
           placeholderTextColor="#929292"
           onChangeText={(CardN) => setCardN(CardN)}

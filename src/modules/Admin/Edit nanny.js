@@ -5,6 +5,7 @@ import {
   View,
   Image,
   StatusBar,
+  Alert,
   TextInput,
   TouchableOpacity,
 } from "react-native";
@@ -14,7 +15,7 @@ import Ngrok from '../../constants/ngrok';
 import axios from 'axios';
 
 
-export default function Edit_Nanny({ route }) {
+export default function Edit_Nanny({ route,navigation }) {
 
   let c = route.params.tripid1;
   console.log("sfsdffasdas", c);
@@ -76,9 +77,9 @@ export default function Edit_Nanny({ route }) {
       .then(responseJson => {
         console.log(responseJson);
         if (responseJson.message == "nanny changed") {
-          alert('Changed Successfully')
+          Alert.alert('Changed Successfully','', [{text: 'Proceed', onPress:() => navigation.navigate('Home_page')}])
         } else {
-          alert('Try again!')
+          Alert.alert('Try again!')
         }
         //alert(JSON.stringify(response))
       })
@@ -127,7 +128,7 @@ return (
       </View>
       <TouchableOpacity style={styles.loginBtn}
         onPress={pressHandler} >
-        <Text style={styles.loginText}>Add Nanny</Text>
+        <Text style={styles.loginText}>Assign Nanny</Text>
       </TouchableOpacity>
 
     </View>

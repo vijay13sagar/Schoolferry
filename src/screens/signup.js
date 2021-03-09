@@ -11,38 +11,28 @@ import {
 } from "react-native";
 import Ngrok from '../constants/ngrok';
 import axios from 'axios';
-
-
-
-export default function App() {
+import Login from './login'
+export default function App({navigation}) {
   const [email, setEmail] = useState("");
   const [Name, setName] = useState("");
-
   const [contact, setcontact] = useState("");
   const [password, setpassword] = useState("");
   const [{ emailError }, setEmailError] = useState("");
   const [{ contactError }, setcontactError] = useState("");
   const [{ emptyFields }, setemptyFeilds] = useState("");
-
-
   const validateEmail = (email) => {
     const regex_mail = /^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)$/;
     if (regex_mail.test(email)) {
       return true
     }
   };
-
   const validatecontact = (contact) => {
-
     var regex_phone = /^((\+91)?|91)?[789][0-9]{9}/
-
     if (regex_phone.test(contact)) {
       return true
     }
     else { return false }
-
   };
-
   const validateFunction = () => {
     if (!Name || !email || !contact || !password) {
       setemptyFeilds({ emptyFields: "Please Enter All The Details" })
@@ -52,7 +42,6 @@ export default function App() {
       setEmailError({ emailError: "Enter Valid Email Id" })
       setcontactError({ contactError: null })
       setemptyFeilds({ emptyFields: null })
-
       return false
     }
     else if (!validatecontact(contact)) {
@@ -61,13 +50,9 @@ export default function App() {
       return false
     }
     return true
-
   }
-
   const pressHandler = () => {
     if (validateFunction()) {
-
-
       try {
         axios({
           method: 'POST',
@@ -81,35 +66,29 @@ export default function App() {
             email: email,
             contact: contact,
             password: password
-
           }
         })
           .then(function (response) {
             if (response.status == 200) {
-              Alert.alert('Signup Successful')
+              Alert.alert('Signup Successful, Please Login','', [{text: 'Proceed', onPress: () => navigation.navigate('Login')}])
             }
-
-            console.log("response", response);
+           //console.log("response", response);
           })
           .catch(function (error) {
             console.log(error.response.status) // 401
             console.log(error.response.data.error) //Please Authenticate or whatever returned from server
             if (error.response.status == 401) {
               //redirect to login
-              Alert.alert('Already Exists, pleae try with a new number')
+              Alert.alert('Contact Already Exists, pleae try with a new Contact')
             }
-
           })
       }
       catch (error) {
         console.log("errordetails", error);
       }
-
     }
   }
   return (
-
-
     <View style={styles.container}>
       <Image style={styles.image} source={require("../assets/Logo.png")} />
       <StatusBar
@@ -117,13 +96,11 @@ export default function App() {
         // dark-content, light-content and default
         hidden={false}
         //To hide statusBar
-        backgroundColor='#e91e63'
+        backgroundColor='#E91E63'
         //Background color of statusBar only works for Android
         translucent={false}
       //allowing light, but not detailed shapes
-
       />
-
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
@@ -132,8 +109,6 @@ export default function App() {
           onChangeText={(Name) => setName(Name)}
         />
       </View>
-
-
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
@@ -142,7 +117,6 @@ export default function App() {
           onChangeText={(email) => setEmail(email)}
         />
       </View>
-
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
@@ -153,7 +127,6 @@ export default function App() {
           onChangeText={(contact) => setcontact(contact)}
         />
       </View>
-
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
@@ -163,19 +136,14 @@ export default function App() {
           onChangeText={(password) => setpassword(password)}
         />
       </View>
-
       <Text style={styles.error}>{emptyFields}</Text>
       <Text style={styles.error}>{emailError}</Text>
       <Text style={styles.error}>{contactError}</Text>
       <TouchableOpacity style={styles.loginBtn} onPress={pressHandler} >
         <Text style={styles.loginText}>SIGN UP</Text>
-
       </TouchableOpacity>
-
     </View>
-
   );
-
 }
 const styles = StyleSheet.create({
   container: {
@@ -184,14 +152,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-
   image: {
     marginBottom: 40,
   },
-
   inputView: {
     borderWidth: 1,
-    borderColor: '#b0003a',
+    borderColor: '#B0003A',
     borderRadius: 10,
     width: "80%",
     height: 45,
@@ -207,7 +173,7 @@ const styles = StyleSheet.create({
   },
   error: {
     padding: 1,
-    color: '#dc143c',
+    color: '#DC143C',
     fontSize: 11,
     alignItems: 'flex-start',
     justifyContent: 'center'
@@ -215,8 +181,7 @@ const styles = StyleSheet.create({
   forgot_button: {
     height: 30,
     marginBottom: 15,
-    color: '#1e90ff',
-
+    color: '#1E90FF',
   },
   loginBtn: {
     width: "50%",
@@ -224,7 +189,7 @@ const styles = StyleSheet.create({
     height: 38,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#ff5c8d",
+    backgroundColor: "#FF5C8D",
     alignSelf: "center",
     marginTop: 20,
   },
@@ -234,3 +199,15 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
 });
+
+
+
+
+
+
+
+
+
+
+
+

@@ -51,7 +51,7 @@ function Subscriptions() {
       <Stack.Screen
         name="Subscription_list"
         component={Subscriptionlist}
-        options={{ title: 'Subscription list' ,}} // headerShown: false
+        options={{ title: 'Subscriptions' ,}} // headerShown: false
       />
       <Stack.Screen
         name="Pause Plan"
