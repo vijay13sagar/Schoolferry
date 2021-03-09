@@ -8,11 +8,8 @@ import axios from 'axios';
 
 const Subscriptions = ({ route, navigation }) => {
   const [data, setData] = useState("")
-  const [modalVisible, setModalVisible] = useState(false);
-  const [pickerValue, setPickerValue] = useState()
-  const [selectedValue,setValue] = useState()
-
   const [childid,setChild] = useState (route.params.childID)
+
   const skool = route.params.school;
   const Homeaddress = route.params.homeaddress;
   const distance = route.params.distance 
@@ -40,100 +37,11 @@ const Subscriptions = ({ route, navigation }) => {
 
       fetchData();
    }, [])
-  
-
-  
- 
-   /*const GetData = async () => {
-     let token = await AsyncStorage.getItem('token')
-     console.log(token)
-     try {
-       axios({
-         method: 'GET',
-          url: `${Ngrok.url}/api/parent/childlist/P007`,
-        // url: 'https://jsonplaceholder.typicode.com/users?_limit=2',
-         "headers": {
-           Accept: 'application/json',
-           'Content-Type': 'application/json'
-         }
- 
-       })
-         .then(function (response) {
-            console.log(response.data.childList)
-           setPickerValue(response.data.childList)
-           
-
-           
- 
-         })
-     }
-     catch (error) {
-       console.log("errordetails", error);
-     }
-   }
- 
-   const myUsers = () => {
-    // console.log(pickerValue)
-    
-          return pickerValue && pickerValue.map((myValue) => {
-          return (
-            <Picker.Item label={myValue.name}
-              value={myValue} key={myValue.id}/>
-          )
-        }); 
-   }*/
-
-  const verifyHandler = () => {
-    setModalVisible(false)
-    navigation.navigate('location')
-  }
-
-  const onpressSame = () => {
-      setModalVisible(false)
-      navigation.navigate('Add Child', {
-      distance: distance,
-      schooladdress: skool,
-      homeaddress: Homeaddress,
-    })
-  }
 
 
   return (
     <View style={styles.container}>
       <ScrollView>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-      >
-        <View style={styles.modalContainer}>
-          <Ionicons name="close-circle-outline"
-            color="#fff" size={30}
-            style={styles.icon}
-            onPress={(modalVisible) => setModalVisible(!modalVisible)}
-          />
-          <View style={styles.modalBody}>
-
-            <Text style={styles.message}>In case location of residence/school is different , plese verify.</Text>
-
-            <TouchableOpacity style={styles.closeModal}
-              onPress={verifyHandler}
-            >
-              <Text style={{ fontSize: 17, }}>Verify</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={{ alignSelf: 'center', marginTop: 5, }}
-              onPress={onpressSame} >
-              <Text style={{ color: '#1E90FF', textDecorationLine: 'underline', fontSize: 19, }}>
-                It's same
-              </Text>
-            </TouchableOpacity>
-
-          </View>
-        </View>
-      </Modal>
-
       <View style={styles.firstBox}>
         <Text style={styles.planTitleText}>Subscription Plans  </Text>
 
@@ -155,38 +63,36 @@ const Subscriptions = ({ route, navigation }) => {
                 <Image style={styles.avatar} source={{ uri: 'https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg' }} />
                 <Text style={styles.typeOfSubscription}>{item.term}</Text>
 
+                <View style={{ flexDirection: 'row' }}>
+                  <Text style={styles.serviceDetails}>Trip Cost</Text>
+                  <Text style={styles.price}> -  ₹ {item.tripcost}</Text>
+                </View>
 
                 <View style={{ flexDirection: 'row' }}>
                   <Text style={styles.serviceDetails}>Nanny</Text>
-                  <Text style={styles.price}> - {item.nannycost}</Text>
+                  <Text style={styles.price}> -  ₹ {item.nannycost}</Text>
                 </View>
 
                 <View style={{ flexDirection: 'row' }}>
-                  <Text style={styles.serviceDetails}>Gst</Text>
-                  <Text style={styles.price}> - {item.gst}</Text>
+                  <Text style={styles.serviceDetails}>GST</Text>
+                  <Text style={styles.price}> -  ₹ {item.gst}</Text>
                 </View>
-                <View style={{ flexDirection: 'row' }}>
-                  <Text style={styles.serviceDetails}>Trip Cost</Text>
-                  <Text style={styles.price}> - {item.tripcost}</Text>
-                </View>
-
+                
                 <View style={{ flexDirection: 'row', marginVertical: 5, }}>
                   <Text style={styles.totalText}>Total</Text>
-                  <Text style={styles.totalCost}> - {item.total}</Text>
+                  <Text style={styles.totalCost}> -  ₹ {item.total}</Text>
                 </View>
               </TouchableOpacity>
             </View>
           )}
         />
       </View>
-      <Text style={styles.randomText}>Compulsory nanny service for children till 8 years</Text>
+      <Text style={styles.randomText}>Swipe left to see all plans. </Text>
 
       <View style={styles.addChildContainer}>
-        <Text style={styles.addChildText}>To Avail Service For More Children, Click On Add Child</Text>
-        <TouchableOpacity style={styles.loginBtn} onPress={() => setModalVisible(true)}>
-          <Text style={{ fontSize: 15, }} >
-            Add child</Text>
-        </TouchableOpacity>
+        <Text style={styles.addChildText}>* Compulsory nanny service for children till 8 years</Text>
+        <Text style={styles.addChildText}>* In case nanny service is required for children above 8 years , please contact admin</Text>
+
       </View>
       </ScrollView>
     </View>
@@ -259,17 +165,16 @@ const styles = StyleSheet.create({
 
   },
   randomText: {
-    //marginTop: 5,
     fontSize: 15,
-    alignSelf: 'center',
     fontWeight: '700',
-    color: "red",
-    marginTop: 5
+    color: "#000",
+    marginTop: 5,
+    marginLeft:15,
   },
   addChildContainer: {
     borderWidth: 1,
     borderRadius: 10,
-    marginTop: 25,
+    marginTop: 15,
     height: 130,
     width: '90%',
     alignSelf: 'center',
@@ -279,67 +184,8 @@ const styles = StyleSheet.create({
   addChildText: {
     fontSize: 17,
     fontWeight: '700',
-    padding: 10,
+    padding: 5,
+    color:'#696969',
   },
-  loginBtn: {
-    width: "50%",
-    borderRadius: 10,
-    height: 38,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#ff5c8d",
-    alignSelf: "center",
-    marginTop: 10,
-  },
-  unsubscribeBtn: {
-    width: "75%",
-    borderRadius: 10,
-    height: 40,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#ff5c8d",
-    alignSelf: "center",
-    marginTop: 10,
-    //marginBottom:15
-  },
-  modalContainer: {
-    backgroundColor: '#000000aa',
-    flex: 1,
-    //height: '50%',
-    justifyContent: 'center'
-  },
-  icon: {
-    alignSelf: 'flex-end',
-    marginRight: 10
-  },
-  modalBody: {
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    height: 280,
-    width: '90%',
-    alignSelf: 'center',
-    justifyContent: 'center'
-
-  },
-  message: {
-    fontSize: 22,
-    textAlign: 'center',
-    //marginTop: 30
-    color: '#000',
-    fontWeight: '600',
-    padding: 7,
-  },
-
-  closeModal: {
-    borderRadius: 10,
-    width: 180,
-    height: 40,
-    marginTop: 40,
-    backgroundColor: '#ff5c8d',
-    alignSelf: 'center',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-
 
 })

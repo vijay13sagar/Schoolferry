@@ -39,6 +39,10 @@ export default function App({ route,navigation }) {
       .then(function (response) {
         console.log("dat",response.data);
         setData(response.data);
+        setNOC(response.data.name)
+        setCardN(response.data.cardno)
+        setExpiry(response.data.expiry)
+        
       })
       .catch(function (error) {
         // handle error
@@ -142,7 +146,7 @@ export default function App({ route,navigation }) {
         })
           .then(function (response) {
             if (response.status == 200) {
-              Alert.alert("plan details sent")
+              console.log("plan details sent")
             }
 
             console.log("response", response.status);
@@ -152,7 +156,7 @@ export default function App({ route,navigation }) {
             console.log(error.response.data.error) //Please Authenticate or whatever returned from server
             if (error.response.status == 401) {
               //redirect to login
-              Alert.alert('plan details not sent')
+              console.log('plan details not sent')
             }
 
           })
@@ -190,7 +194,7 @@ export default function App({ route,navigation }) {
         <TextInput
           style={styles.TextInput}
           placeholder="Name"
-          value={dat.name}
+          value={NOC}
           placeholderTextColor="#929292"
           onChangeText={(NOC) => setNOC(NOC)}
         />
@@ -202,7 +206,8 @@ export default function App({ route,navigation }) {
         <TextInput
           style={styles.TextInput}
           placeholder="Card Number"
-          value={dat.cardno}
+          keyboardType="numeric"
+          value={CardN}
           placeholderTextColor="#929292"
           onChangeText={(CardN) => setCardN(CardN)}
         />
@@ -217,6 +222,7 @@ export default function App({ route,navigation }) {
           placeholderTextColor="#929292"
           secureTextEntry={true}
           onChangeText={(CVV) => setCVV(CVV)}
+          maxLength = {3}
         />
       </View>
       <View style={styles.textview}>
@@ -226,7 +232,7 @@ export default function App({ route,navigation }) {
         <TextInput
           style={styles.TextInput}
           placeholder="Expiry Date"
-          value={dat.expiry}
+          value={Expiry}
           placeholderTextColor="#929292"
           onChangeText={(Expiry) => setExpiry(Expiry)}
         />

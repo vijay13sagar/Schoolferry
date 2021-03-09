@@ -9,17 +9,17 @@ const addsubscreen = ({navigation}) =>  {
             <View style={styles.slogans}>
               <Text style={{fontWeight:'bold',fontSize:19,alignSelf:'center',marginTop:10,}}>We Provide</Text>
               <Text style={styles.sidehead}>Easy Tracking</Text>
-              <Text style={styles.content}>With advanced tracking algorithms, you can now track live location of the cab taking your little one to school, also always stay updated about the current status.</Text>
+              <Text style={styles.content}>With advanced tracking algorithms, you can now track live location of the vehicle taking your little ones to school.</Text>
               <Text style={styles.sidehead}>Highly Flexible</Text>
-              <Text style={styles.content}>Schoolferry is not like regular school bus service provided by schools, we provide you flexible booking and cancellation options. You can cancel anytime even for one way.</Text>
+              <Text style={styles.content}>Schoolferry is not like ordinary school bus service provided by schools, we provide you flexibility in booking and cancellation options. You can pause your subscription at anytime and we will provide you service for days that you paused subscription for..</Text>
               <Text style={styles.sidehead}>Low Cost</Text>
               <Text style={styles.content}>In the world of price hikes on everything, we are here with exceptionally low price packages, join today for jaw-dropping value for money packages.</Text>
               <Text style={styles.sidehead}>Highly Safe</Text>
-              <Text style={styles.content}>With a team of highly experienced drivers and advanced location tracking app, schoolferry provide you safety like never before. Nannies are also here for taking care of your little ones.</Text>
+              <Text style={styles.content}>With a team of highly experienced drivers and advanced location tracking app, schoolferry provide you safety like never before. Nannies are also provided to take care of your little ones.</Text>
             </View>
-            <Text style={{fontSize:18,marginTop:15,}} >To subscribe to a plan , Please verify location </Text>
+            <Text style={{fontSize:18,marginTop:15,textAlign:'center', }} >To subscribe to a plan , check service availability at your area and get started.</Text>
             <TouchableOpacity style={styles.loginBtn} onPress={()=>navigation.navigate('location')}>
-              <Text style={{fontSize:17}}>Verify</Text>
+              <Text style={{fontSize:16,}}>Check availability</Text>
             </TouchableOpacity>
             
           </View>
@@ -33,18 +33,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#F9F2F2",
 
-  },
-  avatar: {
-    width: 120,
-    height: 180,
-    borderRadius: 63,
-    borderWidth: 1,
-    borderColor: "black",
-    //marginBottom: 10,
-    alignSelf: 'center',
-    position: 'absolute',
-    justifyContent: 'flex-start',
-    marginTop: 50
   },
   sidehead:{
     fontWeight:'bold',
@@ -66,7 +54,7 @@ const styles = StyleSheet.create({
       borderColor: '#b0003a',
       borderRadius: 10,
       width: "85%",
-      height: 460,
+      height: 490,
       padding:2,
       backgroundColor:'#ffe4e1',   //"#C4C4C4",
       marginVertical: 5,
@@ -81,10 +69,7 @@ const styles = StyleSheet.create({
   body: {
     justifyContent:'center',
     alignContent:'center',
-    marginTop: 5,
     alignItems: 'center',
-  
-
   },
   textview: {
     margin: 20,
@@ -117,7 +102,7 @@ const styles = StyleSheet.create({
     alignSelf: "center"
   },
   loginBtn: {
-    width: "50%",
+    width: "60%",
     borderRadius: 10,
     height: 38,
     alignItems: "center",

@@ -25,6 +25,7 @@ import Upipay from '../modules/parent/upipay';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator()
+
 function Subscriptions() {
   return (
     <Stack.Navigator
@@ -50,7 +51,7 @@ function Subscriptions() {
       <Stack.Screen
         name="Subscription_list"
         component={Subscriptionlist}
-        options={{ title: 'Subscription list' ,}} // headerShown: false
+        options={{ title: 'Subscriptions' ,}} // headerShown: false
       />
       <Stack.Screen
         name="Pause Plan"

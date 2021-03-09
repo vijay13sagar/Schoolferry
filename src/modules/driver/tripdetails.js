@@ -98,7 +98,7 @@ const Checklist = ({ route, navigation }) => {
         }
     }
 
-    const starting = () => {
+    const starting = async () => {
         setBut("Trip Inprogress");
         try {
             axios({
@@ -109,7 +109,7 @@ const Checklist = ({ route, navigation }) => {
                     'Content-Type': 'application/json'
                 },
                 data: {
-                    tripid: route.params.item.trip_id
+                    tripid: route.params.item.trip_id,
                 }
             })
                 .then(function (response) {
