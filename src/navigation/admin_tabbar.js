@@ -270,7 +270,7 @@ function App() {
             iconName = focused ? 'bus' : 'bus';
           }
           else if (route.name === 'Notification') {
-            iconName = focused ? 'logo-web-component' : 'logo-web-component';
+            iconName = focused ? 'notifications' : 'notifications';
           }
        
 
@@ -286,7 +286,7 @@ function App() {
       <Tab.Screen name="Customer" component={UserStack} />
       <Tab.Screen name="Employee" component={EmployeeStack} />
       <Tab.Screen name="Vehicle" component={VehicleStack} />
-      <Tab.Screen name="Website" component={WebsiteStack} />
+      <Tab.Screen name="Notification" component={WebsiteStack} />
     </Tab.Navigator>
    
   );

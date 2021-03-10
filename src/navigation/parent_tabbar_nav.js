@@ -22,6 +22,8 @@ import Notrips from '../modules/parent/notriporsub';
 import Subhome from '../modules/parent/subhome';
 import Paymode from '../modules/parent/paymode';
 import Upipay from '../modules/parent/upipay';
+import Trip_Details from '../modules/parent/child_Details';
+
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator()
@@ -159,6 +161,12 @@ function Homepage() {
         component={Subhome}
         options={{ title: 'Home' }}
       />
+       <Stack.Screen
+        name="Trip_details"
+        component={Trip_Details}
+        options={{ title: 'Trip Details' }}
+      />
+     
     </Stack.Navigator>
   );
 }
