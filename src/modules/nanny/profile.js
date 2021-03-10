@@ -1,70 +1,79 @@
-import React, {useEffect, useState} from 'react';
-import { Text, View, ScrollView,TouchableOpacity,StatusBar,Linking, StyleSheet, Image } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Text, View, Alert, ScrollView, TouchableOpacity, StatusBar, Linking, StyleSheet, Image } from 'react-native';
 import Ngrok from '../../constants/ngrok'
 import AsyncStorage from '@react-native-community/async-storage';
 
-const Profile = ({navigation}) => {
-  const [data,getData] = useState([])
+const Profile = ({ navigation }) => {
+  const [data, getData] = useState([])
 
-useEffect( async() => { 
-  let token = await AsyncStorage.getItem('token')
-  fetch(`${Ngrok.url}/api/profiledetails/nanny/${token}`, {
-    "method": "GET",
-    "headers": {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    },
-  })
-    .then(response => response.json())
-    .then(responseJson => {
-      console.log('response',responseJson);
-      getData( responseJson)
-      console.log('responsedata',data);
+  useEffect( () => {
+    (async () => {
+    let token = await AsyncStorage.getItem('token')
+    fetch(`${Ngrok.url}/api/profiledetails/nanny/${token}`, {
+      "method": "GET",
+      "headers": {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
     })
-    .catch(err => {
-      console.log('error',err);
-    });
-  }, [])
+      .then(response => response.json())
+      .then(responseJson => {
+        console.log('response', responseJson);
+        getData(responseJson)
+        console.log('responsedata', data);
+      })
+      .catch(err => {
+        console.log('error', err);
+      });
+  })();
+}, [])
+  const onPressLogout = async () => {
+    try {
+      const keys = await AsyncStorage.getAllKeys();
+      await AsyncStorage.multiRemove(keys);
+      console.log("working");
+      navigation.replace('Login');
+    Alert.alert('You have been logged out');
+  } catch (error) {
+      console.error('Error clearing app data.');
+  }
+  }
 
   return (
 
     <View style={styles.container}>
-        <StatusBar
-         barStyle = "light-content" hidden = {false} backgroundColor = "#e91e63" translucent = {true}
-
+      <StatusBar
+        barStyle="light-content" hidden={false} backgroundColor="#e91e63" translucent={true}
       />
       <ScrollView>
-      <TouchableOpacity style={styles.edit}>
-        <Text style={styles.loginText} onPress={()=> navigation.navigate("Updateprof")}>EDIT</Text>
-      </TouchableOpacity>
-      <View style={styles.body}>
-        <Text style={styles.name}>Hello Nanny</Text>
-      </View>
-
+        <TouchableOpacity style={styles.edit}>
+          <Text style={styles.loginText} onPress={() => navigation.navigate("Updateprof")}>EDIT</Text>
+        </TouchableOpacity>
+        <View style={styles.body}>
+          <Text style={styles.name}>Hello Nanny</Text>
+        </View>
         <Text style={styles.headertext} >Name:</Text>
         <Text style={styles.details}>{data.name}</Text>
-
-
         <Text style={styles.headertext} >User Id:</Text>
         <Text style={styles.details}>{data.id}</Text>
-
-
         <Text style={styles.headertext} >Mobile Number:</Text>
         <Text style={styles.details}>{data.contact}</Text>
-
         <Text style={styles.headertext} >Address:</Text>
         <Text style={styles.detailsAddress}>{data.address}</Text>
         <Text style={styles.headertext} >Id Proof:</Text>
         {/* <Image >{data.idProofUrl}</Image> */}
         <View style={styles.imageview}>
-        <Image style={styles.id} source={{ uri: 'https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg' }} />
-      </View>  
-      <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('Passwordchange')}  >
-        <Text style={styles.loginText}>Change Password</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.loginBtn} onPress={() => { Linking.openURL('tel:8777111223') }}  >
-        <Text style={styles.loginText}>Contact Admin</Text>
-      </TouchableOpacity>
+          <Image style={styles.id} source={{ uri: 'https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg' }} />
+        </View>
+        <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('Passwordchange')}  >
+          <Text style={styles.loginText}>Change Password</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.loginBtn} onPress={() => onPressLogout()}  >
+          <Text style={styles.loginText}>Log Out</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.CallBtn} onPress={() => { Linking.openURL('tel:8777111223') }}  >
+          <Text style={styles.loginText}>Call Admin</Text>
+        </TouchableOpacity>
       </ScrollView>
     </View>
   );
@@ -78,21 +87,32 @@ const styles = StyleSheet.create({
     backgroundColor: "#F9F2F2",
 
   },
-  edit:{
-    flexDirection:'row-reverse',
-    height:35,
-    backgroundColor:'#ff5c8d',
-    width:70,
-    alignSelf:'flex-end',
-    marginTop:15,
-    marginHorizontal:20,
-    alignItems:'center',
-    justifyContent:'center',
+  edit: {
+    flexDirection: 'row-reverse',
+    height: 35,
+    backgroundColor: '#ff5c8d',
+    width: 70,
+    alignSelf: 'flex-end',
+    marginTop: 15,
+    marginHorizontal: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
     //borderColor:'black',
-    borderRadius:12,
+    borderRadius: 12,
   },
-  imageview:{
-    marginBottom:150,
+  imageview: {
+    marginBottom: 150,
+  },
+  CallBtn: {
+    width: "80%",
+    borderRadius: 10,
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#32cd32",
+    alignSelf: 'center',
+    marginTop: 20,
+    marginBottom: 50,
   },
   id: {
     width: 300,
@@ -103,21 +123,21 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     position: 'absolute',
     marginTop: 5,
-    marginBottom:10
+    marginBottom: 10
   },
-  showcase:{
-    padding:10,
-    marginLeft:20,
-    flexDirection:'row',
-    
+  showcase: {
+    padding: 10,
+    marginLeft: 20,
+    flexDirection: 'row',
+
   },
-  sidehead:{
-    fontWeight:'bold',
-    marginLeft:8,
-    alignSelf:'flex-start',
-    justifyContent:'space-around'
+  sidehead: {
+    fontWeight: 'bold',
+    marginLeft: 8,
+    alignSelf: 'flex-start',
+    justifyContent: 'space-around'
   },
-  details:{
+  details: {
     height: 40,
     backgroundColor: "#d3d3d3",
     //borderWidth: 1,
@@ -129,7 +149,7 @@ const styles = StyleSheet.create({
     alignSelf: "center"
 
   },
-  detailsAddress:{
+  detailsAddress: {
     height: 100,
     backgroundColor: "#d3d3d3",
     //borderWidth: 1,
@@ -144,7 +164,7 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 22,
     color: "black",
-    fontWeight:'bold',
+    fontWeight: 'bold',
     fontWeight: '600',
 
   },
@@ -170,10 +190,10 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: 20,
   },
-  loginText:{
-    color:'black',
-    fontSize:15,
-   // fontWeight:'700'
+  loginText: {
+    color: 'black',
+    fontSize: 15,
+    // fontWeight:'700'
   }
 
 });

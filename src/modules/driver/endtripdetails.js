@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     },
     firstbox: {
         width: '95%',
-        height: 280,
+        height: 300,
         borderRadius: 10,
         borderWidth: 1,
         borderColor: 'black',
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     },
     secondbox: {
         width: '95%',
-        height: 175,
+        height: 195,
         borderRadius: 10,
         borderWidth: 1,
         borderColor: 'black',

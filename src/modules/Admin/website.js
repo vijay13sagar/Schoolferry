@@ -29,6 +29,7 @@ import {
 
 import Ngrok from '../../constants/ngrok';
 import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
 import { Picker } from '@react-native-picker/picker';
 
 export default function Add_Driver() {
@@ -108,7 +109,17 @@ export default function Add_Driver() {
             }
         }
     }
-
+    const onPressLogout = async () => {
+        try {
+          const keys = await AsyncStorage.getAllKeys();
+          await AsyncStorage.multiRemove(keys);
+          console.log("working");
+          navigation.replace('Login');
+        Alert.alert('You have been logged out');
+      } catch (error) {
+          console.error('Error clearing app data.');
+      }
+      }
 
     return (
         <View style={styles.container}>
@@ -152,7 +163,9 @@ export default function Add_Driver() {
                 <Text style={styles.loginText}>Confirm</Text>
 
             </TouchableOpacity>
-
+            <TouchableOpacity style={styles.loginBtn} onPress={() => onPressLogout()}  >
+        <Text style={styles.loginText}>Log Out</Text>
+      </TouchableOpacity>
         </View>
     );
 }

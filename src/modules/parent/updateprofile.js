@@ -72,6 +72,7 @@ const updateProfile = ({route, navigation}) => {
           keyboardType="numeric"
           style={styles.TextInput}
           placeholder="Contact"
+          maxLength={10}
           placeholderTextColor="#929292"
           onChangeText={(contact) => setContact(contact)}
           value = {contact}
@@ -79,7 +80,6 @@ const updateProfile = ({route, navigation}) => {
       </View>
       <View style={styles.inputView} >
         <TextInput
-          // keyboardType="numeric"
           style={styles.TextInput}
           placeholder="Email"
           placeholderTextColor="#929292"

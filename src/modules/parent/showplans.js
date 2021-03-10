@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
   firstBox: {
     height: 32,
     flexDirection: 'row',
-    marginTop: 20,
+    marginTop: 10,
     width: '100%',
   },
   Picker: {
@@ -331,6 +331,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ff5c8d',
     alignSelf: 'center',
     marginTop: 10,
+    marginBottom:20,
   },
   modalContainer: {
     backgroundColor: '#000000aa',

@@ -10,6 +10,7 @@ const Homescreen = ({ navigation }) => {
   
   const [data,getData] = useState([])
   useEffect( () => {
+    (async () => {
     const fetchData = navigation.addListener('focus', async () => {
     let token = await AsyncStorage.getItem('token')
     fetch(`${Ngrok.url}/api/driver/tripdetails/${token}`, {
@@ -30,7 +31,8 @@ const Homescreen = ({ navigation }) => {
       });
     })
     fetchData
-    }, [navigation])
+    })();
+  }, [navigation])
   const [pickerValue, setPickerValue] = useState("")
   return (
     <View style={styles.container}>
@@ -48,15 +50,10 @@ const Homescreen = ({ navigation }) => {
 
       <View style={styles.pendingTrips}>
         <Text style={styles.tripsTitleText}>Today's Trips</Text>
-        <View style={styles.tripBox}>
-          <Text style={styles.Text}>Total Trips - 01 </Text>
-          <Text style={styles.Text}>Pending Trips - 01 </Text>
-
-        </View>
+        <Text style={styles.startTripText}>Click to see Trip details</Text>
       </View>
 
-      <Text style={styles.startTripText}>Click to see Trip details</Text>
-
+      
       <FlatList
         style={styles.flatlist}
         data={data}
@@ -76,7 +73,7 @@ const Homescreen = ({ navigation }) => {
                 </Text>
                 {item.endedTripAt ? null : <Ionicons name="chevron-forward-outline"
                   color="#000" size={25}
-                  style={styles.icon}
+                  style={{marginLeft:"35%"}}
                 />}
 
               </Body>
@@ -131,7 +128,7 @@ const styles = StyleSheet.create({
   startTripText: {
     fontSize: 22,
     textAlign: "center",
-    marginTop: 50,
+    marginTop: 30,
     marginBottom: 10,
 
   },
@@ -155,7 +152,7 @@ const styles = StyleSheet.create({
     height: 60,
     alignItems: 'center',
     justifyContent: 'center',
-
+    marginTop:10,
   },
   card2: {
     width: '80%',
@@ -163,14 +160,9 @@ const styles = StyleSheet.create({
     height: 60,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor:'lightgrey'
+    backgroundColor:'lightgrey',
+    marginTop:10,
   },
-  icon: {
-    //justifyContent:'center',
-    // alignItems:'center',
-    // alignSelf:'flex-end',
-    marginLeft: 100,
-  }
 
 })
 

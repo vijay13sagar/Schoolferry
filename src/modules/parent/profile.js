@@ -4,6 +4,7 @@ import {
   View,
   TouchableOpacity,
   StyleSheet,
+  Alert,
   ActivityIndicator,
 } from 'react-native';
 import Login from '../../screens/login';
@@ -39,8 +40,19 @@ const Profile = ({navigation}) => {
       }
     });
 
-    fetchData;
-  }, [navigation]);
+    fetchData;        
+  }, [navigation])
+  const onPressLogout = async () => {
+    try {
+      const keys = await AsyncStorage.getAllKeys();
+      await AsyncStorage.multiRemove(keys);
+      console.log("working");
+      navigation.replace('Login');
+    Alert.alert('You have been logged out');
+  } catch (error) {
+      console.error('Error clearing app data.',error);
+  }
+  }
 
   return isLoading ? (
     <View style={styles.container}>
@@ -87,6 +99,10 @@ const Profile = ({navigation}) => {
         onPress={() => navigation.navigate('Change Password')}>
         <Text style={styles.loginText}>Change Password</Text>
       </TouchableOpacity>
+      <TouchableOpacity style={styles.loginBtn} onPress={() => onPressLogout()}  >
+        <Text style={styles.loginText}>Log Out</Text>
+      </TouchableOpacity>
+
     </View>
   );
 };
@@ -117,7 +133,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   body: {
-    marginVertical: 40,
+    marginVertical: 23,
     alignSelf: 'center',
   },
   textview: {

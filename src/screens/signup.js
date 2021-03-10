@@ -12,7 +12,7 @@ import {
 import Ngrok from '../constants/ngrok';
 import axios from 'axios';
 import Login from './login'
-export default function App({navigation}) {
+export default function App({route,navigation}) {
   const [email, setEmail] = useState("");
   const [Name, setName] = useState("");
   const [contact, setcontact] = useState("");
@@ -70,7 +70,7 @@ export default function App({navigation}) {
         })
           .then(function (response) {
             if (response.status == 200) {
-              Alert.alert('Signup Successful, Please Login','', [{text: 'Proceed', onPress: () => navigation.navigate('Login')}])
+              Alert.alert('Signup Successful, Please Login','', [{text: 'Proceed', onPress: () => navigation.navigate('OTPscreen',{item:contact})}])
             }
            //console.log("response", response);
           })

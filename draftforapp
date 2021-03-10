@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import Onboarding from './src/navigation/onboardingnavigation';
 import DriverNav from './src/navigation/driver_tabbar_nav';
 import ParentNav from './src/navigation/parent_tabbar_nav';
+import AdminNav from './src/navigation/admin_tabbar';
 import NannyNav from './src/navigation/nanny_tabbar_nav';
 import messaging from '@react-native-firebase/messaging';
 
@@ -57,7 +58,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      < NannyNav/>
+      <Onboarding/>
     </NavigationContainer>
   );
 } 
