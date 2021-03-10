@@ -112,7 +112,7 @@ const gotootpscreen=()=>{
           
           if (responseJson.status == 401) {
             if ((responseJson.message == "Token not provided")) {
-              Alert.alert("Not an Exsisting user")
+              Alert.alert("Not an exsisting user, please sign up first !")
             }
             else if ((responseJson.message == "OTP verification not done")) {
               //Alert.alert("OTP verification need to be done")
