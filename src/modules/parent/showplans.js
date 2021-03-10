@@ -23,7 +23,7 @@ const showplanScreen = ({route, navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [pickerValue, setPickerValue] = useState([]);
   const [selectedValue, setValue] = useState('');
-  const [isLoading, setisLoading] = useState(true)
+  const [isLoading, setisLoading] = useState(true);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -37,8 +37,7 @@ const showplanScreen = ({route, navigation}) => {
           setValue(res.data[0].childName);
           // console.log('selectedvalue:', selectedValue)
           console.log('subsciption refresh:', res.data[0].childName);
-          setisLoading(false)
-
+          setisLoading(false);
         } catch (error) {
           console.error(error);
         }
@@ -49,26 +48,6 @@ const showplanScreen = ({route, navigation}) => {
       //return null;
     }, []),
   );
-
-  /*useEffect(() => {
-
-    //fetchData();
-    const fetchData = navigation.addListener('focus', async () => {
-      let token = await AsyncStorage.getItem('token')
-    try {
-      const res = await axios(`${Ngrok.url}/api/parent/detail/childlist/${token}`)
-      setPickerValue(res.data)
-      setValue(res.data[0].childName)
-      // console.log('selectedvalue:', selectedValue)
-      console.log('subsciption refresh:',res.data[0].childName )
-    }
-    catch (error) {
-      console.error(error);
-    }
-    })
-
-    fetchData;
-  }, [])*/
 
   const myUsers = () => {
     return (
@@ -95,7 +74,7 @@ const showplanScreen = ({route, navigation}) => {
         })
       : [];
 
-  // console.log('value1', value1[0])
+  // console.log('status', value1[0].status);
 
   const verifyHandler = () => {
     setModalVisible(false);
@@ -111,8 +90,7 @@ const showplanScreen = ({route, navigation}) => {
     });
   };
 
-  return isLoading ? null :
-   (
+  return isLoading ? null : (
     <ScrollView style={styles.container}>
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <View style={styles.modalContainer}>
@@ -188,33 +166,39 @@ const showplanScreen = ({route, navigation}) => {
 
                 <Text style={styles.typeOfSubscription}>{item.term}</Text>
 
-                <View style={{ flexDirection: 'row' }}>
+                <View style={{flexDirection: 'row'}}>
                   <Text style={styles.serviceDetails}>Trip Cost</Text>
-                  <Text style={styles.price}> -  ₹ {item.tripcost}</Text>
+                  <Text style={styles.price}> - ₹ {item.tripcost}</Text>
                 </View>
 
-                <View style={{ flexDirection: 'row' }}>
+                <View style={{flexDirection: 'row'}}>
                   <Text style={styles.serviceDetails}>Nanny</Text>
-                  <Text style={styles.price}> -  ₹ {item.nannycost}</Text>
+                  <Text style={styles.price}> - ₹ {item.nannycost}</Text>
                 </View>
 
-                <View style={{ flexDirection: 'row' }}>
+                <View style={{flexDirection: 'row'}}>
                   <Text style={styles.serviceDetails}>GST</Text>
-                  <Text style={styles.price}> -  ₹ {item.gst}</Text>
+                  <Text style={styles.price}> - ₹ {item.gst}</Text>
                 </View>
-                
-                <View style={{ flexDirection: 'row', marginVertical: 5, }}>
+
+                <View style={{flexDirection: 'row', marginVertical: 5}}>
                   <Text style={styles.totalText}>Total</Text>
-                  <Text style={styles.totalCost}> -  ₹ {item.total}</Text>
+                  <Text style={styles.totalCost}> - ₹ {item.total}</Text>
                 </View>
               </TouchableOpacity>
             </View>
           )}
         />
       </View>
-      <Text style={styles.randomText}>
-        Compulsory nanny service for children till 8 years
-      </Text>
+      {Boolean(value1.length) && value1[0].status == 'subscribed' ? (
+        <Text style={styles.randomText}>
+          Compulsory nanny service for children till 8 years
+        </Text>
+      ) : (
+        <Text style={styles.randomText2}>
+          Unsusbcribed Child. select a plan to get subscribed
+        </Text>
+      )}
 
       <View style={styles.addChildContainer}>
         <Text style={styles.addChildText}>
@@ -226,16 +210,14 @@ const showplanScreen = ({route, navigation}) => {
           <Text style={{fontSize: 15}}>Add child</Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        style={styles.unsubscribeBtn}
-        onPress={() => navigation.navigate('Pause Plan')}
-        disabled={
-          Boolean(value1.length) && value1[0].status == 'subscribed'
-            ? false
-            : true
-        }>
-        <Text style={{fontSize: 15}}>Pause subscription</Text>
-      </TouchableOpacity>
+
+      {Boolean(value1.length) && value1[0].status == 'subscribed' ? (
+        <TouchableOpacity
+          style={styles.unsubscribeBtn}
+          onPress={() => navigation.navigate('Pause Plan')}>
+          <Text style={{fontSize: 15}}>Pause subscription</Text>
+        </TouchableOpacity>
+      ) : null}
     </ScrollView>
   );
 };
@@ -328,6 +310,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: '700',
     padding: 10,
+    textAlign: 'center',
   },
   loginBtn: {
     width: '50%',
@@ -348,12 +331,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#ff5c8d',
     alignSelf: 'center',
     marginTop: 10,
-    //marginBottom:15
   },
   modalContainer: {
     backgroundColor: '#000000aa',
     flex: 1,
-    //height: '50%',
     justifyContent: 'center',
   },
   icon: {
@@ -386,5 +367,13 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  randomText2: {
+    fontSize: 19,
+    fontWeight: '700',
+    color: '#4169e1',
+    marginVertical: 8,
+    textAlign: 'center',
+    marginHorizontal: 5,
   },
 });

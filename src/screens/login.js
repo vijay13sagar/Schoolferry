@@ -85,11 +85,11 @@ export default function Login({navigation}) {
           } else if (responseJson[1] == 'Nanny') {
             AsyncStorage.setItem('token', responseJson[0]);
             navigation.replace('Nanny Interface');
-          } else if ((responseJson.message = 'Invalid contact/password')) {
+          } else if ((responseJson.message == 'Invalid contact/password')) {
             Alert.alert('Incorrect contact/password');
           }
-           else if(responseJson.message = "Token not provided"){
-           Alert.alert("Token not sent")
+           else if(responseJson.message == "OTP verification not done"){
+           Alert.alert("OTP verification not done")
          }
         })
         .catch((error) => {

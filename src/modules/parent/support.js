@@ -25,7 +25,7 @@ const Support = () =>  {
       </TouchableOpacity>
       <View style={{marginTop:70}}>
       <Text style={{fontSize:19,alignSelf:'center',}}>Or you can call us </Text>
-      <TouchableOpacity style={styles.CallBtn} onPress={() => { Linking.openURL('tel:8777111223') }}  >
+      <TouchableOpacity style={styles.CallBtn} onPress={() => { Linking.openURL('tel:8192856814') }}  >
         <Text style={{fontSize:17, color:'#000'}}>Make a Call </Text>
       </TouchableOpacity>
       </View>

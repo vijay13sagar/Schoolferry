@@ -14,7 +14,7 @@ const updateProfile = ({route, navigation}) => {
     let token = await AsyncStorage.getItem('token')
     var regex_phone = /^((\+91)?|91)?[789][0-9]{9}/
     
-    if (!contact || !email || !address) {
+    if (!name || !contact || !email || !address ) {
       setError({ error: "Please fill all details" })
     }
     else if (!regex_phone.test(contact)) {
@@ -61,7 +61,7 @@ const updateProfile = ({route, navigation}) => {
       <View style={styles.inputView} >
         <TextInput
           style={styles.TextInput}
-          placeholder="Contact"
+          placeholder="Name"
           placeholderTextColor="#929292"
           onChangeText={(name) => setName(name)}
           value = {name}
