@@ -51,6 +51,8 @@ const subscribedHome = ({route, navigation}) => {
           setValue(response.data.childList[0].name);
          // console.log('data',response.data)
           //console.log('refresh subhome:', response.data.childList[0].trips);
+          // console.log('data',response.data.childList[0].name, selectedValue)
+          //console.log('refresh subhome:', response.data.childList[0].name);
          // console.log('child data: ', response.data);
           setLoading(false);
         } catch (e) {

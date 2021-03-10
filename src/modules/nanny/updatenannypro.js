@@ -1,7 +1,8 @@
 import React,{useState} from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet,Alert, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import Ngrok from '../../constants/ngrok'
 import AsyncStorage from '@react-native-community/async-storage';
+import addchild from '../parent/addingchild';
 
 
 const Checklist = () => {
@@ -10,6 +11,9 @@ const Checklist = () => {
   const [address,setAddress] = useState("")
 
   const presshandler = async () => {
+    if(!contact && !address){
+      Alert.alert("Failed","Fields should not be empty");
+    }else{
     let token = await AsyncStorage.getItem('token')
     fetch(`${Ngrok.url}/api/profileupdate/nanny`, {
       "method": "POST",
@@ -27,14 +31,15 @@ const Checklist = () => {
       .then(responseJson => {
         console.log(responseJson);
         if (responseJson.message == "data updated successfully") {
-          alert('Profile Updated Successfully')
+          Alert.alert('Profile Updated Successfully')
         } else {
-          alert('Failed')
+          Alert.alert('Failed','Number already exist')
         }
       })
       .catch(err => {
         console.log(err);
       });
+    }
   }
   return (
     <View style={styles.container}>
@@ -44,6 +49,7 @@ const Checklist = () => {
             keyboardType="numeric"
             style={styles.TextInput}
             placeholder="Contact"
+            maxLength={10}
             placeholderTextColor="#929292"
             onChangeText={(contact) => setContact(contact)}
           />

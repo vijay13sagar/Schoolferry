@@ -1,13 +1,15 @@
 import React, { useState,useEffect } from "react";
-import { Text, View, StyleSheet, TouchableOpacity, Linking, StatusBar, FlatList } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Linking, StatusBar, FlatList, Settings } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { Card, CardItem, Body } from 'native-base'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Ngrok from '../../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
+import symbolicateStackTrace from "react-native/Libraries/Core/Devtools/symbolicateStackTrace";
+import { ScrollView } from "react-native-gesture-handler";
 
 const Homescreen = ({ navigation }) => {
-  
+  const [stat,setStat] = useState(false)
   const [data,getData] = useState([])
   useEffect( () => {
     (async () => {
@@ -24,7 +26,12 @@ const Homescreen = ({ navigation }) => {
       .then(responseJson => {
         console.log('response',responseJson);
         getData( responseJson)
-        console.log('responsedata',data);
+        console.log('responsedata',responseJson[0].endedTripAt);
+        if((responseJson[0].endedTripAt==false)){
+          setStat(false)
+        }else{
+          setStat(true)
+        }
       })
       .catch(err => {
         console.log('error',err);
@@ -34,6 +41,7 @@ const Homescreen = ({ navigation }) => {
     })();
   }, [navigation])
   const [pickerValue, setPickerValue] = useState("")
+
   return (
     <View style={styles.container}>
       <StatusBar
@@ -48,19 +56,17 @@ const Homescreen = ({ navigation }) => {
 
       />
 
-      <View style={styles.pendingTrips}>
-        <Text style={styles.tripsTitleText}>Today's Trips</Text>
-        <Text style={styles.startTripText}>Click to see Trip details</Text>
-      </View>
-
-      
+      <View >{stat ? <Text style={styles.startTripText}>Click to see Trip details</Text> : <Text style={styles.startTripText}>No Completed Trips</Text>}</View>
+<ScrollView style={{marginVertical:20}}>
       <FlatList
         style={styles.flatlist}
         data={data}
         keyExtractor={item => item.trip_id}
         renderItem={({ item }) => (
-          <Card style= { item.endedTripAt ? styles.card2 :styles.card}>
-            <CardItem style={item.endedTripAt ? {backgroundColor:'lightgrey'}:{backgroundColor:'white'}} button disabled={item.endedTripAt ? true : false} onPress={() => navigation.navigate('Trip Details',{item:item})}>
+            <View>
+            {item.endedTripAt ?
+              <Card style= { styles.card} >
+            <CardItem style={{backgroundColor:'white'}} button onPress={() => navigation.navigate('Endtrip_details',{item:item})}>
               <Body style={{ flexDirection: 'row' }}>
                 <Text style={{ fontSize: 17, fontWeight: '700' }}>
                 Trip Id :
@@ -68,23 +74,19 @@ const Homescreen = ({ navigation }) => {
                 <Text style={{ fontSize: 17, marginLeft: 5, fontWeight: '700' }}>
                 {item.trip_id}
                 </Text>
-                <Text style={{marginLeft:50}}>
-                  {item.endedTripAt ?<Text style={{color:'white',fontWeight:'700',fontSize:17}}>Trip Completed</Text> : null}
-                </Text>
-                {item.endedTripAt ? null : <Ionicons name="chevron-forward-outline"
+                <Text style={{marginLeft:50}}></Text>
+                <Ionicons name="chevron-forward-outline"
                   color="#000" size={25}
-                  style={{marginLeft:"35%"}}
-                />}
-
+                  style={styles.icon}
+                />
               </Body>
             </CardItem>
           </Card>
+           : null}
+        </View>
         )}
       />
-      <TouchableOpacity style={styles.CallBtn} onPress={() => { Linking.openURL('tel:8777111223') }}  >
-        <Text style={styles.loginText}>Call Admin</Text>
-      </TouchableOpacity>
-
+</ScrollView>
     </View>
   );
 }
@@ -128,7 +130,7 @@ const styles = StyleSheet.create({
   startTripText: {
     fontSize: 22,
     textAlign: "center",
-    marginTop: 30,
+    marginTop: 50,
     marginBottom: 10,
 
   },
@@ -152,7 +154,7 @@ const styles = StyleSheet.create({
     height: 60,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop:10,
+
   },
   card2: {
     width: '80%',
@@ -160,9 +162,14 @@ const styles = StyleSheet.create({
     height: 60,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor:'lightgrey',
-    marginTop:10,
+    backgroundColor:'lightgrey'
   },
+  icon: {
+    //justifyContent:'center',
+    // alignItems:'center',
+    // alignSelf:'flex-end',
+    marginLeft: 100,
+  }
 
 })
 

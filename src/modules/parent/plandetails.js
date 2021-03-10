@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import {
   StyleSheet,
   Text,StatusBar,
@@ -14,47 +14,24 @@ const App =({route,navigation}) =>  {
   const [selectedStartDate, setselectedStartDate] = useState("")
     const minDate=new Date();//Today
     const maxDate = moment(selectedStartDate).format('DD-MM-YYYY'); 
-    const kost=route.params.item.tripcost;
-    const s=route.params.schooladdress
     let tomorrow = selectedStartDate;
     const f=route.params.item.term;
+    const [stay,setStay] = useState(true);
     let e;
-    if(f =='Monthly'){
-      e=30;
-    }else if(f =='Quarterly'){
-      e=91;
-    }else if(f=='Half Yearly'){
-      e=182;
-    }else if(f=="Yearly"){
-      e=365;
-    }
+    const payhandler=(selectedStartDate)=>{
+      setselectedStartDate(selectedStartDate);
+      setStay(false);
+        if(f =='Monthly'){
+          e=30;
+        }else if(f =='Quarterly'){
+          e=91;
+        }else if(f=='Half Yearly'){
+          e=182;
+        }else if(f=="Yearly"){
+          e=365;
+        }
+      }
     tomorrow = moment(tomorrow).add(e, 'day').format('DD-MM-YYYY');
-    // const saveplan =async()=>{
-    //   try {
-    //     await AsyncStorage.setItem("eskool", s);
-    //     console.log("1",eskool);
-    //     await AsyncStorage.setItem("start", maxDate);
-    //     console.log("1",start);
-    //     await AsyncStorage.setItem("end", tomorrow);
-    //     console.log("1",end);
-    //     await AsyncStorage.setItem("term", f);
-    //     console.log("1",term);
-    //     await AsyncStorage.setItem("costly", kost);
-    //     console.log("1",costly);
-    //   } catch (error) {
-    //     console.log("error",error);
-    //   }
-    // }
-    
-    // AsyncStorage.setItem("eskool", route.params.schooladdress )
-    // AsyncStorage.setItem("start", maxDate)
-    // AsyncStorage.setItem("end", tomorrow)
-    // AsyncStorage.setItem("term", f)
-    //AsyncStorage.setItem("costly", route.params.item.tripcost)
-    // console.log("cost",costly);
-    // console.log("cost",start);
-    // console.log("cost",end);
-    // console.log("cost",eskool);
     return (
       <View style={styles.container}>
         <StatusBar
@@ -79,12 +56,9 @@ const App =({route,navigation}) =>  {
           selectedDayColor="#ff5c8d"
           selectedDayTextColor="#FFFFFF"
           // onDateChange={this.onDateChange}
-          onDateChange={(selectedStartDate) => setselectedStartDate(selectedStartDate)}
+          onDateChange={(selectedStartDate) => payhandler(selectedStartDate)}
         />
         </View>
-        {/* <View>
-          <Text style={styles.details}>{ startDate }</Text>
-        </View> */}
         <View>
           <Text style={styles.inputView}>{ maxDate }</Text>
         </View>
@@ -94,13 +68,13 @@ const App =({route,navigation}) =>  {
       </View>
       <View style={styles.textview}>
         <Text style={styles.headertext} >Cost</Text>
-        <Text style={styles.inputView}>{route.params.item.total}  {route.params.childid}</Text>
+        <Text style={styles.inputView}>{route.params.item.total}</Text>
       </View>
       <View style={styles.textview}>
         <Text style={styles.headertext} >School Name</Text>
         <Text style={styles.inputView2}>{route.params.schooladdress}</Text>
         </View>
-        <TouchableOpacity style={styles.loginBtn} onPress={()=>navigation.navigate('Pay Mode',{
+        <TouchableOpacity style={styles.loginBtn} disabled={stay} onPress={()=>navigation.navigate('Pay Mode',{
           maxDate: maxDate,
           tomorrow: tomorrow,
           f:f,
