@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   StatusBar,
@@ -13,12 +13,13 @@ import {
 
 import Ngrok from '../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
+import axios from 'axios';
 
-export default function Login({navigation}) {
+export default function Login({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [{emailError}, setEmailError] = useState('');
-  const [{passwordError}, setPasswordError] = useState('');
+  const [{ emailError }, setEmailError] = useState('');
+  const [{ passwordError }, setPasswordError] = useState('');
   const pressHandler = () => {
     navigation.navigate('Sign up');
   };
@@ -33,20 +34,41 @@ export default function Login({navigation}) {
   };
   const validateFunction = () => {
     if (!email) {
-      setEmailError({emailError: 'Email/Phone Field Cannot be Empty'});
+      setEmailError({ emailError: 'Email/Phone Field Cannot be Empty' });
       return false;
     }
     if (!validateEmail(email)) {
-      setEmailError({emailError: 'Enter Valid Email/Phone'});
+      setEmailError({ emailError: 'Enter Valid Email/Phone' });
       return false;
     }
     if (!password) {
-      setPasswordError({passwordError: 'Password Cannot be Empty'});
+      setPasswordError({ passwordError: 'Password Cannot be Empty' });
       return false;
     }
     return true;
   };
-
+const gotootpscreen=()=>{
+  
+  console.log("number",email);
+  axios
+      .get(`${Ngrok.url}/api/user/${email}`)
+      .then(function (response) {
+        console.log("otpstat",response.status);
+        console.log("otpmsg",response.data.message);
+        if((response.status==200)){
+          navigation.navigate('OTPscreen',{item:email})
+        }else if ((response.message=="Invalid Contact")){
+          Alert.alert("Please enter Valid Phone Number");
+        }
+      })
+      .catch(function (error) {
+        // handle error
+        console.log("error",error.message);
+      })
+      .finally(function () {
+        // always executed
+      });
+}
   const handleSubmitpPress = async () => {
     let firebaseToken = await AsyncStorage.getItem('FBtoken');
     console.log('FB token', firebaseToken);
@@ -72,25 +94,34 @@ export default function Login({navigation}) {
         .then((response) => response.json())
         .then((responseJson) => {
           console.log('response', responseJson);
-
-          if (responseJson[1] == 'Parent') {
-            AsyncStorage.setItem('token', responseJson[0]);
-            navigation.replace('Parent Interface');
-          } else if (responseJson[1] == 'Driver') {
-            AsyncStorage.setItem('token', responseJson[0]);
-            navigation.replace('Driver Interface');
-          } else if (responseJson[1] == 'Admin') {
-            AsyncStorage.setItem('token', responseJson[0]);
-            navigation.replace('Admin Interface');
-          } else if (responseJson[1] == 'Nanny') {
-            AsyncStorage.setItem('token', responseJson[0]);
-            navigation.replace('Nanny Interface');
-          } else if ((responseJson.message = 'Invalid contact/password')) {
-            Alert.alert('Incorrect contact/password');
+          console.log("status", responseJson.status);
+          
+            if (responseJson[1] == 'Parent') {
+              AsyncStorage.setItem('token', responseJson[0]);
+              navigation.replace('Parent Interface');
+            } else if (responseJson[1] == 'Driver') {
+              AsyncStorage.setItem('token', responseJson[0]);
+              navigation.replace('Driver Interface');
+            } else if (responseJson[1] == 'Admin') {
+              AsyncStorage.setItem('token', responseJson[0]);
+              navigation.replace('Admin Interface');
+            } else if (responseJson[1] == 'Nanny') {
+              AsyncStorage.setItem('token', responseJson[0]);
+              navigation.replace('Nanny Interface');
+            }
+          
+          if (responseJson.status == 401) {
+            if ((responseJson.message == "Token not provided")) {
+              Alert.alert("Not an Exsisting user")
+            }
+            else if ((responseJson.message == "OTP verification not done")) {
+              //Alert.alert("OTP verification need to be done")
+              gotootpscreen();
+            }
+            else if ((responseJson.message == "Invalid contact/password")) {
+              Alert.alert('Incorrect contact/password');
+            }
           }
-           else if(responseJson.message = "Token not provided"){
-           Alert.alert("Token not sent")
-         }
         })
         .catch((error) => {
           console.log('error', error); // 401
@@ -116,7 +147,7 @@ export default function Login({navigation}) {
         backgroundColor="#e91e63"
         //Background color of statusBar only works for Android
         translucent={false}
-        //allowing light, but not detailed shapes
+      //allowing light, but not detailed shapes
       />
       <View style={styles.inputView}>
         <TextInput

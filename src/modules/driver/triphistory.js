@@ -9,7 +9,7 @@ import symbolicateStackTrace from "react-native/Libraries/Core/Devtools/symbolic
 import { ScrollView } from "react-native-gesture-handler";
 
 const Homescreen = ({ navigation }) => {
-  const [stat,setStat] = useState(null)
+  const [stat,setStat] = useState(false)
   const [data,getData] = useState([])
   useEffect( () => {
     (async () => {
@@ -26,8 +26,8 @@ const Homescreen = ({ navigation }) => {
       .then(responseJson => {
         console.log('response',responseJson);
         getData( responseJson)
-        console.log('responsedata',data);
-        if(data[0].endedTripAt===false){
+        console.log('responsedata',responseJson[0].endedTripAt);
+        if((responseJson[0].endedTripAt==false)){
           setStat(false)
         }else{
           setStat(true)
@@ -56,7 +56,7 @@ const Homescreen = ({ navigation }) => {
 
       />
 
-      <Text style={styles.startTripText}>{stat ?<Text>Click to see Trip details</Text>:<Text>No Completed Trips</Text>}</Text>
+      <View >{stat ? <Text style={styles.startTripText}>Click to see Trip details</Text> : <Text style={styles.startTripText}>No Completed Trips</Text>}</View>
 <ScrollView style={{marginVertical:20}}>
       <FlatList
         style={styles.flatlist}

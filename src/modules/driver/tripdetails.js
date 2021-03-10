@@ -24,6 +24,7 @@ const Checklist = ({ route, navigation }) => {
     const [att,setAtt] = useState("");
     const nannyID=route.params.item.nannyInfo.nannyId;
     const [but, setBut] = useState('Start Trip')
+    const [locdisable,setLoc]= useState(true);
     const [details, setDet] = useState([]);
     const [item1, setItem1] = useState([]);
     const [childId, setChildId] = useState("");
@@ -106,6 +107,7 @@ const Checklist = ({ route, navigation }) => {
 
     const starting = async () => {
         setBut("Trip Inprogress");
+        setLoc(false);
         try {
             axios({
                 method: 'POST',
@@ -196,7 +198,7 @@ const Checklist = ({ route, navigation }) => {
                 }}>
                     <Text>{but}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('Trackee', { refresh: true, tripid: route.params.item.trip_id })}>
+                <TouchableOpacity disabled={locdisable} style={locdisable ? styles.disableBtn: styles.loginBtn} onPress={() => navigation.navigate('Trackee', { refresh: true, tripid: route.params.item.trip_id })}>
                     <Text>Live location</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('Check_list',{TripID:TripID,VehicleID:VehicleID})}>
@@ -239,7 +241,7 @@ const styles = StyleSheet.create({
     },
     firstbox: {
         width: '90%',
-        height: 310,
+        height: 335,
         borderRadius: 10,
         borderWidth: 1,
         borderColor: 'black',
@@ -249,7 +251,7 @@ const styles = StyleSheet.create({
     },
     secondbox: {
         width: '95%',
-        height: 210,
+        height: 235,
         borderRadius: 10,
         borderWidth: 1,
         borderColor: 'black',
@@ -264,6 +266,16 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: "#ff5c8d",
+        alignSelf: "center",
+        marginVertical: 10,
+    },
+    disableBtn: {
+        width: "50%",
+        borderRadius: 10,
+        height: 38,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "lightgrey",
         alignSelf: "center",
         marginVertical: 10,
     },

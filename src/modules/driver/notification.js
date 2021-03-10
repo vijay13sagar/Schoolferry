@@ -16,6 +16,7 @@ export default class Notificationlist extends Component {
       modalVisible: false,
       selectedData: '',
       selectedDate: '',
+      selectedTitle:'',
     };
   }
   componentDidMount = async () => {
@@ -39,8 +40,8 @@ export default class Notificationlist extends Component {
   setModalVisible = (visible) => {
     this.setState({ modalVisible: visible });
   }
-  _selectedItem = (data, data2) => {
-    this.setState({ selectedData: data, selectedDate: data2 });
+  _selectedItem = (data, data2,data3) => {
+    this.setState({ selectedData: data, selectedDate: data2,selectedTitle:data3 });
     this.setModalVisible(true);
   }
   render() {
@@ -69,11 +70,11 @@ export default class Notificationlist extends Component {
               renderItem={({ item }) => (
                 <Card>
                   <CardItem button onPress={() => {
-                    this._selectedItem(item.message, item.date);
+                    this._selectedItem(item.message, item.date,item.title);
                   }}>
                     <Body>
                       <Text>
-                        {item.message}
+                        {item.title}
                       </Text>
                     </Body>
                   </CardItem>
@@ -100,7 +101,11 @@ export default class Notificationlist extends Component {
               onPress={(modalVisible) => this.setModalVisible(!modalVisible)}
             />
             <View style={styles.modalBody}>
-              <Text style={styles.modalheading}>Date of Notice: {this.state.selectedDate}</Text>
+            <Text style={styles.modalheading}> {this.state.selectedTitle}</Text>
+            <View style={{flexDirection:'row',alignSelf: 'center',justifyContent: 'center'}}>
+              <Text style={styles.modalheading}>Date of Notice:</Text>
+              <Text style={styles.message}>{this.state.selectedDate}</Text>
+            </View>
               <Text style={styles.message}>{this.state.selectedData}</Text>
             </View>
           </View>
@@ -190,7 +195,7 @@ const styles = StyleSheet.create({
   modalheading: {
     fontSize: 22,
     textAlign: 'center',
-    marginBottom: 10,
+    marginBottom: 5,
     color: '#000',
     fontWeight: '700',
     padding: 7,

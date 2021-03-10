@@ -4,6 +4,7 @@ import {
   View,
   TouchableOpacity,
   StyleSheet,
+  Alert,
   ActivityIndicator,
 } from 'react-native';
 import Login from '../../screens/login';
@@ -49,7 +50,7 @@ const Profile = ({navigation}) => {
       navigation.replace('Login');
     Alert.alert('You have been logged out');
   } catch (error) {
-      console.error('Error clearing app data.');
+      console.error('Error clearing app data.',error);
   }
   }
 
