@@ -10,7 +10,7 @@ const ASPECT_RATIO = width / height;
 const duration = 500;
 const LATITUDE = 18.1083;
 const LONGITUDE = 83.3799;
-const LATITUDE_DELTA = 0.0051;
+const LATITUDE_DELTA = 0.0001*3;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 export default class Trackee extends React.Component {

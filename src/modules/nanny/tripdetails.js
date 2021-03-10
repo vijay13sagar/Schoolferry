@@ -1,44 +1,43 @@
 import * as React from 'react';
-import { Text, View,StatusBar, TouchableOpacity,Linking, StyleSheet, Image } from 'react-native';
+import { Text, View, StatusBar, TouchableOpacity, Linking, StyleSheet, Image } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 export default function trip_Details({ route, navigation }) {
-  console.log("this.props",route.params.item);
-    return (
-      <View style={styles.container} >
-        <StatusBar
+  console.log("this.props", route.params.item);
+  return (
+    <View style={styles.container} >
+      <StatusBar
         barStyle="light-content"
         // dark-content, light-content and default
         hidden={false}
         //To hide statusBar
-        backgroundColor= '#E91E63'
-        //Background color of statusBar only works for Android
-        //translucent={false}
+        backgroundColor='#E91E63'
+      //Background color of statusBar only works for Android
+      //translucent={false}
       //allowing light, but not detailed shapes
       />
-          <View style={styles.textview}>
-              <Text style={styles.headertext}>Location:         </Text>
-              <Text style={styles.details}>{route.params.item.location}</Text>
-              <Text style={styles.headertext}>Timing:            </Text>
-              <Text style={styles.details}>{route.params.item.driverInfo.driverContact}</Text>
-              <Text style={styles.headertext}>Driver ID:         </Text>
-              <Text style={styles.details}>{route.params.item.driverInfo.driverId}</Text>
-              <Text style={styles.headertext}>Driver Name:  </Text>
-              <Text style={styles.details}>{route.params.item.driverInfo.driverName}</Text>
-              <Text style={styles.headertext}>Driver No:        </Text>
-              <Text style={styles.details}>{route.params.item.driverInfo.driverContact}</Text>
-              <Text style={styles.headertext}>Vehicle No:       </Text>
-              <Text style={styles.details}>{route.params.item.vehicle}</Text>
-            </View>
-          {/* </View> */}
-          <TouchableOpacity style={styles.loginBtn} onPress={ ()=>navigation.navigate('Child List',route.params.item)} >
+      <View style={styles.textview}>
+        <Text style={styles.headertext}>Location:</Text>
+        <Text style={styles.details}>{route.params.item.location}</Text>
+        <Text style={styles.headertext}>Timing:</Text>
+        <Text style={styles.details}>{route.params.item.driverInfo.driverContact}</Text>
+        <Text style={styles.headertext}>Driver ID:</Text>
+        <Text style={styles.details}>{route.params.item.driverInfo.driverId}</Text>
+        <Text style={styles.headertext}>Driver Name:</Text>
+        <Text style={styles.details}>{route.params.item.driverInfo.driverName}</Text>
+        <Text style={styles.headertext}>Driver No:</Text>
+        <Text style={styles.details}>{route.params.item.driverInfo.driverContact}</Text>
+        <Text style={styles.headertext}>Vehicle No:</Text>
+        <Text style={styles.details}>{route.params.item.vehicle}</Text>
+      </View>
+      <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('Child List', route.params.item)} >
         <Text style={styles.loginText}>Child List</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.CallBtn} onPress={() => { Linking.openURL('tel:8777111223') }}  >
+      <TouchableOpacity style={styles.CallBtn} onPress={() => { Linking.openURL('tel:{route.params.item.driverInfo.driverContact}') }}  >
         <Text style={styles.loginText}>Contact Driver</Text>
       </TouchableOpacity>
-      </View>
-    );
-  }
+    </View>
+  );
+}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -56,28 +55,28 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     marginTop: 50
   },
-  showcase:{
-    padding:10,
-    marginLeft:20,
-    flexDirection:'row',
+  showcase: {
+    padding: 10,
+    marginLeft: 20,
+    flexDirection: 'row',
   },
-  sidehead:{
-    fontWeight:'bold',
-    marginLeft:8,
-    alignSelf:'flex-start',
+  sidehead: {
+    fontWeight: 'bold',
+    marginLeft: 8,
+    alignSelf: 'flex-start',
     //position:'relative',
-    justifyContent:'space-around'
+    justifyContent: 'space-around'
   },
   inputView: {
     borderWidth: 1,
     borderColor: '#B0003A',
     borderRadius: 10,
-    padding:10,
+    padding: 10,
     width: "80%",
     height: 45,
     alignItems: "center",
-    alignSelf:'center',
-    backgroundColor:"#fff",   //"#C4C4C4",
+    alignSelf: 'center',
+    backgroundColor: "#fff",   //"#C4C4C4",
     margin: 8,
     //opacity: 0.5,
   },
@@ -97,7 +96,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     marginLeft: 30,
   },
-  details:{
+  details: {
     height: 40,
     backgroundColor: "#D3D3D3",
     //borderWidth: 1,
@@ -129,10 +128,10 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: 20,
   },
-  loginText:{
-    color:'black',
-    fontSize:15,
-   // fontWeight:'700'
+  loginText: {
+    color: 'black',
+    fontSize: 15,
+    // fontWeight:'700'
   },
   CallBtn: {
     width: "80%",
