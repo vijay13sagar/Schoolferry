@@ -73,8 +73,12 @@ const location = ({ navigation }) => {
       // const dis = await calculateDistance();
        // console.log(dis);
 
-        if (!pincode) {
-            setError({ error: 'Please enter pincode' })
+        if ( !schoolAddress || !residenceAddress || !pincode) {
+            setError({ error: 'Please enter all fields' })
+        }
+        else if (pincode.length != 6) {
+            setError({ error: 'Please enter valid pincode' })
+
         }
         else {
 

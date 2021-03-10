@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   body: {
-    marginVertical: 40,
+    marginVertical: 23,
     alignSelf: 'center',
   },
   textview: {
