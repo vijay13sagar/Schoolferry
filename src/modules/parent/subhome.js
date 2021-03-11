@@ -26,6 +26,7 @@ const subscribedHome = ({route, navigation}) => {
   const [pickerValue, setPickerValue] = useState([]);
   const [selectedValue, setValue] = useState('');
   const [isLoading, setLoading] = useState(true);
+  const [trips, settrips] = useState('');
 
   const onDateChange = (date, type) => {
     if (type === 'END_DATE') {
@@ -48,8 +49,10 @@ const subscribedHome = ({route, navigation}) => {
 
           setPickerValue(response.data.childList);
           setValue(response.data.childList[0].name);
+         // console.log('data',response.data)
+          //console.log('refresh subhome:', response.data.childList[0].trips);
           // console.log('data',response.data.childList[0].name, selectedValue)
-          console.log('refresh subhome:', response.data.childList[0].name);
+          //console.log('refresh subhome:', response.data.childList[0].name);
          // console.log('child data: ', response.data);
           setLoading(false);
         } catch (e) {
@@ -82,31 +85,74 @@ const subscribedHome = ({route, navigation}) => {
     pickerValue.length && selectedValue
       ? pickerValue.filter((item) => {
           //console.log('check value', pickerValue, selectedValue)
-          return item.name.toLowerCase().includes(selectedValue.toLowerCase());
+          // return item.name.toLowerCase().includes(selectedValue.toLowerCase());
+          var data = item.name.toLowerCase().includes(selectedValue.toLowerCase())
+        //settrips(data)
+        
+        // if(data){
+        //   //console.log("value2",item.trips);
+        //   settrips(item.trips)
+        // }
+    //console.log('check value', pickerValue, selectedValue)
+    // return item.name.toLowerCase().includes(selectedValue.toLowerCase())
+    return data
         })
       : [];
 
-  //console.log('value1', value1)
+  // console.log('value1', value1[0].trips)
+  
+// settrips(( pickerValue.length && selectedValue)?value1[0].trips:null)
 
   return isLoading ? null : (
     <ScrollView>
+       <StatusBar
+          barStyle="light-content"
+          // dark-content, light-content and default
+          hidden={false}
+          //To hide statusBar
+          backgroundColor='#e91e63'
+          //Background color of statusBar only works for Android
+          translucent={false}
+        //allowing light, but not detailed shapes
+
+        />
 
       <Picker
         selectedValue={selectedValue}
         style={styles.Picker}
         onValueChange={(value) =>
-          /*{ console.log('pickervalue', value);*/ setValue(value)
+          /*{ console.log('pickervalue',value);*/ setValue(value)
         }>
         {myUsers()}
       </Picker>
-
       <View
         style={{
           marginLeft: 20,
           alignSelf: 'flex-start',
           justifyContent: 'center',
         }}>
-        <Text style={{fontWeight: 'bold', fontSize: 21}}>Plan Details -</Text>
+          
+         
+        <Text style={{fontWeight: 'bold', fontSize: 21}}>Trips For Today :-</Text>
+      </View>
+      <View>
+        {Boolean(value1.length) &&
+        value1[0].trips.map((item)=>(
+        <TouchableOpacity style={styles.trips} onPress={()=> navigation.navigate('Trip_details',item)}>
+        <Text style={{justifyContent:'center',marginTop:6,marginLeft:10}}>{item.tripId}</Text>
+        </TouchableOpacity>
+        ))
+        }
+      </View>
+      <View
+        style={{
+          marginLeft: 20,
+          alignSelf: 'flex-start',
+          justifyContent: 'center',
+        }}>
+          
+         
+        <Text style={{fontWeight: 'bold', fontSize: 21}}>Plan Details :-</Text>
       </View>
       <View style={styles.headertext}>
         <Text style={styles.registerTextStyle}>Plan Tenure</Text>
@@ -114,6 +160,7 @@ const subscribedHome = ({route, navigation}) => {
       <View style={styles.details}>
         {Boolean(value1.length) && <Text>{value1[0].tenure}</Text>}
       </View>
+      
       <View style={styles.headertext}>
         <Text style={styles.registerTextStyle}>Date of Subscription:</Text>
       </View>
@@ -141,7 +188,7 @@ const subscribedHome = ({route, navigation}) => {
           justifyContent: 'center',
         }}>
         <Text style={{fontWeight: 'bold', fontSize: 20}}>
-          Cancelation of Ride:
+          Cancelation of Ride :-
         </Text>
       </View>
       <View style={styles.headertext}>
@@ -224,6 +271,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: '85%',
     padding: 8,
+    alignSelf: 'center',
+  },
+  trips: {
+    height: 40,
+    backgroundColor: 'white',
+    
+    width: '95%',
+  marginTop:5,
     alignSelf: 'center',
   },
   loginBtn: {

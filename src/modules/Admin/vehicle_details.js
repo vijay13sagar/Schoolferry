@@ -71,7 +71,7 @@ export default function vehicle_Details({ route, navigation }){
      
       
       
-        <TouchableOpacity style={styles.loginBtn} >
+        {/* <TouchableOpacity style={styles.loginBtn} >
             <Text style={styles.loginText}>Daily Check List</Text>
             
             
@@ -80,7 +80,7 @@ export default function vehicle_Details({ route, navigation }){
             <Text style={styles.loginText}>Track Vehicle</Text>
             
             
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
   );
 }

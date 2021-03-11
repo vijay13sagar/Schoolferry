@@ -80,18 +80,18 @@ export default function user_Details({ route, navigation }) {
 
           </Text>
         </View>
-        <View style={{ width: "70%",marginLeft:35  }}>
-          <Text>Address</Text></View>
+        {/* <View style={{ width: "70%",marginLeft:35  }}>
+          <Text>Address</Text></View> */}
 
-        <View style={styles.details}>
+        {/* <View style={styles.details1}>
           <Text >
 
-            {route.params.item.address}
+         {data.childName}
 
           </Text>
-        </View>
+        </View> */}
 
-        <Text style={{fontSize:15,marginTop:5}} >
+        <Text style={{fontSize:15,marginTop:5}} > 
 
 Child Details
 
@@ -153,6 +153,18 @@ const styles = StyleSheet.create({
   },
   details: {
     height: 40,
+    backgroundColor: "#d3d3d3",
+    //borderWidth: 1,
+    borderRadius: 12,
+    //borderColor: '#ff5c8d',
+    //marginTop: 3,
+    width: '85%',
+    padding: 8,
+    alignSelf: "center"
+
+  },
+  details1: {
+    height: 100,
     backgroundColor: "#d3d3d3",
     //borderWidth: 1,
     borderRadius: 12,

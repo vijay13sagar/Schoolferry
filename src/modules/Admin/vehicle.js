@@ -46,7 +46,14 @@ export default class vehicleList extends Component  {
       />
         
         <ScrollView>
+        <View style={{  justifyContent: 'center', alignItems: 'center' }}>
+        <TouchableOpacity style={styles.loginBtn} onPress = {()=>this.props. navigation.navigate('Add_Vehicle')}>
+         <Text style={styles.loginText}>Add New Vehicles</Text>
+
+       </TouchableOpacity>
+       </View>
         {isLoading ? <ActivityIndicator/> : (
+          
           <FlatList
             data={data}
             keyExtractor={({ id }, index) => id}
@@ -77,12 +84,7 @@ export default class vehicleList extends Component  {
         )}
         </ScrollView>
         
-        <View style={{  justifyContent: 'center', alignItems: 'center' }}>
-        <TouchableOpacity style={styles.loginBtn} onPress = {()=>this.props. navigation.navigate('Add_Vehicle')}>
-         <Text style={styles.loginText}>Add New Vehicles</Text>
-
-       </TouchableOpacity>
-       </View>
+       
     </View>
       
     );

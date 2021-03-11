@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   StatusBar,
@@ -122,6 +122,9 @@ const gotootpscreen=()=>{
               Alert.alert('Incorrect contact/password');
             }
           }
+           else if(responseJson.message = "Token not provided"){
+           Alert.alert("Token not sent")
+         }
         })
         .catch((error) => {
           console.log('error', error); // 401
@@ -147,7 +150,7 @@ const gotootpscreen=()=>{
         backgroundColor="#e91e63"
         //Background color of statusBar only works for Android
         translucent={false}
-      //allowing light, but not detailed shapes
+        //allowing light, but not detailed shapes
       />
       <View style={styles.inputView}>
         <TextInput

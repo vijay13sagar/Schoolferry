@@ -12,10 +12,10 @@ import { ScrollView } from "react-native-gesture-handler";
 import { event } from "react-native-reanimated";
 
 
-export default function child_Details({ route, navigation }){
+export default function Trip_Details({ route }){
  
  
-
+console.log("data",route.params);
   
  
   
@@ -25,59 +25,68 @@ export default function child_Details({ route, navigation }){
     <View style={styles.container}>
       <StatusBar style="auto" />
         <View style={{width:"70%",marginRight:50}}>
-        <Text>Name</Text></View> 
+        <Text>Driver Name</Text></View> 
         
         <View style={styles.details}>
         <Text>
           
-          {route.params.item.childName}
+        
+        {route.params.driverName}
           
         </Text>
       </View>
       <View style={{width:"70%",marginRight:50}}>
-        <Text>school</Text></View> 
+        <Text>Driver Contact</Text></View> 
       
-      <View style={styles.details1}>
+      <View style={styles.details}>
         <Text>
           
-        {route.params.item.school}
+        {route.params.driverContact}
           
         </Text>
       </View>
      
       <View style={{width:"70%",marginRight:50}}>
-        <Text>Age</Text></View> 
+        <Text>Nanny Name</Text></View> 
         <View style={styles.details}>
         <Text>
           
-        {route.params.item.age}
+        {route.params.nannyName}
           
         </Text>
       </View>
       <View style={{width:"70%",marginRight:50}}>
-        <Text>Blood Group</Text></View> 
+        <Text>Nanny Contact</Text></View> 
      
         <View style={styles.details}>
         <Text>
           
-        {route.params.item.bloodGroup}
+        {route.params.nannyContact}
           
         </Text>
       </View>
       <View style={{width:"70%",marginRight:50}}>
-        <Text>Pickup Location</Text></View> 
-        <View style={styles.details1}>
+        <Text>Vehicle Number</Text></View> 
+        <View style={styles.details}>
         <Text>
-          
-        {route.params.item.address} 
+        
+        {route.params.vehicleRegNo}
           
         </Text>
       </View>
       <View style={{width:"70%",marginRight:50}}>
-        <Text>Drop Location</Text></View> 
-        <View style={styles.details1}>
+        <Text>Vehicle Type</Text></View> 
+        <View style={styles.details}>
         <Text>
-        {route.params.item.school}  
+        {route.params.vehicleType}
+         
+        </Text>
+      </View>
+      <View style={{width:"70%",marginRight:50}}>
+        <Text>Vehicle Moderl</Text></View> 
+        <View style={styles.details}>
+        <Text>
+        {route.params.vehicleModel}
          
         </Text>
       </View>
@@ -91,15 +100,15 @@ export default function child_Details({ route, navigation }){
           
         </Text>
       </View> */}
-      <View style={{width:"70%",marginRight:50}}>
+      {/* <View style={{width:"70%",marginRight:50}}>
         <Text>Subscription Details</Text></View> 
       <View style={styles.inputViews}>
       <Text  style={styles.subText}>Start Date:- {route.params.item.subscription.startDate} </Text>
       <Text  style={styles.subText}>End Date:- {route.params.item.subscription.endDate} </Text>
       <Text  style={styles.subText}>Tenure:- {route.params.item.subscription.tenure} </Text>
       <Text  style={styles.subText}>Cost:- {route.params.item.subscription.cost} </Text>
-      {/* <Text  style={styles.subText}>Subscription ID:-{route.params.item.school} </Text> */}
-      </View>
+      {/* <Text  style={styles.subText}>Subscription ID:-{route.params.item.school} </Text>
+      </View> */}
 
     </View>
     </ScrollView>
