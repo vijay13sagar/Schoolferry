@@ -32,7 +32,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Picker } from '@react-native-picker/picker';
 
-export default function Add_Driver() {
+export default function Add_Driver({navigation}) {
    
     const [title, settitle] = useState("");
     const [message, setmessage] = useState("");
@@ -111,14 +111,19 @@ export default function Add_Driver() {
     }
     const onPressLogout = async () => {
         try {
-          const keys = await AsyncStorage.getAllKeys();
-          await AsyncStorage.multiRemove(keys);
+          // const keys = await AsyncStorage.getAllKeys();
+          // await AsyncStorage.multiRemove(keys);
+          AsyncStorage.removeItem('token');
           console.log("working");
           navigation.replace('Login');
         Alert.alert('You have been logged out');
       } catch (error) {
-          console.error('Error clearing app data.');
+          console.error('Error clearing app data.',error);
       }
+        //AsyncStorage.removeItem('token');
+        //window.localStorage.clear();
+        //AsyncStorage.clear()
+        
       }
 
     return (

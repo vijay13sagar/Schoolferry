@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
     Text,
     View,
-    ScrollView,Alert,
+    ScrollView, Alert,
     StyleSheet,
     FlatList,
     TouchableOpacity,
@@ -16,19 +16,19 @@ import Ngrok from '../../constants/ngrok';
 const Checklist = ({ route, navigation }) => {
     const [modalVisible, setModalVisible] = useState(false);
     //const [att,setAtt] = useState("");
-    const [nannyID,setNannyid]=useState(route.params.item.nannyInfo.nannyId);
-    const [but,setBut] = useState('Start Trip')
+    const [nannyID, setNannyid] = useState(route.params.item.nannyInfo.nannyId);
+    const [but, setBut] = useState('Start Trip')
     //let [details,setDet]= useState("");
-    const v=route.params.item.trip_id;
+    const v = route.params.item.trip_id;
     const [item1, setItem1] = useState([]);
     //let [childId,setChildId]= useState(item1.childId);
-    const [childId,setChildId]= useState(item1.childId);
+    const [childId, setChildId] = useState(item1.childId);
     const [item2, setItem2] = useState(route.params.item.childList);
-    
-const Nannyprofile=()=>{
-        return(
+
+    const Nannyprofile = () => {
+        return (
             <View>
-                <Text style={styles.textDetails}>Nanny Id - {route.params.item.nannyInfo.nannyId }</Text>
+                <Text style={styles.textDetails}>Nanny Id - {route.params.item.nannyInfo.nannyId}</Text>
                 <Text style={styles.textDetails}>Nanny Name - {route.params.item.nannyInfo.nannyName} </Text>
                 <Text style={styles.textDetails}>Nanny Contact - {route.params.item.nannyInfo.nannyContact}</Text>
             </View>
@@ -61,16 +61,15 @@ const Nannyprofile=()=>{
             </Modal>
 
             <ScrollView>
-                <View style={ nannyID ? styles.firstbox :styles.secondbox} >
+                <View style={styles.firstbox} >
                     <Text style={styles.textTitle}>Trip ID - {route.params.item.trip_id}</Text>
                     <View style={styles.detailsBox}>
                         <Text style={styles.textDetails}>Destination: {route.params.item.destination} </Text>
                         <Text style={styles.textDetails}>Start Location: {route.params.item.location}</Text>
                         <Text style={styles.textDetails}>Vehicle ID: {route.params.item.vehilce}</Text>
                         <Text style={styles.textDetails}>Total Children: {route.params.item.noOfChildren}</Text>
-                        {/* <Text style={styles.textDetails}>Total Absent - {att}</Text> */}
-                        {route.params.item.nannyInfo.nannyId ? <Nannyprofile/>: null}
-                        
+                        {route.params.item.nannyInfo.nannyId ? <Nannyprofile /> : null}
+
                     </View>
                 </View>
                 <FlatList
@@ -99,20 +98,10 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     firstbox: {
-        width: '95%',
-        height: 300,
+        width: '90%',
         borderRadius: 10,
-        borderWidth: 1,
-        borderColor: 'black',
-        backgroundColor: '#fff',
-        alignSelf: 'center',
-        marginVertical: 15,
-    },
-    secondbox: {
-        width: '95%',
-        height: 195,
-        borderRadius: 10,
-        borderWidth: 1,
+        padding: 8,
+        borderWidth: 2,
         borderColor: 'black',
         backgroundColor: '#fff',
         alignSelf: 'center',
