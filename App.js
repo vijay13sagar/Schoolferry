@@ -31,6 +31,7 @@ export default function App() {
     // foreground message handler 
     foreground = messaging().onMessage(async remoteMessage => {
       alert('A new notification arrived!', JSON.stringify(remoteMessage));
+      console.log('Message handled in the foreground!', remoteMessage);
     });
 
     // Assume a message-notification contains a "type" property in the data payload of the screen to open

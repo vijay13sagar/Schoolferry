@@ -122,7 +122,7 @@ const Checklist = ({ route, navigation }) => {
             })
                 .then(function (response) {
                     if (response.status == 200) {
-                        Alert.alert("Trip started")
+                       // Alert.alert("Trip started")
                     }
                     console.log("response for starttrip", response.status);
                 })
@@ -213,7 +213,7 @@ const Checklist = ({ route, navigation }) => {
                                 setModalVisible(!modalVisible)
                                 setItem1(item)
                             }}>
-                                <Text style={styles.itemText}>{item.childName},{item.childId}</Text>
+                                <Text style={styles.itemText}>{item.childName}{/*item.childId*/}</Text>
                             </TouchableOpacity>
                             <Switch
                                 value={item.attendance}
