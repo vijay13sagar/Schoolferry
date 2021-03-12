@@ -34,11 +34,11 @@ export default function Login({ navigation }) {
   };
   const validateFunction = () => {
     if (!email) {
-      setEmailError({ emailError: 'Email/Phone Field Cannot be Empty' });
+      setEmailError({ emailError: 'Phone Number Field Cannot be Empty' });
       return false;
     }
     if (!validateEmail(email)) {
-      setEmailError({ emailError: 'Enter Valid Email/Phone' });
+      setEmailError({ emailError: 'Enter Valid Phone Number' });
       return false;
     }
     if (!password) {
@@ -154,7 +154,7 @@ const gotootpscreen=()=>{
         <TextInput
           keyboardType="numeric"
           style={styles.TextInput}
-          placeholder="Email/Phone"
+          placeholder="Phone"
           maxLength={10}
           placeholderTextColor="#929292"
           onChangeText={(email) => setEmail(email)}

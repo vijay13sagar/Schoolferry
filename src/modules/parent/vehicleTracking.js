@@ -8,26 +8,26 @@ const Driver = ({ route }) => {
   const [lat, setLatitude] = useState(18.1083)
   const [lon, setLongitude] = useState(83.3799)
 
-  const fetchApi = async () => {
-    //let token = await AsyncStorage.getItem('token')
-    let tripid = await route.params.tripId
-    console.log('trip ID:', tripid)
-    axios
-      .get(`${Ngrok.url}/api/driver/tracking/T004`)
-      .then(function (response) {
-        console.log("dat", response.data);
-        setLatitude(response.data.latitude);
-        setLongitude(response.data.longitude);
-        console.log("dat", lat);
-      })
-      .catch(function (error) {
-        // handle error
-        console.log("error", error.message);
-      })
-      .finally(function () {
-        // always executed
-      });
-  };
+const fetchApi = async() => {
+  //let token = await AsyncStorage.getItem('token')
+   let tripid = await  route.params.tripId
+   console.log('trip ID:', tripid)
+  axios
+    .get(`${Ngrok.url}/api/driver/tracking/${tripid}`)
+    .then(function (response) {
+      console.log("dat",response.data);
+      setLatitude(response.data.latitude);
+      setLongitude(response.data.longitude);
+      console.log("dat",lat);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log("error",error.message);
+    })
+    .finally(function () {
+      // always executed
+    });
+};
 
   useEffect(() => {
     const interval = setInterval(() => {
