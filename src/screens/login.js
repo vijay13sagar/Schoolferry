@@ -78,7 +78,7 @@ const gotootpscreen=()=>{
          id: email,
           password: password
        }*/
-      /*let response = await loginApi(body)*/
+      /let response = await loginApi(body)/
       fetch(`${Ngrok.url}/api/login`, {
         method: 'POST',
         headers: {
@@ -94,7 +94,7 @@ const gotootpscreen=()=>{
         .then((response) => response.json())
         .then((responseJson) => {
           console.log('response', responseJson);
-          console.log("status", responseJson.status);
+         // console.log("status", responseJson.status);
           
             if (responseJson[1] == 'Parent') {
               AsyncStorage.setItem('token', responseJson[0]);
@@ -111,6 +111,7 @@ const gotootpscreen=()=>{
             }
           
           if (responseJson.status == 401) {
+            console.log('status', responseJson.message)
             if ((responseJson.message == "Token not provided")) {
               Alert.alert("Not an exsisting user, please sign up first !")
             }
@@ -118,13 +119,10 @@ const gotootpscreen=()=>{
               //Alert.alert("OTP verification need to be done")
               gotootpscreen();
             }
-            else if ((responseJson.message == "Invalid contact/password")) {
+            else if ((responseJson.message == "Invalid contact/Password")) {
               Alert.alert('Incorrect contact/password');
             }
           }
-           else if(responseJson.message = "Token not provided"){
-           Alert.alert("Token not sent")
-         }
         })
         .catch((error) => {
           console.log('error', error); // 401
