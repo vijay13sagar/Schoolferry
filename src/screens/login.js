@@ -34,11 +34,11 @@ export default function Login({ navigation }) {
   };
   const validateFunction = () => {
     if (!email) {
-      setEmailError({ emailError: 'Email/Phone Field Cannot be Empty' });
+      setEmailError({ emailError: 'Phone Number Field Cannot be Empty' });
       return false;
     }
     if (!validateEmail(email)) {
-      setEmailError({ emailError: 'Enter Valid Email/Phone' });
+      setEmailError({ emailError: 'Enter Valid Phone Number' });
       return false;
     }
     if (!password) {
@@ -94,7 +94,7 @@ const gotootpscreen=()=>{
         .then((response) => response.json())
         .then((responseJson) => {
           console.log('response', responseJson);
-          console.log("status", responseJson.status);
+         // console.log("status", responseJson.status);
           
             if (responseJson[1] == 'Parent') {
               AsyncStorage.setItem('token', responseJson[0]);
@@ -111,6 +111,7 @@ const gotootpscreen=()=>{
             }
           
           if (responseJson.status == 401) {
+            console.log('status', responseJson.message)
             if ((responseJson.message == "Token not provided")) {
               Alert.alert("Not an exsisting user, please sign up first !")
             }
@@ -118,13 +119,10 @@ const gotootpscreen=()=>{
               //Alert.alert("OTP verification need to be done")
               gotootpscreen();
             }
-            else if ((responseJson.message == "Invalid contact/password")) {
+            else if ((responseJson.message == "Invalid contact/Password")) {
               Alert.alert('Incorrect contact/password');
             }
           }
-           else if(responseJson.message = "Token not provided"){
-           Alert.alert("Token not sent")
-         }
         })
         .catch((error) => {
           console.log('error', error); // 401
@@ -156,7 +154,7 @@ const gotootpscreen=()=>{
         <TextInput
           keyboardType="numeric"
           style={styles.TextInput}
-          placeholder="Email/Phone"
+          placeholder="Phone"
           maxLength={10}
           placeholderTextColor="#929292"
           onChangeText={(email) => setEmail(email)}

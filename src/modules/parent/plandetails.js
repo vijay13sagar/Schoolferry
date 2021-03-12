@@ -143,7 +143,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#ff5c8d",
     alignSelf: "center",
-    marginTop: 20,
+    marginTop: 10,
+    marginBottom:5
   },
   inputView: {
     padding:9,

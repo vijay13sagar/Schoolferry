@@ -110,6 +110,7 @@ export default class Trackee extends React.Component {
       console.log("errordetails", error);
     }
   };
+
   Endtrip = () => {
     try {
       fetch(`${Ngrok.url}/api/driver/trip/end`, {
@@ -125,6 +126,8 @@ export default class Trackee extends React.Component {
         .then(function (response) {
           if (response.status == 200) {
             Alert.alert('Trip Ended')
+           
+
           }
 
           console.log("response for end trip", response.status);

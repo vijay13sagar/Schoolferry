@@ -28,7 +28,7 @@ export default function App({ route,navigation }) {
   const e=s.toString();
   const pressHandler1 = () => {
     if (!UPI) {
-        setError({ value_error: "Field  can not be Empty" })
+        setError({ value_error: "Field cannot be Empty" })
         return value_error
       }
       if (UPI) {
@@ -202,8 +202,9 @@ const styles = StyleSheet.create({
   error: {
     color: '#dc143c',
     fontSize: 11,
-    marginTop: 2,
+    //marginTop: 2,
     alignSelf: 'center',
+    marginBottom:5,
   },
 
   inputView: {
@@ -223,9 +224,10 @@ const styles = StyleSheet.create({
 
   },
   headertext: {
-    fontSize: 13,
+    fontSize: 14,
     marginTop: 15,
-    marginLeft: 35,
+   // marginLeft: 35,
+    alignSelf:'center'
   },
 
   TextInput: {

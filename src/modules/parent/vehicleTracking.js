@@ -14,7 +14,7 @@ const fetchApi = async() => {
    let tripid = await  route.params.tripId
    console.log('trip ID:', tripid)
   axios
-    .get(`${Ngrok.url}/api/driver/tracking/T004`)
+    .get(`${Ngrok.url}/api/driver/tracking/${tripid}`)
     .then(function (response) {
       console.log("dat",response.data);
       setLatitude(response.data.latitude);
