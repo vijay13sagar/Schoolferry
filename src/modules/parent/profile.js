@@ -44,8 +44,9 @@ const Profile = ({navigation}) => {
   }, [navigation])
   const onPressLogout = async () => {
     try {
-      const keys = await AsyncStorage.getAllKeys();
-      await AsyncStorage.multiRemove(keys);
+      // const keys = await AsyncStorage.getAllKeys();
+      // await AsyncStorage.multiRemove(keys);
+      AsyncStorage.removeItem('token');
       console.log("working");
       navigation.replace('Login');
     Alert.alert('You have been logged out');

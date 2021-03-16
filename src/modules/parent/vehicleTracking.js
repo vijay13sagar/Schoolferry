@@ -4,10 +4,9 @@ import MapView, { Marker, AnimatedRegion } from 'react-native-maps';
 import axios from 'axios';
 import Ngrok from '../../constants/ngrok';
 
-const Driver = ({route}) => {
-const [lat, setLatitude] = useState(18.1083)
-const [lon, setLongitude]= useState(83.3799)
- 
+const Driver = ({ route }) => {
+  const [lat, setLatitude] = useState(18.1083)
+  const [lon, setLongitude] = useState(83.3799)
 
 const fetchApi = async() => {
   //let token = await AsyncStorage.getItem('token')
@@ -30,39 +29,38 @@ const fetchApi = async() => {
     });
 };
 
-useEffect(() => {
-  const interval = setInterval(() => {
+  useEffect(() => {
+    const interval = setInterval(() => {
       fetchApi();
-  }, 3000);
-  return () => clearInterval(interval);
-});
+    }, 3000);
+    return () => clearInterval(interval);
+  });
 
+  return (
+    <View style={{ flex: 1 }}>
+      <MapView
 
-return (
-<View style={{flex:1 }}>
-<MapView
-
-style={ {
-  // ...StyleSheet.absoluteFillObject,
-  width:"100%",
-  height:"75%",
-  alignSelf:'center',
-  marginVertical:20,
-  justifyContent:'flex-start',
-}}
-initialRegion={{
-latitude: lat,
-longitude: lon,
-latitudeDelta: 0.0011 *5,
-longitudeDelta:0.0011 *3
-}} > 
-<Marker
-coordinate={{ latitude:lat, longitude: lon}}
->
-</Marker >
-</MapView>
-</View>
-);
+        style={{
+          // ...StyleSheet.absoluteFillObject,
+          width: "100%",
+          height: "75%",
+          alignSelf: 'center',
+          marginVertical: 20,
+          justifyContent: 'flex-start',
+        }}
+        initialRegion={{
+          latitude: lat,
+          longitude: lon,
+          latitudeDelta: 0.0011 * 5,
+          longitudeDelta: 0.0011 * 3
+        }} >
+        <Marker
+          coordinate={{ latitude: lat, longitude: lon }}
+        >
+        </Marker >
+      </MapView>
+    </View>
+  );
 }
 
 export default Driver;

@@ -19,6 +19,62 @@ import Endtripdetails from '../modules/driver/endtripdetails';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
+
+function Homepage() {
+  return (
+    <Stack.Navigator
+      initialRouteName="Homey"
+      screenOptions={{
+        headerStyle: { backgroundColor: '#fff' },
+        headerTintColor: 'black',
+        headerTitleStyle: { fontWeight: 'bold' },
+        headerTitleAlign: 'center',
+        //headerShown: false
+      }}>
+      <Stack.Screen
+        name="Homey"
+        component={Home}
+        options={{ title: 'Home' }}
+      />
+      <Stack.Screen
+        name="Trip Details"
+        component={tripDetails}
+        options={{ title: 'Trip Details' }}
+      />
+      <Stack.Screen
+        name="Check_list"
+        component={Checklist}
+        options={{ title: 'CheckList' }}
+      />
+    </Stack.Navigator>
+
+  );
+}
+function Map() {
+  return (
+    <Stack.Navigator
+      initialRouteName="Tripnotstarted"
+      screenOptions={{
+        headerStyle: { backgroundColor: '#fff' },
+        headerTintColor: 'black',
+        headerTitleStyle: { fontWeight: 'bold' },
+        headerTitleAlign: 'center'
+        //headerShown: false
+      }}>
+      <Stack.Screen
+        name="Tripnotstarted"
+        component={Notstarted}
+        options={{ title: 'Map' }}
+      />
+      <Stack.Screen
+        name="Trackee"
+        component={Trackee}
+        options={{ title: 'Map' }}
+      />
+
+    </Stack.Navigator>
+  );
+}
 function History() {
   return (
     <Stack.Navigator
@@ -33,20 +89,20 @@ function History() {
       <Stack.Screen
         name="Trip_history"
         component={Triphistory}
-      options={{ title: 'Trip History' }}
+        options={{ title: 'Trip History' }}
       />
       <Stack.Screen
         name="Endtrip_details"
         component={Endtripdetails}
-      options={{ title: 'Trip Details' }}
+        options={{ title: 'Trip Details' }}
       />
     </Stack.Navigator>
   );
 }
-function Homepage() {
+function Notices() {
   return (
     <Stack.Navigator
-      initialRouteName="Homey"
+      initialRouteName="notifications"
       screenOptions={{
         headerStyle: { backgroundColor: '#fff' },
         headerTintColor: 'black',
@@ -55,24 +111,15 @@ function Homepage() {
         //headerShown: false
       }}>
       <Stack.Screen
-        name="Homey"
-        component={Home}
-      options={{ title: 'Home' }}
+        name="notifications"
+        component={Notifications}
+        options={{ title: 'Notifications' }}
       />
-       <Stack.Screen
-        name="Trip Details"
-        component={tripDetails}
-        options={{ title: 'Trip Details' }}
-      />
-       <Stack.Screen
-        name="Check_list"
-        component={Checklist}
-      options={{ title: 'CheckList' }}
-      />
+
     </Stack.Navigator>
-    
   );
 }
+
 function Profile() {
   return (
     <Stack.Navigator
@@ -102,52 +149,6 @@ function Profile() {
     </Stack.Navigator>
   );
 }
-function Map() {
-  return (
-    <Stack.Navigator
-      initialRouteName="Tripnotstarted"
-      screenOptions={{
-        headerStyle: { backgroundColor: '#fff' },
-        headerTintColor: 'black',
-        headerTitleStyle: { fontWeight: 'bold' },
-        headerTitleAlign: 'center'
-        //headerShown: false
-      }}>
-      <Stack.Screen
-        name="Tripnotstarted"
-        component={Notstarted}
-      options={{ title: 'Map' }}
-      />
-      <Stack.Screen
-        name="Trackee"
-        component={Trackee}
-      options={{title: 'Map' }}
-      />
-      
-    </Stack.Navigator>
-  );
-}
-function Notices() {
-  return (
-    <Stack.Navigator
-      initialRouteName="notifications"
-      screenOptions={{
-        headerStyle: { backgroundColor: '#fff' },
-        headerTintColor: 'black',
-        headerTitleStyle: { fontWeight: 'bold' },
-        headerTitleAlign: 'center'
-        //headerShown: false
-      }}>
-      <Stack.Screen
-        name="notifications"
-        component={Notifications}
-      options={{ title: 'Notifications' }}
-      />
-      
-    </Stack.Navigator>
-  );
-}
-
 
 
 const DriverTab = () => {
@@ -156,7 +157,7 @@ const DriverTab = () => {
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
-
+          
           if (route.name === 'Home') {
             iconName = focused ? 'home' : 'home-outline';
           }
@@ -183,7 +184,7 @@ const DriverTab = () => {
     >
       <Tab.Screen name="Home" component={Homepage} />
       <Tab.Screen name="Map" component={Map} />
-      <Tab.Screen name="History" component={History} /> 
+      <Tab.Screen name="History" component={History} />
       <Tab.Screen name="Notifications" component={Notices} />
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>

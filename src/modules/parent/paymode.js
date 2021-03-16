@@ -39,7 +39,7 @@ const Homescreen = ({ route,navigation }) => {
                 </Text>
                 <Ionicons name="chevron-forward-outline"
                   color="#000" size={25}
-                  style={{marginLeft:90}}
+                  style={{marginLeft:70}}
                 />
               </Body>
             </CardItem>
@@ -59,7 +59,7 @@ const Homescreen = ({ route,navigation }) => {
                 </Text>
                 <Ionicons name="chevron-forward-outline"
                   color="#000" size={25}
-                  style={{marginLeft:80}}
+                  style={{marginLeft:60}}
                 />
               </Body>
             </CardItem>
