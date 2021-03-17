@@ -34,7 +34,7 @@ export default class ChildList extends Component  {
             keyExtractor={({ id }, index) => id}
             renderItem={({ item }) => (
         <TouchableOpacity style={styles.loginBtn} onPress = {()=>this.props.navigation.navigate('Child Details',{item:item})}>
-          <Text>{ item.childId }</Text>
+          <Text>{item.childName} , { item.childId }</Text>
         </TouchableOpacity>
             )}
           />

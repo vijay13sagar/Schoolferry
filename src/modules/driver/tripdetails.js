@@ -21,15 +21,11 @@ const wait = (timeout) => {
 
 const Checklist = ({ route, navigation }) => {
     const [modalVisible, setModalVisible] = useState(false);
-    const [att, setAtt] = useState("");
-    const nannyID = route.params.item.nannyInfo.nannyId;
     const [but, setBut] = useState('Start Trip')
-    const [locdisable, setLoc] = useState(true);
+    const [locdisable, setLoc] = useState();
     const [details, setDet] = useState([]);
     const [item1, setItem1] = useState([]);
-    const [childId, setChildId] = useState("");
-    const [item2, setItem2] = useState(route.params.item.childList);
-    const [selectedValue, setValue] = useState("");
+    const [absentee,setInfo] =useState();
     let TripID = route.params.item.trip_id;
     let VehicleID = route.params.item.vehilce;
     const [refreshing, setRefreshing] = React.useState(false);
@@ -53,10 +49,9 @@ const Checklist = ({ route, navigation }) => {
         })
             .then(response => response.json())
             .then(responseJson => {
-                console.log('responsehshshs', responseJson);
-                console.log('lists', responseJson.childList);
+                setInfo(responseJson.noOfChildrenAbsent)
+                setLoc(responseJson.startedTripAt);
                 setDet(responseJson.childList)
-
             })
             .catch(err => {
                 console.log('error', err);
@@ -85,19 +80,8 @@ const Checklist = ({ route, navigation }) => {
             })
                 .then(function (response) {
                     if (response.data.message == "attendance marked") {
-                        Alert.alert(
-                            "Child Attendance",
-                            "Attendance Marked",
-                            [
-                                { text: "OK", onPress: () => onRefresh() }
-                            ],
-                            { cancelable: false }
-                        );
+                        onRefresh();
                     }
-                    setAtt(response.data.totalMarkedAbsent);
-                    console.log("att", att);
-                    console.log("ssss", response.data.totalMarkedAbsent);
-                    console.log("response", response.status);
                 })
         }
         catch (error) {
@@ -107,7 +91,7 @@ const Checklist = ({ route, navigation }) => {
 
     const starting = async () => {
         setBut("Trip Inprogress");
-        setLoc(false);
+        onRefresh();
         try {
             axios({
                 method: 'POST',
@@ -134,9 +118,18 @@ const Checklist = ({ route, navigation }) => {
     const Nannyprofile = () => {
         return (
             <View style={styles.detailsBox}>
-                <Text style={styles.textDetails}>Nanny Id - {route.params.item.nannyInfo.nannyId}</Text>
-                <Text style={styles.textDetails}>Nanny Name - {route.params.item.nannyInfo.nannyName} </Text>
-                <Text style={styles.textDetails}>Nanny Contact - {route.params.item.nannyInfo.nannyContact}</Text>
+                <View style={{flexDirection:'row',flexWrap:'wrap'}}>
+                <Text style={styles.textHeads}>Nanny Id - </Text>
+                <Text style={styles.textDetails}> {route.params.item.nannyInfo.nannyId}</Text>
+                </View>
+                <View style={{flexDirection:'row',flexWrap:'wrap'}}>
+                <Text style={styles.textHeads}>Nanny Name - </Text>
+                <Text style={styles.textDetails}> {route.params.item.nannyInfo.nannyName}</Text>
+                </View>
+                <View style={{flexDirection:'row',flexWrap:'wrap'}}>
+                <Text style={styles.textHeads}>Nanny Contact - </Text>
+                <Text style={styles.textDetails}> {route.params.item.nannyInfo.nannyContact}</Text>
+                </View>
             </View>
         );
     }
@@ -176,20 +169,36 @@ const Checklist = ({ route, navigation }) => {
                 <View style={styles.firstbox} >
                     <Text style={styles.textTitle}>Trip ID - {route.params.item.trip_id}</Text>
                     <View style={styles.detailsBox}>
-                        <Text style={styles.textDetails}>Destination: {route.params.item.destination} </Text>
-                        <Text style={styles.textDetails}>Start Location: {route.params.item.location}</Text>
-                        <Text style={styles.textDetails}>Vehicle ID: {route.params.item.vehilce}</Text>
-                        <Text style={styles.textDetails}>Total Children: {route.params.item.noOfChildren}</Text>
-                        <Text style={styles.textDetails}>Total Absent - {att}</Text>
+                        <View style={{flexDirection:'row',flexWrap:'wrap'}}>
+                        <Text style={styles.textHeads}>Destination: </Text>
+                        <Text style={styles.textDetails}> {route.params.item.destination} </Text>
+                        </View>
+                        <View style={{flexDirection:'row',flexWrap:'wrap'}}>
+                        <Text style={styles.textHeads}>Start Location:</Text>
+                        <Text style={styles.textDetails}>{route.params.item.location}</Text>
+                        </View>
+                        <View style={{flexDirection:'row',flexWrap:'wrap'}}>
+                        <Text style={styles.textHeads}>Vehicle ID: </Text>
+                        <Text style={styles.textDetails}> {route.params.item.vehilce}</Text>
+                        </View>
+                        <View style={{flexDirection:'row',flexWrap:'wrap'}}>
+                        <Text style={styles.textHeads}>Total Children: </Text>
+                        <Text style={styles.textDetails}> {route.params.item.noOfChildren}</Text>
+                        </View>
+                        <View style={{flexDirection:'row',flexWrap:'wrap'}}>
+                        <Text style={styles.textHeads}>Total Absent - </Text>
+                        <Text style={styles.textDetails}> {absentee}</Text>
+                        </View>
+                        
                         {route.params.item.nannyInfo.nannyId ? <Nannyprofile /> : null}
                     </View>
                 </View>
-                <TouchableOpacity style={locdisable ? styles.loginBtn : styles.disableBtn} disabled={!locdisable} onPress={() => {
+                <TouchableOpacity style={!locdisable ? styles.loginBtn : styles.disableBtn} disabled={locdisable} onPress={() => {
                     starting()
                 }}>
                     <Text>{but}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity disabled={locdisable} style={locdisable ? styles.disableBtn : styles.loginBtn} onPress={() =>
+                <TouchableOpacity disabled={!locdisable} style={!locdisable ? styles.disableBtn : styles.loginBtn} onPress={() =>
                     navigation.navigate('Map', { screen: 'Trackee', params: { tripid: route.params.item.trip_id } },
                     )
                 }>
@@ -270,12 +279,18 @@ const styles = StyleSheet.create({
         // backgroundColor:'yellow',
         flex: 1,
         marginTop: 5,
-        alignItems: 'center',
+        //marginHorizontal:19,
+        alignItems: 'flex-start',
 
     },
     textDetails: {
         fontSize: 18,
         fontWeight: '600',
+        marginTop: 4,
+    },
+    textHeads: {
+        fontSize: 18,
+        fontWeight: 'bold',
         marginTop: 4,
     },
     Picker: {

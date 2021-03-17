@@ -93,7 +93,7 @@ const Profile = ({navigation}) => {
       </View>
       <View style={styles.textview}>
         <Text style={styles.headertext}>Address</Text>
-        <Text style={styles.detailsAddress}>{data.address}</Text>
+        <Text style={styles.details}>{data.address}</Text>
       </View>
       <TouchableOpacity
         style={styles.loginBtn}
@@ -145,7 +145,6 @@ const styles = StyleSheet.create({
     marginLeft: 30,
   },
   details: {
-    height: 40,
     backgroundColor: '#d3d3d3',
     borderRadius: 12,
     width: '85%',

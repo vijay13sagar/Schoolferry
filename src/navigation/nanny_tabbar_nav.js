@@ -13,6 +13,8 @@ import Child_list from '../modules/nanny/childlist';
 import Child_details from '../modules/nanny/childdetails';
 import History from '../modules/nanny/history';
 import updateprof from '../modules/nanny/updatenannypro';
+import End_trips from '../modules/nanny/endtrips';
+import Old_childdetails from '../modules/nanny/oldchilddetails';
 
 const Tab = createBottomTabNavigator()
 const Stack=createStackNavigator()
@@ -52,6 +54,16 @@ function Triphistory() {
         name="History page"
         component={History}
         options={{ title: 'Trip History' }}
+      />
+      <Stack.Screen
+        name="trip_ended"
+        component={End_trips}
+        options={{ title: 'Trip Details' }}
+      />
+      <Stack.Screen
+        name="oldChild Details"
+        component={Old_childdetails}
+        options={{ title: 'Child Details' }}
       />
     </Stack.Navigator>
   );
