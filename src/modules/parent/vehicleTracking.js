@@ -68,8 +68,8 @@ const fetchApi = async() => {
         region={{
           latitude: lat,
           longitude: lon,
-          latitudeDelta: 0.001 * 8,
-          longitudeDelta: 0.001 * 7
+          latitudeDelta: 0.0001 * 8,
+          longitudeDelta: 0.0008 
         }}
       >
         <MapView.Circle
@@ -78,8 +78,8 @@ const fetchApi = async() => {
                   longitude: lon,
                 }}
                 fillColor={'blue'}
-                radius={2}
-                strokeColor={'lightblue'}
+                radius={1}
+                strokeColor={'blue'}
                 strokeWidth={2}
               />
               <MapView.Circle
@@ -88,15 +88,15 @@ const fetchApi = async() => {
                   longitude: lon,
                 }}
                 fillColor={'rgba(230,238,255,0.3)'}
-                radius={10}
-                strokeColor={'lightblue'}
-                strokeWidth={1}
+                radius={12}
+                strokeColor={'blue'}
+                strokeWidth={1.5}
               />
-        {/* <Marker
+        <Marker
           coordinate={{ latitude: lat, longitude: lon }}
-          //image={require('../../assets/school.png')}
+          image={require('../../assets/car.png')}
         >
-        </Marker > */}
+        </Marker >
       </MapView>
     </View>
   );
