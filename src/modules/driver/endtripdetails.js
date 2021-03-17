@@ -27,10 +27,19 @@ const Checklist = ({ route, navigation }) => {
 
     const Nannyprofile = () => {
         return (
-            <View>
-                <Text style={styles.textDetails}>Nanny Id - {route.params.item.nannyInfo.nannyId}</Text>
-                <Text style={styles.textDetails}>Nanny Name - {route.params.item.nannyInfo.nannyName} </Text>
-                <Text style={styles.textDetails}>Nanny Contact - {route.params.item.nannyInfo.nannyContact}</Text>
+            <View style={styles.detailsBox}>
+                <View style={{flexDirection:'row',flexWrap:'wrap'}}>
+                <Text style={styles.textHeads}>Nanny Id - </Text>
+                <Text style={styles.textDetails}> {route.params.item.nannyInfo.nannyId}</Text>
+                </View>
+                <View style={{flexDirection:'row',flexWrap:'wrap'}}>
+                <Text style={styles.textHeads}>Nanny Name - </Text>
+                <Text style={styles.textDetails}> {route.params.item.nannyInfo.nannyName}</Text>
+                </View>
+                <View style={{flexDirection:'row',flexWrap:'wrap'}}>
+                <Text style={styles.textHeads}>Nanny Contact - </Text>
+                <Text style={styles.textDetails}> {route.params.item.nannyInfo.nannyContact}</Text>
+                </View>
             </View>
         );
     }
@@ -61,15 +70,31 @@ const Checklist = ({ route, navigation }) => {
             </Modal>
 
             <ScrollView>
-                <View style={styles.firstbox} >
+            <View style={styles.firstbox} >
                     <Text style={styles.textTitle}>Trip ID - {route.params.item.trip_id}</Text>
                     <View style={styles.detailsBox}>
-                        <Text style={styles.textDetails}>Destination: {route.params.item.destination} </Text>
-                        <Text style={styles.textDetails}>Start Location: {route.params.item.location}</Text>
-                        <Text style={styles.textDetails}>Vehicle ID: {route.params.item.vehilce}</Text>
-                        <Text style={styles.textDetails}>Total Children: {route.params.item.noOfChildren}</Text>
+                        <View style={{flexDirection:'row',flexWrap:'wrap'}}>
+                        <Text style={styles.textHeads}>Destination: </Text>
+                        <Text style={styles.textDetails}> {route.params.item.destination} </Text>
+                        </View>
+                        <View style={{flexDirection:'row',flexWrap:'wrap'}}>
+                        <Text style={styles.textHeads}>Start Location:</Text>
+                        <Text style={styles.textDetails}>{route.params.item.location}</Text>
+                        </View>
+                        <View style={{flexDirection:'row',flexWrap:'wrap'}}>
+                        <Text style={styles.textHeads}>Vehicle ID: </Text>
+                        <Text style={styles.textDetails}> {route.params.item.vehilce}</Text>
+                        </View>
+                        <View style={{flexDirection:'row',flexWrap:'wrap'}}>
+                        <Text style={styles.textHeads}>Total Children: </Text>
+                        <Text style={styles.textDetails}> {route.params.item.noOfChildren}</Text>
+                        </View>
+                        {/* <View style={{flexDirection:'row',flexWrap:'wrap'}}>
+                        <Text style={styles.textHeads}>Total Absent - </Text>
+                        <Text style={styles.textDetails}> {att}</Text>
+                        </View> */}
+                        
                         {route.params.item.nannyInfo.nannyId ? <Nannyprofile /> : null}
-
                     </View>
                 </View>
                 <FlatList
@@ -117,6 +142,11 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         marginVertical: 10,
     },
+    textHeads: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginTop: 4,
+    },
     textTitle: {
         fontSize: 25,
         fontWeight: 'bold',
@@ -124,10 +154,9 @@ const styles = StyleSheet.create({
         marginVertical: 5
     },
     detailsBox: {
-        // backgroundColor:'yellow',
         flex: 1,
         marginTop: 5,
-        alignItems: 'center',
+        alignItems: 'flex-start',
 
     },
     textDetails: {

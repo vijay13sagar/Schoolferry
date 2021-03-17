@@ -182,7 +182,7 @@ export default function App({ route,navigation }) {
 
       />
       <View style={{flexDirection:'row',marginTop:20,alignSelf:'center'}}>
-        <Text>Click here to fill Previously saved </Text>
+        <Text>Click to fill previously saved </Text>
       <TouchableOpacity onPress={() => getcard()}  >
         <Text style={styles.forgot_button}>Card Details</Text>
       </TouchableOpacity>
@@ -413,8 +413,9 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     color: "white",
-    fontWeight: "bold",
-    textAlign: "center"
+    //fontWeight: "bold",
+    textAlign: "center",
+    fontSize:15,
   },
   modalText: {
     marginBottom: 15,

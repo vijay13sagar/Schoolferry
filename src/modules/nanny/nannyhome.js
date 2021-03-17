@@ -55,8 +55,8 @@ export default class Triplist extends Component {
               data={data}
               keyExtractor={({ id }, index) => id}
               renderItem={({ item }) => (
-                <Card style={styles.card}>
-                  <CardItem button onPress={() => this.props.navigation.navigate('Tripdetails', { item: item })}>
+                <Card style= { item.endedTripAt ? styles.card2 :styles.card}>
+                  <CardItem style={item.endedTripAt ? {backgroundColor:'lightgrey'}:{backgroundColor:'white'}} button disabled={item.endedTripAt ? true : false} onPress={() => this.props.navigation.navigate('Tripdetails', { item: item })}>
                     <Body style={{ flexDirection: 'row' }}>
                       <Text style={{ fontSize: 17, fontWeight: '700' }}>
                         Trip Id :
@@ -66,10 +66,13 @@ export default class Triplist extends Component {
                           item.trip_id
                         }
                       </Text>
-                      <Ionicons name="chevron-forward-outline"
-                        color="#000" size={25}
-                        style={{marginLeft:"55%"}}
-                      />
+                      <Text style={{marginLeft:50}}>
+                  {item.endedTripAt ?<Text style={{color:'white',fontWeight:'700',fontSize:17}}>Trip Completed</Text> : null}
+                </Text>
+                {item.endedTripAt ? null : <Ionicons name="chevron-forward-outline"
+                  color="#000" size={25}
+                  style={{marginLeft:"35%"}}
+                />}
                     </Body>
                   </CardItem>
                 </Card>
@@ -163,6 +166,15 @@ const styles = StyleSheet.create({
     height: 60,
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop:10,
+  },
+  card2: {
+    width: '80%',
+    alignSelf: 'center',
+    height: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor:'lightgrey',
     marginTop:10,
   },
   datestyle: {

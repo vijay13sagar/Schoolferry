@@ -168,6 +168,9 @@ export default function Add_Driver({navigation}) {
                 <Text style={styles.loginText}>Confirm</Text>
 
             </TouchableOpacity>
+            <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('charts')}  >
+        <Text style={styles.loginText}>Management</Text>
+      </TouchableOpacity>
             <TouchableOpacity style={styles.loginBtn} onPress={() => onPressLogout()}  >
         <Text style={styles.loginText}>Log Out</Text>
       </TouchableOpacity>

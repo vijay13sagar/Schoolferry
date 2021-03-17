@@ -32,6 +32,7 @@ import freeNannytrip_list from '../modules/Admin/freeNannytrip_list';
 import Edit_Nanny from '../modules/Admin/Edit nanny';
 import freeVehicletrip_list from '../modules/Admin/freeVehicletrip_list';
 import Edit_Vehicle from '../modules/Admin/Edit vehicle';
+import charts from '../modules/Admin/management';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 function Homestack() {
@@ -241,7 +242,11 @@ function WebsiteStack() {
           component={Website}
           options={{ title: 'Notification' }}
         />
-        
+        <Stack.Screen
+          name="charts"
+          component={charts}
+          options={{ title: 'Management' }}
+        />
        
       </Stack.Navigator>
     );
