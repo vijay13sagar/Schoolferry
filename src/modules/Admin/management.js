@@ -55,24 +55,24 @@ const MyPieChart = () => {
             population:data.subscribedUsers,
             color: 'rgba(131, 167, 234, 1)',
             legendFontColor: 'black',
-            legendFontSize: 14,
+            legendFontSize: 12,
           },
           {
             name: '[Registered]',
             population: data.onlyRegisteredUsers,
             color: '#F00',
             legendFontColor: 'black',
-            legendFontSize: 14,
+            legendFontSize: 12,
           },
           {
             name: '[No Child Added]',
             population: data.noChildAdded,
             color: 'lightgreen',
             legendFontColor: 'black',
-            legendFontSize: 14,
+            legendFontSize: 12,
           },
         ]}
-        width={Dimensions.get('window').width - 16}
+        width={Dimensions.get('window').width - 30}
         height={220}
         chartConfig={{
           backgroundColor: '#1cc910',
@@ -93,7 +93,7 @@ const MyPieChart = () => {
         paddingLeft="15"
         absolute //For the absolute number else percentage
       />}
-      <Text style={styles.header}>MONTHLY STATS</Text>
+      <Text style={styles.header}>INCOME STATS</Text>
       <BarChart
         data={{
           labels: months,
@@ -103,6 +103,7 @@ const MyPieChart = () => {
             },
           ],
         }}
+        fromZero
         width={Dimensions.get('window').width - 16}
         height={220}
         yAxisLabel={'Rs'}
@@ -123,22 +124,22 @@ const MyPieChart = () => {
       />
       <View style={{flexDirection:'row'}}>
         <TouchableOpacity style={styles.histBtn} onPress={()=>CallHIST(12)}>
-        <Text style={{fontSize:13,fontWeight:'bold'}}>
+        <Text style={{fontSize:13,fontWeight:'bold',color:"white"}}>
               1 YEAR
             </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.histBtn} onPress={()=>CallHIST(6)}>
-        <Text style={{fontSize:13,fontWeight:'bold'}}>
+        <Text style={{fontSize:13,fontWeight:'bold',color:"white"}}>
               6 MONTHS
             </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.histBtn} onPress={()=>CallHIST(3)}>
-        <Text style={{fontSize:13,fontWeight:'bold'}}>
+        <Text style={{fontSize:13,fontWeight:'bold',color:"white"}}>
               3 MONTHS
             </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.histBtn} onPress={()=>CallHIST(1)}>
-        <Text style={{fontSize:13,fontWeight:'bold'}}>
+        <Text style={{fontSize:13,fontWeight:'bold',color:"white"}}>
               1 MONTH
             </Text>
         </TouchableOpacity>
@@ -172,7 +173,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginVertical: 15,
     backgroundColor: "#ff5c8d",
-    marginHorizontal:10
+    marginHorizontal:"2%"
   },
   header: {
     textAlign: 'center',
