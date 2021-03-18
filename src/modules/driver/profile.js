@@ -30,8 +30,9 @@ const Profile = ({ navigation }) => {
   }, [])
   const onPressLogout = async () => {
     try {
-      const keys = await AsyncStorage.getAllKeys();
-      await AsyncStorage.multiRemove(keys);
+      // const keys = await AsyncStorage.getAllKeys();
+      // await AsyncStorage.multiRemove(keys);
+      AsyncStorage.removeItem('token');
       console.log("working");
       navigation.replace('Login');
     Alert.alert('You have been logged out');
@@ -69,11 +70,11 @@ const Profile = ({ navigation }) => {
   
       <View style={styles.textview}>
         <Text style={styles.headertext} >Address</Text>
-        <Text style={styles.detailsAddress}>{data.address}</Text>
+        <Text style={styles.details}>{data.address}</Text>
       </View>
       <View style={styles.textview}>
         <Text style={styles.headertext} >License Number </Text>
-        <Text style={styles.detailsAddress}></Text>
+        <Text style={styles.details}></Text>
       </View>
       <TouchableOpacity style={styles.loginBtn}
       >
@@ -130,12 +131,8 @@ const styles = StyleSheet.create({
     marginBottom:2,
   },
   details: {
-    height: 40,
     backgroundColor: "#d3d3d3",
-    //borderWidth: 1,
     borderRadius: 12,
-    //borderColor: '#ff5c8d',
-    //marginTop: 3,
     width: '85%',
     padding: 8,
     alignSelf: "center"

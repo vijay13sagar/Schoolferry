@@ -40,7 +40,6 @@ const Homescreen = ({ navigation }) => {
     fetchData
     })();
   }, [navigation])
-  const [pickerValue, setPickerValue] = useState("")
 
   return (
     <View style={styles.container}>

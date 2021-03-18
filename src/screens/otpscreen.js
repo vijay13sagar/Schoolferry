@@ -20,9 +20,9 @@ const Otpscreen=({route,navigation})=> {
     console.log("params",route.params);
     const email=route.params.item;
     console.log("email",email);
-    // useEffect(() => {
-    //     Resendotp();    
-    //   }, [])
+    useEffect(() => {
+         Resendotp();    
+      }, [])
     const Resendotp=()=>{
         console.log("email",email);
         axios

@@ -144,7 +144,7 @@ function Homepage() {
         headerStyle: { backgroundColor: "#fff" },
         headerTintColor: 'black',
         headerTitleStyle: { fontWeight: 'bold' },
-        headerTitleAlign: 'center'
+        headerTitleAlign: 'center',
       }}
     >
       <Stack.Screen
@@ -237,6 +237,7 @@ const TabNavigator = () => {
       <Tab.Screen name="Home" component={Homepage} />
       <Tab.Screen name="Track" component={Mappage} />
       <Tab.Screen name="Subscriptions" component={Subscriptions} />
+      
       <Tab.Screen name="Support" component={Supportpage} />
       <Tab.Screen name="Profile" component={Profiles} />
     </Tab.Navigator>
