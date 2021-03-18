@@ -30,11 +30,12 @@ const Profile = ({navigation}) => {
           .then((responseJson) => {
             console.log(responseJson);
             getData(responseJson);
+            setLoading(false);
           })
           .catch((err) => {
             console.log(err);
           });
-        setLoading(false);
+        
       } catch (e) {
         //alert('Failed to save the data to the storage')
       }
