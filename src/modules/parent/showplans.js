@@ -74,7 +74,7 @@ const showplanScreen = ({route, navigation}) => {
         })
       : [];
 
-  // console.log('status', value1[0].status);
+  //console.log('status', value1[0].childId);
 
   const verifyHandler = () => {
     setModalVisible(false);
@@ -214,7 +214,10 @@ const showplanScreen = ({route, navigation}) => {
       {Boolean(value1.length) && value1[0].status == 'subscribed' ? (
         <TouchableOpacity
           style={styles.unsubscribeBtn}
-          onPress={() => navigation.navigate('Pause Plan')}>
+          onPress={() => navigation.navigate('Pause Plan',{
+
+            childid: Boolean(value1.length) && value1[0].childId,     
+          })}>
           <Text style={{fontSize: 15}}>Pause subscription</Text>
         </TouchableOpacity>
       ) : null}
