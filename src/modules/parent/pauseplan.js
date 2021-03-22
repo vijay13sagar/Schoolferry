@@ -72,6 +72,10 @@ const PausePlan = ({route, navigation}) => {
             if (response.status == 200) {
               Alert.alert('Plan paused successful');
               setCount(count + 1);
+              setLoading(true)
+              setError()
+              setselectedEndDate('')
+              setselectedStartDate('')
             } else {
               Alert.alert('Failed. Please try again');
             }
@@ -101,7 +105,7 @@ const PausePlan = ({route, navigation}) => {
     <ScrollView style={styles.container}>
       <View style={[data.pauseEndDate ? styles.biggerBox : styles.pausePlan]}>
         <Text style={styles.mainHeading}>Pause Plan Details</Text>
-        <Text style={styles.heading}>Total Number of pauses - 03</Text>
+        <Text style={styles.heading}>Total number of pauses - 03</Text>
 
         {!data.pauseEndDate ? null : (
           <>
@@ -114,7 +118,7 @@ const PausePlan = ({route, navigation}) => {
           </>
         )}
         <Text style={styles.heading}>
-          Pauses left - 0{data.remainingPauseAttempts}{' '}
+          Pauses remaining - 0{data.remainingPauseAttempts}{' '}
         </Text>
       </View>
       <View
