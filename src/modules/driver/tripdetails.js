@@ -91,6 +91,7 @@ const Checklist = ({ route, navigation }) => {
 
     const starting = async () => {
         setBut("Trip Inprogress");
+        //setLoc(false);
         onRefresh();
         try {
             axios({

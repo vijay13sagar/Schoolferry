@@ -1,21 +1,3 @@
-// import * as React from 'react';
-// import { Searchbar } from 'react-native-paper';
-
-// const MyComponent = () => {
-//   const [searchQuery, setSearchQuery] = React.useState('');
-
-//   const onChangeSearch = query => setSearchQuery(query);
-
-//   return (
-//     <Searchbar
-//       placeholder="Search"
-//       onChangeText={onChangeSearch}
-//       value={searchQuery}
-//     />
-//   );
-// };
-
-// export default MyComponent;
 import React, { useState } from "react";
 import {
     StyleSheet,
@@ -168,9 +150,6 @@ export default function Add_Driver({navigation}) {
                 <Text style={styles.loginText}>Confirm</Text>
 
             </TouchableOpacity>
-            <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('charts')}  >
-        <Text style={styles.loginText}>Management</Text>
-      </TouchableOpacity>
             <TouchableOpacity style={styles.loginBtn} onPress={() => onPressLogout()}  >
         <Text style={styles.loginText}>Log Out</Text>
       </TouchableOpacity>

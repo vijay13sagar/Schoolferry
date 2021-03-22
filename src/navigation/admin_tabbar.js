@@ -2,6 +2,8 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 import Employee from '../modules/Admin/employee';
 import Website from '../modules/Admin/website';
 import Add_Vehicle from '../modules/Admin/add_vehicle';
@@ -17,11 +19,8 @@ import userList from '../modules/Admin/user';
 import user_Details from '../modules/Admin/user_Details';
 import userSubscription from '../modules/Admin/usersubscription';
 import child_Details from '../modules/Admin/child_Details';
-import { Icon } from 'native-base';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import Home_page from '../modules/Admin/home';
 import Trip_Details from '../modules/Admin/daily trip details';
-
 import dailyChildtrip_list from '../modules/Admin/dailyChildtrip_list';
 import remove_Child from '../modules/Admin/remove child';
 import freeChildtrip_list from '../modules/Admin/freeChildtrip_list ';
@@ -32,7 +31,10 @@ import freeNannytrip_list from '../modules/Admin/freeNannytrip_list';
 import Edit_Nanny from '../modules/Admin/Edit nanny';
 import freeVehicletrip_list from '../modules/Admin/freeVehicletrip_list';
 import Edit_Vehicle from '../modules/Admin/Edit vehicle';
-import charts from '../modules/Admin/management';
+import Rev_stats from '../modules/Admin/revenuestats';
+import Sub_stats from '../modules/Admin/subscripstats';
+import Trip_stats from '../modules/Admin/tripstats';
+import Manageoptions from '../modules/Admin/manageoptions';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 function Homestack() {
@@ -230,22 +232,37 @@ function VehicleStack() {
 function WebsiteStack() {
     return (
       <Stack.Navigator
-        initialRouteName="Notifications"
+        initialRouteName="ManageOptions"
         screenOptions={{
           headerStyle: { backgroundColor: '#FFFFFF' },
           headerTintColor: '#000000',
           headerTitleStyle: { fontWeight: 'bold' },
           headerTitleAlign:"center"
         }}>
+          <Stack.Screen
+          name="ManageOptions"
+          component={Manageoptions}
+          options={{ title: 'Reports' }}
+        />
         <Stack.Screen
           name="website"
           component={Website}
-          options={{ title: 'Notification' }}
+          options={{ title: 'Reports' }}
         />
         <Stack.Screen
-          name="charts"
-          component={charts}
-          options={{ title: 'Management' }}
+          name="TripStats"
+          component={Trip_stats}
+          options={{ title: 'Reports' }}
+        />
+        <Stack.Screen
+          name="SubStats"
+          component={Sub_stats}
+          options={{ title: 'Reports' }}
+        />
+        <Stack.Screen
+          name="RevStats"
+          component={Rev_stats}
+          options={{ title: 'Reports' }}
         />
        
       </Stack.Navigator>
@@ -263,19 +280,19 @@ function App() {
           let iconName;
 
           if (route.name === 'Home') {
-            iconName = focused ? 'home' : 'home';
+            iconName = focused ? 'home' : 'home-outline';
           }
           else if (route.name === 'Customer') {
-            iconName = focused ? 'person-circle' : 'person-circle';
+            iconName = focused ? 'person-circle' : 'person-circle-outline';
           }
           else if (route.name === 'Employee') {
-            iconName = focused ? 'person' : 'person';
+            iconName = focused ? 'people-sharp' : 'people-outline';
           }
           else if (route.name === 'Vehicle') {
-            iconName = focused ? 'bus' : 'bus';
+            iconName = focused ? 'bus' : 'bus-outline';
           }
-          else if (route.name === 'Notification') {
-            iconName = focused ? 'notifications' : 'notifications';
+          else if (route.name === 'Management') {
+            iconName = focused ? 'pie-chart' : 'pie-chart-outline';
           }
        
 
@@ -291,7 +308,7 @@ function App() {
       <Tab.Screen name="Customer" component={UserStack} />
       <Tab.Screen name="Employee" component={EmployeeStack} />
       <Tab.Screen name="Vehicle" component={VehicleStack} />
-      <Tab.Screen name="Notification" component={WebsiteStack} />
+      <Tab.Screen name="Management" component={WebsiteStack} />
     </Tab.Navigator>
    
   );
