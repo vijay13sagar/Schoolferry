@@ -89,8 +89,9 @@ export default function Login({navigation}) {
       })
         .then((response) => response.json())
         .then((responseJson) => {
-          console.log('res', responseJson);
+          console.log('response:', responseJson);
           //console.log("status", responseJson.status);
+
           if (responseJson[1] == 'Parent') {
             AsyncStorage.setItem('token', responseJson[0]);
             navigation.replace('Parent Interface');
@@ -104,8 +105,9 @@ export default function Login({navigation}) {
             AsyncStorage.setItem('token', responseJson[0]);
             navigation.replace('Nanny Interface');
           }
+
           if (responseJson.status == 401) {
-            console.log('status', responseJson.status);
+            console.log('message:', responseJson.message);
             if (responseJson.message == 'Token not provided') {
               Alert.alert('Not an exsisting user, please sign up first !');
             } else if (responseJson.message == 'OTP verification not done') {

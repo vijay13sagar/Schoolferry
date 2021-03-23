@@ -7,14 +7,12 @@ import {
   Text,
   View,
   Image,
-  CheckBox,
   TextInput,
   Button,
   TouchableHighlight,
-
   TouchableOpacity,
 } from "react-native";
-//import { CheckBox } from "@react-native-community/checkbox";
+import CheckBox from '@react-native-community/checkbox';
 import Ngrok from '../../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
@@ -170,17 +168,6 @@ export default function App({ route,navigation }) {
 
 
     <View style={{justifyContent:'center',marginVertical:10,backgroundColor: "#F9F2F2",}}>
-      <StatusBar
-        barStyle="light-content"
-        // dark-content, light-content and default
-        hidden={false}
-        //To hide statusBar
-        backgroundColor="#e91e63"
-        //Background color of statusBar only works for Android
-        translucent={false}
-      //allowing light, but not detailed shapes
-
-      />
       <View style={{flexDirection:'row',marginTop:20,alignSelf:'center'}}>
         <Text>Click to fill previously saved </Text>
       <TouchableOpacity onPress={() => getcard()}  >

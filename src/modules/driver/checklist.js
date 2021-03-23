@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { CheckBox, Text, StyleSheet, TextInput, TouchableOpacity, Alert, View } from "react-native";
+import { Text, StyleSheet, TextInput, TouchableOpacity, Alert, View } from "react-native";
 import moment from 'moment';
 import { ScrollView } from "react-native-gesture-handler";
 import Ngrok from '../../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
+import CheckBox from '@react-native-community/checkbox';
 
 const today = new Date();
 const TD = moment(today).format('DD-MM-YYYY');

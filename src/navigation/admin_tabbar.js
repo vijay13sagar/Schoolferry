@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import Employee from '../modules/Admin/employee';
+
 import Add_Vehicle from '../modules/Admin/add_vehicle';
 import Add_Driver from '../modules/Admin/Add_Driver';
 import Add_Nanny from '../modules/Admin/Add_Nanny';
@@ -36,6 +37,7 @@ import Trip_stats from '../modules/Admin/tripstats';
 import Manageoptions from '../modules/Admin/manageoptions';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+
 function Homestack() {
   return (
     <Stack.Navigator
@@ -243,6 +245,7 @@ function WebsiteStack() {
           component={Manageoptions}
           options={{ title: 'Reports' }}
         />
+        
         <Stack.Screen
           name="TripStats"
           component={Trip_stats}
@@ -259,13 +262,20 @@ function WebsiteStack() {
           options={{ title: 'Reports' }}
         />
        
+       
       </Stack.Navigator>
     );
   }
   
 
 function App() {
+ 
+    
+ 
   return (
+    
+  
+    
     
       
       <Tab.Navigator
@@ -304,6 +314,7 @@ function App() {
       <Tab.Screen name="Vehicle" component={VehicleStack} />
       <Tab.Screen name="Management" component={WebsiteStack} />
     </Tab.Navigator>
+  
    
   );
 }
