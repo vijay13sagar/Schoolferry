@@ -18,8 +18,6 @@ export default function trip_Details({ route, navigation }) {
       <View style={styles.textview}>
         <Text style={styles.headertext}>Location:</Text>
         <Text style={styles.details}>{route.params.item.location}</Text>
-        <Text style={styles.headertext}>Timing:</Text>
-        <Text style={styles.details}>{route.params.item.driverInfo.driverContact}</Text>
         <Text style={styles.headertext}>Driver ID:</Text>
         <Text style={styles.details}>{route.params.item.driverInfo.driverId}</Text>
         <Text style={styles.headertext}>Driver Name:</Text>
@@ -32,9 +30,9 @@ export default function trip_Details({ route, navigation }) {
       <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('Child List', route.params.item)} >
         <Text style={styles.loginText}>Child List</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.CallBtn} onPress={() => { Linking.openURL('tel:{route.params.item.driverInfo.driverContact}') }}  >
+      {/* <TouchableOpacity style={styles.CallBtn} onPress={() => { Linking.openURL('tel:{route.params.item.driverInfo.driverContact}') }}  >
         <Text style={styles.loginText}>Contact Driver</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 }

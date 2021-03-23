@@ -41,6 +41,9 @@ const Otpscreen=({route,navigation})=> {
         });
     }
     const Validateotp=()=>{
+        if(otp==null){
+            setOtpError("OTP Field Cannot be Empty");
+        }else{
         try {
             axios({
               method: 'POST',
@@ -59,6 +62,7 @@ const Otpscreen=({route,navigation})=> {
                     console.log("hi",response.data.message);
                   if((response.data.message=="verified")){
                     setOtpError(null );
+                    Alert.alert("OTP Verification successful","Please Login");
                     navigation.navigate('Login')
                   }else if((response.data.message=="not verified")){
                       //Alert.alert("Incorrect OTP");
@@ -85,6 +89,7 @@ const Otpscreen=({route,navigation})=> {
           catch (error) {
             console.log("errordetails", error);
           }
+        }
     }
     return (
         <View style={styles.container}>

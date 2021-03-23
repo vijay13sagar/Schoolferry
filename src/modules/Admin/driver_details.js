@@ -70,7 +70,7 @@ export default function driver_Details({ route, navigation }){
         <Text style={{alignSelf:"center", marginTop: 8,}}>Edit</Text>
 
       </TouchableOpacity>  */}
-        <View style={{width:"70%"}}>
+        <View style={{marginRight:285}}>
         <Text>Name</Text></View> 
         
       <View style={styles. details}>
@@ -81,7 +81,7 @@ export default function driver_Details({ route, navigation }){
           </Text>
       </View>
      
-      <View style={{width:"70%"}}>
+      <View style={{marginRight:230}}>
         <Text>Phone Number</Text></View> 
         
         <View style={styles. details}>
@@ -92,11 +92,11 @@ export default function driver_Details({ route, navigation }){
           </Text>
       </View>
      
-      <View style={{width:"70%"}}>
+      <View style={{marginRight:265}}>
         <Text>Address</Text></View> 
      
        
-        <View style={styles. detailsAddress}>
+        <View style={styles. details}>
         <Text>
           
           {route.params.item.address}
@@ -104,7 +104,7 @@ export default function driver_Details({ route, navigation }){
           </Text>
       </View>
      
-      <View style={{width:"70%"}}>
+      <View style={{marginRight:225}}>
         <Text>Vehicle Number</Text></View> 
         
         <View style={styles. details}>
@@ -115,7 +115,7 @@ export default function driver_Details({ route, navigation }){
           </Text>
       </View>
      
-      <View style={{width:"70%"}}>
+      <View style={{marginRight:250}}>
         <Text>Experience</Text></View> 
        
         <View style={styles. details}>
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     //opacity: 0.5,
   },
   details:{
-    height: 40,
+    
     backgroundColor: "#d3d3d3",
     //borderWidth: 1,
     borderRadius: 12,
@@ -193,18 +193,7 @@ const styles = StyleSheet.create({
     alignSelf: "center"
 
   },
-  detailsAddress:{
-    height: 100,
-    backgroundColor: "#d3d3d3",
-    //borderWidth: 1,
-    borderRadius: 12,
-    //borderColor: '#ff5c8d',
-    //marginTop: 3,
-    width: '85%',
-    padding: 8,
-    alignSelf: "center"
-
-  },
+  
   TextInput: {
     width: "70%",
     height: 50,
