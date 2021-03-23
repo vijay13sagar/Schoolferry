@@ -4,7 +4,7 @@ import {
   Text,
   View,
   StyleSheet,
-  TouchableOpacity,StatusBar,
+  TouchableOpacity,
   Dimensions,
   ScrollView,
   ActivityIndicator,
@@ -21,162 +21,121 @@ import Ngrok from '../../constants/ngrok';
 import axios from 'axios';
 
 const MyPieChart = () => {
-  const [data,setData]=useState();
-  const [isLoading,setisload]=useState(true);
-  const [hist, setHist] = useState([10,18,8,20, 25]);
-  const [months,setmonths]= useState(['January','February','March','April','May',]);
+  const [data, setData] = useState();
+  const [isLoading, setisload] = useState(true);
+  const [hist, setHist] = useState([10, 18, 8, 20, 25]);
+  const [months, setmonths] = useState(['January', 'February', 'March', 'April', 'May',]);
   useEffect(() => {
-      CallHIST(1);
-      axios
-        .get(`${Ngrok.url}/api/management/piechart`)
-        .then(function (response) {
-          setData(response.data);
-          setisload(false);
-        })
-        .catch(function (error) {
-          // handle error
-          console.log("error",error.message);
-        })
-        .finally(function () {
-          // always executed
-        });
-      },[]);
-  const CallHIST=(val)=>{
-    const newvalue=val
-    console.log("hahah",newvalue);
+    CallHIST(1);
+
+  }, []);
+  const CallHIST = (val) => {
+    const newvalue = val
+    console.log("hahah", newvalue);
     axios
-    .get(`${Ngrok.url}/api/management/histogram/${newvalue}`)
-    .then(function (response) {
-      setHist(response.data.amounts);
-      setmonths(response.data.months)
-      //setisload(false);
-    })
-    .catch(function (error) {
-      // handle error
-      console.log("error",error.message);
-    })
-    .finally(function () {
-      // always executed
-    });
+      .get(`${Ngrok.url}/api/management/tripsreport/${newvalue}`)
+      .then(function (response) {
+        setHist(response.data.trips);
+        setmonths(response.data.months)
+        
+        //setisload(false);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log("error", error.message);
+      })
+      .finally(function () {
+        // always executed
+      });
 
   }
   return (
-    <View><StatusBar
-    barStyle="light-content"
-    // dark-content, light-content and default
-    hidden={false}
-    //To hide statusBar
-    backgroundColor="#e91e63"
-    //Background color of statusBar only works for Android
-    translucent={false}
-  //allowing light, but not detailed shapes
-
-  />
     <ScrollView>
-      <Text style={styles.header}>SUBSCRIPTION STATS</Text>
-      {/* style={{alignSelf:'flex-start'}} */}
-      {isLoading ? <ActivityIndicator/>:<View ><PieChart
-        data={[
-          {
-            name: '[Subscribed]',
-            population:data.subscribedUsers,
-            color: 'rgba(131, 167, 234, 1)',
-            legendFontColor: 'black',
-            legendFontSize: 12,
-          },
-          {
-            name: '[Registered]',
-            population: data.onlyRegisteredUsers,
-            color: '#F00',
-            legendFontColor: 'black',
-            legendFontSize: 12,
-          },
-          {
-            name: '[No Child Added]',
-            population: data.noChildAdded,
-            color: 'lightgreen',
-            legendFontColor: 'black',
-            legendFontSize: 12,
-          },
-        ]}
-        width={Dimensions.get('window').width -30}
-        height={220}
-        chartConfig={{
-          backgroundColor: '#1cc910',
-          backgroundGradientFrom: '#eff3ff',
-          backgroundGradientTo: '#efefef',
-          //decimalPlaces: 0,
-          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-          style: {
-            borderRadius: 16,
-          },
-        }}
-        style={{
-          marginVertical: 8,
-          borderRadius: 16,
-        }}
-        accessor="population"
-        backgroundColor="transparent"
-        paddingLeft="15"
-        absolute //For the absolute number else percentage
-      />
-      <Text style={styles.header}>REVENUE STATS</Text>
-      <BarChart
-        data={{
-          labels: months,
-          datasets: [
-            {
-              data: hist,
+
+
+      <View>
+        <Text style={styles.header}>TRIP STATS</Text>
+        <BarChart
+          data={{
+            labels: months,
+            datasets: [
+              {
+                data: hist,
+              },
+            ],
+          }}
+          fromZero
+          width={Dimensions.get('window').width - 30}
+          height={220}
+          yAxisLabel={''}
+          chartConfig={{
+            backgroundColor: '#1CC910',
+            backgroundGradientFrom: 'lightblue',//'rgb(12, 99, 250)',//'#EFF3FF',
+            backgroundGradientTo: 'white',//'rgb(39, 143, 255)',//'#EFEFEF',
+            decimalPlaces: 0,
+            barPercentage: 0.5,
+            color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+            style: {
+              borderRadius: 16,
             },
-          ],
-        }}
-        fromZero
-        width={Dimensions.get('window').width -30}
-        height={220}
-        yAxisLabel={'₹'}
-        chartConfig={{
-          backgroundColor: '#1CC910',
-          backgroundGradientFrom: 'lightblue',//'rgb(12, 99, 250)',//'#EFF3FF',
-          backgroundGradientTo: 'white',//'rgb(39, 143, 255)',//'#EFEFEF',
-          decimalPlaces: 0,
-          barPercentage:0.5,
-          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-          style: {
+          }}
+          style={{
+            marginLeft: 10,
+            marginVertical: 8,
             borderRadius: 16,
-          },
-        }}
-        style={{
-          marginLeft:10,
-          marginVertical: 8,
-          borderRadius: 16,
-        }}
-      />
-      <View style={{flexDirection:'row'}}>
-        <TouchableOpacity style={styles.histBtn} onPress={()=>CallHIST(12)}>
-        <Text style={{fontSize:10,fontWeight:'bold',color:"white"}}>
+          }}
+        />
+        <View style={{ flexDirection: 'row' }}>
+          <TouchableOpacity style={styles.histBtn} onPress={() => CallHIST(12)}>
+            <Text style={{ fontSize: 10, fontWeight: 'bold', color: "white" }}>
               YEARLY
             </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.histBtn} onPress={()=>CallHIST(6)}>
-        <Text style={{fontSize:10,fontWeight:'bold',color:"white"}}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.histBtn} onPress={() => CallHIST(6)}>
+            <Text style={{ fontSize: 10, fontWeight: 'bold', color: "white" }}>
               HALF-YEARLY
             </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.histBtn} onPress={()=>CallHIST(3)}>
-        <Text style={{fontSize:10,fontWeight:'bold',color:"white"}}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.histBtn} onPress={() => CallHIST(3)}>
+            <Text style={{ fontSize: 10, fontWeight: 'bold', color: "white" }}>
               QUARTERLY
             </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.histBtn} onPress={()=>CallHIST(1)}>
-        <Text style={{fontSize:10,fontWeight:'bold',color:"white"}}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.histBtn} onPress={() => CallHIST(1)}>
+            <Text style={{ fontSize: 10, fontWeight: 'bold', color: "white" }}>
               MONTHLY
             </Text>
-        </TouchableOpacity>
+          </TouchableOpacity>
         </View>
-      </View>}
+        <View style={{ flexDirection: "row",marginBottom:150,marginLeft:5 }}>
+          <View>
+          <Text style={{ justifyContent: 'center', marginTop: 6, marginLeft: 10,fontWeight: "bold" ,fontSize:15 }}>Month</Text>
+          {
+            months.map((item1) => (
+
+              <View>
+                <Text style={{ justifyContent: 'center', marginTop: 6, marginLeft: 10,fontWeight: "bold" ,fontSize:15}}>{item1} :- </Text>
+              </View>
+            ))
+
+          }
+          </View>
+          <View>
+            <Text style={{ justifyContent: 'center', marginTop: 6, marginLeft: 10,fontWeight: "bold" ,fontSize:15 }}>Total no of trips</Text>
+          {
+            hist.map((item2) => (
+
+              <View >
+                <Text style={{ justifyContent: 'center', marginTop: 6, marginLeft: 10,fontWeight: "bold" ,fontSize:15 }}>{item2}</Text>
+              </View>
+            ))
+
+          }
+          </View>
+        </View>
+      </View>
 
     </ScrollView>
-    </View>
   );
 };
 
@@ -196,7 +155,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginVertical: 15,
     backgroundColor: "#ff5c8d",
-    marginHorizontal:"2%"
+    marginHorizontal: "2%"
   },
   header: {
     textAlign: 'center',
@@ -206,6 +165,3 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
 });
-
-
-

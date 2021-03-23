@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Text, View, Alert, ScrollView, TouchableOpacity, StatusBar, Linking, StyleSheet, Image } from 'react-native';
 import Ngrok from '../../constants/ngrok'
 import AsyncStorage from '@react-native-community/async-storage';
+import {useFocusEffect} from '@react-navigation/native';
 
 const Profile = ({ navigation }) => {
   const [data, getData] = useState([])
@@ -60,21 +61,19 @@ const Profile = ({ navigation }) => {
         <Text style={styles.headertext} >Mobile Number:</Text>
         <Text style={styles.details}>{data.contact}</Text>
         <Text style={styles.headertext} >Address:</Text>
-        <Text style={styles.detailsAddress}>{data.address}</Text>
-        <Text style={styles.headertext} >Id Proof:</Text>
-        {/* <Image >{data.idProofUrl}</Image> */}
-        <View style={styles.imageview}>
+        <Text style={styles.details}>{data.address}</Text>
+        {/* <Text style={styles.headertext} >Id Proof:</Text>
+         */}
+        {/* <View style={styles.imageview}>
           <Image style={styles.id} source={{ uri: 'https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg' }} />
-        </View>
+        </View> */}
         <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('Passwordchange')}  >
           <Text style={styles.loginText}>Change Password</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.loginBtn} onPress={() => onPressLogout()}  >
           <Text style={styles.loginText}>Log Out</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.CallBtn} onPress={() => { Linking.openURL('tel:8777111223') }}  >
-          <Text style={styles.loginText}>Call Admin</Text>
-        </TouchableOpacity>
+        
       </ScrollView>
     </View>
   );
@@ -104,17 +103,7 @@ const styles = StyleSheet.create({
   imageview: {
     marginBottom: 150,
   },
-  CallBtn: {
-    width: "80%",
-    borderRadius: 10,
-    height: 40,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#32cd32",
-    alignSelf: 'center',
-    marginTop: 20,
-    marginBottom: 50,
-  },
+  
   id: {
     width: 300,
     height: 160,
@@ -139,19 +128,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around'
   },
   details: {
-    height: 40,
-    backgroundColor: "#d3d3d3",
-    //borderWidth: 1,
-    borderRadius: 12,
-    //borderColor: '#ff5c8d',
-    //marginTop: 3,
-    width: '85%',
-    padding: 8,
-    alignSelf: "center"
-
-  },
-  detailsAddress: {
-    height: 100,
     backgroundColor: "#d3d3d3",
     //borderWidth: 1,
     borderRadius: 12,

@@ -1,17 +1,26 @@
 import React, { useState,useEffect } from "react";
-import { Text, View, StyleSheet, TouchableOpacity, Linking, StatusBar, FlatList } from 'react-native';
+import { Text, View, StyleSheet,ScrollView,RefreshControl, TouchableOpacity, Linking, StatusBar, FlatList } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { Card, CardItem, Body } from 'native-base'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Ngrok from '../../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
+import {useFocusEffect} from '@react-navigation/native';
 
 const Homescreen = ({ navigation }) => {
-  
+  const [refreshing, setRefreshing] = React.useState(false);
   const [data,getData] = useState([])
-  useEffect( () => {
-    (async () => {
-    const fetchData = navigation.addListener('focus', async () => {
+  const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+}
+// const onRefresh = React.useCallback(() => {
+//   setRefreshing(true);
+//   wait(2000).then(() => setRefreshing(false));
+// }, []);
+  useFocusEffect( 
+    React.useCallback(() => {
+      console.log("shaashdghas");
+    const fetchData = async () => {
     let token = await AsyncStorage.getItem('token')
     fetch(`${Ngrok.url}/api/driver/tripdetails/${token}`, {
       "method": "GET",
@@ -27,13 +36,13 @@ const Homescreen = ({ navigation }) => {
         console.log('responsedata',data);
       })
       .catch(err => {
-        console.log('error',err);
+        console.log('error',err);      
       });
-    })
-    fetchData
-    })();
-  }, [navigation])
-  const [pickerValue, setPickerValue] = useState("")
+    }
+    fetchData();
+
+  }, []),
+  );
   return (
     <View style={styles.container}>
       <StatusBar
@@ -47,13 +56,21 @@ const Homescreen = ({ navigation }) => {
       //allowing light, but not detailed shapes
 
       />
-
+ 
       <View style={styles.pendingTrips}>
         <Text style={styles.tripsTitleText}>Today's Trips</Text>
         <Text style={styles.startTripText}>Click to see Trip details</Text>
       </View>
 
-      
+      <ScrollView >
+        {/* ontentContainerStyle={styles.scrollView}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
+                }
+            > */}
       <FlatList
         style={styles.flatlist}
         data={data}
@@ -81,10 +98,11 @@ const Homescreen = ({ navigation }) => {
           </Card>
         )}
       />
+      </ScrollView>
       <TouchableOpacity style={styles.CallBtn} onPress={() => { Linking.openURL('tel:8777111223') }}  >
         <Text style={styles.loginText}>Call Admin</Text>
       </TouchableOpacity>
-
+      
     </View>
   );
 }

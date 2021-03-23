@@ -29,14 +29,15 @@ const Checklist = ({ route, navigation }) => {
     let TripID = route.params.item.trip_id;
     let VehicleID = route.params.item.vehilce;
     const [refreshing, setRefreshing] = React.useState(false);
-    const [len, setLen] = useState(0);
+    //const [len, setLen] = useState(0);
 
     const onRefresh = React.useCallback(() => {
-        setLen(route.params.item.destination.length)
-        console.log("lenght", len);
+        // setLen(route.params.item.destination.length)
+        // console.log("lenght", len);
         setRefreshing(true);
-        wait(2000).then(() => setRefreshing(false));
         Children();
+        wait(2000).then(() => setRefreshing(false));
+        
     }, []);
 
     const Children = () => {
@@ -92,7 +93,7 @@ const Checklist = ({ route, navigation }) => {
     const starting = async () => {
         setBut("Trip Inprogress");
         //setLoc(false);
-        onRefresh();
+        
         try {
             axios({
                 method: 'POST',
@@ -108,6 +109,7 @@ const Checklist = ({ route, navigation }) => {
                 .then(function (response) {
                     if (response.status == 200) {
                        // Alert.alert("Trip started")
+                       onRefresh();
                     }
                     console.log("response for starttrip", response.status);
                 })
@@ -135,7 +137,7 @@ const Checklist = ({ route, navigation }) => {
         );
     }
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             <Modal
                 animationType="slide"
                 transparent={true}
@@ -209,6 +211,7 @@ const Checklist = ({ route, navigation }) => {
                     <Text>Check List</Text>
                 </TouchableOpacity>
                 <Text style={styles.absent}>Marked Absent</Text>
+                <SafeAreaView>
                 <FlatList
                     data={details} //item2
                     renderItem={({ item }) => (
@@ -228,8 +231,9 @@ const Checklist = ({ route, navigation }) => {
                     )}
                     keyExtractor={item => item.id}
                 />
+                </SafeAreaView>
             </ScrollView>
-        </SafeAreaView>
+        </View>
     );
 }
 export default Checklist;

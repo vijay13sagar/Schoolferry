@@ -41,8 +41,7 @@ const MyPieChart = () => {
         .finally(function () {
           // always executed
         });
-      },[]);
-      axios
+        axios
     .get(`${Ngrok.url}/api/management/usersreport`)
     .then(function (response) {
       setHist(response.data.usersVal);
@@ -58,6 +57,8 @@ const MyPieChart = () => {
     .finally(function () {
       // always executed
     });
+      },[]);
+      
     // const prog = {
     //   labels: ["Swim", "Bike", "Run"], // optional
     //   data: [0.4, 0.7, 0.8]

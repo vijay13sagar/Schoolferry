@@ -5,22 +5,22 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-community/async-storage';
 
 const Homescreen = ({ navigation }) => {
-  const onPressLogout = async () => {
-    try {
-      // const keys = await AsyncStorage.getAllKeys();
-      // await AsyncStorage.multiRemove(keys);
-      AsyncStorage.removeItem('token');
-      console.log("working");
-      navigation.replace('Login');
-      Alert.alert('You have been logged out');
-    } catch (error) {
-      console.error('Error clearing app data.', error);
-    }
-    //AsyncStorage.removeItem('token');
-    //window.localStorage.clear();
-    //AsyncStorage.clear()
+  // const onPressLogout = async () => {
+  //   try {
+  //     // const keys = await AsyncStorage.getAllKeys();
+  //     // await AsyncStorage.multiRemove(keys);
+  //     AsyncStorage.removeItem('token');
+  //     console.log("working");
+  //     navigation.replace('Login');
+  //     Alert.alert('You have been logged out');
+  //   } catch (error) {
+  //     console.error('Error clearing app data.', error);
+  //   }
+  //   //AsyncStorage.removeItem('token');
+  //   //window.localStorage.clear();
+  //   //AsyncStorage.clear()
 
-  }
+  // }
   return (
     <View style={styles.container}>
       <StatusBar
@@ -81,9 +81,9 @@ const Homescreen = ({ navigation }) => {
             </CardItem>
           </Card>
           </View>
-          <TouchableOpacity style={styles.loginBtn} onPress={() => onPressLogout()}  >
+          {/* <TouchableOpacity style={styles.loginBtn} onPress={() => onPressLogout()}  >
         <Text style={styles.loginText}>Log Out</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
           </ScrollView>
     </View>
   );
