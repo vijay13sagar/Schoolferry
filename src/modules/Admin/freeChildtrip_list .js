@@ -106,10 +106,10 @@ export default class freeChildtrip_list extends Component  {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 50,
-    flex:1,
+    
+    
       backgroundColor: "#F9F2F2",
-      alignItems: "center",
+    
       
     },
     TextInput: {

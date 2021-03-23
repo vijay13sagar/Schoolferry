@@ -31,7 +31,7 @@ export default function nanny_Details({ route, navigation }){
         <Text style={{alignSelf:"center", marginTop: 8,}}>Edit</Text>
 
       </TouchableOpacity>  */}
-        <View style={{width:"70%"}}>
+        <View style={{marginRight:280}}>
         <Text>Name</Text></View> 
         
         <View style={styles. details}>
@@ -55,7 +55,7 @@ export default function nanny_Details({ route, navigation }){
         />
       </View> */}
      
-      <View style={{width:"70%"}}>
+      <View style={{marginRight:230}}>
         <Text>Phone Number</Text></View> 
         <View style={styles. details}>
         <Text>
@@ -64,17 +64,17 @@ export default function nanny_Details({ route, navigation }){
           
           </Text>
       </View>
-      <View style={{width:"70%"}}>
+      <View style={{marginRight:265}}>
         <Text>Address</Text></View> 
      
-        <View style={styles. detailsAddress}>
+        <View style={styles. details}>
         <Text>
           
           {route.params.item.address}
           
           </Text>
       </View>
-      <View style={{width:"70%"}}>
+      <View style={{marginRight:225}}>
         <Text>Vehicle Number</Text></View> 
         <View style={styles. details}>
         <Text>
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   details:{
-    height: 40,
+    
     backgroundColor: "#d3d3d3",
     //borderWidth: 1,
     borderRadius: 12,
@@ -144,18 +144,7 @@ const styles = StyleSheet.create({
     alignSelf: "center"
 
   },
-  detailsAddress:{
-    height: 100,
-    backgroundColor: "#d3d3d3",
-    //borderWidth: 1,
-    borderRadius: 12,
-    //borderColor: '#ff5c8d',
-    //marginTop: 3,
-    width: '85%',
-    padding: 8,
-    alignSelf: "center"
-
-  },
+  
   inputView: {
     borderWidth: 1,
     borderColor: '#b0003a',

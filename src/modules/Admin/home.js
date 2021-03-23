@@ -5,6 +5,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import axios from 'axios';
 import Ngrok from '../../constants/ngrok';
 import moment from 'moment';
+
 const today = new Date();
 const TD = moment(today).format('DD-MM-YYYY');
 export default class Home_page extends Component {
@@ -94,7 +95,7 @@ export default class Home_page extends Component {
 
     return (
       
-      <View style={styles.Container}>
+      <View style={styles.container}>
         <StatusBar
           barStyle="light-content"
           // dark-content, light-content and default
@@ -154,10 +155,9 @@ export default class Home_page extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 50,
-    flex: 1,
+    
     backgroundColor: "#F9F2F2",
-    alignItems: "center",
+   
 
   },
   TextInput: {

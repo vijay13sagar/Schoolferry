@@ -18,85 +18,11 @@ import { set } from "react-native-reanimated";
 
 export default function Trip_Details({ route, navigation }) {
 
-  // const [pickerValue, setPickerValue] = useState("")
-  // const [drivername, setdrivername] = useState("")
-  // const [data, getData] = useState()
-  // const [nanny, setNanny] = useState("");
+ 
   const s = route.params.item.trip_id
   let NID = null;
-// let bf = false;
-  //  useEffect(() => {
-
-    
-// // let responseJson = axios.get(`${Ngrok.url}/api/trip/child/age/${s}`) 
-// // let value = responseJson.data.nannyRequired;
-// // console.log("response",responseJson.data.nannyRequired);
-// // // setNanny(responseJson.data.nannyRequired)
 
 
-// // if(!value){
-// // setNanny(false)
-// // }
-// // else{
-// //   setNanny(true)
-// // }
-// // console.log("nanny",nanny);
-      // fetch(`${Ngrok.url}/api/trip/child/age/${s}`, {
-      //   "method": "GET",
-      //   "headers": {
-      //     Accept: 'application/json',
-      //     'Content-Type': 'application/json'
-      //   },
-      // })
-      //   .then(response => response.json())
-      //   .then(responseJson => {
-      //     console.log("cl", typeof(responseJson));
-      //     console.log("cl", responseJson.nannyRequired);
-
-
-      //     getData(responseJson)
-      //     if(data == true){
-      //       console.log("sai");
-      //       bf=false
-      //     }
-
-      //     else{
-      //       console.log("kumar");
-      //     bf=true
-      //     }
-      //  console.log("nanny",bf);
-
-      //   })
-      //   .catch(err => {
-
-      //   });
-      // })
-    
-
-//   },[])
-//   // const presshandler=() => {
-//   //   fetch(`${Ngrok.url}/api/trip/child/age/${s}`, {
-//   //     "method": "GET",
-//   //     "headers": {
-//   //       Accept: 'application/json',
-//   //       'Content-Type': 'application/json'
-//   //     },
-//   //   })
-//   //     .then(response => response.json())
-//   //     .then(responseJson => {
-//   //       console.log("cl", typeof (responseJson));
-//   //       console.log("cl", responseJson.nannyRequired);
-
-
-//   //       getData(responseJson)
-//   //       console.log("nanny", data);
-
-//   //     })
-//   //     .catch(err => {
-
-//   //     });
-
-//   // }
 
   const nannyid = route.params.item.nanny_id
 //let bd = false;
@@ -120,7 +46,7 @@ export default function Trip_Details({ route, navigation }) {
         <StatusBar style="auto" />
 
 
-        <View style={{ width: "70%" }}>
+        <View style={{ marginRight:240}}>
           <Text>Driver Name</Text></View>
 
         <View style={styles.details}>
@@ -131,7 +57,7 @@ export default function Trip_Details({ route, navigation }) {
           </Text>
         </View>
 
-        <View style={{ width: "70%" }}>
+        <View style={{ marginRight:230}}>
           <Text>Vehicle Number</Text></View>
 
         <View style={styles.details}>
@@ -142,7 +68,7 @@ export default function Trip_Details({ route, navigation }) {
           </Text>
         </View>
 
-        <View style={{ width: "70%" }}>
+        <View style={{ marginRight:210 }}>
           <Text>Number of children</Text></View>
         <View style={styles.details}>
           <Text>
@@ -152,7 +78,7 @@ export default function Trip_Details({ route, navigation }) {
           </Text>
         </View>
 
-        <View style={{ width: "70%" }}>
+        <View style={{ marginRight:260}}>
           <Text>Nanny ID</Text></View>
 
         <View style={styles.details}>
@@ -163,7 +89,7 @@ export default function Trip_Details({ route, navigation }) {
 
           </Text>
         </View>
-        <View style={{ width: "70%" }}>
+        <View style={{marginRight:240 }}>
           <Text>Start Location</Text></View>
         <View style={styles.details1}>
           <Text>
@@ -172,7 +98,7 @@ export default function Trip_Details({ route, navigation }) {
 
           </Text>
         </View>
-        <View style={{ width: "70%" }}>
+        <View style={{ marginRight:240}}>
           <Text>End Location</Text></View>
         <View style={styles.details1}>
           <Text >
@@ -247,7 +173,7 @@ const styles = StyleSheet.create({
   },
 
   details: {
-    height: 40,
+   
     backgroundColor: "#d3d3d3",
     //borderWidth: 1,
     borderRadius: 12,
@@ -259,7 +185,7 @@ const styles = StyleSheet.create({
 
   },
   details1: {
-    height: 100,
+   
     backgroundColor: "#d3d3d3",
     //borderWidth: 1,
     borderRadius: 12,

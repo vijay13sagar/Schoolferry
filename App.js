@@ -61,7 +61,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Onboarding/>
+      <AdminNav/>
     </NavigationContainer>
   );
 }
