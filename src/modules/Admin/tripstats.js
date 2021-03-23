@@ -80,6 +80,7 @@ const MyPieChart = () => {
             ],
           }}
           fromZero
+          showValuesOnTopOfBars	
           width={Dimensions.get('window').width - 30}
           height={220}
           yAxisLabel={''}
@@ -87,7 +88,7 @@ const MyPieChart = () => {
             backgroundColor: '#1CC910',
             backgroundGradientFrom: 'lightblue',//'rgb(12, 99, 250)',//'#EFF3FF',
             backgroundGradientTo: 'white',//'rgb(39, 143, 255)',//'#EFEFEF',
-            decimalPlaces: 0,
+            decimalPlaces: 1,
             barPercentage: 0.5,
             color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
             style: {
@@ -122,7 +123,7 @@ const MyPieChart = () => {
             </Text>
           </TouchableOpacity>
         </View>
-        <View style={{ flexDirection: "row",marginBottom:10,marginLeft:5 }}>
+        {/* <View style={{ flexDirection: "row",marginBottom:10,marginLeft:5 }}>
           <View>
           <Text style={{ justifyContent: 'center', marginTop: 6, marginLeft: 10,fontWeight: "bold" ,fontSize:15 }}>Month</Text>
           {
@@ -147,7 +148,7 @@ const MyPieChart = () => {
 
           }
           </View>
-        </View>
+        </View> */}
         <Text style={styles.header}>VEHICLE STATS</Text>
       <BarChart
         data={{
@@ -159,15 +160,16 @@ const MyPieChart = () => {
           ],
         }}
         fromZero
+        showValuesOnTopOfBars	
         width={Dimensions.get('window').width -30}
         height={220}
-        yAxisLabel={''}
+        //yAxisLabel={''}
         chartConfig={{
           backgroundColor: '#1CC910',
           backgroundGradientFrom: 'lightblue',//'rgb(12, 99, 250)',//'#EFF3FF',
           backgroundGradientTo: 'white',//'rgb(39, 143, 255)',//'#EFEFEF',
-          decimalPlaces: 0,
-          barPercentage:1,
+          decimalPlaces: 1,
+          barPercentage:0.5,
           color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
           style: {
             borderRadius: 16,

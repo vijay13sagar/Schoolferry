@@ -147,6 +147,7 @@ const MyPieChart = () => {
           ],
         }}
         fromZero
+        showValuesOnTopOfBars	
         width={Dimensions.get('window').width -30}
         height={220}
         yAxisLabel={''}
@@ -178,6 +179,7 @@ const MyPieChart = () => {
           ],
         }}
         fromZero
+        showValuesOnTopOfBars	
         width={Dimensions.get('window').width -30}
         height={220}
         yAxisLabel={''}
