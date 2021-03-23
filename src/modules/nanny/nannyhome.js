@@ -66,7 +66,7 @@ export default class Triplist extends Component {
                           item.trip_id
                         }
                       </Text>
-                      <Text style={{marginLeft:50}}>
+                      <Text style={{marginLeft:40}}>
                   {item.endedTripAt ?<Text style={{color:'white',fontWeight:'700',fontSize:17}}>Trip Completed</Text> : null}
                 </Text>
                 {item.endedTripAt ? null : <Ionicons name="chevron-forward-outline"
@@ -80,7 +80,9 @@ export default class Triplist extends Component {
             />
           )}
         </ScrollView>
-
+        <TouchableOpacity style={styles.CallBtn} onPress={() => { Linking.openURL('tel:8777111223') }}  >
+          <Text style={styles.loginText}>Call Admin</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -97,8 +99,18 @@ const styles = StyleSheet.create({
     width: "80%",
     height: "30%",
     flex: 1,
-    //backgroundColor: "#F9F2F2",
     alignSelf: "center",
+  },
+  CallBtn: {
+    width: "80%",
+    borderRadius: 10,
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#32cd32",
+    alignSelf: 'center',
+    marginTop: 20,
+    marginBottom: 50,
   },
   TextInput: {
     height: 50,
