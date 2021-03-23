@@ -26,7 +26,7 @@ const MyPieChart = () => {
   const [hist, setHist] = useState([10,18,8,20, 25]);
   const [months,setmonths]= useState(['January','February','March','April','May',]);
   useEffect(() => {
-      //CallHIST(1);
+      CallHIST(1);
       axios
         .get(`${Ngrok.url}/api/management/piechart`)
         .then(function (response) {
@@ -44,41 +44,57 @@ const MyPieChart = () => {
   const CallHIST=(val)=>{
     const newvalue=val
     console.log("hahah",newvalue);
+    axios
+    .get(`${Ngrok.url}/api/management/histogram/${newvalue}`)
+    .then(function (response) {
+      setHist(response.data.amounts);
+      setmonths(response.data.months)
+      //setisload(false);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log("error",error.message);
+    })
+    .finally(function () {
+      // always executed
+    });
+
   }
   return (
     <ScrollView>
       <Text style={styles.header}>SUBSCRIPTION STATS</Text>
-      {isLoading ? <ActivityIndicator/>:<PieChart
+      {/* style={{alignSelf:'flex-start'}} */}
+      {isLoading ? <ActivityIndicator/>:<View ><PieChart
         data={[
           {
             name: '[Subscribed]',
             population:data.subscribedUsers,
             color: 'rgba(131, 167, 234, 1)',
             legendFontColor: 'black',
-            legendFontSize: 14,
+            legendFontSize: 12,
           },
           {
             name: '[Registered]',
             population: data.onlyRegisteredUsers,
             color: '#F00',
             legendFontColor: 'black',
-            legendFontSize: 14,
+            legendFontSize: 12,
           },
           {
             name: '[No Child Added]',
             population: data.noChildAdded,
             color: 'lightgreen',
             legendFontColor: 'black',
-            legendFontSize: 14,
+            legendFontSize: 12,
           },
         ]}
-        width={Dimensions.get('window').width - 16}
+        width={Dimensions.get('window').width -30}
         height={220}
         chartConfig={{
           backgroundColor: '#1cc910',
           backgroundGradientFrom: '#eff3ff',
           backgroundGradientTo: '#efefef',
-          decimalPlaces: 2,
+          //decimalPlaces: 0,
           color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
           style: {
             borderRadius: 16,
@@ -92,8 +108,8 @@ const MyPieChart = () => {
         backgroundColor="transparent"
         paddingLeft="15"
         absolute //For the absolute number else percentage
-      />}
-      <Text style={styles.header}>MONTHLY STATS</Text>
+      />
+      <Text style={styles.header}>REVENUE STATS</Text>
       <BarChart
         data={{
           labels: months,
@@ -103,46 +119,50 @@ const MyPieChart = () => {
             },
           ],
         }}
-        width={Dimensions.get('window').width - 16}
+        fromZero
+        width={Dimensions.get('window').width -30}
         height={220}
-        yAxisLabel={'Rs'}
+        yAxisLabel={'₹'}
         chartConfig={{
           backgroundColor: '#1CC910',
-          backgroundGradientFrom: '#EFF3FF',
-          backgroundGradientTo: '#EFEFEF',
-          decimalPlaces: 2,
+          backgroundGradientFrom: 'lightblue',//'rgb(12, 99, 250)',//'#EFF3FF',
+          backgroundGradientTo: 'white',//'rgb(39, 143, 255)',//'#EFEFEF',
+          decimalPlaces: 0,
+          barPercentage:0.5,
           color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
           style: {
             borderRadius: 16,
           },
         }}
         style={{
+          marginLeft:10,
           marginVertical: 8,
           borderRadius: 16,
         }}
       />
       <View style={{flexDirection:'row'}}>
         <TouchableOpacity style={styles.histBtn} onPress={()=>CallHIST(12)}>
-        <Text style={{fontSize:13,fontWeight:'bold'}}>
-              1 YEAR
+        <Text style={{fontSize:10,fontWeight:'bold',color:"white"}}>
+              YEARLY
             </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.histBtn} onPress={()=>CallHIST(6)}>
-        <Text style={{fontSize:13,fontWeight:'bold'}}>
-              6 MONTHS
+        <Text style={{fontSize:10,fontWeight:'bold',color:"white"}}>
+              HALF-YEARLY
             </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.histBtn} onPress={()=>CallHIST(3)}>
-        <Text style={{fontSize:13,fontWeight:'bold'}}>
-              3 MONTHS
+        <Text style={{fontSize:10,fontWeight:'bold',color:"white"}}>
+              QUARTERLY
             </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.histBtn} onPress={()=>CallHIST(1)}>
-        <Text style={{fontSize:13,fontWeight:'bold'}}>
-              1 MONTH
+        <Text style={{fontSize:10,fontWeight:'bold',color:"white"}}>
+              MONTHLY
             </Text>
         </TouchableOpacity>
-      </View>
+        </View>
+      </View>}
 
     </ScrollView>
   );
@@ -150,14 +170,6 @@ const MyPieChart = () => {
 
 export default MyPieChart;
 const styles = StyleSheet.create({
-  // container: {
-  //   flex: 1,
-  //   backgroundColor: 'white',
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   textAlign: 'center',
-  //   padding: 10,
-  // },
   container: {
     padding: 50,
     flex: 1,
@@ -172,16 +184,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginVertical: 15,
     backgroundColor: "#ff5c8d",
-    marginHorizontal:10
+    marginHorizontal:"2%"
   },
   header: {
     textAlign: 'center',
-    fontWeight: '800',
+    fontWeight: 'bold',
     fontSize: 18,
     padding: 16,
     marginTop: 16,
   },
 });
-
-
-

@@ -15,11 +15,11 @@ import Ngrok from '../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 
-export default function Login({ navigation }) {
+export default function Login({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [{ emailError }, setEmailError] = useState('');
-  const [{ passwordError }, setPasswordError] = useState('');
+  const [{emailError}, setEmailError] = useState('');
+  const [{passwordError}, setPasswordError] = useState('');
   const pressHandler = () => {
     navigation.navigate('Sign up');
   };
@@ -34,41 +34,41 @@ export default function Login({ navigation }) {
   };
   const validateFunction = () => {
     if (!email) {
-      setEmailError({ emailError: 'Phone Number Field Cannot be Empty' });
+      setEmailError({emailError: 'Phone Number Field Cannot be Empty'});
       return false;
     }
     if (!validateEmail(email)) {
-      setEmailError({ emailError: 'Enter Valid Phone Number' });
+      setEmailError({emailError: 'Enter Valid Phone Number'});
       return false;
     }
     if (!password) {
-      setPasswordError({ passwordError: 'Password Cannot be Empty' });
+      setPasswordError({passwordError: 'Password Cannot be Empty'});
       return false;
     }
     return true;
   };
-const gotootpscreen=()=>{
-  
-  console.log("number",email);
-  axios
+  const gotootpscreen = () => {
+    console.log('number', email);
+    axios
       .get(`${Ngrok.url}/api/user/${email}`)
       .then(function (response) {
-        console.log("otpstat",response.status);
-        console.log("otpmsg",response.data.message);
-        if((response.status==200)){
-          navigation.navigate('OTPscreen',{item:email})
-        }else if ((response.message=="Invalid Contact")){
-          Alert.alert("Please enter Valid Phone Number");
+        console.log('otpstat', response.status);
+        console.log('otpmsg', response.data.message);
+        if (response.status == 200) {
+          navigation.navigate('OTPscreen', {item: email});
+        } else if (response.message == 'Invalid Contact') {
+          Alert.alert('Please enter Valid Phone Number');
         }
       })
       .catch(function (error) {
         // handle error
-        console.log("error",error.message);
+        console.log('error', error.message);
       })
       .finally(function () {
         // always executed
       });
-}
+  };
+  
   const handleSubmitpPress = async () => {
     let firebaseToken = await AsyncStorage.getItem('FBtoken');
     console.log('FB token', firebaseToken);
@@ -78,7 +78,7 @@ const gotootpscreen=()=>{
          id: email,
           password: password
        }*/
-      /let response = await loginApi(body)/
+      //let response = await loginApi(body)/
       fetch(`${Ngrok.url}/api/login`, {
         method: 'POST',
         headers: {
@@ -93,48 +93,45 @@ const gotootpscreen=()=>{
       })
         .then((response) => response.json())
         .then((responseJson) => {
-          console.log('response', responseJson);
-         // console.log("status", responseJson.status);
-          
-            if (responseJson[1] == 'Parent') {
-              AsyncStorage.setItem('token', responseJson[0]);
-              navigation.replace('Parent Interface');
-            } else if (responseJson[1] == 'Driver') {
-              AsyncStorage.setItem('token', responseJson[0]);
-              navigation.replace('Driver Interface');
-            } else if (responseJson[1] == 'Admin') {
-              AsyncStorage.setItem('token', responseJson[0]);
-              navigation.replace('Admin Interface');
-            } else if (responseJson[1] == 'Nanny') {
-              AsyncStorage.setItem('token', responseJson[0]);
-              navigation.replace('Nanny Interface');
-            }
-          
+          console.log('res', responseJson);
+          //console.log("status", responseJson.status);
+
+          if (responseJson[1] == 'Parent') {
+            AsyncStorage.setItem('token', responseJson[0]);
+            navigation.replace('Parent Interface');
+          } else if (responseJson[1] == 'Driver') {
+            AsyncStorage.setItem('token', responseJson[0]);
+            navigation.replace('Driver Interface');
+          } else if (responseJson[1] == 'Admin') {
+            AsyncStorage.setItem('token', responseJson[0]);
+            navigation.replace('Admin Interface');
+          } else if (responseJson[1] == 'Nanny') {
+            AsyncStorage.setItem('token', responseJson[0]);
+            navigation.replace('Nanny Interface');
+          }
+
           if (responseJson.status == 401) {
-            console.log('status', responseJson.message)
-            if ((responseJson.message == "Token not provided")) {
-              Alert.alert("Not an exsisting user, please sign up first !")
-            }
-            else if ((responseJson.message == "OTP verification not done")) {
+            console.log('status', responseJson.status);
+            if (responseJson.message == 'Token not provided') {
+              Alert.alert('Not an exsisting user, please sign up first !');
+            } else if (responseJson.message == 'OTP verification not done') {
               //Alert.alert("OTP verification need to be done")
               gotootpscreen();
-            }
-            else if ((responseJson.message == "Invalid contact/Password")) {
+            } else if (
+              responseJson.message == 'Invalid contact/password' ||
+              responseJson.message == 'Invalid contact/Password'
+            ) {
               Alert.alert('Incorrect contact/password');
             }
           }
         })
         .catch((error) => {
-          console.log('error', error); // 401
-          // console.log(error.response.data.error) //Please Authenticate or whatever returned from server
+          console.log('error', error.message); // 401  
           // if(error.responseJson.status == 401){
           //   //redirect to login
           //   Alert.alert('Phone Number Alredy Exist!')
           // }
         });
-      /*.catch(err => {
-          console.log(err);
-        });*/
     }
   };
   return (

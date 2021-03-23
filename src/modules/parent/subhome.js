@@ -163,21 +163,15 @@ const subscribedHome = ({route, navigation}) => {
         </Text>
       </View>
       <View>
-        {Boolean(value1.length) &&
-          value1[0].trips.map((item) => (
-            <TouchableOpacity
-              style={styles.trips}
-              onPress={() => navigation.navigate('Trip_details', item)}>
-              <Text
-                style={{
-                  justifyContent: 'center',
-                  marginTop: 6,
-                  marginLeft: 10,
-                }}>
-                {item.tripId}
-              </Text>
-            </TouchableOpacity>
-          ))}
+        {Boolean(value1[0].trips.length) ?
+        value1[0].trips.map((item)=>(
+        <TouchableOpacity style={styles.trips} onPress={()=> navigation.navigate('Trip_details',item)}>
+        <Text style={{justifyContent:'center',marginTop:6,marginLeft:10}}>{item.tripId}</Text>
+        </TouchableOpacity>
+        ))
+        :
+        <Text style={{justifyContent:"center",marginLeft:30}}>No Trips</Text>
+        }
       </View>
       <View
         style={{

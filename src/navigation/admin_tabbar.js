@@ -33,8 +33,14 @@ import Edit_Nanny from '../modules/Admin/Edit nanny';
 import freeVehicletrip_list from '../modules/Admin/freeVehicletrip_list';
 import Edit_Vehicle from '../modules/Admin/Edit vehicle';
 import charts from '../modules/Admin/management';
+import Chart from '../modules/Admin/management 2';
+
+
+
+import { View } from 'react-native';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+
 function Homestack() {
   return (
     <Stack.Navigator
@@ -247,6 +253,11 @@ function WebsiteStack() {
           component={charts}
           options={{ title: 'Management' }}
         />
+        <Stack.Screen
+          name="chart"
+          component={Chart}
+          options={{ title: 'Management' }}
+        />
        
       </Stack.Navigator>
     );
@@ -254,7 +265,13 @@ function WebsiteStack() {
   
 
 function App() {
+ 
+    
+ 
   return (
+    
+  
+    
     
       
       <Tab.Navigator
@@ -293,6 +310,7 @@ function App() {
       <Tab.Screen name="Vehicle" component={VehicleStack} />
       <Tab.Screen name="Notification" component={WebsiteStack} />
     </Tab.Navigator>
+  
    
   );
 }
