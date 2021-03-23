@@ -5,7 +5,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import Employee from '../modules/Admin/employee';
-import Website from '../modules/Admin/website';
 import Add_Vehicle from '../modules/Admin/add_vehicle';
 import Add_Driver from '../modules/Admin/Add_Driver';
 import Add_Nanny from '../modules/Admin/Add_Nanny';
@@ -242,11 +241,6 @@ function WebsiteStack() {
           <Stack.Screen
           name="ManageOptions"
           component={Manageoptions}
-          options={{ title: 'Reports' }}
-        />
-        <Stack.Screen
-          name="website"
-          component={Website}
           options={{ title: 'Reports' }}
         />
         <Stack.Screen
