@@ -242,6 +242,7 @@ const styles = StyleSheet.create({
 
     container: {
         flex: 1,
+        backgroundColor: "#F9F2F2",
     },
     firstbox: {
         width: '90%',

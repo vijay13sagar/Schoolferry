@@ -114,13 +114,6 @@ const MyPieChart = () => {
             legendFontColor: 'black',
             legendFontSize: 12,
           },
-          // {
-          //   name: '[No Child Added]',
-          //   population: data.noChildAdded,
-          //   color: 'lightgreen',
-          //   legendFontColor: 'black',
-          //   legendFontSize: 12,
-          // },
         ]}
         width={Dimensions.get('window').width -30}
         height={220}

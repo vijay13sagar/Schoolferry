@@ -25,8 +25,23 @@ const MyPieChart = () => {
   const [isLoading, setisload] = useState(true);
   const [hist, setHist] = useState([10, 18, 8, 20, 25]);
   const [months, setmonths] = useState(['January', 'February', 'March', 'April', 'May',]);
+  const [vehhist, setVehHist] = useState([]);
+  const [veh,setVeh]= useState([]);
   useEffect(() => {
     CallHIST(1);
+    axios
+    .get(`${Ngrok.url}/api/management/usersreport`)
+    .then(function (response) {
+      setVehHist(response.data.capacity);
+      setVeh(response.data.vehicles);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log("error",error.message);
+    })
+    .finally(function () {
+      // always executed
+    });
 
   }, []);
   const CallHIST = (val) => {
@@ -107,7 +122,7 @@ const MyPieChart = () => {
             </Text>
           </TouchableOpacity>
         </View>
-        <View style={{ flexDirection: "row",marginBottom:150,marginLeft:5 }}>
+        <View style={{ flexDirection: "row",marginBottom:10,marginLeft:5 }}>
           <View>
           <Text style={{ justifyContent: 'center', marginTop: 6, marginLeft: 10,fontWeight: "bold" ,fontSize:15 }}>Month</Text>
           {
@@ -133,6 +148,37 @@ const MyPieChart = () => {
           }
           </View>
         </View>
+        <Text style={styles.header}>VEHICLE STATS</Text>
+      <BarChart
+        data={{
+          labels: veh,
+          datasets: [
+            {
+              data: vehhist,
+            },
+          ],
+        }}
+        fromZero
+        width={Dimensions.get('window').width -30}
+        height={220}
+        yAxisLabel={''}
+        chartConfig={{
+          backgroundColor: '#1CC910',
+          backgroundGradientFrom: 'lightblue',//'rgb(12, 99, 250)',//'#EFF3FF',
+          backgroundGradientTo: 'white',//'rgb(39, 143, 255)',//'#EFEFEF',
+          decimalPlaces: 0,
+          barPercentage:1,
+          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+          style: {
+            borderRadius: 16,
+          },
+        }}
+        style={{
+          marginLeft:10,
+          marginVertical: 8,
+          borderRadius: 16,
+        }}
+      />
       </View>
 
     </ScrollView>
