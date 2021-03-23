@@ -265,6 +265,7 @@ const styles = StyleSheet.create({
   avatar: {
     width: '100%',
     height: '50%',
+    borderRadius:10
   },
   typeOfSubscription: {
     fontSize: 22,

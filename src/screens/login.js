@@ -10,11 +10,9 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-
 import Ngrok from '../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
-
 export default function Login({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -68,11 +66,9 @@ export default function Login({navigation}) {
         // always executed
       });
   };
-  
   const handleSubmitpPress = async () => {
     let firebaseToken = await AsyncStorage.getItem('FBtoken');
     console.log('FB token', firebaseToken);
-
     if (validateFunction()) {
       /* const body = {
          id: email,
@@ -95,7 +91,6 @@ export default function Login({navigation}) {
         .then((responseJson) => {
           console.log('res', responseJson);
           //console.log("status", responseJson.status);
-
           if (responseJson[1] == 'Parent') {
             AsyncStorage.setItem('token', responseJson[0]);
             navigation.replace('Parent Interface');
@@ -109,7 +104,6 @@ export default function Login({navigation}) {
             AsyncStorage.setItem('token', responseJson[0]);
             navigation.replace('Nanny Interface');
           }
-
           if (responseJson.status == 401) {
             console.log('status', responseJson.status);
             if (responseJson.message == 'Token not provided') {
@@ -142,7 +136,7 @@ export default function Login({navigation}) {
         // dark-content, light-content and default
         hidden={false}
         //To hide statusBar
-        backgroundColor="#e91e63"
+        backgroundColor="#E91E63"
         //Background color of statusBar only works for Android
         translucent={false}
         //allowing light, but not detailed shapes
@@ -231,7 +225,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 60,
-    backgroundColor: '#ff5c8d',
+    backgroundColor: '#FF5C8D',
   },
   registerTextStyle: {
     marginTop: 10,

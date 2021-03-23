@@ -20,18 +20,18 @@ const App = ({ route, navigation }) => {
   const [stay, setStay] = useState(true);
   const [{ valueError }, setValueerror] = useState('');
   let e;
+  if (f == 'Monthly') {
+    e = 30;
+  } else if (f == 'Quarterly') {
+    e = 91;
+  } else if (f == 'Half Yearly') {
+    e = 182;
+  } else if (f == "Yearly") {
+    e = 365;
+  }
   const payhandler = (selectedStartDate) => {
     setselectedStartDate(selectedStartDate);
-    setStay(false);
-    if (f == 'Monthly') {
-      e = 30;
-    } else if (f == 'Quarterly') {
-      e = 91;
-    } else if (f == 'Half Yearly') {
-      e = 182;
-    } else if (f == "Yearly") {
-      e = 365;
-    }
+    setStay(false);   
   }
   const validateentries = () => {
     if (stay == false) {
@@ -48,6 +48,7 @@ const App = ({ route, navigation }) => {
     }
   }
   tomorrow = moment(tomorrow).add(e, 'day').format('DD-MM-YYYY');
+  console.log("to",tomorrow);
   return (
     <View style={styles.container}>
       <StatusBar

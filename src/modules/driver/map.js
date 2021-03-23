@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet,Alert,TouchableOpacity, Text, View } from 'react-native';
 import geolocation from 'react-native-geolocation-service';
 import MapView, { Marker, AnimatedRegion } from 'react-native-maps';
 import Ngrok from '../../constants/ngrok';
@@ -18,6 +18,39 @@ export default class App extends React.Component {
 
     this.interval = setInterval(() => { this.updateloc() }, 5000)
   }
+  componentWillUnmount() {
+    clearInterval(this.interval)
+  }
+  Endtrip = () => {
+    try {
+      fetch(`${Ngrok.url}/api/driver/trip/end`, {
+        "method": "POST",
+        "headers": {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          tripid: this.props.route.params.tripid,
+        })
+      })
+        .then(function (response) {
+          if (response.status == 200) {
+            Alert.alert('Trip Ended')
+           
+
+          }
+
+          console.log("response for end trip", response.status);
+        })
+        .catch(function (error) {
+          console.log("ERROR", error);
+
+        })
+    }
+    catch (error) {
+      console.log("errordetails", error);
+    }
+  };
   updateloc = async() => {
     let geoOptions = {
       enableHighAccuracy: true,
@@ -80,12 +113,12 @@ export default class App extends React.Component {
         )}
         { this.state.ready && (
           <View>
-            <Text >{
+            {/* <Text >{
               `Latitude: ${this.state.where.lat}
                     Longitude: ${this.state.where.lng}`
-            }</Text>
+            }</Text> */}
             <MapView
-              style={{ height: 800, width: 1000 }}
+              style={{ height: 600, width: 450 }}
               //showsUserLocation
               followsUserLocation
               mapType='standard'
@@ -95,7 +128,7 @@ export default class App extends React.Component {
                 latitude: this.state.where.lat,
                 longitude: this.state.where.lng,
                 latitudeDelta: 0.0001 * 8,
-                longitudeDelta: 0.001 * 7
+                longitudeDelta: 0.0001 * 7
               }}
             >
 
@@ -105,6 +138,13 @@ export default class App extends React.Component {
               >
               </Marker >
             </MapView>
+            <TouchableOpacity style={styles.loginBtn} onPress={()=>{//this.props.navigation.replace('Home',{refresh:true})
+        this.Endtrip()
+        this.props.navigation.navigate('Homey',{refresh:true})
+        this.props.navigation.replace('Tripnotstarted',{refresh:true})
+      }}>
+              <Text>End Trip</Text>
+            </TouchableOpacity>
           </View>
         )}
       </View>
@@ -115,10 +155,21 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
+    //alignItems: 'center',
     justifyContent: 'center'
   },
   big: {
     fontSize: 48
-  }
+  },
+  loginBtn: {
+    width: "50%",
+    borderRadius: 10,
+    height: 38,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#ff5c8d",
+    alignSelf: "center",
+    marginTop: 20,
+    marginBottom:20,
+  },
 });

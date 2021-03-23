@@ -3,7 +3,7 @@ import {
   SafeAreaView,
   Text,
   View,
-  StyleSheet,
+  StyleSheet,StatusBar,
   TouchableOpacity,
   Dimensions,
   ScrollView,
@@ -24,9 +24,10 @@ const MyPieChart = () => {
   const [data,setData]=useState();
   const [isLoading,setisload]=useState(true);
   const [hist, setHist] = useState([10,18,8,20, 25]);
-  const [months,setmonths]= useState(['January','February','March','April','May',]);
+  const months= ['Parents','TotalChild','SubChild','UnSubChild',];
+  const [emphist, setEmpHist] = useState([10,18,8,20, 25]);
+  const [emp,setEmp]= useState([]);
   useEffect(() => {
-      CallHIST(1);
       axios
         .get(`${Ngrok.url}/api/management/piechart`)
         .then(function (response) {
@@ -40,15 +41,13 @@ const MyPieChart = () => {
         .finally(function () {
           // always executed
         });
-      },[]);
-  const CallHIST=(val)=>{
-    const newvalue=val
-    console.log("hahah",newvalue);
-    axios
-    .get(`${Ngrok.url}/api/management/histogram/${newvalue}`)
+        axios
+    .get(`${Ngrok.url}/api/management/usersreport`)
     .then(function (response) {
-      setHist(response.data.amounts);
-      setmonths(response.data.months)
+      setHist(response.data.usersVal);
+      setEmpHist(response.data.employeesVals);
+      setEmp(response.data.employees);
+      //setmonths(response.data.users)
       //setisload(false);
     })
     .catch(function (error) {
@@ -58,13 +57,48 @@ const MyPieChart = () => {
     .finally(function () {
       // always executed
     });
-
-  }
+      },[]);
+      
+    // const prog = {
+    //   labels: ["Swim", "Bike", "Run"], // optional
+    //   data: [0.4, 0.7, 0.8]
+    // };
   return (
+    <View>
+      <StatusBar
+        barStyle="light-content"
+        // dark-content, light-content and default
+        hidden={false}
+        //To hide statusBar
+        backgroundColor="#e91e63"
+        //Background color of statusBar only works for Android
+        translucent={false}
+      //allowing light, but not detailed shapes
+
+      />
     <ScrollView>
       <Text style={styles.header}>SUBSCRIPTION STATS</Text>
       {/* style={{alignSelf:'flex-start'}} */}
-      {isLoading ? <ActivityIndicator/>:<View ><PieChart
+      {isLoading ? <ActivityIndicator/>:<View >
+        {/* <ProgressChart
+  data={prog}
+  width={400}
+  height={220}
+  strokeWidth={16}
+  radius={32}
+  chartConfig={{
+    backgroundColor: '#1cc910',
+    backgroundGradientFrom: '#eff3ff',
+    backgroundGradientTo: '#efefef',
+    //decimalPlaces: 0,
+    color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+    style: {
+      borderRadius: 16,
+    },
+  }}
+  hideLegend={false}
+/> */}
+        <PieChart
         data={[
           {
             name: '[Subscribed]',
@@ -75,18 +109,18 @@ const MyPieChart = () => {
           },
           {
             name: '[Registered]',
-            population: data.onlyRegisteredUsers,
+            population: data.unSubscribedUsers,
             color: '#F00',
             legendFontColor: 'black',
             legendFontSize: 12,
           },
-          {
-            name: '[No Child Added]',
-            population: data.noChildAdded,
-            color: 'lightgreen',
-            legendFontColor: 'black',
-            legendFontSize: 12,
-          },
+          // {
+          //   name: '[No Child Added]',
+          //   population: data.noChildAdded,
+          //   color: 'lightgreen',
+          //   legendFontColor: 'black',
+          //   legendFontSize: 12,
+          // },
         ]}
         width={Dimensions.get('window').width -30}
         height={220}
@@ -109,7 +143,7 @@ const MyPieChart = () => {
         paddingLeft="15"
         absolute //For the absolute number else percentage
       />
-      <Text style={styles.header}>REVENUE STATS</Text>
+      <Text style={styles.header}>USERS STATS</Text>
       <BarChart
         data={{
           labels: months,
@@ -122,13 +156,13 @@ const MyPieChart = () => {
         fromZero
         width={Dimensions.get('window').width -30}
         height={220}
-        yAxisLabel={'₹'}
+        yAxisLabel={''}
         chartConfig={{
           backgroundColor: '#1CC910',
           backgroundGradientFrom: 'lightblue',//'rgb(12, 99, 250)',//'#EFF3FF',
           backgroundGradientTo: 'white',//'rgb(39, 143, 255)',//'#EFEFEF',
           decimalPlaces: 0,
-          barPercentage:0.5,
+          barPercentage:1,
           color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
           style: {
             borderRadius: 16,
@@ -140,31 +174,41 @@ const MyPieChart = () => {
           borderRadius: 16,
         }}
       />
-      <View style={{flexDirection:'row'}}>
-        <TouchableOpacity style={styles.histBtn} onPress={()=>CallHIST(12)}>
-        <Text style={{fontSize:10,fontWeight:'bold',color:"white"}}>
-              YEARLY
-            </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.histBtn} onPress={()=>CallHIST(6)}>
-        <Text style={{fontSize:10,fontWeight:'bold',color:"white"}}>
-              HALF-YEARLY
-            </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.histBtn} onPress={()=>CallHIST(3)}>
-        <Text style={{fontSize:10,fontWeight:'bold',color:"white"}}>
-              QUARTERLY
-            </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.histBtn} onPress={()=>CallHIST(1)}>
-        <Text style={{fontSize:10,fontWeight:'bold',color:"white"}}>
-              MONTHLY
-            </Text>
-        </TouchableOpacity>
-        </View>
+      <Text style={styles.header}>EMPLOYEE STATS</Text>
+      <BarChart
+        data={{
+          labels: emp,
+          datasets: [
+            {
+              data: emphist,
+            },
+          ],
+        }}
+        fromZero
+        width={Dimensions.get('window').width -30}
+        height={220}
+        yAxisLabel={''}
+        chartConfig={{
+          backgroundColor: '#1CC910',
+          backgroundGradientFrom: 'lightblue',//'rgb(12, 99, 250)',//'#EFF3FF',
+          backgroundGradientTo: 'white',//'rgb(39, 143, 255)',//'#EFEFEF',
+          decimalPlaces: 0,
+          barPercentage:1,
+          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+          style: {
+            borderRadius: 16,
+          },
+        }}
+        style={{
+          marginLeft:10,
+          marginVertical: 8,
+          borderRadius: 16,
+        }}
+      />
       </View>}
 
     </ScrollView>
+    </View>
   );
 };
 
@@ -194,3 +238,6 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
 });
+
+
+

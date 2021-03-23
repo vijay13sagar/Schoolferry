@@ -18,8 +18,6 @@ export default function trip_Details({ route, navigation }) {
       <View style={styles.textview}>
         <Text style={styles.headertext}>Location:</Text>
         <Text style={styles.details}>{route.params.item.location}</Text>
-        <Text style={styles.headertext}>Timing:</Text>
-        <Text style={styles.details}>{route.params.item.driverInfo.driverContact}</Text>
         <Text style={styles.headertext}>Driver ID:</Text>
         <Text style={styles.details}>{route.params.item.driverInfo.driverId}</Text>
         <Text style={styles.headertext}>Driver Name:</Text>
@@ -35,7 +33,7 @@ export default function trip_Details({ route, navigation }) {
             keyExtractor={({ id }, index) => id}
             renderItem={({ item }) => (
         <TouchableOpacity style={styles.loginBtn} onPress = {()=>navigation.navigate('oldChild Details',{item:item})}>
-          <Text>{item.childName} , { item.childId }</Text>
+          <Text>{ item.childId } , {item.childName}</Text>
         </TouchableOpacity>
             )}
           />

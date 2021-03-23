@@ -27,8 +27,8 @@ const subscribedHome = ({route, navigation}) => {
   const [pickerValue, setPickerValue] = useState([]);
   const [selectedValue, setValue] = useState('');
   const [isLoading, setLoading] = useState(true);
-  const [trips, settrips] = useState('');
   const [error, setError] = useState();
+  const [count, setCount] = useState(0);
 
   const onDateChange = (date, type) => {
     if (type === 'END_DATE') {
@@ -53,7 +53,7 @@ const subscribedHome = ({route, navigation}) => {
           setValue(response.data.childList[0].name);
 
           // console.log('data',response.data.childList[0].name, selectedValue)
-          //console.log('refresh subhome:', response.data.childList[0].name);
+          //console.log('refresh subhome:', response.data.childList[0]);
           setLoading(false);
         } catch (e) {
           // Handle error
@@ -63,7 +63,7 @@ const subscribedHome = ({route, navigation}) => {
       fetchUser();
 
       //return null;
-    }, []),
+    }, [count]),
   );
 
   const myUsers = () => {
@@ -96,12 +96,10 @@ const subscribedHome = ({route, navigation}) => {
       : [];
 
   //console.log('value1', value1[0]);
-
+ 
   const cancelHandler = async () => {
     let child_id = await value1[0].id;
     console.log('id:', child_id);
-    //console.log('SD:', startDate);
-   // console.log('ED:', endDate);
 
     if (startDate == 'Invalid date' || endDate == 'Invalid date') {
       setError('Please select start/end date');
@@ -118,6 +116,11 @@ const subscribedHome = ({route, navigation}) => {
 
             if (response.status == 200) {
               Alert.alert('Ride cancelled successfully');
+              setCount(count + 1);
+              setLoading(true);
+              setError();
+              setselectedEndDate('');
+              setselectedStartDate('');
             } else {
               Alert.alert('Failed. Please try again');
             }
@@ -135,13 +138,9 @@ const subscribedHome = ({route, navigation}) => {
     <ScrollView>
       <StatusBar
         barStyle="light-content"
-        // dark-content, light-content and default
         hidden={false}
-        //To hide statusBar
         backgroundColor="#e91e63"
-        //Background color of statusBar only works for Android
         translucent={false}
-        //allowing light, but not detailed shapes
       />
 
       <Picker
@@ -207,12 +206,14 @@ const subscribedHome = ({route, navigation}) => {
       <View style={styles.details}>
         {Boolean(value1.length) && <Text>{value1[0].cost}</Text>}
       </View>
+  
 
       <View
         style={{
           marginLeft: 20,
           alignSelf: 'flex-start',
           justifyContent: 'center',
+          marginTop: 10,
         }}>
         <Text style={{fontWeight: 'bold', fontSize: 20}}>
           Cancelation of Ride :-
@@ -324,7 +325,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#FF5C8D',
     alignSelf: 'center',
-    marginTop: 20,
+    marginTop: 10,
     marginBottom: 20,
   },
   Picker: {

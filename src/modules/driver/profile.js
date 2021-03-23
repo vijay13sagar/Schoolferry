@@ -72,10 +72,6 @@ const Profile = ({ navigation }) => {
         <Text style={styles.headertext} >Address</Text>
         <Text style={styles.details}>{data.address}</Text>
       </View>
-      <View style={styles.textview}>
-        <Text style={styles.headertext} >License Number </Text>
-        <Text style={styles.details}></Text>
-      </View>
       <TouchableOpacity style={styles.loginBtn}
       >
         <Text style={styles.loginText} onPress={() => navigation.navigate("Change Password")}
