@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity,Alert } from 'react-native';
 import Ngrok from '../../constants/ngrok'
 import AsyncStorage from '@react-native-community/async-storage';
+import Loader from '../../components/Loader'
 
 const updateProfile = ({route, navigation}) => {
   const [name,setName] =  useState(route.params.name)
@@ -9,8 +10,10 @@ const updateProfile = ({route, navigation}) => {
   const [email, setEmail] = useState(route.params.email)
   const [address, setAddress] = useState(route.params.address)
   const [{ error }, setError] = useState(" ")
+  const [isloading, setLoading] = useState(false)
 
   const presshandler = async () => {
+    
     let token = await AsyncStorage.getItem('token')
     var regex_phone = /^((\+91)?|91)?[789][0-9]{9}/
     
@@ -21,6 +24,7 @@ const updateProfile = ({route, navigation}) => {
       alert("Please enter valid contact number")
     }
     else {
+      setLoading(true)
       fetch(`${Ngrok.url}/api/profileupdate/parent`, {
         "method": "POST",
         "headers": {
@@ -37,6 +41,7 @@ const updateProfile = ({route, navigation}) => {
         .then(response => response.json())
         .then(responseJson => {
           console.log(responseJson);
+          setLoading(false)
           if (responseJson.message == "data updated successfully") {
             //Alert.alert('Profile Updated Successfully')
             navigation.goBack()
@@ -49,6 +54,7 @@ const updateProfile = ({route, navigation}) => {
           }
         })
         .catch(err => {
+          setLoading(false)
           console.log(err);
         });
     }

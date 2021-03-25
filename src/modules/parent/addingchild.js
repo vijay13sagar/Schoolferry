@@ -15,6 +15,7 @@ import { Picker } from '@react-native-picker/picker';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import moment from 'moment'
+import Loader from '../../components/Loader';
 
 export default function addchild({ route, navigation }) {
   const [CN, setCN] = useState("");
@@ -31,6 +32,8 @@ export default function addchild({ route, navigation }) {
   const [textflag2, setTextFlag2] = useState(false)
   const [datePickerVisible, setDatePickerVisible] = useState(false)
   const [dateFlag, setDateFlag] = useState(false)
+  const [isLoading, setLoading] = useState(false);
+
 
   const distanceCal = route.params.distance;
   console.log('distance',route.params.distance)
@@ -57,6 +60,7 @@ export default function addchild({ route, navigation }) {
 
     let token = await AsyncStorage.getItem('token');
     if (validateFunction()) {
+      setLoading(true)
       try {
         axios({
           method: 'POST',
@@ -73,13 +77,14 @@ export default function addchild({ route, navigation }) {
             school: SA,
             starttime: ST,
             endtime: ET,
-            distance: Number(distanceCal),
+            distance:5, //Number(distanceCal),
             parentid: token,
 
           }
         })
           .then(function (response) {
             console.log('status',response.status);
+            setLoading(false)
 
             if (response.status == 200) {
              // console.log(response.data)
@@ -103,6 +108,7 @@ export default function addchild({ route, navigation }) {
 
           })
           .catch(function (error) {
+            setLoading(false)
             console.log(error);
           })
       }
@@ -139,7 +145,7 @@ export default function addchild({ route, navigation }) {
 
   return (
     <View style={styles.container}>
-      {/* <Image style={styles.image} source={require("../assets/Logo.png")} /> */}
+        <Loader loading={isLoading} />
       <DateTimePickerModal
         isVisible={visible}
         mode="time"

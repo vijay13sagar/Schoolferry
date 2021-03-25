@@ -2,20 +2,17 @@ import React, {useState, useEffect} from 'react';
 import {
   Text,
   View,
-  StatusBar,
   TouchableOpacity,
   StyleSheet,
-  ActivityIndicator,
   FlatList,
 } from 'react-native';
-import {sub} from 'react-native-reanimated';
+
 import Ngrok from '../../constants/ngrok';
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
-import Tracking from './vehicleTracking';
-import {Picker} from '@react-native-picker/picker';
 import {Content, Card, CardItem, Body} from 'native-base';
 import {useFocusEffect} from '@react-navigation/native';
+import Loader from '../../components/Loader';
 
 const oldmap = ({navigation}) => {
   const [flag, setflag] = useState(true);
@@ -139,9 +136,7 @@ const oldmap = ({navigation}) => {
   };
   return isLoading ? (
     <View style={styles.container}>
-      <View style={{flex: 1, marginTop: 200}}>
-        <ActivityIndicator size="large" color="#E91E63" />
-      </View>
+      <Loader loading={isLoading} />
     </View>
   ) : (
     <View style={styles.container}>{userType ? <Subs /> : <Nosubs />}</View>

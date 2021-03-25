@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,99 +8,107 @@ import {
   TextInput,
   Alert,
   TouchableOpacity,
-} from "react-native";
+} from 'react-native';
 import Ngrok from '../constants/ngrok';
 import axios from 'axios';
-import Login from './login'
-export default function App({route,navigation}) {
-  const [email, setEmail] = useState("");
-  const [Name, setName] = useState("");
-  const [contact, setcontact] = useState("");
-  const [password, setpassword] = useState("");
-  const [{ emailError }, setEmailError] = useState("");
-  const [{ contactError }, setcontactError] = useState("");
-  const [{ emptyFields }, setemptyFeilds] = useState("");
+import Loader from '../components/Loader';
+
+export default function App({route, navigation}) {
+  const [email, setEmail] = useState('');
+  const [Name, setName] = useState('');
+  const [contact, setcontact] = useState('');
+  const [password, setpassword] = useState('');
+  const [{emailError}, setEmailError] = useState('');
+  const [{contactError}, setcontactError] = useState('');
+  const [{emptyFields}, setemptyFeilds] = useState('');
+  const [isloading, setLoading] = useState(false);
+
   const validateEmail = (email) => {
     const regex_mail = /^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)$/;
     if (regex_mail.test(email)) {
-      return true
+      return true;
     }
   };
   const validatecontact = (contact) => {
-    var regex_phone = /^((\+91)?|91)?[789][0-9]{9}/
+    var regex_phone = /^((\+91)?|91)?[789][0-9]{9}/;
     if (regex_phone.test(contact)) {
-      return true
+      return true;
+    } else {
+      return false;
     }
-    else { return false }
   };
   const validateFunction = () => {
     if (!Name || !email || !contact || !password) {
-      setemptyFeilds({ emptyFields: "Please Enter All The Details" })
-      return false
+      setemptyFeilds({emptyFields: 'Please Enter All The Details'});
+      return false;
+    } else if (!validateEmail(email)) {
+      setEmailError({emailError: 'Enter Valid Email Id'});
+      setcontactError({contactError: null});
+      setemptyFeilds({emptyFields: null});
+      return false;
+    } else if (!validatecontact(contact)) {
+      setcontactError({contactError: 'Enter Valid Phone Number'});
+      setEmailError({emailError: null});
+      return false;
     }
-    else if (!validateEmail(email)) {
-      setEmailError({ emailError: "Enter Valid Email Id" })
-      setcontactError({ contactError: null })
-      setemptyFeilds({ emptyFields: null })
-      return false
-    }
-    else if (!validatecontact(contact)) {
-      setcontactError({ contactError: "Enter Valid Phone Number" })
-      setEmailError({ emailError: null })
-      return false
-    }
-    return true
-  }
+    return true;
+  };
+
   const pressHandler = () => {
     if (validateFunction()) {
+      setLoading(true);
       try {
         axios({
           method: 'POST',
           url: `${Ngrok.url}/api/parent/signup`,
-          "headers": {
+          headers: {
             Accept: 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
           },
           data: {
             name: Name,
             email: email,
             contact: contact,
-            password: password
-          }
+            password: password,
+          },
         })
           .then(function (response) {
+            setLoading(false);
             if (response.status == 200) {
-              Alert.alert('Signup Successful, Please Login','', [{text: 'Proceed', onPress: () => navigation.navigate('OTPscreen',{item:contact})}])
+              Alert.alert('Signup Successful, Please Verify phone Number', '', [
+                {
+                  text: 'Proceed',
+                  onPress: () =>
+                    navigation.navigate('OTPscreen', {item: contact}),
+                },
+              ]);
             }
-           //console.log("response", response);
+            //console.log("response", response);
           })
           .catch(function (error) {
-            console.log(error.response.status) // 401
-            console.log(error.response.data.error) //Please Authenticate or whatever returned from server
+            setLoading(false);
+            console.log(error.response.status); // 401
+            console.log(error.response.data.message); //Please Authenticate or whatever returned from server
             if (error.response.status == 401) {
               //redirect to login
-              Alert.alert('Contact Already Exists, pleae try with a new Contact')
+              Alert.alert(
+                'Contact Already Exists, pleae try with a new Contact',
+              );
             }
-          })
-      }
-      catch (error) {
-        console.log("errordetails", error);
+          });
+      } catch (error) {
+        setLoading(false);
+        console.log('errordetails', error);
       }
     }
-  }
+  };
+
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={require("../assets/Logo.png")} />
-      <StatusBar
-        barStyle="light-content"
-        // dark-content, light-content and default
-        hidden={false}
-        //To hide statusBar
-        backgroundColor='#E91E63'
-        //Background color of statusBar only works for Android
-        translucent={false}
-      //allowing light, but not detailed shapes
-      />
+      <Loader loading={isloading} />
+
+      <Image style={styles.image} source={require('../assets/Logo.png')} />
+
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
@@ -139,7 +147,7 @@ export default function App({route,navigation}) {
       <Text style={styles.error}>{emptyFields}</Text>
       <Text style={styles.error}>{emailError}</Text>
       <Text style={styles.error}>{contactError}</Text>
-      <TouchableOpacity style={styles.loginBtn} onPress={pressHandler} >
+      <TouchableOpacity style={styles.loginBtn} onPress={pressHandler}>
         <Text style={styles.loginText}>SIGN UP</Text>
       </TouchableOpacity>
     </View>
@@ -148,9 +156,9 @@ export default function App({route,navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F9F2F2",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: '#F9F2F2',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   image: {
     marginBottom: 40,
@@ -159,10 +167,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#B0003A',
     borderRadius: 10,
-    width: "80%",
+    width: '80%',
     height: 45,
-    alignItems: "center",
-    backgroundColor: "#fff",   //"#C4C4C4",
+    alignItems: 'center',
+    backgroundColor: '#fff', //"#C4C4C4",
     marginTop: 5,
     //opacity: 0.5,
   },
@@ -176,7 +184,7 @@ const styles = StyleSheet.create({
     color: '#DC143C',
     fontSize: 11,
     alignItems: 'flex-start',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   forgot_button: {
     height: 30,
@@ -184,13 +192,13 @@ const styles = StyleSheet.create({
     color: '#1E90FF',
   },
   loginBtn: {
-    width: "50%",
+    width: '50%',
     borderRadius: 10,
     height: 38,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#FF5C8D",
-    alignSelf: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#FF5C8D',
+    alignSelf: 'center',
     marginTop: 20,
   },
   registerTextStyle: {
@@ -199,15 +207,3 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
 });
-
-
-
-
-
-
-
-
-
-
-
-

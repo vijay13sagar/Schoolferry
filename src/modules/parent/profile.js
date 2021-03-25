@@ -5,11 +5,11 @@ import {
   TouchableOpacity,
   StyleSheet,
   Alert,
-  ActivityIndicator,
 } from 'react-native';
-import Login from '../../screens/login';
 import Ngrok from '../../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
+import Loader from '../../components/Loader';
+
 
 const Profile = ({navigation}) => {
   const [data, getData] = useState([]);
@@ -58,9 +58,7 @@ const Profile = ({navigation}) => {
 
   return isLoading ? (
     <View style={styles.container}>
-      <View style={{flex: 1, marginTop: 200}}>
-        <ActivityIndicator size="large" color="#E91E63" />
-      </View>
+      <Loader loading={isLoading} />
     </View>
   ) : (
     <View style={styles.container}>
