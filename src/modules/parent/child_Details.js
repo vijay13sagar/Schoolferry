@@ -71,7 +71,7 @@ let NPH = null
         </Text>
       </View>
       <View style={{width:"70%",marginRight:50}}>
-        <Text>Vehicle Moderl</Text></View>
+        <Text>Vehicle Model</Text></View>
         <View style={styles.details}>
         <Text>
         {route.params.vehicleModel}
