@@ -13,11 +13,13 @@ import {
 import axios from 'axios';
 import Ngrok from '../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
+import Loader from '../components/Loader';
 
 const Otpscreen = ({ route, navigation }) => {
     const [otp, setOtp] = useState(['-', '-', '-', '-', '-', '-']);
     const [otpVal, setOtpVal] = useState('');
     const [otpError, setOtpError] = useState('');
+    const [isloading, setLoading] = useState(false)
     console.log("params", route.params);
     const email = route.params.item;
     console.log("email", email);
@@ -25,13 +27,14 @@ const Otpscreen = ({ route, navigation }) => {
         Resendotp();
     }, [])
     const Resendotp = () => {
+        setLoading(true)
         console.log("email", email);
         axios
             .get(`${Ngrok.url}/api/user/${email}`)
             .then(function (response) {
                 console.log("otpstat", response.status);
                 console.log("otpmsg", response.data.message);
-
+                setLoading(false)
             })
             .catch(function (error) {
                 // handle error
@@ -42,6 +45,7 @@ const Otpscreen = ({ route, navigation }) => {
             });
     }
     const Validateotp = async () => {
+        setLoading(true)
         if (otp == null) {
             setOtpError("OTP Field Cannot be Empty");
         } else {
@@ -62,6 +66,7 @@ const Otpscreen = ({ route, navigation }) => {
                     }
                 })
                     .then(function (response) {
+                        setLoading(false)
                         if (response.status == 200) {
                             console.log("hi", response.data.verificationStatus);
                             if ((response.data.verificationStatus == "verified")) {
@@ -103,7 +108,6 @@ const Otpscreen = ({ route, navigation }) => {
                     })
                     .catch(function (error) {
                         console.log(error);
-
                     })
             }
             catch (error) {
@@ -113,7 +117,7 @@ const Otpscreen = ({ route, navigation }) => {
     }
     return (
         <View style={styles.container}>
-
+            <Loader loading = {isloading}/>
             <Text style={styles.tripsTitleText}>Verify Your Mobile Number</Text>
             <Text style={{ marginVertical: 20, fontWeight: "300" }}>Enter your OTP here</Text>
             <TextInput

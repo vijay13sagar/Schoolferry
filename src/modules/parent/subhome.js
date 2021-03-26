@@ -6,7 +6,6 @@ import {
   StatusBar,
   TouchableOpacity,
   View,
-  ActivityIndicator,
   Alert,
 } from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
@@ -16,6 +15,7 @@ import axios from 'axios';
 import Ngrok from '../../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
 import {useFocusEffect} from '@react-navigation/native';
+import Loader from '../../components/Loader';
 
 const subscribedHome = ({route, navigation}) => {
   const [selectedStartDate, setselectedStartDate] = useState('');
@@ -29,6 +29,7 @@ const subscribedHome = ({route, navigation}) => {
   const [isLoading, setLoading] = useState(true);
   const [error, setError] = useState();
   const [count, setCount] = useState(0);
+  const [loader,setLoader] = useState(false)
 
   const onDateChange = (date, type) => {
     if (type === 'END_DATE') {
@@ -104,6 +105,7 @@ const subscribedHome = ({route, navigation}) => {
     if (startDate == 'Invalid date' || endDate == 'Invalid date') {
       setError('Please select start/end date');
     } else {
+      setLoader(true)
       try {
         axios
           .post(`${Ngrok.url}/api/ride/cancel`, {
@@ -113,19 +115,22 @@ const subscribedHome = ({route, navigation}) => {
           })
           .then(function (response) {
             console.log('status: ', response.status);
+            setLoader(false)
 
             if (response.status == 200) {
               Alert.alert('Ride cancelled successfully');
               setCount(count + 1);
-              setLoading(true);
+              //setLoading(true);
               setError();
               setselectedEndDate('');
               setselectedStartDate('');
             } else {
+              
               Alert.alert('Failed. Please try again');
             }
           })
           .catch(function (error) {
+            setLoader(false)
             console.log(error);
           });
       } catch (error) {
@@ -134,7 +139,9 @@ const subscribedHome = ({route, navigation}) => {
     }
   };
 
-  return isLoading ? null : (
+  return isLoading ? (
+    <Loader loading= {isLoading} />
+  ) : (
     <ScrollView>
       <StatusBar
         barStyle="light-content"
@@ -142,6 +149,7 @@ const subscribedHome = ({route, navigation}) => {
         backgroundColor="#e91e63"
         translucent={false}
       />
+     <Loader loading = {loader} />
 
       <Picker
         selectedValue={selectedValue}

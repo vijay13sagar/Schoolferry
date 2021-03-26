@@ -5,6 +5,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Ngrok from '../../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
+import Loader from '../../components/Loader';
 
 export default class Notificationlist extends Component {
 
@@ -12,14 +13,15 @@ export default class Notificationlist extends Component {
     super(props);
     this.state = {
       data: [],
-      isLoading: true,
+      isLoading: false,
       modalVisible: false,
       selectedData: '',
       selectedDate: '',
       selectedTitle:'',
     };
   }
-  componentDidMount = async () => {
+  onFocusFunction = async() => {
+    this.setState({ isLoading: true });
     let token = await AsyncStorage.getItem('token')
     fetch(`${Ngrok.url}/api/notices/${token}`, {
       "method": "GET",
@@ -37,6 +39,15 @@ export default class Notificationlist extends Component {
         this.setState({ isLoading: false });
       });
   }
+  
+  componentDidMount = async () => {
+    this.focusListener = this.props.navigation.addListener('focus', () => {
+      this.onFocusFunction()
+    })
+  }
+  componentWillUnmount () {
+    this.focusListener.remove()
+  }
   setModalVisible = (visible) => {
     this.setState({ modalVisible: visible });
   }
@@ -47,23 +58,13 @@ export default class Notificationlist extends Component {
   render() {
     const { data, isLoading } = this.state;
     const { modalVisible } = this.state;
-    <StatusBar
-      barStyle="light-content"
-      // dark-content, light-content and default
-      hidden={false}
-      //To hide statusBar
-      backgroundColor="#e91e63"
-      //Background color of statusBar only works for Android
-      translucent={false}
-    //allowing light, but not detailed shapes
-
-    />
-
     return (
       <View style={{ flex: 1, padding: 3, backgroundColor: "#F9F2F2", }}>
-
+        <Loader loading = {isLoading}/>
+ <StatusBar
+         barStyle = "light-content" hidden = {false} backgroundColor = "#e91e63" translucent = {true}
+      />
         <ScrollView>
-          {isLoading ? <ActivityIndicator /> : (
             <FlatList
               data={data}
               keyExtractor={({ id }, index) => id}
@@ -82,8 +83,6 @@ export default class Notificationlist extends Component {
 
               )}
             />
-
-          )}
         </ScrollView>
         <Modal
           animationType="slide"

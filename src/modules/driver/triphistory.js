@@ -1,18 +1,19 @@
 import React, { useState,useEffect } from "react";
-import { Text, View, StyleSheet, TouchableOpacity, Linking, StatusBar, FlatList, Settings } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
+import { Text, View, StyleSheet, StatusBar, FlatList} from 'react-native';
 import { Card, CardItem, Body } from 'native-base'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Ngrok from '../../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
-import symbolicateStackTrace from "react-native/Libraries/Core/Devtools/symbolicateStackTrace";
 import { ScrollView } from "react-native-gesture-handler";
+import Loader from '../../components/Loader';
 
 const Homescreen = ({ navigation }) => {
   const [stat,setStat] = useState(false)
   const [data,getData] = useState([])
+  const [isloading,setLoading] = useState(false)
   useEffect( () => {
     (async () => {
+      setLoading(true)
     const fetchData = navigation.addListener('focus', async () => {
     let token = await AsyncStorage.getItem('token')
     fetch(`${Ngrok.url}/api/driver/tripdetails/${token}`, {
@@ -24,6 +25,7 @@ const Homescreen = ({ navigation }) => {
     })
       .then(response => response.json())
       .then(responseJson => {
+        setLoading(false)
         console.log('response',responseJson);
         getData( responseJson)
         console.log('responsedata',responseJson[0].endedTripAt);

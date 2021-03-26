@@ -5,45 +5,43 @@ import { ScrollView } from "react-native-gesture-handler";
 import Ngrok from '../../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
 import CheckBox from '@react-native-community/checkbox';
+import Loader from '../../components/Loader';
 
 const today = new Date();
 const TD = moment(today).format('DD-MM-YYYY');
-
 const App = ({ route, navigation }) => {
   const [fuel, setfuel] = useState(false);
   const [engine, setengine] = useState(false);
   const [firstaid, setfirstaid] = useState(false);
   const [extinguisher, setextinguisher] = useState(false);
-  const [data, getData] = useState()
   const [tyre, settyre] = useState(false);
+  const [isloading,setLoading] = useState(false)
   console.log("dsg", route.params.TripID);
   let tripid = route.params.TripID;
   let vehid = route.params.VehicleID;
-//   // const [VN, setVN] = useState("");
-//   useEffect(() => {
-// console.log("ddddddddddddddddddd");
-//     fetch(`${Ngrok.url}/api/driver/getchecklist/${tripid}`, {
-//       "method": "GET",
-//       "headers": {
-//         Accept: 'application/json',
-//         'Content-Type': 'application/json'
-//       },
-//     })
-//       .then(response => response.json())
-//       .then(responseJson => {
+useEffect(() => {
+  fetch(`${Ngrok.url}/api/driver/getchecklist/${tripid}`, {
+    "method": "GET",
+    "headers": {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+  })
+    .then(response => response.json())
+    .then(responseJson => {
+      setfuel(responseJson.fuel)
+      settyre(responseJson.tyrePressure);
+      setengine(responseJson.engine);
+      setextinguisher(responseJson.extinguisher);
+      setfirstaid(responseJson.firstAid)
+    })
+    .catch(err => {
 
-//         console.log("cl", responseJson);
-
-        
-//         getData(responseJson)
-
-//       })
-//       .catch(err => {
-
-//       });
-//   })
+    });
+}, [])
 
   const pressHandler = () => {
+    setLoading(true)
     fetch(`${Ngrok.url}/api/driver/checklist`, {
       "method": "POST",
       "headers": {
@@ -63,6 +61,7 @@ const App = ({ route, navigation }) => {
     })
       .then(response => response.json())
       .then(responseJson => {
+        setLoading(false)
         console.log(responseJson);
         if (responseJson.message == "checklist updated successfully") {
           Alert.alert('Checklist Updated','', [{text: 'Proceed', onPress:() => navigation.navigate('Trip Details',)}])
@@ -79,6 +78,7 @@ const App = ({ route, navigation }) => {
   }
   return (
     <View style={styles.container}>
+      <Loader loading = {isloading}/>
       <Text style={{ alignSelf: "center" }}>{TD}</Text>
       <View style={{ alignItems: "flex-start", }}>
         <ScrollView style={{ alignSelf: "center", width: "100%" }}>
@@ -115,22 +115,6 @@ const App = ({ route, navigation }) => {
             />
             <Text style={styles.label}>Extinguisher</Text>
           </View>
-          {/* <View style={styles.checkboxContainer}>
-        <CheckBox
-          value={cleanliness}
-          onValueChange={setcleanliness}
-          style={styles.checkbox}
-        />
-        <Text style={styles.label}>Cleanliness</Text>
-      </View> */}
-          {/* <View style={styles.checkboxContainer}>
-        <CheckBox
-          value={brake}
-          onValueChange={setbrake}
-          style={styles.checkbox}
-        />
-        <Text style={styles.label}>Brakes</Text>
-      </View> */}
           <View style={styles.checkboxContainer}>
             <CheckBox
               value={tyre}
@@ -138,18 +122,10 @@ const App = ({ route, navigation }) => {
               style={styles.checkbox}
             />
             <Text style={styles.label}>Tyre Pressure</Text>
-          </View>
-          
+          </View>       
           <TouchableOpacity style={styles.loginBtn} onPress={pressHandler} >
             <Text style={styles.loginText}>Submit</Text>
-
           </TouchableOpacity>
-          
-          {/* <View style={{alignItems:'center'}}>
-    <TouchableOpacity style={styles.loginBtn} onPress = {()=> navigation.navigate('Trip_history')} >
-            <Text style={styles.loginText}>Trip History</Text>
-    </TouchableOpacity>
-    </View> */}
         </ScrollView>
       </View>
     </View>

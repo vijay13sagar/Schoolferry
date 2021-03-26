@@ -5,6 +5,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import Ngrok from '../../constants/ngrok';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-community/async-storage';
+import Loader from '../../components/Loader';
 
 export default class Triplist extends Component {
   constructor(props) {
@@ -28,20 +29,11 @@ export default class Triplist extends Component {
   }
   render() {
     const { data, isLoading } = this.state;
-    <StatusBar
-      barStyle="light-content"
-      // dark-content, light-content and default
-      hidden={false}
-      //To hide statusBar
-      backgroundColor="#e91e63"
-      //Background color of statusBar only works for Android
-      translucent={false}
-    //allowing light, but not detailed shapes
 
-    />
     return (
 
       <View style={{ flex: 1, padding: 3, backgroundColor: "#F9F2F2", }}>
+        <Loader loading = {isLoading}/>
         <StatusBar
          barStyle = "light-content" hidden = {false} backgroundColor = "#e91e63" translucent = {true}
       />

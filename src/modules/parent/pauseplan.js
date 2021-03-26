@@ -13,6 +13,7 @@ import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
 import axios from 'axios';
 import Ngrok from '../../constants/ngrok';
+import Loader from '../../components/Loader'
 
 const PausePlan = ({route, navigation}) => {
   const [selectedStartDate, setselectedStartDate] = useState('');
@@ -25,6 +26,7 @@ const PausePlan = ({route, navigation}) => {
   const [isLoading, setLoading] = useState(true);
   const [count, setCount] = useState(0);
   const [error, setError] = useState();
+  const [loader, setLoader] = useState(false)
 
   const childid = route.params.childid;
 
@@ -58,6 +60,7 @@ const PausePlan = ({route, navigation}) => {
     if (startDate == 'Invalid date' || endDate == 'Invalid date') {
       setError('Please select start/end date');
     } else {
+      setLoader(true)
       try {
         axios
           .post(`${Ngrok.url}/api/subscription/pause`, {
@@ -68,11 +71,11 @@ const PausePlan = ({route, navigation}) => {
           .then(function (response) {
             // console.log('data: ', response.data);
             console.log('message: ', response.data.message);
+            setLoader(false)
 
             if (response.status == 200) {
               Alert.alert('Plan paused successful');
               setCount(count + 1);
-              setLoading(true)
               setError()
               setselectedEndDate('')
               setselectedStartDate('')
@@ -82,6 +85,7 @@ const PausePlan = ({route, navigation}) => {
           })
           .catch(function (error) {
             console.log('err', error.response.data);
+            setLoader(false)
             
             if (error.response.data.status == 409) {
               Alert.alert(JSON.stringify(error.response.data.message));
@@ -96,13 +100,11 @@ const PausePlan = ({route, navigation}) => {
   };
 
   return isLoading ? (
-    <ScrollView style={{backgroundColor: '#F9F2F2'}}>
-      <View style={{flex: 1, marginTop: 200, }}>
-        <ActivityIndicator size="large" color="#E91E63" />
-      </View>
-    </ScrollView>
+    <Loader loading= {isLoading} />
   ) : (
     <ScrollView style={styles.container}>
+      <Loader loading = {loader} />
+
       <View style={[data.pauseEndDate ? styles.biggerBox : styles.pausePlan]}>
         <Text style={styles.mainHeading}>Pause Plan Details</Text>
         <Text style={styles.heading}>Total number of pauses - 03</Text>

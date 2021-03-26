@@ -1,33 +1,37 @@
 import React, { useEffect, useState } from 'react';
-import { Text,Alert, View, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { Text, Alert, View, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import Ngrok from '../../constants/ngrok'
 import AsyncStorage from '@react-native-community/async-storage';
 import { ScrollView } from 'react-native-gesture-handler';
+import Loader from '../../components/Loader';
 
 const Profile = ({ navigation }) => {
   const [data, getData] = useState([])
+  const [isloading, setLoading] = useState(false)
 
-
-    useEffect(() => {
-      (async () => {
-    let token = await AsyncStorage.getItem('token')
-    fetch(`${Ngrok.url}/api/profiledetails/driver/${token}`, {
-      "method": "GET",
-      "headers": {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-    })
-      .then(response => response.json())
-      .then(responseJson => {
-        //console.log(responseJson);
-        getData(responseJson)
+  useEffect(() => {
+    const fetchData = navigation.addListener('focus',async () => {
+      setLoading(true)
+      let token = await AsyncStorage.getItem('token')
+      fetch(`${Ngrok.url}/api/profiledetails/driver/${token}`, {
+        "method": "GET",
+        "headers": {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
       })
-      .catch(err => {
-        console.log(err);
-      });
-    })();
-  }, [])
+        .then(response => response.json())
+        .then(responseJson => {
+          //console.log(responseJson);
+          getData(responseJson)
+          setLoading(false)
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    });
+    fetchData;
+  }, [navigation])
   const onPressLogout = async () => {
     try {
       // const keys = await AsyncStorage.getAllKeys();
@@ -35,22 +39,28 @@ const Profile = ({ navigation }) => {
       AsyncStorage.removeItem('token');
       console.log("working");
       navigation.replace('Login');
-    Alert.alert('You have been logged out');
-  } catch (error) {
+      Alert.alert('You have been logged out');
+    } catch (error) {
       console.error('Error clearing app data.');
-  }
+    }
     //AsyncStorage.removeItem('token');
     //window.localStorage.clear();
     //AsyncStorage.clear()
-    
+
   }
 
   return (
     <ScrollView style={styles.container}>
-      <TouchableOpacity style={styles.edit} onPress={()=> navigation.navigate("Update profile")}>
+      <Loader loading={isloading} />
+      <TouchableOpacity style={styles.edit}
+        onPress={() => navigation.navigate('Update profile', {
+          con: data.contact,
+          add: data.address,
+        })
+        }>
         <Text style={styles.loginText} >Edit</Text>
       </TouchableOpacity>
-      
+
       <View style={styles.body}>
         <Text style={styles.name}>Hello,{data.name}</Text>
       </View>
@@ -67,7 +77,7 @@ const Profile = ({ navigation }) => {
         <Text style={styles.headertext} >Contact</Text>
         <Text style={styles.details}>{data.contact}</Text>
       </View>
-  
+
       <View style={styles.textview}>
         <Text style={styles.headertext} >Address</Text>
         <Text style={styles.details}>{data.address}</Text>
@@ -93,18 +103,18 @@ const styles = StyleSheet.create({
     backgroundColor: "#F9F2F2",
 
   },
-  edit:{
-    flexDirection:'row-reverse',
-    height:35,
-    backgroundColor:'#ff5c8d',
-    width:70,
-    alignSelf:'flex-end',
-    marginTop:15,
-    marginHorizontal:20,
-    alignItems:'center',
-    justifyContent:'center',
+  edit: {
+    flexDirection: 'row-reverse',
+    height: 35,
+    backgroundColor: '#ff5c8d',
+    width: 70,
+    alignSelf: 'flex-end',
+    marginTop: 15,
+    marginHorizontal: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
     //borderColor:'black',
-    borderRadius:12,
+    borderRadius: 12,
   },
   name: {
     fontSize: 22,
@@ -115,7 +125,7 @@ const styles = StyleSheet.create({
   body: {
     marginTop: 30,
     alignItems: 'center',
-    marginBottom:20,
+    marginBottom: 20,
 
   },
   textview: {
@@ -124,7 +134,7 @@ const styles = StyleSheet.create({
   headertext: {
     fontSize: 13,
     marginLeft: 35,
-    marginBottom:2,
+    marginBottom: 2,
   },
   details: {
     backgroundColor: "#d3d3d3",
@@ -146,7 +156,7 @@ const styles = StyleSheet.create({
   loginText: {
     fontSize: 15,
   },
-  detailsAddress:{
+  detailsAddress: {
     height: 80,
     backgroundColor: "#d3d3d3",
     //borderWidth: 1,

@@ -13,11 +13,15 @@ import {
 import Ngrok from '../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
+import Loader from '../components/Loader';
+
 export default function Login({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [{emailError}, setEmailError] = useState('');
   const [{passwordError}, setPasswordError] = useState('');
+  const [isloading,setLoading] = useState(false)
+
   const pressHandler = () => {
     navigation.navigate('Sign up');
   };
@@ -47,12 +51,18 @@ export default function Login({navigation}) {
   };
   const gotootpscreen = () => {
     console.log('number', email);
-          navigation.navigate('OTPscreen', {item: email});
+    navigation.navigate('OTPscreen', {item: email});
   };
   const handleSubmitpPress = async () => {
     let firebaseToken = await AsyncStorage.getItem('FBtoken');
     console.log('FB token', firebaseToken);
     if (validateFunction()) {
+      /* const body = {
+         id: email,
+          password: password
+       }*/
+      //let response = await loginApi(body)/
+      setLoading(true)
       fetch(`${Ngrok.url}/api/login`, {
         method: 'POST',
         headers: {
@@ -68,6 +78,8 @@ export default function Login({navigation}) {
         .then((response) => response.json())
         .then((responseJson) => {
           console.log('response:', responseJson);
+          //console.log("status", responseJson.status);
+          setLoading(false)
 
           if (responseJson[1] == 'Parent') {
             AsyncStorage.setItem('token', responseJson[0]);
@@ -99,8 +111,9 @@ export default function Login({navigation}) {
           }
         })
         .catch((error) => {
+          setLoading(false)
           console.log('error', error.message); // 401  
-          // if(error.responseJson.status == 401){
+        // if(error.responseJson.status == 401){
           //   //redirect to login
           //   Alert.alert('Phone Number Alredy Exist!')
           // }
@@ -109,6 +122,9 @@ export default function Login({navigation}) {
   };
   return (
     <View style={styles.container}>
+      
+      <Loader loading = {isloading}/>
+
       <Image style={styles.image} source={require('../assets/Logo.png')} />
       <StatusBar
         barStyle="light-content"

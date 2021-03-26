@@ -10,8 +10,6 @@ import {
     Switch,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import axios from 'axios';
-import Ngrok from '../../constants/ngrok';
 
 const Checklist = ({ route, navigation }) => {
     const [modalVisible, setModalVisible] = useState(false);

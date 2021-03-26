@@ -11,24 +11,13 @@ export default class ChildList extends Component  {
       isLoading: true
     };
   }
-  // componentDidMount() {
-  //   fetch(`${Ngrok.url}/api/nanny/tripdetails/N002`)
-  //     .then((response) => response.json())
-  //     .then((json) => {
-  //       this.setState({ data: json });
-  //     })
-  //     .catch((error) => console.error(error))
-  //     .finally(() => {
-  //       this.setState({ isLoading: false });
-  //     });
-  // }
   render() {
     const { data, isLoading } = this.state;
     console.log("json",this.props.route.params.childList[0].childId);
     return (
       <View style={styles.container}>
         
-            <Text style={styles.sidehead} >Children List:</Text>
+            {/* <Text style={styles.sidehead} >Children List:</Text> */}
           <FlatList
             data={this.props.route.params.childList}
             keyExtractor={({ id }, index) => id}
@@ -47,8 +36,8 @@ const styles = StyleSheet.create({
   container: {
     padding: 20,
     flex:1,
-      backgroundColor: "#F9F2F2",
-      //alignItems: "center",
+    backgroundColor: "#F9F2F2",
+    justifyContent:'center',
     },
     TextInput: {
       height: 50,
@@ -93,8 +82,8 @@ const styles = StyleSheet.create({
     sidehead:{
       fontWeight:'bold',
       marginLeft:8,
-      alignSelf:'flex-start',
-      justifyContent:'space-around'
+      //alignSelf:'flex-start',
+      //justifyContent:'space-around'
     },
 });
 
