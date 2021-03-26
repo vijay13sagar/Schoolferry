@@ -47,34 +47,12 @@ export default function Login({navigation}) {
   };
   const gotootpscreen = () => {
     console.log('number', email);
-    axios
-      .get(`${Ngrok.url}/api/user/${email}`)
-      .then(function (response) {
-        console.log('otpstat', response.status);
-        console.log('otpmsg', response.data.message);
-        if (response.status == 200) {
           navigation.navigate('OTPscreen', {item: email});
-        } else if (response.message == 'Invalid Contact') {
-          Alert.alert('Please enter Valid Phone Number');
-        }
-      })
-      .catch(function (error) {
-        // handle error
-        console.log('error', error.message);
-      })
-      .finally(function () {
-        // always executed
-      });
   };
   const handleSubmitpPress = async () => {
     let firebaseToken = await AsyncStorage.getItem('FBtoken');
     console.log('FB token', firebaseToken);
     if (validateFunction()) {
-      /* const body = {
-         id: email,
-          password: password
-       }*/
-      //let response = await loginApi(body)/
       fetch(`${Ngrok.url}/api/login`, {
         method: 'POST',
         headers: {
@@ -90,7 +68,6 @@ export default function Login({navigation}) {
         .then((response) => response.json())
         .then((responseJson) => {
           console.log('response:', responseJson);
-          //console.log("status", responseJson.status);
 
           if (responseJson[1] == 'Parent') {
             AsyncStorage.setItem('token', responseJson[0]);

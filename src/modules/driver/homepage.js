@@ -85,7 +85,7 @@ const Homescreen = ({ navigation }) => {
                 <Text style={{ fontSize: 17, marginLeft: 5, fontWeight: '700' }}>
                 {item.trip_id}
                 </Text>
-                <Text style={{marginLeft:50}}>
+                <Text style={{marginLeft:40}}>
                   {item.endedTripAt ?<Text style={{color:'white',fontWeight:'700',fontSize:17}}>Trip Completed</Text> : null}
                 </Text>
                 {item.endedTripAt ? null : <Ionicons name="chevron-forward-outline"

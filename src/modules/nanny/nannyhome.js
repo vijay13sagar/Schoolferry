@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, StatusBar, TouchableOpacity, StyleSheet, FlatList, Text, View } from 'react-native';
+import { ActivityIndicator, StatusBar, TouchableOpacity,Linking, StyleSheet, FlatList, Text, View } from 'react-native';
 import { Container, Header, Content, Card, CardItem, Body } from 'native-base';
 import { ScrollView } from 'react-native-gesture-handler';
 import Ngrok from '../../constants/ngrok';

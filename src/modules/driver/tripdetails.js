@@ -341,7 +341,7 @@ const styles = StyleSheet.create({
     modalBody: {
         backgroundColor: '#fff',
         borderRadius: 10,
-        height: 370,
+        //height: 370,
         width: '92%',
         alignSelf: 'center',
         //justifyContent: 'center'
