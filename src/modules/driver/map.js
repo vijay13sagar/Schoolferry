@@ -1,17 +1,19 @@
 
-import React from 'react';
+import React, { useState} from 'react';
 import { StyleSheet,Alert,TouchableOpacity, Text, View } from 'react-native';
 import geolocation from 'react-native-geolocation-service';
 import MapView, { Marker, AnimatedRegion } from 'react-native-maps';
 import Ngrok from '../../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
+import Loader from '../../components/Loader';
 export default class App extends React.Component {
   constructor() {
     super();
     this.state = {
       ready: false,
       where: { lat: null, lng: null },
-      error: null
+      error: null,
+      isloading:true
     }
   }
   componentDidMount() {
@@ -22,6 +24,7 @@ export default class App extends React.Component {
     clearInterval(this.interval)
   }
   Endtrip = () => {
+    this.setState({isloading:true})
     try {
       fetch(`${Ngrok.url}/api/driver/trip/end`, {
         "method": "POST",
@@ -34,12 +37,10 @@ export default class App extends React.Component {
         })
       })
         .then(function (response) {
+          this.setState({isloading:false})
           if (response.status == 200) {
             Alert.alert('Trip Ended')
-           
-
           }
-
           console.log("response for end trip", response.status);
         })
         .catch(function (error) {
@@ -61,6 +62,8 @@ export default class App extends React.Component {
     geolocation.getCurrentPosition(this.geoSuccess,
       this.geoFailure,
       geoOptions);
+      this.setState({isloading:false})
+      console.log("load",this.state.isloading);
       let token = await AsyncStorage.getItem('token')
         try {
             fetch(`${Ngrok.url}/api/driver/tracking`, {
@@ -84,7 +87,7 @@ export default class App extends React.Component {
                     console.log("response for tracking", response.status);
                 })
                 .catch(function (error) {
-                    console.log("ERROR", error);
+                    console.log("ERR", error);
 
                 })
         }
@@ -96,7 +99,8 @@ export default class App extends React.Component {
     console.log(position.coords.latitude);
     this.setState({
       ready: true,
-      where: { lat: position.coords.latitude, lng: position.coords.longitude }
+      where: { lat: position.coords.latitude, lng: position.coords.longitude },
+      isloading:false
     })
   }
   geoFailure = (err) => {
@@ -105,6 +109,7 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <Loader loading = {this.state.isloading}/>
         {/* { !this.state.ready && (
            <Text style={styles.big}>Using Geolocation in React Native</Text>
         )} */}

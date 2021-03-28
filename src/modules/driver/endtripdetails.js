@@ -10,8 +10,6 @@ import {
     Switch,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import axios from 'axios';
-import Ngrok from '../../constants/ngrok';
 
 const Checklist = ({ route, navigation }) => {
     const [modalVisible, setModalVisible] = useState(false);
@@ -198,7 +196,7 @@ const styles = StyleSheet.create({
     modalBody: {
         backgroundColor: '#fff',
         borderRadius: 10,
-        height: 370,
+        //height: 370,
         width: '92%',
         alignSelf: 'center',
         //justifyContent: 'center'

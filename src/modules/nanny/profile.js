@@ -3,12 +3,14 @@ import { Text, View, Alert, ScrollView, TouchableOpacity, StatusBar, Linking, St
 import Ngrok from '../../constants/ngrok'
 import AsyncStorage from '@react-native-community/async-storage';
 import {useFocusEffect} from '@react-navigation/native';
+import Loader from '../../components/Loader';
 
 const Profile = ({ navigation }) => {
   const [data, getData] = useState([])
-
+  const [isloading,setLoading] = useState(false)
   useEffect( () => {
-    (async () => {
+    const fetchData = navigation.addListener('focus',async () => {
+      setLoading(true)
     let token = await AsyncStorage.getItem('token')
     fetch(`${Ngrok.url}/api/profiledetails/nanny/${token}`, {
       "method": "GET",
@@ -19,6 +21,7 @@ const Profile = ({ navigation }) => {
     })
       .then(response => response.json())
       .then(responseJson => {
+        setLoading(false)
         console.log('response', responseJson);
         getData(responseJson)
         console.log('responsedata', data);
@@ -26,8 +29,9 @@ const Profile = ({ navigation }) => {
       .catch(err => {
         console.log('error', err);
       });
-  })();
-}, [])
+  });
+  fetchData
+}, [navigation])
   const onPressLogout = async () => {
     try {
       // const keys = await AsyncStorage.getAllKeys();
@@ -44,12 +48,13 @@ const Profile = ({ navigation }) => {
   return (
 
     <View style={styles.container}>
+      <Loader loading = {isloading}/>
       <StatusBar
         barStyle="light-content" hidden={false} backgroundColor="#e91e63" translucent={true}
       />
       <ScrollView>
         <TouchableOpacity style={styles.edit}>
-          <Text style={styles.loginText} onPress={() => navigation.navigate("Updateprof")}>EDIT</Text>
+          <Text style={styles.loginText} onPress={() => navigation.navigate("Updateprof",{con: data.contact,add: data.address,})}>EDIT</Text>
         </TouchableOpacity>
         <View style={styles.body}>
           <Text style={styles.name}>Hello Nanny</Text>

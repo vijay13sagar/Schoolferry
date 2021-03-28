@@ -16,7 +16,7 @@ const nannyhome = ({ route }) =>  {
 
       /> 
       <View style={styles.textview}>
-            <Text style={styles.sidehead} >Child details:</Text>
+            {/* <Text style={styles.sidehead} >Child details:</Text> */}
             
               <Text style={styles.headertext}>child name:</Text>
               <Text style={styles.details}>{route.params.item.childName}</Text>
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F9F2F2",
-
+    justifyContent:'center'
   },
   avatar: {
     width: 120,

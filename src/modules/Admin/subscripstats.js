@@ -108,7 +108,7 @@ const MyPieChart = () => {
             legendFontSize: 12,
           },
           {
-            name: '[Registered]',
+            name: '[Not Subscribed]',
             population: data.unSubscribedUsers,
             color: '#F00',
             legendFontColor: 'black',
