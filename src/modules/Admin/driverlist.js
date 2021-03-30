@@ -31,7 +31,6 @@ export default class driverList extends Component  {
 
     return (
       <View style={styles.Container}>
-        <ScrollView>
         {isLoading ? <ActivityIndicator/> : (
           <FlatList
             data={data}
@@ -61,7 +60,6 @@ export default class driverList extends Component  {
             )}
           />
         )}
-        </ScrollView>
       </View>
     );
   }

@@ -1,7 +1,4 @@
 import React, { useEffect } from 'react';
-import {
-  BackHandler,
-} from 'react-native';
 import { NavigationContainer, useNavigation  } from '@react-navigation/native';
 import Onboarding from './src/navigation/onboardingnavigation';
 import DriverNav from './src/navigation/driver_tabbar_nav';
@@ -19,9 +16,7 @@ export default function App() {
   var foreground
 
   useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', () => true)
-      //BackHandler.removeEventListener('hardwareBackPress', () => true)
-    
+
     messaging().getToken()
       .then(token => {
         console.log('firebase token:', token)

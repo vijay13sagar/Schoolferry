@@ -91,7 +91,7 @@ const showplanScreen = ({route, navigation}) => {
   };
 
   return isLoading ? null : (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <View style={styles.modalContainer}>
           <Ionicons
@@ -221,7 +221,7 @@ const showplanScreen = ({route, navigation}) => {
           <Text style={{fontSize: 15}}>Pause subscription</Text>
         </TouchableOpacity>
       ) : null}
-    </ScrollView>
+    </View>
   );
 };
 

@@ -58,8 +58,6 @@ const Homescreen = ({ navigation }) => {
         <Text style={styles.tripsTitleText}>Today's Trips</Text>
         <Text style={styles.startTripText}>Click to see Trip details</Text>
       </View>
-
-      <ScrollView >
         {/* ontentContainerStyle={styles.scrollView}
                 refreshControl={
                     <RefreshControl
@@ -95,7 +93,6 @@ const Homescreen = ({ navigation }) => {
           </Card>
         )}
       />
-      </ScrollView>
       <TouchableOpacity style={styles.CallBtn} onPress={() => { Linking.openURL('tel:8777111223') }}  >
         <Text style={styles.loginText}>Call Admin</Text>
       </TouchableOpacity>

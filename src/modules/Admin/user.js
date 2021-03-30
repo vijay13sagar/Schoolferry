@@ -43,8 +43,6 @@ export default class userList extends Component  {
 
       />
       <Text style={{alignSelf:"center",marginTop:6,fontSize:20}}>List of customers</Text>
-        
-        <ScrollView>
         {isLoading ? <ActivityIndicator/> : (
           <FlatList
             data={data}
@@ -74,7 +72,6 @@ export default class userList extends Component  {
             )}
           />
         )}
-        </ScrollView>
     </View>
       
     );

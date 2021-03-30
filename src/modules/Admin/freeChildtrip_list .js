@@ -48,9 +48,6 @@ export default class freeChildtrip_list extends Component  {
     
     return (
       <View style={styles.Container}>
-         
-        <ScrollView>
-       
         {isLoading ? <ActivityIndicator/> : (
           <FlatList
             data={data}
@@ -73,7 +70,6 @@ export default class freeChildtrip_list extends Component  {
             )}
           />
         )}
-        </ScrollView>
         {/* <Modal
           animationType="slide"
           transparent={true}

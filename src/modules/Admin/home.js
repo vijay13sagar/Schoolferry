@@ -117,8 +117,6 @@ export default class Home_page extends Component {
           </TouchableOpacity>
         </View>
         <View>
-      
-        <ScrollView>
           {isLoading ? <ActivityIndicator /> : (
             <FlatList
               data={data}
@@ -142,8 +140,6 @@ export default class Home_page extends Component {
               )}
             />
           )}
-        </ScrollView>
-
         </View>
        
       </View>

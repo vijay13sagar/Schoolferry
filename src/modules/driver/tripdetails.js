@@ -160,7 +160,6 @@ const Checklist = ({ route, navigation }) => {
                     </View>
                 </View>
             </Modal>
-
             <ScrollView ontentContainerStyle={styles.scrollView}
                 refreshControl={
                     <RefreshControl
@@ -211,7 +210,6 @@ const Checklist = ({ route, navigation }) => {
                     <Text>Check List</Text>
                 </TouchableOpacity>
                 <Text style={styles.absent}>Marked Absent</Text>
-                <SafeAreaView>
                 <FlatList
                     data={details} //item2
                     renderItem={({ item }) => (
@@ -231,7 +229,6 @@ const Checklist = ({ route, navigation }) => {
                     )}
                     keyExtractor={item => item.id}
                 />
-                </SafeAreaView>
             </ScrollView>
         </View>
     );

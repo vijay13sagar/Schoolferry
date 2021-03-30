@@ -48,8 +48,6 @@ export default class freeDrivertrip_list extends Component  {
     
     return (
       <View style={styles.Container}>
-         
-        <ScrollView>
        
         {isLoading ? <ActivityIndicator/> : (
           <FlatList
@@ -73,7 +71,6 @@ export default class freeDrivertrip_list extends Component  {
             )}
           />
         )}
-        </ScrollView>
         {/* <Modal
           animationType="slide"
           transparent={true}

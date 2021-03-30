@@ -30,7 +30,6 @@ export default class nannyList extends Component  {
 
     return (
       <View style={styles.Container}>
-        <ScrollView>
         {isLoading ? <ActivityIndicator/> : (
           <FlatList
             data={data}
@@ -60,7 +59,6 @@ export default class nannyList extends Component  {
             )}
           />
         )}
-        </ScrollView>
       </View>
     );
   }
