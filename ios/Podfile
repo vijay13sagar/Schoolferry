@@ -12,6 +12,8 @@ target 'schoolferry' do
 
   pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
 
+  pod 'tipsi-stripe', :path => '../node_modules/tipsi-stripe'
+
   target 'schoolferryTests' do
     inherit! :complete
     # Pods for testing
