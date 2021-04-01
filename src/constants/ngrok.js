@@ -1,6 +1,6 @@
 const Ngrok = {
 
-    url : 'http://7a3c9cf395d5.ngrok.io'
+    url : 'http://96ef1261e137.ngrok.io'
 
 
 }

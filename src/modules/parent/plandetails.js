@@ -19,6 +19,7 @@ const App = ({ route, navigation }) => {
   const f = route.params.item.term;
   const [stay, setStay] = useState(true);
   const [{ valueError }, setValueerror] = useState('');
+  
   let e;
   if (f == 'Monthly') {
     e = 30;
@@ -40,7 +41,7 @@ const App = ({ route, navigation }) => {
         maxDate: maxDate,
         tomorrow: tomorrow,
         f: f,
-        costly: route.params.item.tripcost,
+        costly: route.params.item.total,
         childid: route.params.childid
       })
     } else {
