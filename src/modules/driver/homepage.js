@@ -1,24 +1,19 @@
 import React, { useState,useEffect } from "react";
-import { Text, View, StyleSheet,ScrollView,RefreshControl, TouchableOpacity, Linking, StatusBar, FlatList } from 'react-native';
+import { Text, View, StyleSheet,ScrollView, TouchableOpacity, Linking, StatusBar, FlatList } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { Card, CardItem, Body } from 'native-base'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Ngrok from '../../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
 import {useFocusEffect} from '@react-navigation/native';
+import Loader from '../../components/Loader';
 
 const Homescreen = ({ navigation }) => {
-  const [refreshing, setRefreshing] = React.useState(false);
   const [data,getData] = useState([])
-  const wait = (timeout) => {
-    return new Promise(resolve => setTimeout(resolve, timeout));
-}
-// const onRefresh = React.useCallback(() => {
-//   setRefreshing(true);
-//   wait(2000).then(() => setRefreshing(false));
-// }, []);
+  const [isloading,setLoading] = useState(false)
   useFocusEffect( 
     React.useCallback(() => {
+      setLoading(true)
       console.log("shaashdghas");
     const fetchData = async () => {
     let token = await AsyncStorage.getItem('token')
@@ -31,6 +26,7 @@ const Homescreen = ({ navigation }) => {
     })
       .then(response => response.json())
       .then(responseJson => {
+        setLoading(false)
         console.log('response',responseJson);
         getData( responseJson)
         console.log('responsedata',data);
@@ -45,6 +41,7 @@ const Homescreen = ({ navigation }) => {
   );
   return (
     <View style={styles.container}>
+      <Loader loading = {isloading}/>
       <StatusBar
         barStyle="light-content"
         // dark-content, light-content and default
@@ -61,8 +58,6 @@ const Homescreen = ({ navigation }) => {
         <Text style={styles.tripsTitleText}>Today's Trips</Text>
         <Text style={styles.startTripText}>Click to see Trip details</Text>
       </View>
-
-      <ScrollView >
         {/* ontentContainerStyle={styles.scrollView}
                 refreshControl={
                     <RefreshControl
@@ -85,7 +80,7 @@ const Homescreen = ({ navigation }) => {
                 <Text style={{ fontSize: 17, marginLeft: 5, fontWeight: '700' }}>
                 {item.trip_id}
                 </Text>
-                <Text style={{marginLeft:50}}>
+                <Text style={{marginLeft:40}}>
                   {item.endedTripAt ?<Text style={{color:'white',fontWeight:'700',fontSize:17}}>Trip Completed</Text> : null}
                 </Text>
                 {item.endedTripAt ? null : <Ionicons name="chevron-forward-outline"
@@ -98,7 +93,6 @@ const Homescreen = ({ navigation }) => {
           </Card>
         )}
       />
-      </ScrollView>
       <TouchableOpacity style={styles.CallBtn} onPress={() => { Linking.openURL('tel:8777111223') }}  >
         <Text style={styles.loginText}>Call Admin</Text>
       </TouchableOpacity>

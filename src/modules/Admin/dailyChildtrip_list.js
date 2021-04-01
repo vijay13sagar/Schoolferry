@@ -52,7 +52,6 @@ export default class dailyChildtrip_list extends Component  {
          <TouchableOpacity style={styles.loginBtn} onPress = {()=>this.props.navigation.navigate('freeChildtrip_list',{tripid:tripid})}>
              <Text style={{alignSelf:"center",marginTop:9}}>Add Child </Text>
            </TouchableOpacity>
-        <ScrollView>
        
         {isLoading ? <ActivityIndicator/> : (
           <FlatList
@@ -76,7 +75,6 @@ export default class dailyChildtrip_list extends Component  {
             )}
           />
         )}
-        </ScrollView>
         {/* <Modal
           animationType="slide"
           transparent={true}

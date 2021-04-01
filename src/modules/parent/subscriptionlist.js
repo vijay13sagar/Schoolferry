@@ -41,7 +41,7 @@ const Subscriptions = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <ScrollView>
+      {/* <ScrollView> */}
       <View style={styles.firstBox}>
         <Text style={styles.planTitleText}>Subscription Plans  </Text>
 
@@ -94,7 +94,7 @@ const Subscriptions = ({ route, navigation }) => {
         <Text style={styles.addChildText}>* In case nanny service is required for children above 8 years , please contact admin</Text>
 
       </View>
-      </ScrollView>
+      {/* </ScrollView> */}
     </View>
 
   );

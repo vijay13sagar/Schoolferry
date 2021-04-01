@@ -67,7 +67,7 @@ export default function change_pwd() {
       <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center' }, styles.loginBtn}
         onPress={handlePress} >
         <Text style={styles.loginText}>
-          Reset Password</Text>
+          Submit</Text>
       </TouchableOpacity>
     </View>
   );

@@ -1,18 +1,19 @@
 import React, { useState,useEffect } from "react";
-import { Text, View, StyleSheet, TouchableOpacity, Linking, StatusBar, FlatList, Settings } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
+import { Text, View, StyleSheet, StatusBar, FlatList} from 'react-native';
 import { Card, CardItem, Body } from 'native-base'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Ngrok from '../../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
-import symbolicateStackTrace from "react-native/Libraries/Core/Devtools/symbolicateStackTrace";
 import { ScrollView } from "react-native-gesture-handler";
+import Loader from '../../components/Loader';
 
 const Homescreen = ({ navigation }) => {
   const [stat,setStat] = useState(false)
   const [data,getData] = useState([])
+  const [isloading,setLoading] = useState(false)
   useEffect( () => {
     (async () => {
+      setLoading(true)
     const fetchData = navigation.addListener('focus', async () => {
     let token = await AsyncStorage.getItem('token')
     fetch(`${Ngrok.url}/api/driver/tripdetails/${token}`, {
@@ -24,6 +25,7 @@ const Homescreen = ({ navigation }) => {
     })
       .then(response => response.json())
       .then(responseJson => {
+        setLoading(false)
         console.log('response',responseJson);
         getData( responseJson)
         console.log('responsedata',responseJson[0].endedTripAt);
@@ -43,6 +45,7 @@ const Homescreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+       <Loader loading = {isloading}/>
       <StatusBar
         barStyle="light-content"
         // dark-content, light-content and default
@@ -56,7 +59,6 @@ const Homescreen = ({ navigation }) => {
       />
 
       <View >{stat ? <Text style={styles.startTripText}>Click to see Trip details</Text> : <Text style={styles.startTripText}>No Completed Trips</Text>}</View>
-<ScrollView style={{marginVertical:20}}>
       <FlatList
         style={styles.flatlist}
         data={data}
@@ -85,7 +87,6 @@ const Homescreen = ({ navigation }) => {
         </View>
         )}
       />
-</ScrollView>
     </View>
   );
 }
@@ -130,7 +131,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     textAlign: "center",
     marginTop: 50,
-    marginBottom: 10,
+    marginBottom: 30,
 
   },
   CallBtn: {

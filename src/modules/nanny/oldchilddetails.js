@@ -4,17 +4,9 @@ import { Text, View, TouchableOpacity, StatusBar,StyleSheet, Image } from 'react
 const nannyhome = ({ route }) =>  {
     return (
       <View style={styles.container} >
-        <StatusBar
-        barStyle="light-content"
-        // dark-content, light-content and default
-        hidden={false}
-        //To hide statusBar
-        backgroundColor="#e91e63"
-        //Background color of statusBar only works for Android
-        translucent={false}
-      //allowing light, but not detailed shapes
-
-      /> 
+         <StatusBar
+         barStyle = "light-content" hidden = {false} backgroundColor = "#e91e63" translucent = {true}
+      />
       <View style={styles.textview}>
             <Text style={styles.sidehead} >Child details:</Text>
             

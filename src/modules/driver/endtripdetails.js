@@ -10,8 +10,6 @@ import {
     Switch,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import axios from 'axios';
-import Ngrok from '../../constants/ngrok';
 
 const Checklist = ({ route, navigation }) => {
     const [modalVisible, setModalVisible] = useState(false);
@@ -68,11 +66,10 @@ const Checklist = ({ route, navigation }) => {
                     </View>
                 </View>
             </Modal>
-
-            <ScrollView>
+            {/* <ScrollView> */}
             <View style={styles.firstbox} >
                     <Text style={styles.textTitle}>Trip ID - {route.params.item.trip_id}</Text>
-                    <View style={styles.detailsBox}>
+                    {/* <View style={styles.detailsBox}> */}
                         <View style={{flexDirection:'row',flexWrap:'wrap'}}>
                         <Text style={styles.textHeads}>Destination: </Text>
                         <Text style={styles.textDetails}> {route.params.item.destination} </Text>
@@ -94,9 +91,10 @@ const Checklist = ({ route, navigation }) => {
                         <Text style={styles.textDetails}> {att}</Text>
                         </View> */}
                         
-                        {route.params.item.nannyInfo.nannyId ? <Nannyprofile /> : null}
-                    </View>
+                        <Text>{route.params.item.nannyInfo.nannyId ? <Nannyprofile /> : null}</Text>
+                    {/* </View> */}
                 </View>
+                {/* </ScrollView> */}
                 <FlatList
                     data={item2}
                     renderItem={({ item }) => (
@@ -111,7 +109,6 @@ const Checklist = ({ route, navigation }) => {
                     )}
                     keyExtractor={item => item.id}
                 />
-            </ScrollView>
         </View>
     );
 }
@@ -198,7 +195,7 @@ const styles = StyleSheet.create({
     modalBody: {
         backgroundColor: '#fff',
         borderRadius: 10,
-        height: 370,
+        //height: 370,
         width: '92%',
         alignSelf: 'center',
         //justifyContent: 'center'

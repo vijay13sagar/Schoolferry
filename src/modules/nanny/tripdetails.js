@@ -1,21 +1,16 @@
 import * as React from 'react';
-import { Text, View, StatusBar, TouchableOpacity, Linking, StyleSheet, Image } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { Text, View, StatusBar, TouchableOpacity,Linking, StyleSheet, Image } from 'react-native';
 export default function trip_Details({ route, navigation }) {
   console.log("this.props", route.params.item);
   return (
     <View style={styles.container} >
       <StatusBar
         barStyle="light-content"
-        // dark-content, light-content and default
         hidden={false}
-        //To hide statusBar
         backgroundColor='#E91E63'
-      //Background color of statusBar only works for Android
-      //translucent={false}
-      //allowing light, but not detailed shapes
       />
       <View style={styles.textview}>
+        {route.params.item.startedTripAt ? <Text style={styles.startTripText}>Trip Started</Text> : null}
         <Text style={styles.headertext}>Location:</Text>
         <Text style={styles.details}>{route.params.item.location}</Text>
         <Text style={styles.headertext}>Driver ID:</Text>
@@ -40,6 +35,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F9F2F2",
+    justifyContent:'center'
   },
   avatar: {
     width: 120,
@@ -52,6 +48,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     justifyContent: 'flex-start',
     marginTop: 50
+  },
+  startTripText: {
+    fontSize: 22,
+    textAlign: "center",
+    marginTop: 30,
+    marginBottom: 10,
+
   },
   showcase: {
     padding: 10,

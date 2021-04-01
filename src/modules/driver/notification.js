@@ -5,6 +5,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Ngrok from '../../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
+import Loader from '../../components/Loader';
 
 export default class Notificationlist extends Component {
 
@@ -16,10 +17,11 @@ export default class Notificationlist extends Component {
       modalVisible: false,
       selectedData: '',
       selectedDate: '',
-      selectedTitle:'',
+      selectedTitle: '',
     };
   }
-  componentDidMount = async () => {
+  onFocusFunction = async() => {
+    this.setState({ isLoading: true });
     let token = await AsyncStorage.getItem('token')
     fetch(`${Ngrok.url}/api/notices/${token}`, {
       "method": "GET",
@@ -30,61 +32,56 @@ export default class Notificationlist extends Component {
     })
       .then((response) => response.json())
       .then((json) => {
-        this.setState({ data: json });
+        this.setState({ data: json});
       })
       .catch((error) => console.error(error))
       .finally(() => {
         this.setState({ isLoading: false });
       });
   }
+  componentDidMount = async () => {
+    this.focusListener = this.props.navigation.addListener('focus', () => {
+      this.onFocusFunction()
+    })
+  }
+  componentWillUnmount () {
+    this.focusListener()
+  }
   setModalVisible = (visible) => {
     this.setState({ modalVisible: visible });
   }
-  _selectedItem = (data, data2,data3) => {
-    this.setState({ selectedData: data, selectedDate: data2,selectedTitle:data3 });
+  _selectedItem = (data, data2, data3) => {
+    this.setState({ selectedData: data, selectedDate: data2, selectedTitle: data3 });
     this.setModalVisible(true);
   }
   render() {
     const { data, isLoading } = this.state;
     const { modalVisible } = this.state;
-    <StatusBar
-      barStyle="light-content"
-      // dark-content, light-content and default
-      hidden={false}
-      //To hide statusBar
-      backgroundColor="#e91e63"
-      //Background color of statusBar only works for Android
-      translucent={false}
-    //allowing light, but not detailed shapes
-
-    />
 
     return (
       <View style={{ flex: 1, padding: 3, backgroundColor: "#F9F2F2", }}>
+        <Loader loading={isLoading} />
+        <StatusBar
+         barStyle = "light-content" hidden = {false} backgroundColor = "#e91e63" translucent = {true}
+      />
+          <FlatList
+            data={data}
+            keyExtractor={({ id }, index) => id}
+            renderItem={({ item }) => (
+              <Card>
+                <CardItem button onPress={() => {
+                  this._selectedItem(item.message, item.date, item.title);
+                }}>
+                  <Body>
+                    <Text>
+                      {item.title}
+                    </Text>
+                  </Body>
+                </CardItem>
+              </Card>
 
-        <ScrollView>
-          {isLoading ? <ActivityIndicator /> : (
-            <FlatList
-              data={data}
-              keyExtractor={({ id }, index) => id}
-              renderItem={({ item }) => (
-                <Card>
-                  <CardItem button onPress={() => {
-                    this._selectedItem(item.message, item.date,item.title);
-                  }}>
-                    <Body>
-                      <Text>
-                        {item.title}
-                      </Text>
-                    </Body>
-                  </CardItem>
-                </Card>
-
-              )}
-            />
-
-          )}
-        </ScrollView>
+            )}
+          />
         <Modal
           animationType="slide"
           transparent={true}
@@ -101,11 +98,11 @@ export default class Notificationlist extends Component {
               onPress={(modalVisible) => this.setModalVisible(!modalVisible)}
             />
             <View style={styles.modalBody}>
-            <Text style={styles.modalheading}> {this.state.selectedTitle}</Text>
-            <View style={{flexDirection:'row',alignSelf: 'center',justifyContent: 'center'}}>
-              <Text style={styles.modalheading}>Date of Notice:</Text>
-              <Text style={styles.message}>{this.state.selectedDate}</Text>
-            </View>
+              <Text style={styles.modalheading}> {this.state.selectedTitle}</Text>
+              <View style={{ flexDirection: 'row', alignSelf: 'center', justifyContent: 'center' }}>
+                <Text style={styles.modalheading}>Date of Notice:</Text>
+                <Text style={styles.message}>{this.state.selectedDate}</Text>
+              </View>
               <Text style={styles.message}>{this.state.selectedData}</Text>
             </View>
           </View>

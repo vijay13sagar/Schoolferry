@@ -44,8 +44,6 @@ export default class vehicleList extends Component  {
       //allowing light, but not detailed shapes
 
       />
-        
-        <ScrollView>
         <View style={{  justifyContent: 'center', alignItems: 'center' }}>
         <TouchableOpacity style={styles.loginBtn} onPress = {()=>this.props. navigation.navigate('Add_Vehicle')}>
          <Text style={styles.loginText}>Add New Vehicles</Text>
@@ -82,9 +80,6 @@ export default class vehicleList extends Component  {
             )}
           />
         )}
-        </ScrollView>
-        
-       
     </View>
       
     );

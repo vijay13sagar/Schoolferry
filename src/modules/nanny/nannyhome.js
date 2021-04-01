@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, StatusBar, TouchableOpacity, StyleSheet, FlatList, Text, View } from 'react-native';
+import { ActivityIndicator, StatusBar, TouchableOpacity,Linking, StyleSheet, FlatList, Text, View } from 'react-native';
 import { Container, Header, Content, Card, CardItem, Body } from 'native-base';
 import { ScrollView } from 'react-native-gesture-handler';
 import Ngrok from '../../constants/ngrok';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-community/async-storage';
+import Loader from '../../components/Loader';
 
 export default class Triplist extends Component {
   constructor(props) {
@@ -28,24 +29,14 @@ export default class Triplist extends Component {
   }
   render() {
     const { data, isLoading } = this.state;
-    <StatusBar
-      barStyle="light-content"
-      // dark-content, light-content and default
-      hidden={false}
-      //To hide statusBar
-      backgroundColor="#e91e63"
-      //Background color of statusBar only works for Android
-      translucent={false}
-    //allowing light, but not detailed shapes
 
-    />
     return (
 
       <View style={{ flex: 1, padding: 3, backgroundColor: "#F9F2F2", }}>
+        <Loader loading = {isLoading}/>
         <StatusBar
          barStyle = "light-content" hidden = {false} backgroundColor = "#e91e63" translucent = {true}
       />
-        <ScrollView>
         <View style={styles.pendingTrips}>
         <Text style={styles.tripsTitleText}>Today's Trips</Text>
         <Text style={styles.startTripText}>Click to see Trip details</Text>
@@ -66,9 +57,12 @@ export default class Triplist extends Component {
                           item.trip_id
                         }
                       </Text>
-                      <Text style={{marginLeft:40}}>
-                  {item.endedTripAt ?<Text style={{color:'white',fontWeight:'700',fontSize:17}}>Trip Completed</Text> : null}
-                </Text>
+                      {item.endedTripAt ?
+                      <Text style={{color:'white',fontWeight:'700',fontSize:17,marginLeft:40}}>Trip Completed</Text>
+                       :
+                       <Text style={{marginLeft:40}}>
+                       {item.startedTripAt ?<Text style={{color:'black',fontWeight:'700',fontSize:17}}>Trip Started</Text> : null}
+                     </Text>}
                 {item.endedTripAt ? null : <Ionicons name="chevron-forward-outline"
                   color="#000" size={25}
                   style={{marginLeft:"35%"}}
@@ -79,7 +73,6 @@ export default class Triplist extends Component {
               )}
             />
           )}
-        </ScrollView>
         <TouchableOpacity style={styles.CallBtn} onPress={() => { Linking.openURL('tel:8777111223') }}  >
           <Text style={styles.loginText}>Call Admin</Text>
         </TouchableOpacity>

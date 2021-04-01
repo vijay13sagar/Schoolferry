@@ -5,10 +5,10 @@ import AsyncStorage from '@react-native-community/async-storage';
 import addchild from '../parent/addingchild';
 
 
-const Checklist = () => {
+const Checklist = ({route,navigation}) => {
  
-  const [contact,setContact] = useState("")
-  const [address,setAddress] = useState("")
+  const [contact,setContact] = useState(route.params.con)
+  const [address,setAddress] = useState(route.params.add)
 
   const presshandler = async () => {
     if(!contact && !address){
@@ -31,7 +31,7 @@ const Checklist = () => {
       .then(responseJson => {
         console.log(responseJson);
         if (responseJson.message == "data updated successfully") {
-          Alert.alert('Profile Updated Successfully')
+          navigation.goBack()
         } else {
           Alert.alert('Failed','Number already exist')
         }
@@ -52,6 +52,7 @@ const Checklist = () => {
             maxLength={10}
             placeholderTextColor="#929292"
             onChangeText={(contact) => setContact(contact)}
+            value={contact}
           />
         </View>
         <View style={styles.inputView} >
@@ -60,6 +61,7 @@ const Checklist = () => {
             placeholder="Address"
             placeholderTextColor="#929292"
            onChangeText={(address) => setAddress(address)}
+           value={address}
           />
 
         </View>

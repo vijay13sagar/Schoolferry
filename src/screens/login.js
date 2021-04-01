@@ -13,7 +13,7 @@ import {
 import Ngrok from '../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
-import Loader from '../components/Loader'
+import Loader from '../components/Loader';
 
 export default function Login({navigation}) {
   const [email, setEmail] = useState('');
@@ -51,27 +51,9 @@ export default function Login({navigation}) {
   };
   const gotootpscreen = () => {
     console.log('number', email);
-    axios
-      .get(`${Ngrok.url}/api/user/${email}`)
-      .then(function (response) {
-        console.log('otpstat', response.status);
-        console.log('otpmsg', response.data.message);
-        if (response.status == 200) {
-          navigation.navigate('OTPscreen', {item: email});
-        } else if (response.message == 'Invalid Contact') {
-          Alert.alert('Please enter Valid Phone Number');
-        }
-      })
-      .catch(function (error) {
-        // handle error
-        console.log('error', error.message);
-      })
-      .finally(function () {
-        // always executed
-      });
+    navigation.navigate('OTPscreen', {item: email});
   };
   const handleSubmitpPress = async () => {
-  
     let firebaseToken = await AsyncStorage.getItem('FBtoken');
     console.log('FB token', firebaseToken);
     if (validateFunction()) {

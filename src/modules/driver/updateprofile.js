@@ -4,10 +4,9 @@ import Ngrok from '../../constants/ngrok'
 import AsyncStorage from '@react-native-community/async-storage';
 
 
-const Checklist = () => {
-
-  const [contact, setContact] = useState("")
-  const [address, setAddress] = useState("")
+const Checklist = ({navigation,route}) => {
+  const [contact, setContact] = useState(route.params.con)
+  const [address, setAddress] = useState(route.params.add)
   const [{ error }, setError] = useState(" ")
 
   const presshandler = async () => {
@@ -38,7 +37,7 @@ const Checklist = () => {
         .then(responseJson => {
           console.log(responseJson);
           if (responseJson.message == "data updated successfully") {
-            alert('Profile Updated Successfully')
+            navigation.goBack()
           }
         })
         .catch(err => {
@@ -57,6 +56,7 @@ const Checklist = () => {
           placeholder="Contact"
           placeholderTextColor="#929292"
           onChangeText={(contact) => setContact(contact)}
+          value={contact}
         />
       </View>
       <View style={styles.inputView} >
@@ -65,6 +65,7 @@ const Checklist = () => {
           placeholder="Address"
           placeholderTextColor="#929292"
           onChangeText={(address) => setAddress(address)}
+          value={address}
         />
 
       </View>

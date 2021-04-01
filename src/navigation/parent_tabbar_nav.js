@@ -43,7 +43,7 @@ function Subscriptions() {
      <Stack.Screen
         name="New_sub_screen"
         component={subscriptions}
-        options={{ title: 'Subscriptions ' }}
+        options={{ title: 'Subscriptions ' ,headerLeft:null,gestureEnabled:false}}
       />
       <Stack.Screen
         name="Add Child"
@@ -53,7 +53,7 @@ function Subscriptions() {
       <Stack.Screen
         name="Subscription_list"
         component={Subscriptionlist}
-        options={{ title: 'Subscriptions' ,}} // headerShown: false
+        options={{ title: 'Subscriptions' ,headerLeft:null,gestureEnabled:false}} // headerShown: false
       />
       <Stack.Screen
         name="Pause Plan"
@@ -105,7 +105,7 @@ function Mappage() {
       <Stack.Screen
         name="NoTrips"
         component={Notrips}
-        options={{ title: 'Vehicle Tracking ' }}
+        options={{ title: 'Vehicle Tracking ',headerLeft:null,gestureEnabled:false }}
       />
       <Stack.Screen
         name="Track"
@@ -130,7 +130,7 @@ function Supportpage() {
       <Stack.Screen
         name="support"
         component={Support}
-        options={{ title: 'Support' }}
+        options={{ title: 'Support',headerLeft:null,gestureEnabled:false }}
       />
 
     </Stack.Navigator>
@@ -150,7 +150,7 @@ function Homepage() {
       <Stack.Screen
         name="Home"
         component={Home}
-        options={{ title: 'Home ' }}
+        options={{ title: 'Home ',headerLeft:null,gestureEnabled:false }}
       />
       <Stack.Screen
         name="location"
@@ -187,12 +187,12 @@ function Profiles() {
       <Stack.Screen
         name="Profile_screen"
         component={Profile_Parent}
-        options={{ title: 'Profile ' }}
+        options={{ title: 'Profile ',headerLeft:null,gestureEnabled:false  }}
       />
       <Stack.Screen
         name="Change Password"
         component={changePassword}
-        options={{ title: 'Change Password' }}
+        options={{ title: 'Change Password'}}
       />
       <Stack.Screen
         name="Update profile"
