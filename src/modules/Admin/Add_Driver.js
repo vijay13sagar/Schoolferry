@@ -8,7 +8,6 @@ import {
   Alert,
   StatusBar,
 } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
 import Ngrok from '../../constants/ngrok';
 import axios from 'axios';
 

@@ -21,6 +21,7 @@ export default class App extends React.Component {
     this.interval = setInterval(() => { this.updateloc() }, 5000)
   }
   componentWillUnmount() {
+    console.log("entering");
     clearInterval(this.interval)
   }
   Endtrip = () => {

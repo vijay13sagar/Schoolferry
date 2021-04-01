@@ -37,7 +37,6 @@ export default class Triplist extends Component {
         <StatusBar
          barStyle = "light-content" hidden = {false} backgroundColor = "#e91e63" translucent = {true}
       />
-        <ScrollView>
         <View style={styles.pendingTrips}>
         <Text style={styles.tripsTitleText}>Today's Trips</Text>
         <Text style={styles.startTripText}>Click to see Trip details</Text>
@@ -58,9 +57,12 @@ export default class Triplist extends Component {
                           item.trip_id
                         }
                       </Text>
-                      <Text style={{marginLeft:40}}>
-                  {item.endedTripAt ?<Text style={{color:'white',fontWeight:'700',fontSize:17}}>Trip Completed</Text> : null}
-                </Text>
+                      {item.endedTripAt ?
+                      <Text style={{color:'white',fontWeight:'700',fontSize:17,marginLeft:40}}>Trip Completed</Text>
+                       :
+                       <Text style={{marginLeft:40}}>
+                       {item.startedTripAt ?<Text style={{color:'black',fontWeight:'700',fontSize:17}}>Trip Started</Text> : null}
+                     </Text>}
                 {item.endedTripAt ? null : <Ionicons name="chevron-forward-outline"
                   color="#000" size={25}
                   style={{marginLeft:"35%"}}
@@ -71,7 +73,6 @@ export default class Triplist extends Component {
               )}
             />
           )}
-        </ScrollView>
         <TouchableOpacity style={styles.CallBtn} onPress={() => { Linking.openURL('tel:8777111223') }}  >
           <Text style={styles.loginText}>Call Admin</Text>
         </TouchableOpacity>

@@ -45,6 +45,7 @@ const Homescreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+       <Loader loading = {isloading}/>
       <StatusBar
         barStyle="light-content"
         // dark-content, light-content and default
@@ -58,7 +59,6 @@ const Homescreen = ({ navigation }) => {
       />
 
       <View >{stat ? <Text style={styles.startTripText}>Click to see Trip details</Text> : <Text style={styles.startTripText}>No Completed Trips</Text>}</View>
-<ScrollView style={{marginVertical:20}}>
       <FlatList
         style={styles.flatlist}
         data={data}
@@ -87,7 +87,6 @@ const Homescreen = ({ navigation }) => {
         </View>
         )}
       />
-</ScrollView>
     </View>
   );
 }
@@ -132,7 +131,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     textAlign: "center",
     marginTop: 50,
-    marginBottom: 10,
+    marginBottom: 30,
 
   },
   CallBtn: {

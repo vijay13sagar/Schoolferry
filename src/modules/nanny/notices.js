@@ -46,7 +46,7 @@ export default class Notificationlist extends Component {
     })
   }
   componentWillUnmount () {
-    this.focusListener.remove()
+    this.focusListener()
   }
   setModalVisible = (visible) => {
     this.setState({ modalVisible: visible });
@@ -64,7 +64,6 @@ export default class Notificationlist extends Component {
  <StatusBar
          barStyle = "light-content" hidden = {false} backgroundColor = "#e91e63" translucent = {true}
       />
-        <ScrollView>
             <FlatList
               data={data}
               keyExtractor={({ id }, index) => id}
@@ -83,7 +82,6 @@ export default class Notificationlist extends Component {
 
               )}
             />
-        </ScrollView>
         <Modal
           animationType="slide"
           transparent={true}

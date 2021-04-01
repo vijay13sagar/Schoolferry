@@ -10,6 +10,7 @@ export default function trip_Details({ route, navigation }) {
         backgroundColor='#E91E63'
       />
       <View style={styles.textview}>
+        {route.params.item.startedTripAt ? <Text style={styles.startTripText}>Trip Started</Text> : null}
         <Text style={styles.headertext}>Location:</Text>
         <Text style={styles.details}>{route.params.item.location}</Text>
         <Text style={styles.headertext}>Driver ID:</Text>
@@ -47,6 +48,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     justifyContent: 'flex-start',
     marginTop: 50
+  },
+  startTripText: {
+    fontSize: 22,
+    textAlign: "center",
+    marginTop: 30,
+    marginBottom: 10,
+
   },
   showcase: {
     padding: 10,

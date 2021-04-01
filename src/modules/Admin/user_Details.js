@@ -44,8 +44,6 @@ export default function user_Details({ route, navigation }) {
 
 
   return (
-
-    <ScrollView>
       <View style={styles.container}>
         <StatusBar style="auto" />
 
@@ -116,8 +114,6 @@ Child Details
           />
         
       </View>
-    </ScrollView>
-
   );
 
 }
