@@ -12,8 +12,10 @@ import {
 } from "react-native";
 import Ngrok from '../../constants/ngrok';
 import axios from 'axios';
+import Loader from '../../components/Loader';
  
-export default function Add_Driver() {
+export default function Add_Driver({navigation}) {
+  const [isloading, setLoading] = useState(false);
   const [VH, setVH] = useState("");
   const [Gps, setGps] = useState("");
   const [Model, setModel] = useState("");
@@ -56,6 +58,8 @@ export default function Add_Driver() {
       console.log("apistarts")
     
     try {
+      setLoading(true);
+
       axios({
         method: 'POST',
         url: `${Ngrok.url}/api/admin/register/vehicle`,
@@ -73,17 +77,20 @@ export default function Add_Driver() {
         }
       })
         .then(function (response) {
+          setLoading(false);
           if (response.status == 200) {
-            Alert.alert('Registration Successful')
+            Alert.alert('Registration Successful','', [{text: 'Proceed', onPress:() => navigation.navigate('vehicleList',)}])
           }
 
           console.log("response", response.status);
         })
         .catch(function (error) {
+          setLoading(false);
           console.log(error.response.status) // 401
           console.log(error.response.data.error) //Please Authenticate or whatever returned from server
         if(error.response.status==401){
           //redirect to login
+          setLoading(false);
           Alert.alert('Phone Number Alredy Exist!')
         }
      
@@ -94,6 +101,7 @@ export default function Add_Driver() {
       // })
     }
        catch(error){
+        setLoading(false);
         console.log("errordetails",error);
        }
      }
@@ -102,6 +110,7 @@ export default function Add_Driver() {
  
    return (
     <View style={styles.container}>
+      <Loader loading={isloading} />
       {/* <StatusBar style="auto" /> */}
       <View style={styles.inputView}>
         <TextInput
@@ -172,12 +181,12 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#b0003a',
         borderRadius: 10,
-        width: "80%",
+        width: "115%",
         height: 45,
         
         
         backgroundColor:"#fff",   //"#C4C4C4",
-        marginTop: 5,
+        marginTop: 10,
         //opacity: 0.5,
       },
     

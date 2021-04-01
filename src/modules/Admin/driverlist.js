@@ -3,7 +3,9 @@ import { ActivityIndicator,TouchableOpacity,StyleSheet, FlatList, Text, View } f
 import { Container, Header, Content, Card, CardItem, Body } from 'native-base';
 import { ScrollView } from 'react-native-gesture-handler';
 import Ngrok from '../../constants/ngrok';
+import Loader from '../../components/Loader';
 export default class driverList extends Component  {
+  
   constructor(props) {
     super(props);
 
@@ -28,6 +30,7 @@ export default class driverList extends Component  {
 
   render() {
     const { data, isLoading } = this.state;
+   
 
     return (
       <View style={styles.Container}>

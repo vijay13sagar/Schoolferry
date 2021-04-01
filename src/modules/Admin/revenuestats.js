@@ -18,27 +18,35 @@ import {
   StackedBarChart,
 } from 'react-native-chart-kit';
 import Ngrok from '../../constants/ngrok';
+import Loader from '../../components/Loader';
 import axios from 'axios';
 
 const MyPieChart = () => {
+  const [loading, setLoading] = useState(false);
   const [data,setData]=useState();
   const [isLoading,setisload]=useState(true);
   const [hist, setHist] = useState([10,18,8,20, 25]);
+
   const [months,setmonths]= useState(['January','February','March','April','May',]);
   useEffect(() => {
+    setLoading(true);
       CallHIST(1);
       },[]);
   const CallHIST=(val)=>{
     const newvalue=val
     console.log("hahah",newvalue);
+    
     axios
     .get(`${Ngrok.url}/api/management/histogram/${newvalue}`)
     .then(function (response) {
       setHist(response.data.amounts);
       setmonths(response.data.months)
       setisload(false);
+      setLoading(false);
     })
     .catch(function (error) {
+      setLoading(false);
+      setLoading(false);
       // handle error
       console.log("error",error.message);
     })
@@ -49,6 +57,7 @@ const MyPieChart = () => {
   }
   return (
     <ScrollView>
+       <Loader loading={loading} />
       {isLoading ? <ActivityIndicator/>:<View >
       <Text style={styles.header}>REVENUE STATS</Text>
       <BarChart

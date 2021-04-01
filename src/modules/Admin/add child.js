@@ -10,59 +10,21 @@ import {
   Alert,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { event } from "react-native-reanimated";
+import Loader from '../../components/Loader';
 import Ngrok from '../../constants/ngrok';
 import axios from 'axios';
 
 
 
 export default function add_Child({ route,navigation}) {
-
+  const [isloading, setLoading] = useState(false);
   let c = route.params.tripid1;
   console.log("sfsdffasdas", c);
   let childid = route.params.item.childId;
   console.log("apistarts", childid)
 let age = route.params.item.age
   const pressHandler = () => {
-   
-    
-    // try {
-    //   axios({
-    //     method: 'POST',
-    //     url: `${Ngrok.url}/api/admin/trips/child/remove`,
-    //     "headers": {
-    //       Accept: 'application/json',
-    //       'Content-Type': 'application/json'
-    //     },
-    //     data: {
-    //       childid : childid,
-    //       tripid : c
-
-    //     }
-    //   })
-    //     .then(function (response) {
-    //       if (response.status == 200) {
-    //         Alert.alert('Removed Successfully')
-    //       }
-
-    //       console.log("response", response.status);
-    //     })
-    //     .catch(function (error) {
-    //       //Please Authenticate or whatever returned from server
-    //     if(error.status == 401){
-    //       //redirect to login
-    //       Alert.alert('Try again!')
-    //     }
-
-    //     })
-    //   // .catch(function (error) {
-    //   //   // handle error
-    //   //   console.log("errordetails",error);
-    //   // })
-    // }
-    //    catch(error){
-    //     console.log("errordetails",error);
-    //    }
+    setLoading(true);
     fetch(`${Ngrok.url}/api/admin/trips/child/add`, {
       "method": "POST",
       "headers": {
@@ -77,6 +39,7 @@ let age = route.params.item.age
     })
       .then(response => response.json())
       .then(responseJson => {
+        setLoading(false);
         console.log(responseJson);
         if (responseJson.message == "child added") {
          Alert. alert('Added Successfully','', [{text: 'Proceed', onPress:() => navigation.navigate('Home_page',)}])
@@ -86,6 +49,7 @@ let age = route.params.item.age
         //alert(JSON.stringify(response))
       })
       .catch(err => {
+        setLoading(false);
         console.log(err);
       });
   
@@ -96,6 +60,7 @@ let age = route.params.item.age
 return (
 
   <ScrollView>
+    <Loader loading={isloading} />
     <View style={styles.container}>
       <StatusBar style="auto" />
       <View style={{ width: "70%", marginRight: 50 }}>

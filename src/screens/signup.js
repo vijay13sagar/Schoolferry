@@ -11,18 +11,17 @@ import {
 } from 'react-native';
 import Ngrok from '../constants/ngrok';
 import axios from 'axios';
+import Login from './login';
 import Loader from '../components/Loader';
-
-export default function App({route, navigation}) {
-  const [email, setEmail] = useState('');
-  const [Name, setName] = useState('');
-  const [contact, setcontact] = useState('');
-  const [password, setpassword] = useState('');
-  const [{emailError}, setEmailError] = useState('');
-  const [{contactError}, setcontactError] = useState('');
-  const [{emptyFields}, setemptyFeilds] = useState('');
+export default function App({route,navigation}) {
+  const [email, setEmail] = useState("");
+  const [Name, setName] = useState("");
+  const [contact, setcontact] = useState("");
+  const [password1, setpassword1] = useState("");
+  const [password2, setpassword2] = useState("");
   const [isloading, setLoading] = useState(false);
-
+  const [{ emptyFields }, setemptyFeilds] = useState("");
+  
   const validateEmail = (email) => {
     const regex_mail = /^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)$/;
     if (regex_mail.test(email)) {
@@ -38,22 +37,30 @@ export default function App({route, navigation}) {
     }
   };
   const validateFunction = () => {
-    if (!Name || !email || !contact || !password) {
-      setemptyFeilds({emptyFields: 'Please Enter All The Details'});
-      return false;
-    } else if (!validateEmail(email)) {
-      setEmailError({emailError: 'Enter Valid Email Id'});
-      setcontactError({contactError: null});
-      setemptyFeilds({emptyFields: null});
-      return false;
-    } else if (!validatecontact(contact)) {
-      setcontactError({contactError: 'Enter Valid Phone Number'});
-      setEmailError({emailError: null});
-      return false;
+    if (!Name || !email || !contact || !password1 || !password2) {
+      setemptyFeilds({ emptyFields: "Please Enter All The Details" })
+      return false
     }
-    return true;
-  };
-
+    else if (!validateEmail(email)) {
+      setemptyFeilds({ emptyFields:  "Enter Valid Email Id" })
+      
+      return false
+    }
+    else if (!validatecontact(contact)) {
+      setemptyFeilds({ emptyFields:  "Enter Valid Phone Number" })
+      
+      return false
+    }
+    else if (password1!== password2) {
+      setemptyFeilds({ emptyFields:  "Both Fields should be same" })
+      
+      return false
+      
+    }else{
+      return true
+    }
+   
+  }
   const pressHandler = () => {
     if (validateFunction()) {
       setLoading(true);
@@ -69,7 +76,7 @@ export default function App({route, navigation}) {
             name: Name,
             email: email,
             contact: contact,
-            password: password,
+            password: password1,
           },
         })
           .then(function (response) {
@@ -102,6 +109,7 @@ export default function App({route, navigation}) {
       }
     }
   };
+
 
   return (
     <View style={styles.container}>
@@ -141,13 +149,21 @@ export default function App({route, navigation}) {
           placeholder="Password"
           placeholderTextColor="#929292"
           secureTextEntry={true}
-          onChangeText={(password) => setpassword(password)}
+          onChangeText={(password1) => setpassword1(password1)}
+        />
+      </View>
+      <View style={styles.inputView}>
+        <TextInput
+          style={styles.TextInput}
+          placeholder="Confirm Password"
+          placeholderTextColor="#929292"
+          secureTextEntry={true}
+          onChangeText={(password2) => setpassword2(password2)}
         />
       </View>
       <Text style={styles.error}>{emptyFields}</Text>
-      <Text style={styles.error}>{emailError}</Text>
-      <Text style={styles.error}>{contactError}</Text>
-      <TouchableOpacity style={styles.loginBtn} onPress={pressHandler}>
+     
+      <TouchableOpacity style={styles.loginBtn} onPress={pressHandler} >
         <Text style={styles.loginText}>SIGN UP</Text>
       </TouchableOpacity>
     </View>
@@ -167,11 +183,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#B0003A',
     borderRadius: 10,
-    width: '80%',
+    width: "87%",
     height: 45,
-    alignItems: 'center',
-    backgroundColor: '#fff', //"#C4C4C4",
-    marginTop: 5,
+    alignItems: "center",
+    backgroundColor: "#fff",   //"#C4C4C4",
+    marginTop: 10,
     //opacity: 0.5,
   },
   TextInput: {

@@ -13,12 +13,14 @@ import Ngrok from '../../constants/ngrok';
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Picker } from '@react-native-picker/picker';
+import Loader from '../../components/Loader';
 const Employee = ({ navigation }) => {
 
   const [title, settitle] = useState("");
   const [message, setmessage] = useState("");
   const [{ emptyFields }, setemptyFeilds] = useState("");
   const [role, setrole] = useState("")
+  const [isloading, setLoading] = useState(false);
 
 
 
@@ -51,6 +53,7 @@ const Employee = ({ navigation }) => {
     if (validateFunction()) {
       console.log("start");
       try {
+        setLoading(true);
         axios({
           method: 'POST',
           url: `${Ngrok.url}/api/admin/notifications`,
@@ -69,12 +72,14 @@ const Employee = ({ navigation }) => {
         })
           .then(function (response) {
             if (response.status == 200) {
+              setLoading(false);
               Alert.alert('Notification Sent')
             }
 
             console.log("response", response.status);
           })
           .catch(function (error) {
+            setLoading(false);
             console.log(error.response.status) // 401
             console.log(error.response.data.error) //Please Authenticate or whatever returned from server
             if (error.response.status == 401) {
@@ -86,6 +91,7 @@ const Employee = ({ navigation }) => {
 
       }
       catch (error) {
+        setLoading(false);
         console.log("errordetails", error);
       }
     }
@@ -93,6 +99,7 @@ const Employee = ({ navigation }) => {
   
   return (
     <View style={styles.container}>
+
       <StatusBar
         barStyle="light-content"
         // dark-content, light-content and default
@@ -104,6 +111,7 @@ const Employee = ({ navigation }) => {
       //allowing light, but not detailed shapes
 
       />
+      <Loader loading={isloading} />
       <ScrollView>
       <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('driverList')} >
         <Text style={styles.loginText}>Driver</Text>

@@ -22,45 +22,6 @@ export default function driver_Details({ route, navigation }){
   const [{ EXP }, setEXP] = useState("");
   
   console.log("this.props",route.params.item.releaseYear);
-
-  
- 
-  // const pressHandler = () => {
-  //   if (validateFunction()) {
-  //     /* const body = {
-  //        id: email,
-  //         password: password
-  //      }*/
-  //     /*let response = await loginApi(body)*/
-  //   fetch("http://eccff4463173.ngrok.io/api/parent/signup", {
-  //     "method": "POST",
-  //     "headers": {
-  //       Accept: 'application/json',
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify({
-  //       firstName: FN,
-  //       lastName:LN ,
-  //       email: email,
-  //       contact: contact,
-  //       password: password
-  //     })
-  //   })
-  //     .then(response => response.json())
-  //     .then(responseJson => {
-  //       console.log(responseJson);
-  //       if (responseJson.message == "registered successfully") {
-  //         alert ('Congratulations..Sign Up Successful')
-  //       }else {
-  //         alert('sign up failed')
-  //       }
-  //       //alert(JSON.stringify(response))
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     });
-  //   }
-  //  }
   return (
     
     <ScrollView>
