@@ -18,16 +18,21 @@ import {
   StackedBarChart,
 } from 'react-native-chart-kit';
 import Ngrok from '../../constants/ngrok';
+import Loader from '../../components/Loader';
 import axios from 'axios';
 
 const MyPieChart = () => {
+  const [loading, setLoading] = useState(false);
   const [data,setData]=useState();
   const [isLoading,setisload]=useState(true);
   const [hist, setHist] = useState([10,18,8,20, 25]);
   const months= ['Parents','TotalChild','SubChild','UnSubChild',];
+  
   const [emphist, setEmpHist] = useState([10,18,8,20, 25]);
   const [emp,setEmp]= useState([]);
   useEffect(() => {
+    setLoading(true);
+    
       axios
         .get(`${Ngrok.url}/api/management/piechart`)
         .then(function (response) {
@@ -35,6 +40,7 @@ const MyPieChart = () => {
           setisload(false);
         })
         .catch(function (error) {
+          setLoading(false);
           // handle error
           console.log("error",error.message);
         })
@@ -49,8 +55,10 @@ const MyPieChart = () => {
       setEmp(response.data.employees);
       //setmonths(response.data.users)
       //setisload(false);
+      setLoading(false);
     })
     .catch(function (error) {
+      setLoading(false);
       // handle error
       console.log("error",error.message);
     })
@@ -65,6 +73,7 @@ const MyPieChart = () => {
     // };
   return (
     <View>
+       <Loader loading={loading} />
       <StatusBar
         barStyle="light-content"
         // dark-content, light-content and default

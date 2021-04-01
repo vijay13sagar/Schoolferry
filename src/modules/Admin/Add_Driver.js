@@ -9,9 +9,13 @@ import {
   StatusBar,
 } from "react-native";
 import Ngrok from '../../constants/ngrok';
+import Loader from '../../components/Loader';
 import axios from 'axios';
 
-export default function Add_Driver() {
+
+
+export default function Add_Driver({navigation}) {
+  const [isloading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [name, setname] = useState("");
   const [password, setpassword] = useState("");
@@ -71,7 +75,7 @@ export default function Add_Driver() {
     return true
 
   }
-
+  
   function pressHandler() {
     console.log("validation", validateFunction())
     if (validateFunction()) {
@@ -79,6 +83,8 @@ export default function Add_Driver() {
       console.log("apistarts")
      
       try {
+        setLoading(true);
+
         axios({
           method: 'POST',
           url: `${Ngrok.url}/api/admin/register/driver`,
@@ -99,16 +105,19 @@ export default function Add_Driver() {
           }
         })
           .then(function (response) {
+            setLoading(false);
             if (response.status == 200) {
-              Alert.alert('Registration Successful')
+              Alert.alert('Registration Successful','', [{text: 'Proceed', onPress:() => navigation.navigate('Employee',)}])
             }
 
             console.log("response", response.status);
           })
           .catch(function (error) {
+            setLoading(false);
             console.log(error.response.status) // 401
             console.log(error.response.data.error) //Please Authenticate or whatever returned from server
           if(error.response.status == 401){
+            setLoading(false);
             //redirect to login
             Alert.alert('Phone Number Alredy Exist!')
           }
@@ -120,6 +129,8 @@ export default function Add_Driver() {
         // })
       }
          catch(error){
+          
+          setLoading(false);
           console.log("errordetails",error);
          }
       }
@@ -130,7 +141,7 @@ export default function Add_Driver() {
   return (
     <View style={styles.container}>
 
-
+<Loader loading={isloading} />
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
@@ -182,6 +193,7 @@ export default function Add_Driver() {
           onChangeText={(LIN) => setLIN(LIN)}
         />
       </View>
+      
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
@@ -191,6 +203,7 @@ export default function Add_Driver() {
           onChangeText={(password) => setpassword(password)}
         />
       </View>
+      
       <Text style={styles.error}>{emptyFields}</Text>
       <Text style={styles.error}>{emailError}</Text>
       <Text style={styles.error}>{contactError}</Text>
@@ -220,11 +233,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#b0003a',
     borderRadius: 10,
-    width: "80%",
+    width: "115%",
     height: 45,
     alignItems: "center",
     backgroundColor: "#fff",   //"#C4C4C4",
-    marginTop: 5,
+    marginTop: 10,
     //opacity: 0.5,
   },
 
@@ -259,6 +272,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#ff5c8d",
     alignSelf: "center",
+    marginTop: 20,
+  },
+  imageBtn: {
+    width: "50%",
+    borderRadius: 10,
+    height: 38,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#ff5c8d",
+  marginLeft:170,
     marginTop: 20,
   },
 

@@ -12,8 +12,10 @@ import {
 } from "react-native";
 import Ngrok from '../../constants/ngrok';
 import axios from 'axios';
+import Loader from '../../components/Loader';
  
-export default function Add_Nanny() {
+export default function Add_Nanny({navigation}) {
+  const [isloading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [name, setname] = useState("");
   const [password, setpassword] = useState("");
@@ -79,40 +81,12 @@ export default function Add_Nanny() {
       if (validateFunction()) {
    
       console.log("apistarts")
-    // fetch(`${Ngrok.url}api/admin/register/nanny`, {
-    //   "method": "POST",
-    //   "headers": {
-    //     Accept: 'application/json',
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify({
-    //     name: name,
-    //     email: email,
-    //     contact: contact,
-    //     address:ADR,
-    //     experience:EXP,
-    //     photourl:"NULL",
-    //     idproofurl:"NULL",
-    //     password:password
-     
-    //   })
-    // })
-    //   .then(response => response.json())
-    //   .then(responseJson => {
-    //     if (responseJson.status == 200) {
-    //       Alert.alert('Congratulations..Sign Up Successful')
-    //     }else  {
-    //      Alert.alert(responseJson.message)
-    //      console.log("apicdddddall",responseJson.message)
-    //     }
-    //     // alert(JSON.stringify(responseJson))
-    //     console.log("apicall",responseJson.message)
-    //   })
-    //   .catch(err => {
-    //     console.log("error details",err);
-    //   });
+    
     try {
+      setLoading(true);
+
       axios({
+        
         method: 'POST',
         url: `${Ngrok.url}/api/admin/register/nanny`,
         "headers": {
@@ -133,23 +107,27 @@ export default function Add_Nanny() {
         }
       })
       .then(function (response) {
+        setLoading(false);
         if (response.status == 200) {
-          Alert.alert('Registration Successful')
+          Alert.alert('Registration Successful','', [{text: 'Proceed', onPress:() => navigation.navigate('Employee',)}])
         }
 
         console.log("response", response.status);
       })
       .catch(function (error) {
+        setLoading(false);
         console.log(error.response.status) // 401
         console.log(error.response.data.error) //Please Authenticate or whatever returned from server
       if(error.response.status == 401){
         //redirect to login
         Alert.alert('Phone Number Alredy Exist!')
+        setLoading(false);
       }
    
       })
     }
        catch(error){
+        setLoading(false);
         console.log("errordetails",error);
        }
      }
@@ -158,7 +136,7 @@ export default function Add_Nanny() {
  
   return (
     <View style={styles.container}>
-      
+      <Loader loading={isloading} />
       
       <View style={styles.inputView}>
         <TextInput
@@ -231,11 +209,11 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#b0003a',
         borderRadius: 10,
-        width: "80%",
+        width: "115%",
         height: 45,
         alignItems: "center",
         backgroundColor:"#fff",   //"#C4C4C4",
-        marginTop: 5,
+        marginTop: 10,
         //opacity: 0.5,
       },
     

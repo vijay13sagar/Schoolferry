@@ -18,30 +18,37 @@ import {
   StackedBarChart,
 } from 'react-native-chart-kit';
 import Ngrok from '../../constants/ngrok';
+import Loader from '../../components/Loader';
 import axios from 'axios';
 
 const MyPieChart = () => {
   const [data, setData] = useState();
   const [isLoading, setisload] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [hist, setHist] = useState([10, 18, 8, 20, 25]);
   const [months, setmonths] = useState(['January', 'February', 'March', 'April', 'May',]);
   const [vehhist, setVehHist] = useState([]);
-  const [veh,setVeh]= useState([]);
+  const [veh, setVeh] = useState([]);
   useEffect(() => {
+    setLoading(true);
+
     CallHIST(1);
     axios
-    .get(`${Ngrok.url}/api/management/usersreport`)
-    .then(function (response) {
-      setVehHist(response.data.capacity);
-      setVeh(response.data.vehicles);
-    })
-    .catch(function (error) {
-      // handle error
-      console.log("error",error.message);
-    })
-    .finally(function () {
-      // always executed
-    });
+      .get(`${Ngrok.url}/api/management/usersreport`)
+      .then(function (response) {
+        setVehHist(response.data.capacity);
+        setVeh(response.data.vehicles);
+        setLoading(false);
+      })
+      .catch(function (error) {
+
+        setLoading(false);
+        // handle error
+        console.log("error", error.message);
+      })
+      .finally(function () {
+        // always executed
+      });
 
   }, []);
   const CallHIST = (val) => {
@@ -52,7 +59,7 @@ const MyPieChart = () => {
       .then(function (response) {
         setHist(response.data.trips);
         setmonths(response.data.months)
-        
+
         //setisload(false);
       })
       .catch(function (error) {
@@ -67,7 +74,7 @@ const MyPieChart = () => {
   return (
     <ScrollView>
 
-
+      <Loader loading={loading} />
       <View>
         <Text style={styles.header}>TRIP STATS</Text>
         <BarChart
@@ -80,7 +87,7 @@ const MyPieChart = () => {
             ],
           }}
           fromZero
-          showValuesOnTopOfBars	
+          showValuesOnTopOfBars
           width={Dimensions.get('window').width - 30}
           height={220}
           yAxisLabel={''}
@@ -150,37 +157,37 @@ const MyPieChart = () => {
           </View>
         </View> */}
         <Text style={styles.header}>VEHICLE STATS</Text>
-      <BarChart
-        data={{
-          labels: veh,
-          datasets: [
-            {
-              data: vehhist,
+        <BarChart
+          data={{
+            labels: veh,
+            datasets: [
+              {
+                data: vehhist,
+              },
+            ],
+          }}
+          fromZero
+          showValuesOnTopOfBars
+          width={Dimensions.get('window').width - 30}
+          height={220}
+          //yAxisLabel={''}
+          chartConfig={{
+            backgroundColor: '#1CC910',
+            backgroundGradientFrom: 'lightblue',//'rgb(12, 99, 250)',//'#EFF3FF',
+            backgroundGradientTo: 'white',//'rgb(39, 143, 255)',//'#EFEFEF',
+            decimalPlaces: 1,
+            barPercentage: 0.5,
+            color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+            style: {
+              borderRadius: 16,
             },
-          ],
-        }}
-        fromZero
-        showValuesOnTopOfBars	
-        width={Dimensions.get('window').width -30}
-        height={220}
-        //yAxisLabel={''}
-        chartConfig={{
-          backgroundColor: '#1CC910',
-          backgroundGradientFrom: 'lightblue',//'rgb(12, 99, 250)',//'#EFF3FF',
-          backgroundGradientTo: 'white',//'rgb(39, 143, 255)',//'#EFEFEF',
-          decimalPlaces: 1,
-          barPercentage:0.5,
-          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-          style: {
+          }}
+          style={{
+            marginLeft: 10,
+            marginVertical: 8,
             borderRadius: 16,
-          },
-        }}
-        style={{
-          marginLeft:10,
-          marginVertical: 8,
-          borderRadius: 16,
-        }}
-      />
+          }}
+        />
       </View>
 
     </ScrollView>

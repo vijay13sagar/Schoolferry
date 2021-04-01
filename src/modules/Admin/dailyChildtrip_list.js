@@ -49,6 +49,7 @@ export default class dailyChildtrip_list extends Component  {
     
     return (
       <View style={styles.Container}>
+        
          <TouchableOpacity style={styles.loginBtn} onPress = {()=>this.props.navigation.navigate('freeChildtrip_list',{tripid:tripid})}>
              <Text style={{alignSelf:"center",marginTop:9}}>Add Child </Text>
            </TouchableOpacity>

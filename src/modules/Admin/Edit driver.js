@@ -13,10 +13,11 @@ import { ScrollView } from "react-native-gesture-handler";
 import { event } from "react-native-reanimated";
 import Ngrok from '../../constants/ngrok';
 import axios from 'axios';
+import Loader from '../../components/Loader';
 
 
 export default function Edit_Driver({ route,navigation }) {
-
+  const [isloading, setLoading] = useState(false);
   let c = route.params.tripid1;
   console.log("sfsdffasdas", c);
   let driverid = route.params.item.id;
@@ -24,43 +25,7 @@ export default function Edit_Driver({ route,navigation }) {
 
   const pressHandler = () => {
 
-    // try {
-    //   axios({
-    //     method: 'POST',
-    //     url: `${Ngrok.url}/api/admin/trips/child/remove`,
-    //     "headers": {
-    //       Accept: 'application/json',
-    //       'Content-Type': 'application/json'
-    //     },
-    //     data: {
-    //       childid : childid,
-    //       tripid : c
-
-    //     }
-    //   })
-    //     .then(function (response) {
-    //       if (response.status == 200) {
-    //         Alert.alert('Removed Successfully')
-    //       }
-
-    //       console.log("response", response.status);
-    //     })
-    //     .catch(function (error) {
-    //       //Please Authenticate or whatever returned from server
-    //     if(error.status == 401){
-    //       //redirect to login
-    //       Alert.alert('Try again!')
-    //     }
-
-    //     })
-    //   // .catch(function (error) {
-    //   //   // handle error
-    //   //   console.log("errordetails",error);
-    //   // })
-    // }
-    //    catch(error){
-    //     console.log("errordetails",error);
-    //    }
+    setLoading(true);
     fetch(`${Ngrok.url}/api/admin/trips/driver/new`, {
       "method": "POST",
       "headers": {
@@ -75,6 +40,7 @@ export default function Edit_Driver({ route,navigation }) {
     })
       .then(response => response.json())
       .then(responseJson => {
+        setLoading(false);
         console.log(responseJson);
         if (responseJson.message == "driver changed") {
           Alert.alert('Changed Successfully','', [{text: 'Proceed', onPress:() => navigation.navigate('Home_page')}])
@@ -84,6 +50,7 @@ export default function Edit_Driver({ route,navigation }) {
         //alert(JSON.stringify(response))
       })
       .catch(err => {
+        setLoading(false);
         console.log(err);
       });
   
@@ -94,6 +61,7 @@ export default function Edit_Driver({ route,navigation }) {
 return (
 
   <ScrollView>
+     <Loader loading={isloading} />
     <View style={styles.container}>
       <StatusBar style="auto" />
       <View style={{ width: "70%", marginRight: 50 }}>
