@@ -172,8 +172,8 @@ const subscribedHome = ({route, navigation}) => {
       <View>
         {Boolean(value1[0].trips.length) ?
         value1[0].trips.map((item)=>(
-        <TouchableOpacity style={styles.trips} onPress={()=> navigation.navigate('Trip_details',item)}>
-        <Text style={{justifyContent:'center',marginTop:6,marginLeft:10}}>{item.tripId}</Text>
+        <TouchableOpacity key = {item.tripId} style={styles.trips} onPress={()=> navigation.navigate('Trip_details',item)}>
+        <Text  style={{justifyContent:'center',marginTop:6,marginLeft:10}}>{item.tripId}</Text>
         </TouchableOpacity>
         ))
         :

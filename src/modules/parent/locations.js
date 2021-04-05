@@ -12,6 +12,7 @@ import AddressPickup from '../../components/addresspickup';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {getDistance, getPreciseDistance} from 'geolib';
 import Loader from '../../components/Loader';
+import Ngrok from '../../constants/ngrok';
 
 const location = ({navigation}) => {
   const [pincode, setPincode] = useState('');
@@ -76,13 +77,15 @@ const location = ({navigation}) => {
     } else {
       setLoading(true);
       const responsePincode = await fetch(
-        `http://schoolferry.eba-syr2z5av.us-east-2.elasticbeanstalk.com/api/locations/pincode/${pincode}`,
+        `${Ngrok.url}/api/locations/pincode/${pincode}`,
       );
-      console.log(responsePincode.status);
+     
       const responseSchool = await fetch(
-        `http://schoolferry.eba-syr2z5av.us-east-2.elasticbeanstalk.com/api/locations/schools/${schoolAddress}`,
+        `${Ngrok.url}/api/locations/schools/${schoolAddress}`,
       );
-      console.log(responseSchool.status);
+      console.log('school:',responseSchool.status);
+      console.log('pincode:',responsePincode.status);
+
       setLoading(false);
 
       if (responsePincode.status == 200 && responseSchool.status == 200) {
@@ -156,7 +159,7 @@ const location = ({navigation}) => {
           <View style={styles.modalBody}>
             <Text style={styles.message}>Great! Service is available</Text>
             <Text style={styles.newsText}>
-              To Avail Service ,kindly add child details
+               Please add child details
             </Text>
 
             <TouchableOpacity
@@ -179,6 +182,7 @@ const location = ({navigation}) => {
       />
       <TextInput
         keyboardType="numeric"
+        maxLength={6}
         style={styles.TextInput}
         placeholder="Enter Pincode"
         placeholderTextColor="#929292"
