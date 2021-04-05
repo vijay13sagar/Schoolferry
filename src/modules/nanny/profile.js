@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Text, View, Alert, ScrollView, TouchableOpacity, StatusBar, Linking, StyleSheet, Image } from 'react-native';
 import Ngrok from '../../constants/ngrok'
 import AsyncStorage from '@react-native-community/async-storage';
-import {useFocusEffect} from '@react-navigation/native';
 import Loader from '../../components/Loader';
+import styles from '../../components/style';
+
 
 const Profile = ({ navigation }) => {
   const [data, getData] = useState([])
@@ -47,10 +48,10 @@ const Profile = ({ navigation }) => {
 
   return (
 
-    <View style={styles.container}>
+    <View style={styles.cont}>
       <Loader loading = {isloading}/>
       <StatusBar
-        barStyle="light-content" hidden={false} backgroundColor="#e91e63" translucent={true}
+        barStyle="light-content" hidden={false} backgroundColor="#FF5C00" translucent={true}
       />
       <ScrollView>
         <TouchableOpacity style={styles.edit}>
@@ -75,7 +76,7 @@ const Profile = ({ navigation }) => {
         <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('Passwordchange')}  >
           <Text style={styles.loginText}>Change Password</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.loginBtn} onPress={() => onPressLogout()}  >
+        <TouchableOpacity style={styles.logoutBtn} onPress={() => onPressLogout()}  >
           <Text style={styles.loginText}>Log Out</Text>
         </TouchableOpacity>
         
@@ -85,98 +86,3 @@ const Profile = ({ navigation }) => {
 }
 
 export default Profile;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#F9F2F2",
-    justifyContent:'center'
-
-  },
-  edit: {
-    flexDirection: 'row-reverse',
-    height: 35,
-    backgroundColor: '#ff5c8d',
-    width: 70,
-    alignSelf: 'flex-end',
-    marginTop: 15,
-    marginHorizontal: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-    //borderColor:'black',
-    borderRadius: 12,
-  },
-  imageview: {
-    marginBottom: 150,
-  },
-  
-  id: {
-    width: 300,
-    height: 160,
-    borderWidth: 1,
-    borderColor: "black",
-    marginBottom: 10,
-    alignSelf: 'center',
-    position: 'absolute',
-    marginTop: 5,
-    marginBottom: 10
-  },
-  showcase: {
-    padding: 10,
-    marginLeft: 20,
-    flexDirection: 'row',
-
-  },
-  sidehead: {
-    fontWeight: 'bold',
-    marginLeft: 8,
-    alignSelf: 'flex-start',
-    justifyContent: 'space-around'
-  },
-  details: {
-    backgroundColor: "#d3d3d3",
-    //borderWidth: 1,
-    borderRadius: 12,
-    //borderColor: '#ff5c8d',
-    //marginTop: 3,
-    width: '85%',
-    padding: 8,
-    alignSelf: "center"
-
-  },
-  name: {
-    fontSize: 22,
-    color: "black",
-    fontWeight: 'bold',
-    fontWeight: '600',
-
-  },
-  body: {
-    marginTop: 25,
-    alignItems: 'center'
-
-  },
-  textview: {
-    marginBottom: 7,
-  },
-  headertext: {
-    fontSize: 13,
-    marginLeft: 35,
-  },
-  loginBtn: {
-    width: "50%",
-    borderRadius: 10,
-    height: 38,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#ff5c8d",
-    alignSelf: "center",
-    marginTop: 20,
-  },
-  loginText: {
-    color: 'black',
-    fontSize: 15,
-    // fontWeight:'700'
-  }
-
-});

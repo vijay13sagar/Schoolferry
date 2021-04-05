@@ -13,7 +13,8 @@ import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
 import axios from 'axios';
 import Ngrok from '../../constants/ngrok';
-import Loader from '../../components/Loader'
+import Loader from '../../components/Loader';
+import styles from '../../components/style';
 
 const PausePlan = ({route, navigation}) => {
   const [selectedStartDate, setselectedStartDate] = useState('');
@@ -106,7 +107,7 @@ const PausePlan = ({route, navigation}) => {
       <Loader loading = {loader} />
 
       <View style={[data.pauseEndDate ? styles.biggerBox : styles.pausePlan]}>
-        <Text style={styles.mainHeading}>Pause Plan Details</Text>
+        <Text style={styles.mainHeading1}>Pause Plan Details</Text>
         <Text style={styles.heading}>Total number of pauses - 03</Text>
 
         {!data.pauseEndDate ? null : (
@@ -144,7 +145,7 @@ const PausePlan = ({route, navigation}) => {
       </View>
       <View
         style={{
-          backgroundColor: '#FFE4E1',
+          backgroundColor: '#FBF0B2',
           width: 250,
           alignSelf: 'center',
           margin: 10,
@@ -158,12 +159,14 @@ const PausePlan = ({route, navigation}) => {
           width={250}
           height={250}
           maxRangeDuration={10}
-          todayBackgroundColor="#F2E"
-          selectedDayColor="#FF5C8D"
+          todayBackgroundColor="lightgrey"
+          selectedDayColor="#FF5C00"
           selectedDayTextColor="#FFFFFF"
           onDateChange={onDateChange}
         />
-        <View>
+        
+      </View>
+      <View style={{alignSelf:'center',marginTop:10}}>
           <Text style={styles.registerTextStyle}>
             Selected Start Date: {startDate}
           </Text>
@@ -171,7 +174,6 @@ const PausePlan = ({route, navigation}) => {
             Selected End Date: {endDate}
           </Text>
         </View>
-      </View>
       <Text style={styles.error}>{error}</Text>
       <TouchableOpacity
         style={
@@ -185,109 +187,3 @@ const PausePlan = ({route, navigation}) => {
 };
 // }
 export default PausePlan;
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F9F2F2',
-    //justifyContent: 'center',
-  },
-  pausePlan: {
-    borderWidth: 1,
-    borderRadius: 10,
-    marginTop: 20,
-    height: 110,
-    width: '85%',
-    alignSelf: 'center',
-    //alignItems: 'center',
-    backgroundColor: 'white',
-  },
-  biggerBox: {
-    borderWidth: 1,
-    borderRadius: 10,
-    marginTop: 20,
-    height: 160,
-    width: '85%',
-    alignSelf: 'center',
-    //alignItems: 'center',
-    backgroundColor: 'white',
-  },
-  mainHeading: {
-    fontSize: 20,
-    fontWeight: '700',
-    textAlign: 'center',
-    marginTop: 5,
-  },
-  heading: {
-    fontSize: 18,
-    marginTop: 4,
-    marginLeft: 10,
-  },
-  error: {
-    padding: 1,
-    color: '#DC143C',
-    fontSize: 14,
-    textAlign: 'center',
-  },
-  name: {
-    fontSize: 22,
-    color: 'black',
-    fontWeight: '600',
-  },
-  body: {
-    marginTop: 180,
-    alignItems: 'center',
-  },
-  textview: {
-    marginBottom: 7,
-  },
-  headertext: {
-    fontSize: 13,
-    marginLeft: 30,
-  },
-  details: {
-    height: 40,
-    backgroundColor: '#D3D3D3',
-    borderRadius: 10,
-    width: '85%',
-    padding: 8,
-    alignSelf: 'center',
-  },
-  trips: {
-    height: 40,
-    backgroundColor: 'white',
-    width: '95%',
-    marginTop: 5,
-    alignSelf: 'center',
-  },
-  loginBtn: {
-    width: '50%',
-    borderRadius: 10,
-    height: 38,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#FF5C8D',
-    alignSelf: 'center',
-    marginTop: 5,
-    marginBottom: 20,
-  },
-  Picker: {
-    width: '45%',
-    marginVertical: 10,
-    borderRadius: 10,
-    height: 30,
-    borderWidth: 1,
-    alignContent: 'center',
-    alignSelf: 'flex-end',
-  },
-  inputViews: {
-    borderWidth: 1,
-    borderColor: '#B0003A',
-    borderRadius: 10,
-    width: '80%',
-    height: 100,
-    alignItems: 'center',
-    backgroundColor: '#fff', //"#C4C4C4",
-    marginTop: 5,
-    //opacity: 0.5,
-  },
-});

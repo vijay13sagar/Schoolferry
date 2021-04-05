@@ -10,6 +10,8 @@ import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
 import { Item } from 'native-base';
 import AsyncStorage from '@react-native-community/async-storage';
+import styles from '../../components/style';
+
 
 const App = ({ route, navigation }) => {
   const [selectedStartDate, setselectedStartDate] = useState("")
@@ -52,35 +54,46 @@ const App = ({ route, navigation }) => {
   console.log("to",tomorrow);
   return (
     <View style={styles.container}>
+      <StatusBar
+        barStyle="light-content"
+        // dark-content, light-content and default
+        hidden={false}
+        //To hide statusBar
+        backgroundColor="#FF5C00"
+        //Background color of statusBar only works for Android
+        translucent={false}
+      //allowing light, but not detailed shapes
+
+      />
       <ScrollView>
-        <Text style={styles.headertext} >Start Date</Text>
-        <View style={{ backgroundColor: '#ffe4e1', width: 250, alignSelf: 'center', margin: 10 }}>
+        <Text style={styles.headertext1} >Start Date</Text>
+        <View style={{ backgroundColor: '#FBF0B2', width: 250, alignSelf: 'center', margin: 10 }}>
           <CalendarPicker
             startFromMonday={true}
             width={250}
             height={250}
             minDate={minDate}
             todayBackgroundColor="lightgrey"
-            selectedDayColor="#ff5c8d"
+            selectedDayColor="#FF5C00"
             selectedDayTextColor="#FFFFFF"
             // onDateChange={this.onDateChange}
             onDateChange={(selectedStartDate) => payhandler(selectedStartDate)}
           />
         </View>
         <View>
-          <Text style={styles.inputView}>{maxDate}</Text>
+          <Text style={styles.inputView1}>{maxDate}</Text>
         </View>
         <View style={styles.textview}>
-          <Text style={styles.headertext} >End Date</Text>
-          <Text style={styles.inputView}>{tomorrow}</Text>
+          <Text style={styles.headertext1} >End Date</Text>
+          <Text style={styles.inputView1}>{tomorrow}</Text>
         </View>
+        <View style={styles.textview}> 
+          <Text style={styles.headertext1} >Cost</Text>
+          <Text style={styles.inputView1}>{route.params.item.total}</Text>
+         </View>
         <View style={styles.textview}>
-          <Text style={styles.headertext} >Cost</Text>
-          <Text style={styles.inputView}>{route.params.item.total}</Text>
-        </View>
-        <View style={styles.textview}>
-          <Text style={styles.headertext} >School Name</Text>
-          <Text style={styles.inputView}>{route.params.schooladdress}</Text>
+          <Text style={styles.headertext1} >School Name</Text>
+          <Text style={styles.inputView1}>{route.params.schooladdress}</Text>
         </View>
         {/* disabled={stay} */}
         <Text style={styles.error}>{valueError}</Text>
@@ -93,80 +106,31 @@ const App = ({ route, navigation }) => {
 }
 export default App;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#F9F2F2",
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: "#F9F2F2",
 
-  },
-  avatar: {
-    width: 120,
-    height: 120,
-    borderRadius: 63,
-    borderWidth: 1,
-    borderColor: "black",
-    //marginBottom: 10,
-    alignSelf: 'center',
-    position: 'absolute',
-    justifyContent: 'flex-start',
-    marginTop: 50
-  },
-  name: {
-    fontSize: 22,
-    color: "black",
-    fontWeight: '600',
+//   },
+//   textview: {
+//     marginBottom: 7,
+//   },
+//   headertext: {
+//     fontSize: 13,
+//     marginLeft: 50,
+//   },
 
-  },
-  error: {
-    color: '#DC143C',
-    fontSize: 11,
-    alignSelf: 'center',
-    justifyContent: 'center',
-  },
-  body: {
-    marginTop: 180,
-    alignItems: 'center'
+//   inputView: {
+//     padding: 9,
+//     borderWidth: 1,
+//     borderColor: '#b0003a',
+//     borderRadius: 10,
+//     width: "80%",
+//     //height: 45,
+//     alignSelf: "center",
+//     backgroundColor: "#fff",   //"#C4C4C4",
+//     marginTop: 5,
+//     //opacity: 0.5,
+//   }, 
 
-  },
-  textview: {
-    marginBottom: 7,
-  },
-  headertext: {
-    fontSize: 13,
-    marginLeft: 50,
-  },
-  details: {
-    height: 40,
-    backgroundColor: "#C4C4C4",
-    borderWidth: 1,
-    borderRadius: 12,
-    borderColor: '#4DAFCE',
-    //marginTop: 3,
-    width: '85%',
-    padding: 8,
-    alignSelf: "center"
-  },
-  loginBtn: {
-    width: "50%",
-    borderRadius: 10,
-    height: 38,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#ff5c8d",
-    alignSelf: "center",
-    marginVertical: 15
-  },
-  inputView: {
-    padding: 9,
-    borderWidth: 1,
-    borderColor: '#b0003a',
-    borderRadius: 10,
-    width: "80%",
-    //height: 45,
-    alignSelf: "center",
-    backgroundColor: "#fff",   //"#C4C4C4",
-    marginTop: 5,
-    //opacity: 0.5,
-  }, 
-
-});
+// });

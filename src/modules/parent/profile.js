@@ -9,7 +9,7 @@ import {
 import Ngrok from '../../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
 import Loader from '../../components/Loader';
-
+import styles from '../../components/style';
 
 const Profile = ({navigation}) => {
   const [data, getData] = useState([]);
@@ -74,7 +74,7 @@ const Profile = ({navigation}) => {
         }>
         <Text style={styles.loginText}>Edit</Text>
       </TouchableOpacity>
-      <View style={styles.body}>
+      <View style={styles.body2}>
         <Text style={styles.name}>Hello, {data.name}</Text>
       </View>
 
@@ -99,7 +99,7 @@ const Profile = ({navigation}) => {
         onPress={() => navigation.navigate('Change Password')}>
         <Text style={styles.loginText}>Change Password</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.loginBtn} onPress={() => onPressLogout()}  >
+      <TouchableOpacity style={styles.logoutBtn} onPress={() => onPressLogout()}  >
         <Text style={styles.loginText}>Log Out</Text>
       </TouchableOpacity>
 
@@ -109,69 +109,3 @@ const Profile = ({navigation}) => {
 
 export default Profile;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F9F2F2',
-  },
-  edit: {
-    flexDirection: 'row-reverse',
-    height: 35,
-    backgroundColor: '#ff5c8d', //'#ff6090',
-    width: 70,
-    alignSelf: 'flex-end',
-    marginTop: 15,
-    marginHorizontal: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-    //borderColor:'black',
-    borderRadius: 12,
-  },
-  name: {
-    fontSize: 22,
-    color: 'black',
-    fontWeight: '600',
-  },
-  body: {
-    marginVertical: 23,
-    alignSelf: 'center',
-  },
-  textview: {
-    marginBottom: 7,
-  },
-  headertext: {
-    fontSize: 16,
-    marginLeft: 30,
-  },
-  details: {
-    backgroundColor: '#d3d3d3',
-    borderRadius: 12,
-    width: '85%',
-    padding: 8,
-    alignSelf: 'center',
-    fontSize: 16,
-  },
-  loginBtn: {
-    width: '50%',
-    borderRadius: 10,
-    height: 38,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#ff5c8d',
-    alignSelf: 'center',
-    marginTop: 20,
-  },
-  loginText: {
-    color: 'black',
-    fontSize: 15,
-    // fontWeight:'700'
-  },
-  detailsAddress: {
-    height: 100,
-    backgroundColor: '#d3d3d3',
-    borderRadius: 12,
-    width: '85%',
-    padding: 8,
-    alignSelf: 'center',
-  },
-});

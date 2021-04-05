@@ -10,7 +10,7 @@ export default function Loader({loading}) {
       onRequestClose={() => {}}>
       <View style={styles.modalBackground}>
         <View style={styles.activityIndicatorHolder}>
-          <ActivityIndicator animating={loading} size="large" color="#E91E63" />
+          <ActivityIndicator animating={loading} size="large" color="#FF5C00" />
         </View>
       </View>
     </Modal>

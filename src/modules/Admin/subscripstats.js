@@ -79,7 +79,7 @@ const MyPieChart = () => {
         // dark-content, light-content and default
         hidden={false}
         //To hide statusBar
-        backgroundColor="#e91e63"
+        backgroundColor="#FF5C00"
         //Background color of statusBar only works for Android
         translucent={false}
       //allowing light, but not detailed shapes

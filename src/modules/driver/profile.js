@@ -4,6 +4,7 @@ import Ngrok from '../../constants/ngrok'
 import AsyncStorage from '@react-native-community/async-storage';
 import { ScrollView } from 'react-native-gesture-handler';
 import Loader from '../../components/Loader';
+import styles from '../../components/style';
 
 const Profile = ({ navigation }) => {
   const [data, getData] = useState([])
@@ -88,7 +89,7 @@ const Profile = ({ navigation }) => {
         >
           Change Password</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.loginBtn} onPress={() => onPressLogout()}  >
+      <TouchableOpacity style={styles.logoutBtn} onPress={() => onPressLogout()}  >
         <Text style={styles.loginText}>Log Out</Text>
       </TouchableOpacity>
     </ScrollView>
@@ -96,77 +97,3 @@ const Profile = ({ navigation }) => {
 }
 
 export default Profile;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#F9F2F2",
-
-  },
-  edit: {
-    flexDirection: 'row-reverse',
-    height: 35,
-    backgroundColor: '#ff5c8d',
-    width: 70,
-    alignSelf: 'flex-end',
-    marginTop: 15,
-    marginHorizontal: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-    //borderColor:'black',
-    borderRadius: 12,
-  },
-  name: {
-    fontSize: 22,
-    color: "black",
-    fontWeight: '600',
-
-  },
-  body: {
-    marginTop: 30,
-    alignItems: 'center',
-    marginBottom: 20,
-
-  },
-  textview: {
-    marginBottom: 7,
-  },
-  headertext: {
-    fontSize: 13,
-    marginLeft: 35,
-    marginBottom: 2,
-  },
-  details: {
-    backgroundColor: "#d3d3d3",
-    borderRadius: 12,
-    width: '85%',
-    padding: 8,
-    alignSelf: "center"
-  },
-  loginBtn: {
-    width: "50%",
-    borderRadius: 10,
-    height: 40,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#ff5c8d",
-    alignSelf: "center",
-    marginTop: 20,
-  },
-  loginText: {
-    fontSize: 15,
-  },
-  detailsAddress: {
-    height: 80,
-    backgroundColor: "#d3d3d3",
-    //borderWidth: 1,
-    borderRadius: 12,
-    //borderColor: '#ff5c8d',
-    //marginTop: 3,
-    width: '85%',
-    padding: 8,
-    alignSelf: "center"
-
-  }
-
-});

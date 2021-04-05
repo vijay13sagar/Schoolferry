@@ -14,6 +14,7 @@ import Ngrok from '../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import Loader from '../components/Loader';
+import styles from '../components/style';
 
 export default function Login({navigation}) {
   const [email, setEmail] = useState('');
@@ -121,21 +122,20 @@ export default function Login({navigation}) {
     }
   };
   return (
-    <View style={styles.container}>
+    <View style={styles.cont2}>
       
       <Loader loading = {isloading}/>
-
-      <Image style={styles.image} source={require('../assets/Logo.png')} />
       <StatusBar
         barStyle="light-content"
         // dark-content, light-content and default
         hidden={false}
         //To hide statusBar
-        backgroundColor="#E91E63"
+        backgroundColor='#FF5C00'//"#26A7FF"
         //Background color of statusBar only works for Android
         translucent={false}
         //allowing light, but not detailed shapes
       />
+      <Image style={{width:'80%',height:'25%',marginBottom:20}} source={require('../assets/Logo.png')} />
       <View style={styles.inputView}>
         <TextInput
           keyboardType="numeric"
@@ -177,54 +177,3 @@ export default function Login({navigation}) {
     </View>
   );
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F9F2F2',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  image: {
-    marginBottom: 40,
-  },
-  inputView: {
-    borderWidth: 1,
-    borderColor: '#B0003A',
-    borderRadius: 10,
-    width: '80%',
-    height: 45,
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    marginTop: 5,
-    //opacity: 0.5,
-  },
-  TextInput: {
-    height: 50,
-    flex: 1,
-    alignItems: 'center',
-  },
-  error: {
-    color: '#DC143C',
-    fontSize: 11,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  forgot_button: {
-    height: 30,
-    color: '#1E90FF',
-  },
-  loginBtn: {
-    width: '60%',
-    borderRadius: 10,
-    height: 40,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 60,
-    backgroundColor: '#FF5C8D',
-  },
-  registerTextStyle: {
-    marginTop: 10,
-    color: 'black',
-    fontSize: 13,
-  },
-});

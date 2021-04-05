@@ -16,6 +16,7 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import moment from 'moment'
 import Loader from '../../components/Loader';
+import styles from '../../components/style';
 
 export default function addchild({ route, navigation }) {
   const [CN, setCN] = useState("");
@@ -166,7 +167,7 @@ export default function addchild({ route, navigation }) {
      <View style={{marginTop:60}}>
       <View style={styles.inputView }>
         <TextInput
-          style={styles.TextInput}
+          style={styles.TextInput1}
           placeholder="Child Name"
           placeholderTextColor="#929292"
           onChangeText={(CN) => setCN(CN)}
@@ -183,7 +184,7 @@ export default function addchild({ route, navigation }) {
       <View style={styles.inputaddress}>
         <TextInput
           
-          style={styles.TextInput}
+          style={styles.TextInput1}
           placeholder="School"
           placeholderTextColor="#929292"
           onChangeText={(SA) => setSA(SA)}
@@ -193,7 +194,7 @@ export default function addchild({ route, navigation }) {
       </View>
       <View style={styles.inputaddress}>
         <TextInput
-          style={styles.TextInput}
+          style={styles.TextInput1}
           placeholder="Residence Address"
           placeholderTextColor="#929292"
           onChangeText={(HA) => setHA(HA)}
@@ -206,18 +207,18 @@ export default function addchild({ route, navigation }) {
       <TouchableOpacity style={styles.pickerBtn}
         onPress={()=>{
           setVisible(true), setTimerValue(1) } }>
-        <Text style={[styles.Text, textflag ? styles.bg1 : styles.bg2]}>{textflag? ST :"School Start Time"}</Text>
+        <Text style={[styles.dobText, textflag ? styles.bg1 : styles.bg2]}>{textflag? ST :"School Start Time"}</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.pickerBtn}
         onPress={()=>{
           setVisible(true), setTimerValue(2) }}  >
-        <Text style={[styles.Text, textflag2 ? styles.bg1 : styles.bg2]}>{textflag2? ET :"School End Time"}</Text>
+        <Text style={[styles.dobText, textflag2 ? styles.bg1 : styles.bg2]}>{textflag2? ET :"School End Time"}</Text>
       </TouchableOpacity>
       </View>
       <Picker
         selectedValue={pickerValue}
-        style={styles.Picker}
+        style={styles.Picker1}
         onValueChange={(value) => setPickerValue(value)} 
         
         >
@@ -244,100 +245,3 @@ export default function addchild({ route, navigation }) {
     </View>
   );
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#F9F2F2",
-  },
-  inputView: {
-    borderWidth: 1,
-    borderColor: '#B0003A',
-    borderRadius: 10,
-    width: "80%",
-    height: 45,
-    padding: 2,
-    backgroundColor: "#fff",   //"#C4C4C4",
-    marginTop: 7,
-    alignSelf:'center'
-  },
-  TextInput: {
-    flex: 1,
-    borderRadius: 12, 
-    padding: 8,
-    alignSelf: "center"
-
-  },
-  error: {
-    color: '#DC143C',
-    fontSize: 13,
-    alignSelf:'center',
-    marginTop:5
-  },
-  loginBtn: {
-    width: "50%",
-    borderRadius: 10,
-    height: 40,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#FF5C8D",
-    alignSelf: "center",
-    marginTop: 30,
-  },
-  loginText:{
-    fontSize:14
-  },
-  inputaddress: {
-    borderWidth: 1,
-    borderColor: '#B0003A',
-    borderRadius: 10,
-    width: "80%",
-    height: 45,
-    padding: 2,
-    backgroundColor: "#fff",   //"#C4C4C4",
-    marginTop: 7,
-    alignSelf:'center'
-  },
-  Picker: {
-    width: "70%",
-    marginTop: 7,
-    borderRadius: 10,
-    height: 45,
-    borderWidth: 2,
-    alignContent: "center",
-    alignSelf: "center",
-  },
-  pickerBtn:{
-    width: 150,
-    borderRadius: 10,
-    borderWidth:1,
-    borderColor:'#B0003A',
-    height: 45,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#fff",
-    alignSelf: "center",
-    marginTop: 10,
-
-  },
-  text:{
-    fontSize:16,
-    color:'#B0003A'
-  },
-  dobText:{
-    padding:8, 
-    alignSelf:'center',
-  },
-  bg1:{
-    color:'#000'
-  },
-  bg2:{
-    color:'#929292'
-  },
-  serviceText:{
-    color:'red',
-    fontSize:16,
-    marginTop:15,
-    marginLeft:10,
-    //marginRight:5,
-  }
-});
