@@ -60,6 +60,8 @@ export default function CardFormScreen({route, navigation}) {
     fetchdata();
   }, [count]);
 
+
+
   const handleCardPayPress = async () => {
   
     try {
@@ -87,14 +89,13 @@ export default function CardFormScreen({route, navigation}) {
 
   const deleteHandler = (value) => {
   console.log(value);
-    Alert.alert('Are you sure ?', ' ', [
+    Alert.alert(`Delete card ending with ${value}`,' ' , [
       {
-        text: 'Yes',
+        text: 'Delete',
         onPress: () => deletecard(),
       },
       {text: 'Discard', style: 'cancel'},
     ]);
-
     const deletecard = async() => {
       setisLoading(true)
       let parentId = await AsyncStorage.getItem('token');
@@ -116,15 +117,24 @@ export default function CardFormScreen({route, navigation}) {
           console.log(error);
           setisLoading(false);
           Alert.alert('Failed. Please Try Again');
-        });
-
-        
+        });      
       } catch (error) {
         
       }
-
     }
   };
+
+  const savedCardPayemnt = (val) => {
+    Alert.alert( `Making payment with card ending with ${val}`, ' ', [
+      {
+        text: 'Pay',
+        onPress: () => paymentHandler(val),
+      },
+      {text: 'Discard', style: 'cancel'},
+    ]);
+
+  }
+
 
   const paymentHandler = async (value) => {
     setisLoading(true);
@@ -132,9 +142,10 @@ export default function CardFormScreen({route, navigation}) {
     console.log('PID', parentId);
     console.log('card no', cardno);
     console.log('paymentmethod', id);
-    console.log('save?', isSelected);
+    console.log('card save ?', isSelected);
     console.log('amount', amount);
     setTokenData(value)
+    sendplan();
     
     console.log('token',value)
     try {
@@ -175,6 +186,44 @@ export default function CardFormScreen({route, navigation}) {
       console.log(error);
     }
   };
+
+  const sendplan = () => {
+
+    try {
+      axios({
+        method: 'POST',
+        url: `${Ngrok.url}/api/plandetails`,
+        "headers": {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        data: {
+          childid:route.params.childid,
+          startdate:route.params.maxDate,
+          enddate:route.params.tomorrow,
+          tenure:route.params.f,
+          amount:amount.toString()
+        }
+      })
+        .then(function (response) {
+          console.log("plan details send status: ", response.status);
+
+        })
+        .catch(function (error) {
+          console.log(error.response.status) // 401
+          console.log(error.response.data.error) //Please Authenticate or whatever returned from server
+          if (error.response.status == 401) {
+            //redirect to login
+            console.log('plan details not sent')
+          }
+
+        })
+    }
+    catch (error) {
+      console.log("errordetails", error);
+    }
+
+}
 
   return isLoading ? (
     <View style={styles.container}>
@@ -228,7 +277,7 @@ export default function CardFormScreen({route, navigation}) {
                 <TouchableOpacity
                   style={styles.cardData}
                   onPress={() => {
-                    paymentHandler(item.cardNo)
+                    savedCardPayemnt(item.cardNo)
                   }}>
                   <Ionicons
                     name="card"

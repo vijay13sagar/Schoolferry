@@ -8,17 +8,6 @@ const Homescreen = ({ route,navigation }) => {
   const childid= route.params.childid;
   return (
     <View style={styles.container}>
-      <StatusBar
-        barStyle="light-content"
-        // dark-content, light-content and default
-        hidden={false}
-        //To hide statusBar
-        backgroundColor="#e91e63"
-        //Background color of statusBar only works for Android
-        translucent={false}
-      //allowing light, but not detailed shapes
-
-      />
 
       <View style={styles.pendingTrips}>
         <Text style={styles.tripsTitleText}>Select a Payment Option</Text>

@@ -34,7 +34,7 @@ const oldmap = ({navigation}) => {
           );
 
           console.log('tracking page:', response.data.payment);
-          console.log('Trip Status:', response2.data);
+          //console.log('Trip Status:', response2.data);
 
           let data = response.data.payment;
           setripDetails(response2.data);

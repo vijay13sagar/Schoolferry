@@ -37,7 +37,7 @@ const App = ({ route, navigation }) => {
   const validateentries = () => {
     if (stay == false) {
       setValueerror({ valueError: null });
-      navigation.navigate('Pay Mode', {
+      navigation.navigate('PaymentScreen', {
         maxDate: maxDate,
         tomorrow: tomorrow,
         f: f,
@@ -52,17 +52,6 @@ const App = ({ route, navigation }) => {
   console.log("to",tomorrow);
   return (
     <View style={styles.container}>
-      <StatusBar
-        barStyle="light-content"
-        // dark-content, light-content and default
-        hidden={false}
-        //To hide statusBar
-        backgroundColor="#e91e63"
-        //Background color of statusBar only works for Android
-        translucent={false}
-      //allowing light, but not detailed shapes
-
-      />
       <ScrollView>
         <Text style={styles.headertext} >Start Date</Text>
         <View style={{ backgroundColor: '#ffe4e1', width: 250, alignSelf: 'center', margin: 10 }}>

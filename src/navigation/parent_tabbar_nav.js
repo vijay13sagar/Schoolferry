@@ -78,12 +78,12 @@ function Subscriptions() {
       <Stack.Screen
         name="PaymentScreen"
         component={Payment}
-        options={{ title: 'Payment Screen' }}
+        options={{ title: 'Make Payment' }}
       />
       <Stack.Screen
         name="Upiscreen"
         component={Upipay}
-        options={{ title: 'Payment Screen' }}
+        options={{ title: 'Payment' }}
       />
       
     </Stack.Navigator>
