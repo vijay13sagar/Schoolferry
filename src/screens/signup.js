@@ -13,6 +13,7 @@ import Ngrok from '../constants/ngrok';
 import axios from 'axios';
 import Login from './login';
 import Loader from '../components/Loader';
+import styles from '../components/style';
 export default function App({route,navigation}) {
   const [email, setEmail] = useState("");
   const [Name, setName] = useState("");
@@ -112,11 +113,11 @@ export default function App({route,navigation}) {
 
 
   return (
-    <View style={styles.container}>
+    <View style={styles.cont2}>
       <Loader loading={isloading} />
-
-      <Image style={styles.image} source={require('../assets/Logo.png')} />
-
+<View>
+      <Image style={{width:280,height:170,marginBottom:20}} source={require('../assets/Logo.png')} />
+      </View>
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
@@ -155,7 +156,7 @@ export default function App({route,navigation}) {
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
-          placeholder="Confirm Password"
+          placeholder="Reenter Password"
           placeholderTextColor="#929292"
           secureTextEntry={true}
           onChangeText={(password2) => setpassword2(password2)}
@@ -169,57 +170,3 @@ export default function App({route,navigation}) {
     </View>
   );
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F9F2F2',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  image: {
-    marginBottom: 40,
-  },
-  inputView: {
-    borderWidth: 1,
-    borderColor: '#B0003A',
-    borderRadius: 10,
-    width: "87%",
-    height: 45,
-    alignItems: "center",
-    backgroundColor: "#fff",   //"#C4C4C4",
-    marginTop: 10,
-    //opacity: 0.5,
-  },
-  TextInput: {
-    height: 50,
-    flex: 1,
-    padding: 10,
-  },
-  error: {
-    padding: 1,
-    color: '#DC143C',
-    fontSize: 11,
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-  },
-  forgot_button: {
-    height: 30,
-    marginBottom: 15,
-    color: '#1E90FF',
-  },
-  loginBtn: {
-    width: '50%',
-    borderRadius: 10,
-    height: 38,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#FF5C8D',
-    alignSelf: 'center',
-    marginTop: 20,
-  },
-  registerTextStyle: {
-    marginTop: 10,
-    color: 'black',
-    fontSize: 13,
-  },
-});

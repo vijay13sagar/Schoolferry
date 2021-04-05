@@ -6,6 +6,8 @@ import MapView, { Marker, AnimatedRegion } from 'react-native-maps';
 import Ngrok from '../../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
 import Loader from '../../components/Loader';
+import styles from '../../components/style';
+
 export default class App extends React.Component {
   constructor() {
     super();
@@ -100,6 +102,7 @@ export default class App extends React.Component {
     console.log(position.coords.latitude);
     this.setState({
       ready: true,
+      error:null,
       where: { lat: position.coords.latitude, lng: position.coords.longitude },
       isloading:false
     })
@@ -124,7 +127,7 @@ export default class App extends React.Component {
                     Longitude: ${this.state.where.lng}`
             }</Text> */}
             <MapView
-              style={{ height: 600, width: 450 }}
+              style={{ height: "90%", width: "100%" }}
               //showsUserLocation
               followsUserLocation
               mapType='standard'
@@ -149,7 +152,7 @@ export default class App extends React.Component {
         this.props.navigation.navigate('Homey',{refresh:true})
         this.props.navigation.replace('Tripnotstarted',{refresh:true})
       }}>
-              <Text>End Trip</Text>
+              <Text style={styles.loginText}>End Trip</Text>
             </TouchableOpacity>
           </View>
         )}
@@ -157,25 +160,3 @@ export default class App extends React.Component {
     );
   }
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#F9F2F2",
-    //alignItems: 'center',
-    justifyContent: 'center'
-  },
-  big: {
-    fontSize: 48
-  },
-  loginBtn: {
-    width: "50%",
-    borderRadius: 10,
-    height: 38,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#ff5c8d",
-    alignSelf: "center",
-    marginTop: 20,
-    marginBottom:20,
-  },
-});

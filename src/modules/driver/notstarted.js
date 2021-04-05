@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Text, View,StatusBar, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import styles from '../../components/style';
 
 const oldmap = ({navigation}) =>  {
     return (
@@ -9,7 +10,7 @@ const oldmap = ({navigation}) =>  {
         // dark-content, light-content and default
         hidden={false}
         //To hide statusBar
-        backgroundColor="#e91e63"
+        backgroundColor="#FF5C00"
         //Background color of statusBar only works for Android
         translucent={false}
       //allowing light, but not detailed shapes
@@ -18,7 +19,7 @@ const oldmap = ({navigation}) =>  {
             
             <Text style={styles.centerview} >To Check location on map, Please Start a Trip</Text>
             <TouchableOpacity style={styles.loginBtn} onPress={()=>navigation.navigate('Home',{refresh:true})}>
-              <Text>Start Trip</Text>
+              <Text style={styles.loginText}>Start Trip</Text>
             </TouchableOpacity>
             
           </View>
@@ -27,31 +28,3 @@ const oldmap = ({navigation}) =>  {
   }
 
 export default oldmap;
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#F9F2F2",
-
-  },
-
-  centerview: {
-    justifyContent:'center',
-    //alignContent:'center',
-    //marginTop: 180,
-    //alignItems: 'center',
-    alignSelf:'center'
-
-  },
- 
-  loginBtn: {
-    width: "50%",
-    borderRadius: 10,
-    height: 38,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#ff5c8d",
-    alignSelf: "center",
-    marginTop: 20,
-  },
-
-});

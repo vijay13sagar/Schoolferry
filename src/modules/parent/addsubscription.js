@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { Text, View,StatusBar, TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native';
+import styles from '../../components/style';
 
 const addsubscreen = ({navigation}) =>  {
     return (
       <ScrollView style={styles.container} >
       
-          <View style={styles.body}>
+          <View style={styles.body1}>
             <View style={styles.slogans}>
               <Text style={{fontWeight:'bold',fontSize:19,alignSelf:'center',marginTop:10,}}>We Provide</Text>
               <Text style={styles.sidehead}>Easy Tracking</Text>
@@ -28,88 +29,3 @@ const addsubscreen = ({navigation}) =>  {
   }
 
 export default addsubscreen;
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#F9F2F2",
-
-  },
-  sidehead:{
-    fontWeight:'bold',
-    marginLeft:8,
-    alignSelf:'flex-start',
-    justifyContent:'space-around',
-    fontSize:18
-  },
-  content:{
-    marginLeft:13,
-    alignSelf:'flex-start',
-    justifyContent:'space-around',
-    marginVertical:2,
-    fontSize:15
-
-  },
-  slogans:{
-    borderWidth: 1,
-      borderColor: '#b0003a',
-      borderRadius: 10,
-      width: "85%",
-      height: 490,
-      padding:2,
-      backgroundColor:'#ffe4e1',   //"#C4C4C4",
-      marginVertical: 5,
-
-  },
-  name: {
-    fontSize: 22,
-    color: "black",
-    fontWeight: '600',
-
-  },
-  body: {
-    justifyContent:'center',
-    alignContent:'center',
-    alignItems: 'center',
-  },
-  textview: {
-    margin: 20,
-  },
-  headertext: {
-    fontSize: 13,
-    marginLeft: 30,
-  },
-  details: {
-    height: 40,
-    margin:10,
-    backgroundColor: "#C4C4C4",
-    borderWidth: 1,
-    borderRadius: 12,
-    borderColor: '#4DAFCE',
-    //marginTop: 3,
-    width: '85%',
-    padding: 8,
-    alignSelf: "center"
-  },
-  details2: {
-    height: 200,
-    backgroundColor: "grey",
-    borderWidth: 1,
-    borderRadius: 12,
-    borderColor: '#4DAFCE',
-    //marginTop: 3,
-    width: '85%',
-    padding: 8,
-    alignSelf: "center"
-  },
-  loginBtn: {
-    width: "60%",
-    borderRadius: 10,
-    height: 38,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#ff5c8d",
-    alignSelf: "center",
-    marginTop: 15,
-  },
-
-});

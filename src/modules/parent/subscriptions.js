@@ -12,6 +12,7 @@ import Ngrok from '../../constants/ngrok';
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 import Loader from '../../components/Loader';
+import styles from '../../components/style';
 
 const subscription = ({navigation}) => {
   const [childinfo, setChildInfo] = useState();
@@ -55,9 +56,4 @@ const subscription = ({navigation}) => {
 };
 
 export default subscription;
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F9F2F2',
-  },
-});
+

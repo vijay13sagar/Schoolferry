@@ -158,7 +158,7 @@ const NannyTab = () => {
         },
       })}
       tabBarOptions={{
-        activeTintColor: '#ff5c8d',
+        activeTintColor: '#FF5C00',
         inactiveTintColor: 'gray',
       }}
     >
