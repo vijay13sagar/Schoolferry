@@ -144,7 +144,7 @@ const showplanScreen = ({route, navigation}) => {
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           data={Boolean(value1.length) && value1[0].plans}
-          keyExtractor={(item, index) => item.total}
+          keyExtractor={(item, index) => item.childId}
           renderItem={({item}) => (
             <View style={{flex: 1}}>
               <TouchableOpacity
