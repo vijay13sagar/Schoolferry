@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, StatusBar,Alert, TouchableOpacity, StyleSheet, FlatList, Text, View } from 'react-native';
-import { Container, Header, Content, Card, CardItem, Body } from 'native-base';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ActivityIndicator, StatusBar,Alert, TouchableOpacity, FlatList, Text, View } from 'react-native';
+import { Card, CardItem, Body } from 'native-base';
 import axios from 'axios';
 import Ngrok from '../../constants/ngrok';
 import moment from 'moment';
+import styles from '../../components/styles_admin';
 
 const today = new Date();
 const TD = moment(today).format('DD-MM-YYYY');
@@ -19,8 +19,10 @@ export default class Home_page extends Component {
     };
   }
   
-
+  
+  
   componentDidMount() {
+  
     this._unsubscribe = this.props.navigation.addListener('focus', () => {
 
     fetch(`${Ngrok.url}/api/admin/today/trips`)
@@ -39,7 +41,8 @@ export default class Home_page extends Component {
   componentWillUnmount() {
     this._unsubscribe();
   }
-   onpressHandler = () => {
+  
+  onpressHandler = () => {
     try {
       axios({
         method: 'POST',
@@ -49,18 +52,7 @@ export default class Home_page extends Component {
           'Content-Type': 'application/json'
         },
          data: {
-          //  date :TD,
-        //   name: name,
-        //   email: email,
-        //   contact: contact,
-        //   address: ADR,
-        //   experience: EXP,
-        //   photourl: "NULL",
-        //   idproofurl: "NULL",
-        //   password: password
-
-
-         }
+          }
       })
         .then(function (response) {
           if (response.status == 200) {
@@ -70,22 +62,14 @@ export default class Home_page extends Component {
           console.log("response", response.status);
         })
         .catch(function (error) {
-          // console.log(error.response.status) // 401
-          // console.log(error.response.data.error) //Please Authenticate or whatever returned from server
-          // if (error.response.status == 401) {
-          //   //redirect to login
-          //   Alert.alert('Trip Generation Failed!')
-          // }
+      
           console.log(error);
-
         })
     }
     catch (error) {
       console.log("errordetails", error);
     }
   }
-  
-
   render() {
     const { data, isLoading } = this.state;
     
@@ -95,13 +79,13 @@ export default class Home_page extends Component {
 
     return (
       
-      <View style={styles.container}>
+      <View style={styles.container1}>
         <StatusBar
           barStyle="light-content"
           // dark-content, light-content and default
           hidden={false}
           //To hide statusBar
-          backgroundColor='#e91e63'
+          backgroundColor='#FF5C00'
           //Background color of statusBar only works for Android
           translucent={false}
         //allowing light, but not detailed shapes
@@ -109,8 +93,8 @@ export default class Home_page extends Component {
         />
         <Text style={{ alignSelf: "center" }}>{TD}</Text>
         <View>
-          <TouchableOpacity style={styles.Schedule} onPress={this.onpressHandler} >
-            <Text style={styles.loginText}>Schedule Trips</Text>
+          <TouchableOpacity style={styles.loginBtn} onPress={this.onpressHandler} >
+            <Text style={styles.TextInput}>Schedule Trips</Text>
             
 
 
@@ -120,9 +104,9 @@ export default class Home_page extends Component {
           {isLoading ? <ActivityIndicator /> : (
             <FlatList
               data={data}
-              keyExtractor={({ id }, index) => id}
+              keyExtractor={({ driver_id}, index) => driver_id}
               renderItem={({ item }) => (
-                <Card style={{ flexDirection: "column" }}>
+                <Card style={{ flexDirection: "column"}}>
                   <CardItem button onPress={() => this.props.navigation.navigate('Trip_Details', { item: item })}>
                     <Body>
                       <Text style={{ flexDirection: 'row' }}>
@@ -147,63 +131,3 @@ export default class Home_page extends Component {
     );
   }
 };
-
-
-const styles = StyleSheet.create({
-  container: {
-    
-    backgroundColor: "#F9F2F2",
-   
-
-  },
-  TextInput: {
-    height: 50,
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 10,
-    marginLeft: 10,
-
-  },
-  loginBtn: {
-    width: "50%",
-    borderRadius: 10,
-    height: 38,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#ff5c8d",
-    alignSelf: "center",
-    marginTop: 20,
-  },
-
-  Schedule: {
-    width: "40%",
-    borderRadius: 10,
-    height: 38,
-    alignItems:"center",
-    justifyContent:"center",
-  
-    backgroundColor: "#ff5c8d",
-    alignSelf:"center",
-    marginTop: 20,
-  },
-  title: {
-    position: 'absolute',
-    marginTop: 65,
-    marginBottom: 0,
-    marginHorizontal: 20,
-    fontSize: 30,
-    color: 'white',
-    fontWeight: 'bold'
-  }, time: {
-    width: '20%',
-    marginVertical: 20,
-    position: 'absolute',
-    backgroundColor: 'green',
-    color: 'white',
-    fontSize: 25,
-    fontWeight: 'bold',
-    bottom: 0,
-    borderRadius: 20,
-    marginLeft: 20
-  }
-});

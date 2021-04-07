@@ -2,17 +2,18 @@
 
 import React, { useState } from "react";
 import {
-  StyleSheet,
+  
   Text,
   View,
   TextInput,
   TouchableOpacity,
   Alert,
-  StatusBar,
+  
 } from "react-native";
 import Ngrok from '../../constants/ngrok';
 import axios from 'axios';
 import Loader from '../../components/Loader';
+import styles from '../../components/styles_admin';
  
 export default function Add_Nanny({navigation}) {
   const [isloading, setLoading] = useState(false);
@@ -52,26 +53,14 @@ export default function Add_Nanny({navigation}) {
       setEmailError({ emailError: null })
       return false
     }
-    // else if (!validateEmail(email)) {
-    //   setEmailError({ emailError: "Enter Valid Email Id" })
-    //   setcontactError({contactError:null})
-    //   setemptyFeilds({ emptyFields: null })
-
-    //   return false
-    // }
+    
     else if (!validatecontact(contact)) {
       setcontactError({ contactError: "Enter Valid Phone Number" })
       setEmailError({ emailError: null })
       setemptyFeilds({ emptyFields: null })
       return false
     }
-    // else {
-    //   setEmailError({ emailError: null })
-    //   setemptyFeilds({ emptyFields: null })
-    //   setcontactError({contactError:null})
-    //   return false
-    // }
-    
+   
     return true
     
   }
@@ -140,7 +129,7 @@ export default function Add_Nanny({navigation}) {
       
       <View style={styles.inputView}>
         <TextInput
-          style={styles.TextInput}
+          style={styles.TextInput1}
           placeholder="Name"
           placeholderTextColor="#929292"
           onChangeText={(name) => setname(name)}
@@ -148,24 +137,17 @@ export default function Add_Nanny({navigation}) {
       </View>
       <View style={styles.inputView}>
         <TextInput
-          style={styles.TextInput}
+          style={styles.TextInput1}
           placeholder="Mobile Number"
           keyboardType="numeric"
           placeholderTextColor="#929292"
           onChangeText={(contact) => setcontact(contact)}
         />
       </View>
-      {/* <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Email"
-          placeholderTextColor="#929292"
-          onChangeText={(email) => setEmail(email)}
-        />
-      </View> */}
+     
       <View style={styles.inputView}>
         <TextInput
-          style={styles.TextInput}
+          style={styles.TextInput1}
           placeholder="Address"
           placeholderTextColor="#929292"
           onChangeText={(ADR) => setADR(ADR)}
@@ -173,7 +155,7 @@ export default function Add_Nanny({navigation}) {
       </View>
       <View style={styles.inputView}>
         <TextInput
-          style={styles.TextInput}
+          style={styles.TextInput1}
           placeholder="Password"
           placeholderTextColor="#929292"
           secureTextEntry={true}
@@ -184,7 +166,7 @@ export default function Add_Nanny({navigation}) {
       <Text style={styles.error}>{emailError}</Text>
       <Text style={styles.error}>{contactError}</Text>
         <TouchableOpacity style={styles.loginBtn} onPress={pressHandler} >
-            <Text style={styles.loginText}>Confirm</Text>
+            <Text style={styles.TextInput}>Confirm</Text>
             
         </TouchableOpacity>
         
@@ -192,64 +174,3 @@ export default function Add_Nanny({navigation}) {
   );
 }
  
-const styles = StyleSheet.create({
-    container: {
-      padding: 50,
-      flex:1,
-        backgroundColor: "#F9F2F2",
-        alignItems: "center",
-        
-      },
-    
-      image: {
-        marginBottom: 40,
-      },
-    
-      inputView: {
-        borderWidth: 1,
-        borderColor: '#b0003a',
-        borderRadius: 10,
-        width: "115%",
-        height: 45,
-        alignItems: "center",
-        backgroundColor:"#fff",   //"#C4C4C4",
-        marginTop: 10,
-        //opacity: 0.5,
-      },
-    
-       TextInput: {
-        height: 50,
-        alignItems:"flex-start",
-        padding: 10,
-        marginLeft:10,
-    
-      },
-    
-      forgot_button: {
-        height: 30,
-        marginBottom: 15,
-        color: '#1e90ff',
-    
-      },
-      error: {
-        padding:1,
-  
-      color: '#dc143c',
-      fontSize: 11,
-      alignItems: 'flex-start',
-      justifyContent: 'center'
-      },
-    
-      loginBtn: {
-        width: "50%",
-        borderRadius: 10,
-        height: 38,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#ff5c8d",
-        alignSelf: "center",
-        marginTop: 20,
-      },
-     
-  
-});

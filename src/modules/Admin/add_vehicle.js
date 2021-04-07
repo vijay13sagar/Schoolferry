@@ -13,6 +13,7 @@ import {
 import Ngrok from '../../constants/ngrok';
 import axios from 'axios';
 import Loader from '../../components/Loader';
+import styles from '../../components/styles_admin';
  
 export default function Add_Driver({navigation}) {
   const [isloading, setLoading] = useState(false);
@@ -22,23 +23,6 @@ export default function Add_Driver({navigation}) {
   const [Cap, setCap] = useState("");
   const [Type, setType] = useState();
   const [{ emptyFields }, setemptyFeilds] = useState("");
-  const validateEmail = (email) => {
-    const regex_mail = /^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)$/;
-    if (regex_mail.test(email)) {
-        return true
-    }
-  };
-
-  // const validatecontact = (contact) => {
-    
-  //     var regex_phone = /^((\+91)?|91)?[789][0-9]{9}/
-  
-  //   if (regex_phone.test(contact)) {
-  //     return true
-  //   }
-  //   else{return false}
-
-  // };
 
   const validateFunction = () => {
     
@@ -95,10 +79,6 @@ export default function Add_Driver({navigation}) {
         }
      
         })
-      // .catch(function (error) {
-      //   // handle error
-      //   console.log("errordetails",error);
-      // })
     }
        catch(error){
         setLoading(false);
@@ -114,7 +94,7 @@ export default function Add_Driver({navigation}) {
       {/* <StatusBar style="auto" /> */}
       <View style={styles.inputView}>
         <TextInput
-          style={styles.TextInput}
+          style={styles.TextInput1}
           placeholder="Enter Vehicle Number"
           placeholderTextColor="#929292"
           onChangeText={(VH) => setVH(VH)}
@@ -122,7 +102,7 @@ export default function Add_Driver({navigation}) {
       </View>
       <View style={styles.inputView}>
         <TextInput
-          style={styles.TextInput}
+          style={styles.TextInput1}
           placeholder="Enter GPS Tracking Number"
           placeholderTextColor="#929292"
           onChangeText={(Gps) => setGps(Gps)}
@@ -130,7 +110,7 @@ export default function Add_Driver({navigation}) {
       </View>
       <View style={styles.inputView}>
         <TextInput
-          style={styles.TextInput}
+          style={styles.TextInput1}
           placeholder="Enter Type"
           placeholderTextColor="#929292"
           onChangeText={(Type) => setType(Type)}
@@ -138,7 +118,7 @@ export default function Add_Driver({navigation}) {
       </View>
        <View style={styles.inputView}>
         <TextInput
-          style={styles.TextInput}
+          style={styles.TextInput1}
           placeholder="Enter Model"
           placeholderTextColor="#929292"
           onChangeText={(Model) => setModel(Model)}
@@ -146,7 +126,7 @@ export default function Add_Driver({navigation}) {
       </View> 
       <View style={styles.inputView}>
         <TextInput
-          style={styles.TextInput}
+          style={styles.TextInput1}
           placeholder="Capacity"
           placeholderTextColor="#929292"
           onChangeText={(Cap) => setCap(Cap)}
@@ -156,7 +136,7 @@ export default function Add_Driver({navigation}) {
       <Text style={styles.error}>{emptyFields}</Text>
 
         <TouchableOpacity style={styles.loginBtn} onPress={pressHandler}>
-            <Text style={styles.loginText}>Register</Text>
+            <Text style={styles.TextInput}>Register</Text>
           
             
         </TouchableOpacity>
@@ -164,64 +144,3 @@ export default function Add_Driver({navigation}) {
   );
 }
  
-const styles = StyleSheet.create({
-    container: {
-      padding: 50,
-      flex:1,
-        backgroundColor: "#F9F2F2",
-        alignItems: "center",
-        
-      },
-    
-      image: {
-        marginBottom: 40,
-      },
-    
-      inputView: {
-        borderWidth: 1,
-        borderColor: '#b0003a',
-        borderRadius: 10,
-        width: "115%",
-        height: 45,
-        
-        
-        backgroundColor:"#fff",   //"#C4C4C4",
-        marginTop: 10,
-        //opacity: 0.5,
-      },
-    
-       TextInput: {
-        height: 50,
-       marginLeft:30,
-      
-    
-      },
-    
-      forgot_button: {
-        height: 30,
-        marginBottom: 15,
-        color: '#1e90ff',
-    
-      },
-      error: {
-        padding:1,
-  
-      color: '#dc143c',
-      fontSize: 11,
-      alignItems: 'flex-start',
-      justifyContent: 'center'
-      },
-    
-      loginBtn: {
-        width: "50%",
-        borderRadius: 10,
-        height: 38,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#ff5c8d",
-        alignSelf: "center",
-        marginTop: 20,
-      },
-     
-  
-});

@@ -20,6 +20,7 @@ import {
 import Ngrok from '../../constants/ngrok';
 import Loader from '../../components/Loader';
 import axios from 'axios';
+import styles from '../../components/styles_admin'
 
 const MyPieChart = () => {
   const [data, setData] = useState();
@@ -73,7 +74,7 @@ const MyPieChart = () => {
   }
   return (
     <ScrollView>
-
+ <View style={styles.container1}>
       <Loader loading={loading} />
       <View>
         <Text style={styles.header}>TRIP STATS</Text>
@@ -130,32 +131,7 @@ const MyPieChart = () => {
             </Text>
           </TouchableOpacity>
         </View>
-        {/* <View style={{ flexDirection: "row",marginBottom:10,marginLeft:5 }}>
-          <View>
-          <Text style={{ justifyContent: 'center', marginTop: 6, marginLeft: 10,fontWeight: "bold" ,fontSize:15 }}>Month</Text>
-          {
-            months.map((item1) => (
-
-              <View>
-                <Text style={{ justifyContent: 'center', marginTop: 6, marginLeft: 10,fontWeight: "bold" ,fontSize:15}}>{item1} :- </Text>
-              </View>
-            ))
-
-          }
-          </View>
-          <View>
-            <Text style={{ justifyContent: 'center', marginTop: 6, marginLeft: 10,fontWeight: "bold" ,fontSize:15 }}>Total no of trips</Text>
-          {
-            hist.map((item2) => (
-
-              <View >
-                <Text style={{ justifyContent: 'center', marginTop: 6, marginLeft: 10,fontWeight: "bold" ,fontSize:15 }}>{item2}</Text>
-              </View>
-            ))
-
-          }
-          </View>
-        </View> */}
+        
         <Text style={styles.header}>VEHICLE STATS</Text>
         <BarChart
           data={{
@@ -189,34 +165,9 @@ const MyPieChart = () => {
           }}
         />
       </View>
-
+      </View>
     </ScrollView>
   );
 };
 
 export default MyPieChart;
-const styles = StyleSheet.create({
-  container: {
-    padding: 50,
-    flex: 1,
-    backgroundColor: "#F9F2F2",
-    alignItems: "center",
-  },
-  histBtn: {
-    width: "20%",
-    borderRadius: 10,
-    height: 41,
-    alignItems: "center",
-    justifyContent: "center",
-    marginVertical: 15,
-    backgroundColor: "#ff5c8d",
-    marginHorizontal: "2%"
-  },
-  header: {
-    textAlign: 'center',
-    fontWeight: 'bold',
-    fontSize: 18,
-    padding: 16,
-    marginTop: 16,
-  },
-});

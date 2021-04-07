@@ -14,6 +14,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Picker } from '@react-native-picker/picker';
 import Loader from '../../components/Loader';
+import styles from '../../components/styles_admin'
 const Employee = ({ navigation }) => {
 
   const [title, settitle] = useState("");
@@ -98,14 +99,14 @@ const Employee = ({ navigation }) => {
   }
   
   return (
-    <View style={styles.container}>
+    <View style={styles.container1}>
 
       <StatusBar
         barStyle="light-content"
         // dark-content, light-content and default
         hidden={false}
         //To hide statusBar
-        backgroundColor='#e91e63'
+        backgroundColor='#FF5C00'
         //Background color of statusBar only works for Android
         translucent={false}
       //allowing light, but not detailed shapes
@@ -114,24 +115,26 @@ const Employee = ({ navigation }) => {
       <Loader loading={isloading} />
       <ScrollView>
       <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('driverList')} >
-        <Text style={styles.loginText}>Driver</Text>
+        <Text style={styles.TextInput}>Driver</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('Add_Driver')} >
-        <Text style={styles.loginText}>Add Driver</Text>
+        <Text style={styles.TextInput}>Add Driver</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('nannyList')} >
-        <Text style={styles.loginText}>Nanny</Text>
+        <Text style={styles.TextInput}>Nanny</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('Add_Nanny')} >
-        <Text style={styles.loginText}>Add Nanny</Text>
+        <Text style={styles.TextInput}>Add Nanny</Text>
       </TouchableOpacity>
       <View style={styles.pendingTrips1}>
-        <Text style={styles.tripsTitleText}>Notifications</Text>
+        <Text style={{ fontSize: 25,
+    marginTop: 10,
+    fontWeight: "bold"}}>Notifications</Text>
         <Text style={{fontSize:17,fontWeight:'bold'}}>Send Notifications to Different Users</Text>
       </View>
       <Picker
         selectedValue={role}
-        style={styles.Picker}
+        style={{width:'80%',alignSelf:"center"}}
 
         onValueChange={(role) =>
           setrole(role)
@@ -164,7 +167,7 @@ const Employee = ({ navigation }) => {
       </View>
       <Text style={styles.error}>{emptyFields}</Text>
       <TouchableOpacity style={styles.loginBtn} onPress={pressHandler} >
-        <Text style={styles.loginText}>Confirm</Text>
+        <Text style={styles.TextInput}>Confirm</Text>
       </TouchableOpacity>
       
       </ScrollView>
@@ -173,86 +176,3 @@ const Employee = ({ navigation }) => {
 }
 
 export default Employee;
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#F9F2F2",
-    // alignItems: "center",
-    // justifyContent: "center",
-  },
-  pendingTrips1: {
-    backgroundColor: "#fff",
-    height: 80,
-    marginTop: 10,
-    width: '90%',
-    alignItems: "center",
-    alignSelf: "center",
-    borderWidth: 1,
-    borderRadius: 10
-  },
-  tripsTitleText: {
-    fontSize: 25,
-    marginTop: 10,
-    fontWeight: "bold"
-  },
-  startTripText: {
-    fontSize: 22,
-    textAlign: "center",
-    marginTop: 30,
-    marginBottom: 10,
-  },
-  inputView: {
-    borderWidth: 1,
-    borderColor: '#b0003a',
-    borderRadius: 10,
-    width: "80%",
-    height: 45,
-    alignItems: "center",
-    backgroundColor: "#fff",   //"#C4C4C4",
-    marginTop: 5,
-    //opacity: 0.5,
-  },
-  registerTextStyle: {
-    marginTop: 10,
-    color: 'black',
-    fontSize: 13,
-  },
-  Picker: {
-    width: "75%",
-    marginVertical: 10,
-    borderRadius: 10,
-    height: 30,
-    borderWidth: 1,
-    alignContent: "center",
-    alignSelf: "center",
-  },
-  TextInput: {
-    height: 50,
-    alignItems: "flex-start",
-    padding: 10,
-    marginLeft: 10,
-  },
-  forgot_button: {
-    height: 30,
-    marginBottom: 15,
-    color: '#1e90ff',
-  },
-  error: {
-    padding: 1,
-    color: '#dc143c',
-    fontSize: 11,
-    alignItems: 'flex-start',
-    justifyContent: 'center'
-  },
-  loginBtn: {
-    width: "50%",
-    borderRadius: 10,
-    height: 38,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#ff5c8d",
-    alignSelf: "center",
-    marginTop: 20,
-  },
-
-});

@@ -1,0 +1,210 @@
+import React from "react";
+import {StyleSheet} from 'react-native'
+
+export default StyleSheet.create({
+    container1: {
+      flex:1,
+        backgroundColor: "#FCFDDB",
+      },
+      container: {
+  
+        flex: 1,
+        backgroundColor: "#FCFDDB",
+        alignItems: "center",
+        justifyContent: "center",
+      },
+      container2: {
+       
+        flex: 1,
+        backgroundColor: "#FCFDDB",
+        alignItems: "center",
+      
+      },
+      histBtn: {
+        width: "20%",
+        borderRadius: 10,
+        height: 41,
+        alignItems: "center",
+        justifyContent: "center",
+        marginVertical: 15,
+        backgroundColor: "#FF5C00",
+        marginHorizontal:"2%"
+      },
+      header: {
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: 18,
+        padding: 16,
+        marginTop: 16,
+      },
+      loginBtn: {
+        width: "50%",
+        borderRadius: 10,
+        height: 38,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#FF5C00",
+        alignSelf: "center",
+        marginTop: 20,
+      },
+      pendingTrips1: {
+        backgroundColor: "#fff",
+        height: 80,
+        marginTop: 10,
+        width: '90%',
+        alignItems: "center",
+        alignSelf: "center",
+        borderWidth: 1,
+        borderRadius: 10
+      },
+      logo: {
+        marginVertical: 20,
+        width:260,
+        height:220,
+      },
+      pendingTrips: {
+        backgroundColor: "#fff",
+        height: 140,
+        marginTop: 50,
+        width: '90%',
+        alignItems: "center",
+        alignSelf: "center",
+        borderWidth: 1,
+        borderRadius: 10
+    
+      },
+      Schedule: {
+        width: "40%",
+        borderRadius: 10,
+        height: 38,
+        alignItems:"center",
+        justifyContent:"center",
+      
+        backgroundColor: "#ff5c8d",
+        alignSelf:"center",
+        marginTop: 20,
+      },
+      title: {
+        position: 'absolute',
+        marginTop: 65,
+        marginBottom: 0,
+        marginHorizontal: 20,
+        fontSize: 30,
+        color: 'white',
+        fontWeight: 'bold'
+      }, 
+      time: {
+        width: '20%',
+        marginVertical: 20,
+        position: 'absolute',
+        backgroundColor: 'green',
+        color: 'white',
+        fontSize: 25,
+        fontWeight: 'bold',
+        bottom: 0,
+        borderRadius: 20,
+        marginLeft: 20
+      },
+      
+      inputView: {
+        borderWidth: 1,
+        borderColor: '#FF5C00',
+        borderRadius: 10,
+        width: "80%",
+        height: 45,
+        alignItems: "center",
+        backgroundColor: "#fff",   //"#C4C4C4",
+        marginTop: 10,
+        //opacity: 0.5,
+      },
+      loginBtns: {
+        width: "75%",
+        borderRadius: 10,
+        height: 40,
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: 20,
+        backgroundColor: "#FF5C00",
+      },
+      
+      card1: {
+        width: '90%',
+        alignSelf: 'center',
+        height: 100,
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      payicon: {
+        width: 70,
+        height: 70,
+        //borderRadius: 63,
+        //borderWidth: 1,
+        //borderColor: "black",
+        //marginBottom: 10,
+        alignSelf: 'center',
+        position: 'absolute',
+        justifyContent: 'flex-start',
+        marginTop: 50
+      },
+      details: {
+       
+        backgroundColor: "#d3d3d3",
+        //borderWidth: 1,
+        borderRadius: 12,
+        //borderColor: '#ff5c8d',
+        //marginTop: 3,
+        width: '85%',
+        padding: 8,
+        marginTop:5,
+        marginBottom:10,
+        alignSelf: "center"
+    
+      },
+      
+      
+     
+      inputViews: {
+        borderWidth: 1,
+        borderColor: '#FF5C00',
+        borderRadius: 10,
+        width: "80%",
+        height: 100,
+        alignItems: "center",
+        backgroundColor: "#fff",   //"#C4C4C4",
+        marginTop: 5,
+        //opacity: 0.5,
+      },
+     TextInput: {
+        
+        color:"white", 
+        alignItems:"center",
+        justifyContent:"center",
+    
+      },
+      TextInput1: {
+        height: 50,
+        color:"white", 
+        alignItems: "flex-start",
+        padding: 10,
+        marginLeft: 10,
+    
+      },
+     
+      forgot_button: {
+        height: 30,
+        marginBottom: 15,
+        color: '#1e90ff',
+    
+      },
+      error: {
+        padding: 1,
+    
+        color: '#dc143c',
+        fontSize: 11,
+        alignItems: 'flex-start',
+        justifyContent: 'center'
+      },
+      
+
+      
+    })

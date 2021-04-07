@@ -1,25 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import {
-  SafeAreaView,
+ 
   Text,
   View,
-  StyleSheet,
+ 
   TouchableOpacity,
   Dimensions,
   ScrollView,
   ActivityIndicator,
 } from 'react-native';
 import {
-  LineChart,
+  
   BarChart,
-  PieChart,
-  ProgressChart,
-  ContributionGraph,
-  StackedBarChart,
+ 
 } from 'react-native-chart-kit';
 import Ngrok from '../../constants/ngrok';
 import Loader from '../../components/Loader';
 import axios from 'axios';
+import styles from '../../components/styles_admin'
 
 const MyPieChart = () => {
   const [loading, setLoading] = useState(false);
@@ -56,6 +54,7 @@ const MyPieChart = () => {
 
   }
   return (
+    <View style={styles.container1}>
     <ScrollView>
        <Loader loading={loading} />
       {isLoading ? <ActivityIndicator/>:<View >
@@ -116,35 +115,8 @@ const MyPieChart = () => {
       </View>}
 
     </ScrollView>
+    </View>
   );
 };
 
 export default MyPieChart;
-const styles = StyleSheet.create({
-  container: {
-    padding: 50,
-    flex: 1,
-    backgroundColor: "#F9F2F2",
-    alignItems: "center",
-  },
-  histBtn: {
-    width: "20%",
-    borderRadius: 10,
-    height: 41,
-    alignItems: "center",
-    justifyContent: "center",
-    marginVertical: 15,
-    backgroundColor: "#ff5c8d",
-    marginHorizontal:"2%"
-  },
-  header: {
-    textAlign: 'center',
-    fontWeight: 'bold',
-    fontSize: 18,
-    padding: 16,
-    marginTop: 16,
-  },
-});
-
-
-

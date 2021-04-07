@@ -14,6 +14,8 @@ import { event } from "react-native-reanimated";
 import Ngrok from '../../constants/ngrok';
 import axios from 'axios';
 import Loader from '../../components/Loader';
+import styles from '../../components/styles_admin'
+
 
 
 export default function Edit_Nanny({ route,navigation }) {
@@ -58,12 +60,12 @@ export default function Edit_Nanny({ route,navigation }) {
 
 
 return (
-
+<View style={styles.container1}>
   <ScrollView>
      <Loader loading={isloading} />
-    <View style={styles.container}>
+    
       <StatusBar style="auto" />
-      <View style={{ width: "70%", marginRight: 50 }}>
+      <View style={{ width: "70%",marginLeft: 35 ,marginTop:40}}>
         <Text>Name</Text></View>
 
       <View style={styles.details}>
@@ -73,8 +75,8 @@ return (
 
         </Text>
       </View>
-      <View style={{ width: "70%", marginRight: 50 }}>
-        <Text>Driver Contact Number</Text></View>
+      <View style={{ width: "70%", marginLeft: 35}}>
+        <Text>Contact Number</Text></View>
 
       <View style={styles.details}>
         <Text>
@@ -84,8 +86,8 @@ return (
         </Text>
       </View>
 
-      <View style={{ width: "70%", marginRight: 50 }}>
-        <Text>driver ID</Text></View>
+      <View style={{ width: "70%", marginLeft: 35}}>
+        <Text>Nanny ID</Text></View>
       <View style={styles.details}>
         <Text>
 
@@ -95,101 +97,13 @@ return (
       </View>
       <TouchableOpacity style={styles.loginBtn}
         onPress={pressHandler} >
-        <Text style={styles.loginText}>Assign Nanny</Text>
+        <Text style={styles.TextInput}>Assign Nanny</Text>
       </TouchableOpacity>
 
-    </View>
+    
   </ScrollView>
+  </View>
 
 );
 
 }
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 10,
-    flex: 1,
-    backgroundColor: "#F9F2F2",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  image: {
-    marginBottom: 40,
-  },
-  details: {
-    height: 40,
-    backgroundColor: "#d3d3d3",
-    //borderWidth: 1,
-    borderRadius: 12,
-    //borderColor: '#ff5c8d',
-    //marginTop: 3,
-    width: '85%',
-    padding: 8,
-    alignSelf: "center"
-
-  },
-
-  inputView: {
-    borderWidth: 1,
-    borderColor: '#b0003a',
-    borderRadius: 10,
-    width: "80%",
-    height: 45,
-    alignItems: "center",
-    backgroundColor: "#fff",   //"#C4C4C4",
-    marginTop: 5,
-    //opacity: 0.5,
-  },
-  inputViews: {
-
-    height: 100,
-    backgroundColor: "#d3d3d3",
-    //borderWidth: 1,
-    borderRadius: 12,
-    //borderColor: '#ff5c8d',
-    //marginTop: 3,
-    width: '85%',
-    padding: 8,
-    alignSelf: "center"
-  },
-
-  TextInput: {
-    width: "70%",
-    height: 50,
-    flex: 1,
-    padding: 10,
-    marginLeft: 2,
-
-  },
-  subText: {
-    alignSelf: "flex-start",
-    marginLeft: 10,
-    marginTop: 3,
-
-
-
-  },
-
-  error: {
-    padding: 1,
-
-    color: '#dc143c',
-    fontSize: 11,
-    alignItems: 'flex-start',
-    justifyContent: 'center'
-  },
-  registerTextStyle: {
-    marginTop: 10,
-    color: 'black',
-    fontSize: 13,
-  },
-  loginBtn: {
-    width: "60%",
-    borderRadius: 10,
-    height: 40,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 60,
-    backgroundColor: "#ff5c8d",
-  },
-});
