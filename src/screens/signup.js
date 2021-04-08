@@ -14,6 +14,10 @@ import axios from 'axios';
 import Login from './login';
 import Loader from '../components/Loader';
 import styles from '../components/style';
+import ToastComponent from '../components/Toaster';
+import* as ToastMessage from '../constants/ToastMessages';
+
+
 export default function App({route,navigation}) {
   const [email, setEmail] = useState("");
   const [Name, setName] = useState("");
@@ -22,6 +26,8 @@ export default function App({route,navigation}) {
   const [password2, setpassword2] = useState("");
   const [isloading, setLoading] = useState(false);
   const [{ emptyFields }, setemptyFeilds] = useState("");
+  const [showtoast,setToast] = useState(false)
+  const[message, SetMessage] = useState()
   
   const validateEmail = (email) => {
     const regex_mail = /^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)$/;
@@ -37,6 +43,7 @@ export default function App({route,navigation}) {
       return false;
     }
   };
+
   const validateFunction = () => {
     if (!Name || !email || !contact || !password1 || !password2) {
       setemptyFeilds({ emptyFields: "Please Enter All The Details" })
@@ -62,6 +69,7 @@ export default function App({route,navigation}) {
     }
    
   }
+
   const pressHandler = () => {
     if (validateFunction()) {
       setLoading(true);
@@ -98,10 +106,7 @@ export default function App({route,navigation}) {
             console.log(error.response.status); // 401
             console.log(error.response.data.message); //Please Authenticate or whatever returned from server
             if (error.response.status == 401) {
-              //redirect to login
-              Alert.alert(
-                'Contact Already Exists, pleae try with a new Contact',
-              );
+            setToast(true)
             }
           });
       } catch (error) {
@@ -109,11 +114,13 @@ export default function App({route,navigation}) {
         console.log('errordetails', error);
       }
     }
+    setToast(false)
   };
 
 
   return (
     <View style={styles.cont2}>
+       {showtoast? (<ToastComponent type = {ToastMessage.failure}  message = {ToastMessage.message3}/>): null}
       <Loader loading={isloading} />
 <View>
       <Image style={{width:280,height:170,marginBottom:20}} source={require('../assets/Logo.png')} />

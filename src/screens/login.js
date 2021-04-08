@@ -15,12 +15,17 @@ import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import Loader from '../components/Loader';
 import styles from '../components/style';
+import ToastComponent from '../components/Toaster';
+import* as ToastMessage from '../constants/ToastMessages';
 
 export default function Login({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [{emailError}, setEmailError] = useState('');
-  const [isloading,setLoading] = useState(false)
+  const [{passwordError}, setPasswordError] = useState('');
+  const [isloading, setLoading] = useState(false);
+  const [showtoast,setToast] = useState(false)
+  const [message, SetMessage] = useState()
 
   const pressHandler = () => {
     navigation.navigate('Sign up');
@@ -62,7 +67,7 @@ export default function Login({navigation}) {
           password: password
        }*/
       //let response = await loginApi(body)/
-      setLoading(true)
+      setLoading(true);
       fetch(`${Ngrok.url}/api/login`, {
         method: 'POST',
         headers: {
@@ -77,9 +82,9 @@ export default function Login({navigation}) {
       })
         .then((response) => response.json())
         .then((responseJson) => {
-          console.log('response:', responseJson);
+          // console.log('response:', responseJson);
           //console.log("status", responseJson.status);
-          setLoading(false)
+          setLoading(false);
 
           if (responseJson[1] == 'Parent') {
             AsyncStorage.setItem('token', responseJson[0]);
@@ -98,7 +103,10 @@ export default function Login({navigation}) {
           if (responseJson.status == 401) {
             console.log('message:', responseJson.message);
             if (responseJson.message == 'Token not provided') {
-              Alert.alert('Not an exsisting user, please sign up first !');
+              //Alert.alert('Not an exsisting user, please sign up first !');
+              setToast(true)
+              SetMessage(ToastMessage.message2)
+              
             } else if (responseJson.message == 'OTP verification not done') {
               //Alert.alert("OTP verification need to be done")
               gotootpscreen();
@@ -106,35 +114,44 @@ export default function Login({navigation}) {
               responseJson.message == 'Invalid contact/password' ||
               responseJson.message == 'Invalid contact/Password'
             ) {
-              Alert.alert('Incorrect contact/password');
+              //Alert.alert('Incorrect contact/password');
+              //return <ToastMessage />;
+              setToast(true)
+              SetMessage(ToastMessage.message1)
             }
           }
         })
         .catch((error) => {
-          setLoading(false)
-          console.log('error', error.message); // 401  
-        // if(error.responseJson.status == 401){
+          setLoading(false);
+          console.log('error', error.message); // 401
+          // if(error.responseJson.status == 401){
           //   //redirect to login
           //   Alert.alert('Phone Number Alredy Exist!')
           // }
         });
+        setToast(false)
     }
+    
   };
+
   return (
     <View style={styles.cont2}>
-      
-      <Loader loading = {isloading}/>
+      {showtoast? (<ToastComponent type = {ToastMessage.failure}  message = {message}/>): null}
+      <Loader loading={isloading} />
       <StatusBar
         barStyle="light-content"
         // dark-content, light-content and default
         hidden={false}
         //To hide statusBar
-        backgroundColor='#FF5C00'//"#26A7FF"
+        backgroundColor="#FF5C00" //"#26A7FF"
         //Background color of statusBar only works for Android
         translucent={false}
         //allowing light, but not detailed shapes
       />
-      <Image style={{width:'80%',height:'25%',marginBottom:20}} source={require('../assets/Logo.png')} />
+      <Image
+        style={{width: '80%', height: '25%', marginBottom: 20}}
+        source={require('../assets/Logo.png')}
+      />
       <View style={styles.inputView}>
         <TextInput
           keyboardType="numeric"

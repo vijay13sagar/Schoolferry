@@ -2,13 +2,10 @@
 import React, { useState, useEffect } from "react";
 import {
     StyleSheet,
-    StatusBar,
     Text,
     View,
     TextInput,
-    Button, autoFocus,
     TouchableOpacity,
-    Alert,
 } from "react-native";
 import axios from 'axios';
 import Ngrok from '../constants/ngrok';

@@ -3,7 +3,6 @@ import {
   Text,
   View,
   StyleSheet,
-  StatusBar,
   FlatList,
   TouchableOpacity,
   ScrollView,
@@ -92,7 +91,7 @@ const showplanScreen = ({route, navigation}) => {
   };
 
   return isLoading ? null : (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}  showsVerticalScrollIndicator={false}>
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <View style={styles.modalContainer}>
           <Ionicons
@@ -145,7 +144,7 @@ const showplanScreen = ({route, navigation}) => {
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           data={Boolean(value1.length) && value1[0].plans}
-          keyExtractor={(item, index) => item.total}
+          keyExtractor={(item, index) => item.childId}
           renderItem={({item}) => (
             <View style={{flex: 1}}>
               <TouchableOpacity
@@ -191,11 +190,9 @@ const showplanScreen = ({route, navigation}) => {
           )}
         />
       </View>
-      {Boolean(value1.length) && value1[0].status == 'subscribed' ? (
-        <Text style={styles.randomText}>
-          Compulsory nanny service for children till 8 years
-        </Text>
-      ) : (
+      {Boolean(value1.length) && value1[0].status == 'subscribed' ? 
+        null
+       : (
         <Text style={styles.randomText2}>
           Unsusbcribed Child. select a plan to get subscribed
         </Text>
@@ -222,7 +219,17 @@ const showplanScreen = ({route, navigation}) => {
           <Text style={styles.loginText}>Pause subscription</Text>
         </TouchableOpacity>
       ) : null}
-    </View>
+      {Boolean(value1.length) && value1[0].status == 'subscribed' ? (
+        <TouchableOpacity
+          style={{...styles.logoutBtn, width:'75%',marginTop:15,marginBottom:15,}}
+          onPress={() => navigation.navigate('Pause Plan',{
+
+            childid: Boolean(value1.length) && value1[0].childId,     
+          })}>
+          <Text style={styles.loginText}>Cancel subscription</Text>
+        </TouchableOpacity>
+      ) : null}
+    </ScrollView>
   );
 };
 
