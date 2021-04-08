@@ -12,6 +12,7 @@ import AddressPickup from '../../components/addresspickup';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {getDistance, getPreciseDistance} from 'geolib';
 import Loader from '../../components/Loader';
+import styles from '../../components/style';
 import Ngrok from '../../constants/ngrok';
 
 const location = ({navigation}) => {
@@ -125,7 +126,7 @@ const location = ({navigation}) => {
     <ScrollView style={styles.scrollview} keyboardShouldPersistTaps="handled">
       <Loader loading={isLoading} />
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
-        <View style={styles.modalContainer}>
+        <View style={styles.modalContainer1}>
           <Ionicons
             name="close-circle-outline"
             color="#fff"
@@ -133,9 +134,9 @@ const location = ({navigation}) => {
             style={styles.icon}
             onPress={(modalVisible) => setModalVisible(!modalVisible)}
           />
-          <View style={styles.modalBody}>
-            <Text style={styles.message}>Sorry, Currently Unavailable</Text>
-            <Text style={styles.newsText}>
+          <View style={styles.modalBody1}>
+            <Text style={styles.message2}>Sorry, Currently Unavailable</Text>
+            <Text style={styles.newsText1}>
               We will get back to you once we start service at your area
             </Text>
 
@@ -156,16 +157,16 @@ const location = ({navigation}) => {
             style={styles.icon}
             onPress={(modal1Visible) => setModal1Visible(!modal1Visible)}
           />
-          <View style={styles.modalBody}>
-            <Text style={styles.message}>Great! Service is available</Text>
-            <Text style={styles.newsText}>
-               Please add child details
+          <View style={styles.modalBody1}>
+            <Text style={styles.message2}>Great! Service is available</Text>
+            <Text style={styles.newsText1}>
+            Please add child details
             </Text>
 
             <TouchableOpacity
               style={styles.closeModal}
               onPress={modal1ButtonHandler}>
-              <Text style={{fontSize: 17}}>Add Child</Text>
+              <Text style={styles.loginText}>Add Child</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -182,101 +183,19 @@ const location = ({navigation}) => {
       />
       <TextInput
         keyboardType="numeric"
+        style={styles.TextInput3}
         maxLength={6}
-        style={styles.TextInput}
         placeholder="Enter Pincode"
         placeholderTextColor="#929292"
         onChangeText={(pincode) => setPincode(pincode)}
       />
       <Text style={styles.error}>{error}</Text>
 
-      <TouchableOpacity style={styles.submitBtn} onPress={submitHandler}>
-        <Text style={styles.TextBtn}>Submit</Text>
+      <TouchableOpacity style={styles.loginBtn} onPress={submitHandler}>
+        <Text style={styles.loginText}>Submit</Text>
       </TouchableOpacity>
     </ScrollView>
   );
 };
 
 export default location;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  scrollview: {
-    backgroundColor: '#F9F2F2',
-    flex: 1,
-    padding: 24,
-  },
-  TextInput: {
-    marginTop: 13,
-    paddingLeft: 14,
-    height: 47,
-    flex: 1,
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    fontSize: 15,
-  },
-  error: {
-    color: '#DC143C',
-    fontSize: 13,
-    alignSelf: 'center',
-    marginTop: 5,
-  },
-  submitBtn: {
-    width: '65%',
-    borderRadius: 10,
-    height: 40,
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignSelf: 'center',
-    backgroundColor: '#ff5c8d',
-    marginVertical: 20,
-  },
-  TextBtn: {
-    fontSize: 15,
-  },
-  modalContainer: {
-    backgroundColor: '#00000080',
-    flex: 1,
-    height: '50%',
-    justifyContent: 'center',
-  },
-  modalBody: {
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    height: 280,
-    width: '88%',
-    alignSelf: 'center',
-    justifyContent: 'center',
-  },
-  message: {
-    fontSize: 26,
-    textAlign: 'center',
-    //marginTop: 30
-    color: '#DC143C',
-    fontWeight: '600',
-  },
-  newsText: {
-    fontSize: 19,
-    textAlign: 'center',
-    marginTop: 15,
-    padding: 2,
-    color: 'green',
-  },
-
-  closeModal: {
-    borderRadius: 10,
-    width: '50%',
-    height: 40,
-    marginTop: 30,
-    backgroundColor: '#ff5c8d',
-    alignSelf: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  icon: {
-    alignSelf: 'flex-end',
-    marginRight: 10,
-  },
-});

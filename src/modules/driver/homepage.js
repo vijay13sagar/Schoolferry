@@ -7,6 +7,7 @@ import Ngrok from '../../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
 import {useFocusEffect} from '@react-navigation/native';
 import Loader from '../../components/Loader';
+import styles from '../../components/style';
 
 const Homescreen = ({ navigation }) => {
   const [data,getData] = useState([])
@@ -47,7 +48,7 @@ const Homescreen = ({ navigation }) => {
         // dark-content, light-content and default
         hidden={false}
         //To hide statusBar
-        backgroundColor="#e91e63"
+        backgroundColor="#FF5C00"
         //Background color of statusBar only works for Android
         translucent={false}
       //allowing light, but not detailed shapes
@@ -56,7 +57,7 @@ const Homescreen = ({ navigation }) => {
  
       <View style={styles.pendingTrips}>
         <Text style={styles.tripsTitleText}>Today's Trips</Text>
-        <Text style={styles.startTripText}>Click to see Trip details</Text>
+        <Text style={styles.startTripText1}>Click to see Trip details</Text>
       </View>
         {/* ontentContainerStyle={styles.scrollView}
                 refreshControl={
@@ -94,7 +95,9 @@ const Homescreen = ({ navigation }) => {
         )}
       />
       <TouchableOpacity style={styles.CallBtn} onPress={() => { Linking.openURL('tel:8777111223') }}  >
-        <Text style={styles.loginText}>Call Admin</Text>
+        <Text style={styles.loginText}>Call Admin   <Ionicons name="call"
+                  color="white" size={20}
+                /></Text>
       </TouchableOpacity>
       
     </View>
@@ -103,99 +106,3 @@ const Homescreen = ({ navigation }) => {
 
 export default Homescreen;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#F9F2F2",
-
-  },
-  pendingTrips: {
-    backgroundColor: "#fff",
-    height: 140,
-    marginTop: 50,
-    width: '90%',
-    alignItems: "center",
-    alignSelf: "center",
-    borderWidth: 1,
-    borderRadius: 10
-
-  },
-  tripsTitleText: {
-    fontSize: 25,
-    marginTop: 10,
-    fontWeight: "bold"
-  },
-  tripBox: {
-    flex: 1,
-    marginTop: 20,
-    marginBottom:5,
-
-  },
-  Text: {
-    margin: 4,
-    fontSize: 18,
-    alignSelf: "center"
-
-  },
-  startTripText: {
-    fontSize: 22,
-    textAlign: "center",
-    marginTop: 30,
-    marginBottom: 10,
-  },
-  CallBtn: {
-    width: "80%",
-    borderRadius: 10,
-    height: 40,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#32cd32",
-    alignSelf: 'center',
-    marginBottom: 50,
-  },
-  loginText: {
-    fontSize: 15,
-
-  },
-  card: {
-    width: '80%',
-    alignSelf: 'center',
-    height: 60,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop:10,
-  },
-  card2: {
-    width: '80%',
-    alignSelf: 'center',
-    height: 60,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor:'lightgrey',
-    marginTop:10,
-  },
-
-})
-
-const pickerSelectStyles = StyleSheet.create({
-  inputAndroid: {
-    //backgroundColor:'transparent',
-    height: 50,
-    width: '70%',
-    fontSize: 16,
-    paddingHorizontal: 10,
-    paddingVertical: 8,
-    borderWidth: 2,
-    borderColor: 'black',
-    borderRadius: 8,
-    color: 'black',
-    paddingRight: 30,
-    alignSelf: 'center',
-    marginTop: 50,
-  },
-  placeholder: {
-    color: 'black',
-    fontSize: 12,
-    fontWeight: 'bold',
-  },
-});

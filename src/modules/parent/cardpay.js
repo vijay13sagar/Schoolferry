@@ -17,6 +17,8 @@ import axios from 'axios';
 import Ngrok from '../../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
 import Loader from '../../components/Loader';
+import ToastComponent from '../../components/Toaster';
+import * as ToastMessage from '../../constants/ToastMessages';
 
 stripe.setOptions({
   publishableKey:
@@ -34,8 +36,11 @@ export default function CardFormScreen({route, navigation}) {
   const [savedData, setSavedData] = useState([]);
   const [tokenData, setTokenData] = useState(null);
   const [isLoading, setisLoading] = useState(true);
-  const[count,setCount] = useState(0);
+  const [count, setCount] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
+  const [showtoast, setToast] = useState(false);
+  const [message, SetMessage] = useState();
+  const [type, setType] = useState();
 
   let amount = route.params.costly;
   let childID = route.params.childid;
@@ -51,16 +56,13 @@ export default function CardFormScreen({route, navigation}) {
         setisLoading(false);
         if (response.data.length > 0) {
           setSavedData(response.data);
-        }
-        else {
+        } else {
           setSavedData([]);
         }
       } catch (error) {}
     };
     fetchdata();
   }, [count]);
-
-
 
   const handleCardPayPress = async () => {
   
@@ -76,78 +78,80 @@ export default function CardFormScreen({route, navigation}) {
           expYear: 2020,
         },
       });
-
+    
       setLoading(false);
       setpaymentMethod(paymentMethod);
       setCardno(paymentMethod.card.last4);
       setId(paymentMethod.id);
-      // console.log(paymentMethod);
+      //console.log('token', paymentMethod);
     } catch (error) {
       setLoading(false);
     }
   };
 
   const deleteHandler = (value) => {
-  console.log(value);
-    Alert.alert(`Delete card ending with ${value}`,' ' , [
+    console.log(value);
+    Alert.alert(`Delete card ending with ${value}`, ' ', [
       {
         text: 'Delete',
         onPress: () => deletecard(),
       },
       {text: 'Discard', style: 'cancel'},
     ]);
-    const deletecard = async() => {
-      setisLoading(true)
+
+    const deletecard = async () => {
+      setisLoading(true);
       let parentId = await AsyncStorage.getItem('token');
       try {
-        axios.post( `${Ngrok.url}/api/payment/carddelete`, {
-          parentid:parentId,
-          cardno:value
-        })
-        .then(function (response) {
-          console.log('response:', response.data.message);
-          setisLoading(false);
+        axios
+          .post(`${Ngrok.url}/api/payment/carddelete`, {
+            parentid: parentId,
+            cardno: value,
+          })
+          .then(function (response) {
+            console.log('response:', response.data.message);
+            setisLoading(false);
 
-          if (response.data.message == 'Card deleted successfully') {
-            Alert.alert('Card Deleted Successfully');
-            setCount(count+1)
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-          setisLoading(false);
-          Alert.alert('Failed. Please Try Again');
-        });      
-      } catch (error) {
-        
-      }
-    }
+            if (response.data.message == 'Card deleted successfully') {
+              //Alert.alert('Card Deleted Successfully');
+              setToast(true);
+              setType(ToastMessage.success);
+              SetMessage(ToastMessage.message9);
+              setCount(count + 1);
+            }
+          })
+          .catch(function (error) {
+            setToast(true);
+            setType(ToastMessage.failure);
+            SetMessage(ToastMessage.message5);
+            console.log(error);
+            setisLoading(false);
+          });
+      } catch (error) {}
+    };
+    setToast(false);
   };
 
   const savedCardPayemnt = (val) => {
-    Alert.alert( `Making payment with card ending with ${val}`, ' ', [
+    Alert.alert(`Making payment with card ending with ${val}`, ' ', [
       {
         text: 'Pay',
         onPress: () => paymentHandler(val),
       },
       {text: 'Discard', style: 'cancel'},
     ]);
-
-  }
-
+  };
 
   const paymentHandler = async (value) => {
     setisLoading(true);
     let parentId = await AsyncStorage.getItem('token');
-    console.log('PID', parentId);
-    console.log('card no', cardno);
     console.log('paymentmethod', id);
     console.log('card save ?', isSelected);
     console.log('amount', amount);
-    setTokenData(value)
+    setTokenData(value);
     sendplan();
-    
-    console.log('token',value)
+
+    console.log('token', value);
     try {
       axios
         .post(`${Ngrok.url}/api/payment`, {
@@ -164,66 +168,67 @@ export default function CardFormScreen({route, navigation}) {
           setisLoading(false);
 
           if (response.data.message == 'Payment Succesful. Thanks.') {
-           setModalVisible(true)
-            setCount(count+1)
+            setModalVisible(true);
+            setCount(count + 1);
           } else if (
             response.data.message == 'Payment Successful. Card Saved. Thanks.'
           ) {
-            setModalVisible(true)
+            setModalVisible(true);
             //setCount(count+1)
           } else if (
             response.data.message == 'Payment failed. Please contact your bank.'
           ) {
-            Alert.alert('Payment failed. Please contact your bank.');
+            setToast(true);
+            setType(ToastMessage.failure);
+            SetMessage(ToastMessage.message10);
+            
           }
         })
         .catch(function (error) {
+          setToast(true);
+          setType(ToastMessage.failure);
+          SetMessage(ToastMessage.message5);
           console.log(error);
           setisLoading(false);
-          Alert.alert('Failed. Please Try Again');
         });
     } catch (error) {
       console.log(error);
     }
+    setToast(false)
   };
 
   const sendplan = () => {
-
     try {
       axios({
         method: 'POST',
         url: `${Ngrok.url}/api/plandetails`,
-        "headers": {
+        headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         data: {
-          childid:route.params.childid,
-          startdate:route.params.maxDate,
-          enddate:route.params.tomorrow,
-          tenure:route.params.f,
-          amount:amount.toString()
-        }
+          childid: route.params.childid,
+          startdate: route.params.maxDate,
+          enddate: route.params.tomorrow,
+          tenure: route.params.f,
+          amount: amount.toString(),
+        },
       })
         .then(function (response) {
-          console.log("plan details send status: ", response.status);
-
+          console.log('plan details send status: ', response.status);
         })
         .catch(function (error) {
-          console.log(error.response.status) // 401
-          console.log(error.response.data.error) //Please Authenticate or whatever returned from server
+          console.log(error.response.status); // 401
+          console.log(error.response.data.error); //Please Authenticate or whatever returned from server
           if (error.response.status == 401) {
             //redirect to login
-            console.log('plan details not sent')
+            console.log('plan details not sent');
           }
-
-        })
+        });
+    } catch (error) {
+      console.log('errordetails', error);
     }
-    catch (error) {
-      console.log("errordetails", error);
-    }
-
-}
+  };
 
   return isLoading ? (
     <View style={styles.container}>
@@ -231,76 +236,68 @@ export default function CardFormScreen({route, navigation}) {
     </View>
   ) : (
     <View style={styles.container}>
+      {showtoast ? <ToastComponent type={type} message={message} /> : null}
       <Loader loading={isLoading} />
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-        >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Text style={{
+      <Modal animationType="slide" transparent={true} visible={modalVisible}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text
+              style={{
                 marginBottom: 15,
-                textAlign: "center",
-                fontSize:14,
-              }}>Payment Successful</Text>
+                textAlign: 'center',
+                fontSize: 14,
+              }}>
+              Payment Successful
+            </Text>
 
-              <TouchableHighlight
-                style={{ ...styles.openButtono, backgroundColor: "#2196F3" }}
-                onPress={() => {
-                  setModalVisible(!modalVisible)
-                  navigation.navigate('New_sub_screen');
-                }}
-              >
-                <Text style={{color:'#fff',textAlign:'center'}}>OK</Text>
-              </TouchableHighlight>
-            </View>
+            <TouchableHighlight
+              style={{...styles.openButtono, backgroundColor: '#2196F3'}}
+              onPress={() => {
+                setModalVisible(!modalVisible);
+                navigation.navigate('New_sub_screen');
+              }}>
+              <Text style={{color: '#fff', textAlign: 'center'}}>OK</Text>
+            </TouchableHighlight>
           </View>
-        </Modal>
+        </View>
+      </Modal>
       <Text style={styles.header}>You are making payment of </Text>
       <Text style={styles.instruction}>₹ {amount}</Text>
       {Boolean(savedData.length) ? (
         <>
-          <Text style={styles.heading}>Use Saved Cards -</Text>  
+          <Text style={styles.heading}>Use Saved Cards -</Text>
           <FlatList
-            style={{flexGrow: 0,}}
+            style={{flexGrow: 0}}
             data={savedData}
             keyExtractor={(item) => item.cardNo}
             renderItem={({item}) => (
-              
               <View
                 style={{
                   flexDirection: 'row',
-                  alignSelf
-                  :'center'
+                  alignSelf: 'center',
                 }}>
                 <TouchableOpacity
                   style={styles.cardData}
                   onPress={() => {
-                    savedCardPayemnt(item.cardNo)
+                    savedCardPayemnt(item.cardNo);
                   }}>
                   <Ionicons
                     name="card"
                     color="#000"
                     size={35}
-                    style={styles.icon}
                   />
                   <Text style={styles.cardNumText}>
                     Card ending with {item.cardNo}
                   </Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.deleteBtn} onPress={()=> deleteHandler(item.cardNo)}>
-                  <Ionicons
-                    name="trash"
-                    color="#fff"
-                    size={30}
-                    
-                  />
+                <TouchableOpacity
+                  style={styles.deleteBtn}
+                  onPress={() => deleteHandler(item.cardNo)}>
+                  <Ionicons name="trash" color="#fff" size={30} />
                 </TouchableOpacity>
               </View>
             )}
           />
-          
         </>
       ) : null}
 
@@ -331,7 +328,11 @@ export default function CardFormScreen({route, navigation}) {
         ) : null}
 
         {paymentMethod ? (
-          <TouchableOpacity style={styles.paybtn} onPress={()=>{paymentHandler(null)}}>
+          <TouchableOpacity
+            style={styles.paybtn}
+            onPress={() => {
+              paymentHandler(null);
+            }}>
             <Text style={{fontSize: 15, color: '#fff'}}> Make Payment</Text>
           </TouchableOpacity>
         ) : null}
@@ -343,8 +344,7 @@ export default function CardFormScreen({route, navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F9F2F2",
- 
+    backgroundColor: '#FCFDDB',
   },
   header: {
     fontSize: 22,
@@ -378,7 +378,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
     flexDirection: 'row',
     borderWidth: 1,
-    justifyContent: 'center',
+    justifyContent:'space-evenly',
     alignItems: 'center',
     marginLeft: 10,
   },
@@ -394,7 +394,7 @@ const styles = StyleSheet.create({
   cardNumText: {
     alignSelf: 'center',
     fontSize: 16,
-    marginLeft: 15,
+    //marginLeft: 15,
   },
   heading: {
     fontSize: 17,
@@ -406,27 +406,27 @@ const styles = StyleSheet.create({
   },
   modalText: {
     marginBottom: 15,
-    textAlign: "center",
-    color: "red",
+    textAlign: 'center',
+    color: 'red',
   },
   centeredView: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#00000080',
   },
   modalView: {
-    backgroundColor: "white",
+    backgroundColor: 'white',
     borderRadius: 15,
     padding: 35,
-    alignItems: "center",
+    alignItems: 'center',
     //elevation: 5
   },
   openButtono: {
-    backgroundColor: "#4DAFCE",
+    backgroundColor: '#4DAFCE',
     borderRadius: 10,
     padding: 10,
-    width:60,
-    marginTop:10,  
+    width: 60,
+    marginTop: 10,
   },
 });

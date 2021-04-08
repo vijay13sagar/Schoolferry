@@ -10,6 +10,7 @@ import {
     Switch,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import styles from '../../components/style';
 
 const Checklist = ({ route, navigation }) => {
     const [modalVisible, setModalVisible] = useState(false);
@@ -99,7 +100,7 @@ const Checklist = ({ route, navigation }) => {
                     data={item2}
                     renderItem={({ item }) => (
                         <View style={{ flexDirection: 'row', marginTop: 20, alignSelf: 'center', }}>
-                            <TouchableOpacity style={styles.card} onPress={() => {
+                            <TouchableOpacity style={styles.childcard} onPress={() => {
                                 setModalVisible(!modalVisible)
                                 setItem1(item)
                             }}>
@@ -114,129 +115,3 @@ const Checklist = ({ route, navigation }) => {
 }
 
 export default Checklist;
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#F9F2F2",
-    },
-    firstbox: {
-        width: '90%',
-        borderRadius: 10,
-        padding: 8,
-        borderWidth: 2,
-        borderColor: 'black',
-        backgroundColor: '#fff',
-        alignSelf: 'center',
-        marginVertical: 15,
-    },
-    loginBtn: {
-        width: "50%",
-        borderRadius: 10,
-        height: 38,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#ff5c8d",
-        alignSelf: "center",
-        marginVertical: 10,
-    },
-    textHeads: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginTop: 4,
-    },
-    textTitle: {
-        fontSize: 25,
-        fontWeight: 'bold',
-        alignSelf: 'center',
-        marginVertical: 5
-    },
-    detailsBox: {
-        flex: 1,
-        marginTop: 5,
-        alignItems: 'flex-start',
-
-    },
-    textDetails: {
-        fontSize: 18,
-        fontWeight: '600',
-        marginVertical: 2,
-    },
-    card: {
-        backgroundColor: '#32cd32',
-        borderRadius: 10,
-        //borderWidth: 1,
-        marginBottom: 5,
-        marginRight: 15,
-        //backgroundColor: '#fff',
-        alignSelf: 'center',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '70%',
-        height: 70,
-        shadowColor: '#000',
-        shadowOpacity: 1,
-        shadowOffset: {
-            width: 10,
-            height: 10
-        }
-    },
-    itemText: {
-        fontSize: 18,
-        fontWeight: '600'
-
-    },
-    modalContainer: {
-        backgroundColor: '#000000aa',
-        flex: 1,
-        //height: '50%',
-        justifyContent: 'center'
-    },
-    modalBody: {
-        backgroundColor: '#fff',
-        borderRadius: 10,
-        //height: 370,
-        width: '92%',
-        alignSelf: 'center',
-        //justifyContent: 'center'
-
-    },
-    message: {
-        fontSize: 27,
-        textAlign: 'center',
-        marginTop: 15,
-        color: '#000',
-        fontWeight: '600'
-    },
-    newsText: {
-        fontSize: 23,
-        padding: 2,
-        color: '#000000aa',
-        padding: 5,
-        marginLeft: 10,
-        fontWeight: '600'
-    },
-
-    closeModal: {
-        borderRadius: 10,
-        width: "50%",
-        height: 40,
-        marginTop: 40,
-        backgroundColor: '#ff5c8d',
-        alignSelf: 'center',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    icon: {
-        alignSelf: 'flex-end',
-        marginRight: 5,
-
-    },
-    absent: {
-        alignSelf: 'flex-end',
-        fontSize: 15,
-        //marginTop:10,
-        color: 'red',
-    }
-
-})

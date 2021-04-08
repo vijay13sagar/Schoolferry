@@ -26,7 +26,7 @@ const Homescreen = ({ navigation }) => {
       <StatusBar
         barStyle="light-content"
         hidden={false}
-        backgroundColor="#e91e63"
+        backgroundColor="#FF5C00"
         translucent={false}
       />
       <ScrollView>

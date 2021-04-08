@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity, KeyboardAvoidingView, TextInp
 import MapView, { Marker } from 'react-native-maps';
 import Ngrok from '../../constants/ngrok';
 import Subhome from '../parent/subhome';
+import styles from '../../components/style';
 
 const Unsubhomescreen = ({ navigation }) => {
 
@@ -15,7 +16,7 @@ const Unsubhomescreen = ({ navigation }) => {
                 // dark-content, light-content and default
                 hidden={false}
                 //To hide statusBar
-                backgroundColor='#e91e63'
+                backgroundColor='#FF5C00'
                 //Background color of statusBar only works for Android
                 translucent={false}
             //allowing light, but not detailed shapes
@@ -69,7 +70,7 @@ const Unsubhomescreen = ({ navigation }) => {
                 />
             </MapView>
             <View style={styles.textview}>
-            <Text style={styles.note}>* Click on icons to see schools we cater service to </Text>
+            <Text style={styles.note}>* Click on icons to see schools we cater service to *</Text>
                 <Text style={styles.text}>Check service availability at your area</Text>
             </View>
             <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate("location")}>
@@ -81,46 +82,3 @@ const Unsubhomescreen = ({ navigation }) => {
 
 export default Unsubhomescreen;
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#F9F2F2',
-    },
-    map: {
-        height: '70%',
-    },
-    textview: {
-
-    },
-    text: {
-        fontSize: 20,
-        alignSelf: 'center',
-        paddingHorizontal: 10,
-        textAlign: 'center',
-        marginTop:35
-    },
-    loginBtn: {
-        width: "60%",
-        borderRadius: 10,
-        height: 40,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#ff5c8d",
-        alignSelf: "center",
-        backgroundColor: "#ff5c8d",
-         marginTop: 20
-    },
-    loginText: {
-        color: 'black',
-        fontSize: 16,
-        // fontWeight:'700'
-    },
-    note:{
-        fontSize:16,
-        marginHorizontal:5,
-        //textAlign:'center',
-        color:'grey'
-
-    }
-
-})

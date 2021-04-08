@@ -6,6 +6,7 @@ import Ngrok from '../../constants/ngrok';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-community/async-storage';
 import Loader from '../../components/Loader';
+import styles from '../../components/style';
 
 export default class Triplist extends Component {
   constructor(props) {
@@ -32,10 +33,10 @@ export default class Triplist extends Component {
 
     return (
 
-      <View style={{ flex: 1, padding: 3, backgroundColor: "#F9F2F2", }}>
+      <View style={styles.container}>
         <Loader loading = {isLoading}/>
         <StatusBar
-         barStyle = "light-content" hidden = {false} backgroundColor = "#e91e63" translucent = {true}
+         barStyle = "light-content" hidden = {false} backgroundColor = "#FF5C00" translucent = {true}
       />
         <View style={styles.pendingTrips}>
         <Text style={styles.tripsTitleText}>Today's Trips</Text>
@@ -74,121 +75,11 @@ export default class Triplist extends Component {
             />
           )}
         <TouchableOpacity style={styles.CallBtn} onPress={() => { Linking.openURL('tel:8777111223') }}  >
-          <Text style={styles.loginText}>Call Admin</Text>
+          <Text style={styles.loginText}>Call Admin   <Ionicons name="call"
+                  color="white" size={20}
+                /></Text>
         </TouchableOpacity>
       </View>
     );
   }
 };
-const styles = StyleSheet.create({
-  container: {
-    padding: 50,
-    flex: 1,
-    backgroundColor: "#F9F2F2",
-    alignItems: "center",
-  },
-  cardbox: {
-    padding: 8,
-    width: "80%",
-    height: "30%",
-    flex: 1,
-    alignSelf: "center",
-  },
-  CallBtn: {
-    width: "80%",
-    borderRadius: 10,
-    height: 40,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#32cd32",
-    alignSelf: 'center',
-    marginTop: 20,
-    marginBottom: 50,
-  },
-  TextInput: {
-    height: 50,
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 10,
-    marginLeft: 10,
-  },
-  pendingTrips: {
-    backgroundColor: "#fff",
-    height: 140,
-    marginTop: 50,
-    width: '90%',
-    alignItems: "center",
-    alignSelf: "center",
-    borderWidth: 1,
-    borderRadius: 10
-
-  },
-  tripsTitleText: {
-    fontSize: 25,
-    marginTop: 10,
-    fontWeight: "bold"
-  },
-  startTripText: {
-    fontSize: 22,
-    textAlign: "center",
-    marginTop: 30,
-    marginBottom: 10,
-
-  },
-  loginBtn: {
-    width: "50%",
-    borderRadius: 10,
-    height: 38,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#ff5c8d",
-    alignSelf: "center",
-    marginTop: 20,
-  },
-  title: {
-    position: 'absolute',
-    marginTop: 65,
-    marginBottom: 0,
-    marginHorizontal: 20,
-    fontSize: 30,
-    color: 'white',
-    fontWeight: 'bold'
-  }, time: {
-    width: '20%',
-    marginVertical: 20,
-    position: 'absolute',
-    backgroundColor: 'green',
-    color: 'white',
-    fontSize: 25,
-    fontWeight: 'bold',
-    bottom: 0,
-    borderRadius: 20,
-    marginLeft: 20
-  },
-  card: {
-    width: '80%',
-    alignSelf: 'center',
-    height: 60,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop:10,
-  },
-  card2: {
-    width: '80%',
-    alignSelf: 'center',
-    height: 60,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor:'lightgrey',
-    marginTop:10,
-  },
-  datestyle: {
-    alignSelf: 'center',
-    fontSize: 25
-  },
-  loginText: {
-    color: 'black',
-    fontSize: 15,
-    // fontWeight:'700'
-  },
-});
