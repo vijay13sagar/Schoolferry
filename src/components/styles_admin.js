@@ -20,6 +20,29 @@ export default StyleSheet.create({
         alignItems: "center",
       
       },
+      icon: {
+        alignSelf: 'flex-end',
+        marginRight: 10,
+
+    },
+    avatar: {
+      width: "100%",
+      height: "50%",
+    },
+      modalContainer: {
+        backgroundColor: '#000000aa',
+        flex: 1,
+        //height: '50%',
+        justifyContent: 'center'
+    },
+    modalBody1: {
+      backgroundColor: '#fff',
+      borderRadius: 10,
+      height: 280,
+      width: '88%',
+      alignSelf: 'center',
+      justifyContent: 'center',
+    },
       histBtn: {
         width: "20%",
         borderRadius: 10,

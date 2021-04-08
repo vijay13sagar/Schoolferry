@@ -5,7 +5,7 @@ import {
   View,
   StatusBar, ActivityIndicator, FlatList
 } from 'react-native';
-import { Card, CardList, Body, ListItem } from 'native-base';
+import { Card, CardList, CardItem, Body, ListItem } from 'native-base';
 import { ScrollView } from "react-native-gesture-handler";
 import AsyncStorage from '@react-native-community/async-storage';
 import Ngrok from '../../constants/ngrok';
@@ -14,7 +14,7 @@ import styles from '../../components/styles_admin'
 
 
 export default function user_Details({ route, navigation }) {
-  
+
 
   const [childlists, getData] = useState()
   console.log("this.props", route.params.item);
@@ -45,69 +45,71 @@ export default function user_Details({ route, navigation }) {
 
 
   return (
-      <View style={styles.container1}>
-        <StatusBar style="auto" />
+    <View style={styles.container1}>
+      <StatusBar style="auto" />
 
-        <View style={{ width: "70%",marginLeft:35 ,marginTop:30, }}>
-          <Text>Name</Text></View>
+      <View style={{ width: "70%", marginLeft: 35, marginTop: 30, }}>
+        <Text>Name</Text></View>
 
-        <View style={styles.details}>
-          <Text >
+      <View style={styles.details}>
+        <Text >
 
-            {route.params.item.name}
+          {route.params.item.name}
 
-          </Text>
-        </View>
+        </Text>
+      </View>
 
-        <View style={{ width: "70%",marginLeft:35  }}>
-          <Text>Email ID</Text></View>
+      <View style={{ width: "70%", marginLeft: 35 }}>
+        <Text>Email ID</Text></View>
 
-        <View style={styles.details}>
-          <Text>
+      <View style={styles.details}>
+        <Text>
 
-            {route.params.item.email}
+          {route.params.item.email}
 
-          </Text>
-        </View>
+        </Text>
+      </View>
 
-        <View style={{ width: "70%",marginLeft:35 }}>
-          <Text>Phone Number</Text></View>
-        <View style={styles.details}>
-          <Text >
+      <View style={{ width: "70%", marginLeft: 35 }}>
+        <Text>Phone Number</Text></View>
+      <View style={styles.details}>
+        <Text >
 
-            {route.params.item.contact}
+          {route.params.item.contact}
 
-          </Text>
-        </View>
-        
+        </Text>
+      </View>
 
-        <Text style={{ fontSize: 20,
-    marginTop: 10,alignSelf:"center",marginBottom:5,
-    fontWeight: "bold"}} > 
 
-Child List
+      <Text style={{
+        fontSize: 20,
+        marginTop: 10, alignSelf: "center", marginBottom: 5,
+        fontWeight: "bold"
+      }} >
+
+        Child List
 
 </Text>
-        
-          <FlatList
-            data={childlists}
-            keyExtractor={item => item.id}
-            renderItem={({ item }) => (
-              // <Card style={{width:"100%",marginTop:5}}>
-                <ListItem style={{backgroundColor:"white",width:"100%",marginTop:5}}
-                 onPress= { () => navigation.navigate('child_Details',{item:item})}>
-                  <Text>
-                    {
-                      item.childName
-                    }
-                  </Text>
-                </ListItem>
-              // </Card>
 
-            )}
-          />
-        
-      </View>
+      <FlatList
+        data={childlists}
+        keyExtractor={item => item.id}
+        renderItem={({ item }) => (
+          <Card>
+            <CardItem button onPress={() => navigation.navigate('child_Details', { item: item })}>
+              <Body>
+                <Text>
+                  {
+                    item.childName
+                  }
+                </Text>
+              </Body>
+            </CardItem>
+          </Card>
+        )}
+      />
+
+    </View>
   );
 
 }
