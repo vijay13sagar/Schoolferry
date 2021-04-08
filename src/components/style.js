@@ -24,18 +24,18 @@ export default StyleSheet.create({
       borderWidth: 1,
       borderRadius: 10
     },
-    inputView: {
-      borderWidth: 1,
-      borderColor: '#FF5C00',
-      borderRadius: 10,
-      width: "80%",
-      height: 45,
-      alignSelf: "center",
-      alignItems:'center',
-      backgroundColor: "#fff",   //"#C4C4C4",
-      marginTop: 20,
-      //opacity: 0.5,
-    },
+    // inputView: {
+    //   borderWidth: 1,
+    //   borderColor: '#FF5C00',
+    //   borderRadius: 10,
+    //   width: "80%",
+    //   height: 45,
+    //   alignSelf: "center",
+    //   alignItems:'center',
+    //   backgroundColor: "#fff",   //"#C4C4C4",
+    //   marginTop: 20,
+    //   //opacity: 0.5,
+    // },
     checkboxContainer: {
       flexDirection: "row",
       marginBottom: 20,
@@ -143,7 +143,7 @@ export default StyleSheet.create({
 
     },
     modalContainer: {
-        backgroundColor: '#000000aa',
+        backgroundColor: '#000000',
         flex: 1,
         //height: '50%',
         justifyContent: 'center'
@@ -310,10 +310,11 @@ export default StyleSheet.create({
     },
     //triphistory.js (Nothing)
     //updateprofile.js (check main view background color)
-      text: {
+      text1: {
         fontSize: 18,
         color:'black',
         alignSelf: 'center',
+        marginTop:20,
         marginBottom: 10,
         justifyContent:'center'
       },
@@ -379,7 +380,7 @@ export default StyleSheet.create({
   //parent module
   //unsubscribedhome.js
 map: {
-    height: '70%',
+    height: '75%',
 },
 note:{
     fontSize:16,
@@ -397,7 +398,7 @@ note:{
     marginHorizontal: 3,
   },
   body: {
-    marginVertical: 40,
+    marginVertical: 20,
     alignSelf: 'center',
   },
   nameText: {
@@ -611,13 +612,13 @@ TextInput1: {
 },
 inputaddress: {
   borderWidth: 1,
-  borderColor: '#B0003A',
+  borderColor: '#FF5C00',
   borderRadius: 10,
   width: "80%",
   height: 45,
   padding: 2,
   backgroundColor: "#fff",   //"#C4C4C4",
-  marginTop: 7,
+  marginTop: 15,
   alignSelf:'center'
 },
 Picker1: {
@@ -633,13 +634,13 @@ pickerBtn:{
   width: 150,
   borderRadius: 10,
   borderWidth:1,
-  borderColor:'#B0003A',
+  borderColor:'#FF5C00',
   height: 45,
   alignItems: "center",
   justifyContent: "center",
   backgroundColor: "#fff",
   alignSelf: "center",
-  marginTop: 10,
+  marginTop: 15,
 
 },
 dobText:{
@@ -812,7 +813,7 @@ inputView1: {
   alignItems:'center',
   justifyContent:'center',
   backgroundColor: "#fff",   //"#C4C4C4",
-  marginTop: 5,
+  marginTop: 15,
   //opacity: 0.5,
 },
 //upipay.js
@@ -827,7 +828,7 @@ inputView: {
   alignItems:'center',
   justifyContent:'center',
   backgroundColor: "#fff",   //"#C4C4C4",
-  marginTop: 5,
+  marginTop: 15,
   //opacity: 0.5,
 },
 //Screens
@@ -855,7 +856,47 @@ text: {
   marginTop: 100,
   alignSelf:'center',
   fontSize: 15,
-
 },
+//otpscreen.js
+otpBox: {
+  padding: 10,
+  marginRight: 10,
+  borderWidth: 1,
+  fontSize: 25,
+  borderColor: 'lightgrey',
+  height: 50,
+  width: 50,
+  textAlign: 'center'
+},
+otpBoxesContainer: {
+  flexDirection: 'row'
+},
+//profile.js
+licence: {
+  marginTop:20,
+  height: 100,
+  width: 100,
+  borderRadius:50,
+  alignSelf: 'center'
+  },
+  idproof:{
+    width:320,
+    height:170,
+    alignSelf:'center'
+  },
+  inputView2: {
+    //padding: 2,
+    borderWidth: 1,
+    borderColor: '#FF5C00',
+    borderRadius: 10,
+    width: "80%",
+    height: 45,
+    alignSelf: "center",
+    alignItems:'center',
+    justifyContent:'center',
+    backgroundColor: "#fff",   //"#C4C4C4",
+    marginTop: 5,
+    //opacity: 0.5,
+  },
     })
     

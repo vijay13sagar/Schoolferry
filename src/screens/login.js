@@ -20,7 +20,6 @@ export default function Login({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [{emailError}, setEmailError] = useState('');
-  const [{passwordError}, setPasswordError] = useState('');
   const [isloading,setLoading] = useState(false)
 
   const pressHandler = () => {
@@ -45,7 +44,7 @@ export default function Login({navigation}) {
       return false;
     }
     if (!password) {
-      setPasswordError({passwordError: 'Password Cannot be Empty'});
+      setEmailError({emailError: 'Password Cannot be Empty'});
       return false;
     }
     return true;
@@ -146,7 +145,7 @@ export default function Login({navigation}) {
           onChangeText={(email) => setEmail(email)}
         />
       </View>
-      <Text style={styles.error}>{emailError}</Text>
+     
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
@@ -156,7 +155,7 @@ export default function Login({navigation}) {
           onChangeText={(password) => setPassword(password)}
         />
       </View>
-      <Text style={styles.error}>{passwordError}</Text>
+      <Text style={styles.error}>{emailError}</Text>
       <TouchableOpacity onPress={() => navigation.navigate('Forgot Password')}>
         <Text style={styles.forgot_button}>Forgot Password?</Text>
       </TouchableOpacity>

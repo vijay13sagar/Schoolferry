@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, StatusBar, StyleSheet, FlatList, Text, View, Modal } from 'react-native';
+import {  StatusBar, FlatList, Text, View } from 'react-native';
 import { Card, CardItem, Body } from 'native-base';
-import { ScrollView } from 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Ngrok from '../../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -17,10 +16,7 @@ export default class Notificationlist extends Component {
       data: [],
       isLoading: true,
       selected: false,
-      modalVisible: false,
-      selectedData: '',
-      selectedDate: '',
-      selectedTitle: '',
+      item1:[],
     };
   }
   onFocusFunction = async () => {
@@ -36,6 +32,8 @@ export default class Notificationlist extends Component {
       .then((response) => response.json())
       .then((json) => {
         this.setState({ data: json });
+        this.setState({item1:json.map(child=>({...child,attend:false}))})
+        console.log("not",this.state.item1);
       })
       .catch((error) => console.error(error))
       .finally(() => {
@@ -50,74 +48,63 @@ export default class Notificationlist extends Component {
   componentWillUnmount() {
     this.focusListener()
   }
-  setModalVisible = (visible) => {
-    this.setState({ modalVisible: visible });
-  }
-  _selectedItem = (data, data2, data3) => {
-    this.setState({ selectedData: data, selectedDate: data2, selectedTitle: data3, selected: !this.state.selected });
-    this.setModalVisible(true);
+  Enlarge=(item) => {
+      const data1 = this.state.item1.map(child => {
+      if (child.message === item.message) {
+      return { ...child, attend: !child.attend }
+      }
+      return child
+      })
+      console.log("why",data1);
+      this.setState({item1:data1})
   }
   render() {
-    const { data, isLoading, selected } = this.state;
-    const { modalVisible } = this.state;
+    const { item1, isLoading } = this.state;
 
     return (
-      <View style={{ flex: 1, padding: 3, backgroundColor: "#FCFDDB", }}>
+      <View style={styles.container}>
         <Loader loading={isLoading} />
         <StatusBar
           barStyle="light-content" hidden={false} backgroundColor="#FF5C00" translucent={true}
         />
         <FlatList
-          data={data}
-          keyExtractor={({ id }, index) => id}
+          data={item1}
+          keyExtractor={({ message }, index) => message}
           renderItem={({ item }) => (
             <View><Card>
-              <CardItem button onPress={() => {
-                this._selectedItem(item.message, item.date, item.title)
-              }}>
-                <Body>
-                  <Text>
+              <CardItem button onPress={() => {{
+                this.Enlarge(item)
+              }}}>
+                <Body style={{flexDirection:'row',justifyContent:'space-between',padding:3}}>
+                  <Text style={{alignSelf:'flex-start'}}>
                     {item.title}
-                  </Text>
+                </Text>
+                <Text style={{alignSelf:'flex-end'}}>
+                {item.attend ? <Ionicons name="chevron-up"
+                    color="#000" size={25}
+                  />: <Ionicons name="chevron-down"
+                  color="#000" size={25}
+                />}
+                </Text>
                 </Body>
               </CardItem>
             </Card>
-              {/* { selected ? <Card>
+              { item.attend ? <Card>
                 <Body>
-                  <Text>
+                <Text style={styles.modalheading}> {item.title}</Text>
+              <View style={{ flexDirection: 'row', alignSelf: 'center', justifyContent: 'center' }}>
+                <Text style={styles.modalheading}>Date of Notice:</Text>
+                <Text style={styles.notice}>{item.date}</Text>
+              </View>
+              <Text style={styles.notice}>{item.message}</Text>
+                  {/* <Text>
                     {item.title},{item.date},{item.message}
-                  </Text>
+                  </Text> */}
                 </Body>
-              </Card> : null} */}
+              </Card> : null}
             </View>
           )}
         />
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
-            this.setModalVisible(!modalVisible);
-          }}
-        >
-          <View style={styles.modalContainer}>
-            <Ionicons name="close-circle-outline"
-              color="#fff" size={30}
-              style={styles.icon}
-              onPress={(modalVisible) => this.setModalVisible(!modalVisible)}
-            />
-            <View style={styles.modalBody}>
-              <Text style={styles.modalheading}> {this.state.selectedTitle}</Text>
-              <View style={{ flexDirection: 'row', alignSelf: 'center', justifyContent: 'center' }}>
-                <Text style={styles.modalheading}>Date of Notice:</Text>
-                <Text style={styles.notice}>{this.state.selectedDate}</Text>
-              </View>
-              <Text style={styles.notice}>{this.state.selectedData}</Text>
-            </View>
-          </View>
-        </Modal>
-
       </View>
     );
   }
