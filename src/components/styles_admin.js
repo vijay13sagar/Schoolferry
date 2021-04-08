@@ -130,6 +130,17 @@ export default StyleSheet.create({
         marginTop: 10,
         //opacity: 0.5,
       },
+      inputView1: {
+        borderWidth: 1,
+        borderColor: '#FF5C00',
+        borderRadius: 10,
+        width: "80%",
+        height: 45,
+     alignSelf:"center",
+        backgroundColor: "#fff",   //"#C4C4C4",
+        marginTop: 10,
+        //opacity: 0.5,
+      },
       loginBtns: {
         width: "75%",
         borderRadius: 10,
@@ -202,6 +213,14 @@ export default StyleSheet.create({
         marginLeft: 10,
     
       },
+      TextInput2: {
+        height: 50,
+        color:"white", 
+        alignSelf:"center",
+        padding: 10,
+        marginLeft: 10,
+    
+      },
      
       forgot_button: {
         height: 30,
@@ -217,7 +236,45 @@ export default StyleSheet.create({
         alignItems: 'flex-start',
         justifyContent: 'center'
       },
-      
+
+      container3: {
+        flex: 1,
+        backgroundColor: "#FCFDDB",
+        },
+        licence: {
+        marginTop:20,
+        height: 100,
+        width: 100,
+        borderRadius:50,
+        alignSelf: 'center'
+        },
+        modalContainer: {
+        backgroundColor: '#000000',
+        flex: 1,
+        //height: '50%',
+        justifyContent: 'center'
+        },
+        modalBody1: {
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        height: 280,
+        width: '88%',
+        alignSelf: 'center',
+        justifyContent: 'center',
+        },
+        message1: {
+        fontSize: 22,
+        textAlign: 'center',
+        //marginTop: 30
+        color: '#000',
+        fontWeight: '600',
+        padding: 7,
+        },
+        icon: {
+        alignSelf: 'flex-end',
+        marginRight: 10,
+        },
 
       
+
     })

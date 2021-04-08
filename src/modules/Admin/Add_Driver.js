@@ -161,7 +161,7 @@ const [pic, setPic] = useState(false);
 
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container3}>
       {pic ?
       <View style={{ flex: 1, backgroundColor: 'black' }}>
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
@@ -231,17 +231,17 @@ const [pic, setPic] = useState(false);
       </View>
       }
          
-        {/* <View style={styles.inputView}>
+        <View style={styles.inputView1}>
           <TextInput
-            style={styles.TextInput1}
+            style={styles.TextInput2}
             placeholder="Name"
             placeholderTextColor="#929292"
             onChangeText={(name) => setname(name)}
           />
         </View>
-        <View style={styles.inputView}>
+        <View style={styles.inputView1}>
           <TextInput
-            style={styles.TextInput1}
+            style={styles.TextInput2}
             placeholder="Mobile Number"
             keyboardType="numeric"
             placeholderTextColor="#929292"
@@ -249,26 +249,26 @@ const [pic, setPic] = useState(false);
           />
         </View>
 
-        <View style={styles.inputView}>
+        <View style={styles.inputView1}>
           <TextInput
-            style={styles.TextInput1}
+            style={styles.TextInput2}
             placeholder="Address"
             placeholderTextColor="#929292"
             onChangeText={(ADR) => setADR(ADR)}
           />
         </View>
-        <View style={styles.inputView}>
+        <View style={styles.inputView1}>
           <TextInput
-            style={styles.TextInput1}
+            style={styles.TextInput2}
             placeholder="Exp"
 
             placeholderTextColor="#929292"
             onChangeText={(EXP) => setEXP(EXP)}
           />
         </View>
-        <View style={styles.inputView}>
+        <View style={styles.inputView1}>
           <TextInput
-            style={styles.TextInput1}
+            style={styles.TextInput2}
             placeholder="Licence No"
             keyboardType="numeric"
             placeholderTextColor="#929292"
@@ -276,9 +276,9 @@ const [pic, setPic] = useState(false);
           />
         </View>
 
-        <View style={styles.inputView}>
+        <View style={styles.inputView1}>
           <TextInput
-            style={styles.TextInput1}
+            style={styles.TextInput2}
             placeholder="Password"
             placeholderTextColor="#929292"
             secureTextEntry={true}
@@ -292,7 +292,7 @@ const [pic, setPic] = useState(false);
         <TouchableOpacity style={styles.loginBtn} onPress={pressHandler} >
           <Text style={styles.TextInput}>Confirm</Text>
 
-        </TouchableOpacity> */}
+        </TouchableOpacity>
 
     </View>
   );
