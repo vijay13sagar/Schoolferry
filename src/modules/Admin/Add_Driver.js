@@ -7,7 +7,7 @@ import {
   Image,
   TouchableOpacity,
   Alert,
-  Modal, modalVisible
+  Modal,ImageBackground,CameraRoll ,
 
 } from "react-native";
 import Ngrok from '../../constants/ngrok';
@@ -22,11 +22,12 @@ import ImagePicker from 'react-native-image-crop-picker';
 export default function Add_Driver({ navigation }) {
   const [isloading, setLoading] = useState(false);
   const [img, setImg] = useState('https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg');
+const [pic, setPic] = useState(false);
   const [email, setEmail] = useState("");
   const [name, setname] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [password, setpassword] = useState("");
-  const [pic, setPic] = useState(false);
+  
   const [contact, setcontact] = useState("");
   const [ADR, setADR] = useState("");
   const [LIN, setLIN] = useState("");
@@ -46,39 +47,38 @@ export default function Add_Driver({ navigation }) {
     else { return false }
 
   };
+  
   const gallery = () => {
     ImagePicker.openPicker({
-      // width: 350,
-      // height: 175,
-      compressImageMaxHeight: 350,
-      compressImageMaxHeight: 175,
-      cropping: true
+    // width: 350,
+    // height: 175,
+    compressImageMaxHeight: 350,
+    compressImageMaxHeight: 175,
+    cropping: true
     }).then(image => {
-      console.log(image);
-      setImg("path", image.path)
-      setModalVisible(false)
+    console.log(image);
+    setImg(image.path)
     });
-  }
-  const Camera = () => {
+    }
+    const Camera = () => {
     ImagePicker.openCamera({
-      compressImageMaxHeight: 350,
-      compressImageMaxHeight: 175,
-      cropping: true,
+    compressImageMaxHeight: 350,
+    compressImageMaxHeight: 175,
+    cropping: true,
     }).then(image => {
-      console.log(image);
-      setImg(image.path)
-      setModalVisible(false)
+    console.log(image);
+    setImg(image.path)
     });
-  }
-  const press = () => {
+    }
+    const press = () => {
     setPic(true)
-  }
-  const backpress = () => {
+    }
+    const backpress = () => {
     setPic(false)
-  }
-  const pick = () => {
+    }
+    const pick=()=>{
     setModalVisible(true);
-  }
+    }
 
   const validateFunction = () => {
 
@@ -162,66 +162,76 @@ export default function Add_Driver({ navigation }) {
 
   return (
     <View style={styles.container}>
-
-      <Loader loading={isloading} />
-     <View>
-     </View>
-          <View style={{ flex: 1, backgroundColor: 'black' }}>
-            <Modal animationType="slide" transparent={true} visible={modalVisible}>
-              <View style={styles.modalContainer}>
-                <Ionicons
-                  name="close-circle-outline"
-                  color="#fff"
-                  size={30}
-                  style={styles.icon}
-                  onPress={(modalVisible) => setModalVisible(!modalVisible)}
-                />
-                <View style={styles.modalBody1}>
-                  <TouchableOpacity
-                    style={{ alignSelf: 'center', marginTop: 5 }}
-                    onPress={Camera}>
-                    <Text
-                      style={{
-                        color: '#1E90FF',
-                        fontSize: 19,
-                      }}>
-                      Open Camera <Ionicons name="camera"
-                        color="#1E90FF" size={25}
-                        style={styles.icon}
-                      />
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={{ alignSelf: 'center', marginTop: 20 }}
-                    onPress={gallery}>
-                    <Text
-                      style={{
-                        color: '#1E90FF',
-                        fontSize: 19,
-                      }}>
-                      Choose From Gallery <Ionicons name="folder"
-                        color="#1E90FF" size={25}
-                        style={styles.icon}
-                      />
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </Modal>
-            <View style={{ flexDirection: 'row', marginBottom: '35%', marginLeft: 10, marginTop: 10 }}>
-              <TouchableOpacity onPress={backpress} style={{ justifyContent: 'flex-start' }}><Ionicons name="arrow-back"
-                color="#FFF" size={25}
-                style={styles.icon}
-              /></TouchableOpacity>
-              <TouchableOpacity onPress={pick} style={{ marginLeft: '80%' }}><Ionicons name="create"
-                color="#FFF" size={25}
-                style={styles.icon}
-              /></TouchableOpacity>
-            </View>
-            <Image style={{ width: '100%', height: '50%', justifyContent: 'center' }} source={{ uri: img }} />
-          </View>
+      {pic ?
+      <View style={{ flex: 1, backgroundColor: 'black' }}>
+      <Modal animationType="slide" transparent={true} visible={modalVisible}>
+      <View style={styles.modalContainer}>
+      <Ionicons
+      name="close-circle-outline"
+      color="#fff"
+      size={30}
+      style={styles.icon}
+      onPress={(modalVisible) => setModalVisible(!modalVisible)}
+      />
+      <View style={styles.modalBody1}>
+      <TouchableOpacity
+      style={{alignSelf: 'center', marginTop: 5}}
+      onPress={Camera}>
+      <Text
+      style={{
+      color: '#1E90FF',
+      fontSize: 19,
+      }}>
+      Open Camera <Ionicons name="camera"
+      color="#1E90FF" size={25}
+      style={styles.icon}
+      />
+      </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+      style={{alignSelf: 'center', marginTop: 20}}
+      onPress={gallery}>
+      <Text
+      style={{
+      color: '#1E90FF',
+      fontSize: 19,
+      }}>
+      Choose From Gallery <Ionicons name="folder"
+      color="#1E90FF" size={25}
+      style={styles.icon}
+      />
+      </Text>
+      </TouchableOpacity>
+      </View>
+      </View>
+      </Modal>
+      <View style={{ flexDirection:'row',marginBottom: '35%', marginLeft: 10, marginTop: 10}}>
+      <TouchableOpacity onPress={backpress} style={{ justifyContent: 'flex-start' }}><Ionicons name="arrow-back"
+      color="#FFF" size={25}
+      style={styles.icon}
+      /></TouchableOpacity>
+      <TouchableOpacity onPress={pick} style={{ marginLeft:'80%' }}><Ionicons name="create"
+      color="#FFF" size={25}
+      style={styles.icon}
+      /></TouchableOpacity>
+      </View>
+      <Image style={{ width: '100%', height: '50%', justifyContent: 'center' }} source={{ uri: img }} />
+      </View>
+      :<View> 
+      <View style={{flexDirection:'row',alignSelf:'center'}}>
+      <TouchableOpacity onPress={press} >
+      <Image style={styles.licence}source={{ uri: img }}/>
+      {/* <Ionicons name="camera"
+      color="white" size={20}
+      style={{backgroundColor:'#FF5C00',marginTop:90,borderRadius:25,justifyContent:'flex-end',alignSelf:'flex-end'}}
+      /> */}
+      </TouchableOpacity>
+      </View>
+     
+      </View>
+      }
          
-        <View style={styles.inputView}>
+        {/* <View style={styles.inputView}>
           <TextInput
             style={styles.TextInput1}
             placeholder="Name"
@@ -282,7 +292,7 @@ export default function Add_Driver({ navigation }) {
         <TouchableOpacity style={styles.loginBtn} onPress={pressHandler} >
           <Text style={styles.TextInput}>Confirm</Text>
 
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
     </View>
   );
