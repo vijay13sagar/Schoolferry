@@ -92,9 +92,9 @@ export default StyleSheet.create({
       height: 38,
       alignItems: "center",
       justifyContent: "center",
-      backgroundColor: "#212121",//'#72CDF4',////"#ff5c8d",
+      backgroundColor: "#212121",
       alignSelf: "center",
-      marginVertical: 10,
+      marginTop: 10,
   },
     textHeads: {
         fontSize: 18,
@@ -495,6 +495,7 @@ firstBox: {
   flexDirection: 'row',
   marginTop: 10,
   width: '100%',
+  justifyContent:'space-between'
 },
 planTitleText: {
   fontSize: 23,
@@ -555,7 +556,7 @@ randomText: {
   fontSize: 15,
   alignSelf: 'center',
   fontWeight: '700',
-  color: 'red',
+  color: '#ce1212',
   marginVertical: 5,
 },
 addChildContainer: {
@@ -566,7 +567,7 @@ addChildContainer: {
   width: '90%',
   alignSelf: 'center',
   alignItems: 'center',
-  backgroundColor: '#FCFDDB',
+  backgroundColor: '#fff',
 },
 addChildText: {
   fontSize: 17,
@@ -583,7 +584,6 @@ unsubscribeBtn: {
   backgroundColor: '#FF5C00',
   alignSelf: 'center',
   marginTop: 10,
-  marginBottom:20,
 },
 message1: {
   fontSize: 22,
@@ -653,7 +653,7 @@ bg2:{
   color:'#929292'
 },
 serviceText:{
-  color:'red',
+  color:'#ce1212',
   fontSize:16,
   marginTop:15,
   marginLeft:10,
@@ -724,11 +724,8 @@ trips: {
   alignSelf: 'center',
 },
 Picker: {
-  width: '45%',
-  borderRadius: 10,
+  width: '35%',
   height: 30,
-  borderWidth: 1,
-  alignContent: 'center',
   alignSelf: 'flex-end',
 },
 //pauseplan.js

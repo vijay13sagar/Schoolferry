@@ -1,12 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import {
-  StyleSheet,
   ScrollView,
   Text,
-  StatusBar,
   TouchableOpacity,
   View,
-  ActivityIndicator,
   Alert,
 } from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
@@ -15,6 +12,8 @@ import axios from 'axios';
 import Ngrok from '../../constants/ngrok';
 import Loader from '../../components/Loader';
 import styles from '../../components/style';
+import ToastComponent from '../../components/Toaster';
+import* as ToastMessage from '../../constants/ToastMessages';
 
 const PausePlan = ({route, navigation}) => {
   const [selectedStartDate, setselectedStartDate] = useState('');
@@ -27,7 +26,10 @@ const PausePlan = ({route, navigation}) => {
   const [isLoading, setLoading] = useState(true);
   const [count, setCount] = useState(0);
   const [error, setError] = useState();
-  const [loader, setLoader] = useState(false)
+  const [loader, setLoader] = useState(false);
+  const [showtoast,setToast] = useState(false)
+  const [message, SetMessage] = useState()
+  const [type,setType] =useState()
 
   const childid = route.params.childid;
 
@@ -61,7 +63,7 @@ const PausePlan = ({route, navigation}) => {
     if (startDate == 'Invalid date' || endDate == 'Invalid date') {
       setError('Please select start/end date');
     } else {
-      setLoader(true)
+      setLoader(true);
       try {
         axios
           .post(`${Ngrok.url}/api/subscription/pause`, {
@@ -72,39 +74,55 @@ const PausePlan = ({route, navigation}) => {
           .then(function (response) {
             // console.log('data: ', response.data);
             console.log('message: ', response.data.message);
-            setLoader(false)
+            setLoader(false);
 
             if (response.status == 200) {
-              Alert.alert('Plan paused successful');
+              //Alert.alert('Plan paused successful');
+              setToast(true)
+              setType(ToastMessage.success)
+              SetMessage(ToastMessage.message6)
               setCount(count + 1);
-              setError()
-              setselectedEndDate('')
-              setselectedStartDate('')
+              setError();
+              setselectedEndDate('');
+              setselectedStartDate('');
             } else {
-              Alert.alert('Failed. Please try again');
+              setToast(true)
+              setType(ToastMessage.failure)
+              SetMessage(ToastMessage.message5)
             }
           })
           .catch(function (error) {
             console.log('err', error.response.data);
-            setLoader(false)
-            
+            setLoader(false);
+
             if (error.response.data.status == 409) {
-              Alert.alert(JSON.stringify(error.response.data.message));
+              //Alert.alert(JSON.stringify(error.response.data.message));
+              setToast(true)
+              setType(ToastMessage.failure)
+              SetMessage(JSON.stringify(error.response.data.message))
             } else if (error.response.data.status == 401) {
-              Alert.alert('Failed. You have exhausted maximum attempts');
+             // Alert.alert('Failed. You have exhausted maximum attempts');
+              setToast(true)
+              setType(ToastMessage.failure)
+              SetMessage(ToastMessage.message7)
+
             }
           });
       } catch (error) {
         console.log(error);
       }
     }
+    setToast(false)
   };
 
   return isLoading ? (
-    <Loader loading= {isLoading} />
+    <View style={styles.container}>
+      <Loader loading={isLoading} />
+    </View>
   ) : (
-    <ScrollView style={styles.container}>
-      <Loader loading = {loader} />
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+        {showtoast? (<ToastComponent type = {type}  message = {message}/>): null}
+      <Loader loading={loader} />
 
       <View style={[data.pauseEndDate ? styles.biggerBox : styles.pausePlan]}>
         <Text style={styles.mainHeading1}>Pause Plan Details</Text>
@@ -129,7 +147,7 @@ const PausePlan = ({route, navigation}) => {
           marginLeft: 20,
           alignSelf: 'flex-start',
           justifyContent: 'center',
-          marginTop: 30,
+          marginTop: 20,
         }}>
         <Text style={{fontWeight: 'bold', fontSize: 20}}>Pause Plan :-</Text>
       </View>
@@ -164,23 +182,20 @@ const PausePlan = ({route, navigation}) => {
           selectedDayTextColor="#FFFFFF"
           onDateChange={onDateChange}
         />
-        
       </View>
-      <View style={{alignSelf:'center',marginTop:10}}>
-          <Text style={styles.registerTextStyle}>
-            Selected Start Date: {startDate}
-          </Text>
-          <Text style={styles.registerTextStyle}>
-            Selected End Date: {endDate}
-          </Text>
-        </View>
+      <View style={{alignSelf: 'center'}}>
+        <Text style={styles.registerTextStyle}>
+          Selected Start Date: {startDate}
+        </Text>
+        <Text style={styles.registerTextStyle}>
+          Selected End Date: {endDate}
+        </Text>
+      </View>
       <Text style={styles.error}>{error}</Text>
       <TouchableOpacity
-        style={
-          ({alignItems: 'center', justifyContent: 'center'}, styles.loginBtn)
-        }
+        style={{...styles.loginBtn, marginTop: 5}}
         onPress={pauseHandler}>
-        <Text style={styles.loginText}>APPLY</Text>
+        <Text style={styles.loginText}>Apply</Text>
       </TouchableOpacity>
     </ScrollView>
   );

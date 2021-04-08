@@ -17,6 +17,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {useFocusEffect} from '@react-navigation/native';
 import Loader from '../../components/Loader';
 import styles from '../../components/style';
+import ToastComponent from '../../components/Toaster';
+import* as ToastMessage from '../../constants/ToastMessages';
 
 const subscribedHome = ({route, navigation}) => {
   const [selectedStartDate, setselectedStartDate] = useState('');
@@ -31,6 +33,9 @@ const subscribedHome = ({route, navigation}) => {
   const [error, setError] = useState();
   const [count, setCount] = useState(0);
   const [loader,setLoader] = useState(false)
+  const [showtoast,setToast] = useState(false)
+  const [message, SetMessage] = useState()
+  const [type,setType] =useState()
 
   const onDateChange = (date, type) => {
     if (type === 'END_DATE') {
@@ -119,15 +124,19 @@ const subscribedHome = ({route, navigation}) => {
             setLoader(false)
 
             if (response.status == 200) {
-              Alert.alert('Ride cancelled successfully');
+             // Alert.alert('Ride cancelled successfully');
+              setToast(true)
+              setType(ToastMessage.success)
+              SetMessage(ToastMessage.message4)
               setCount(count + 1);
-              //setLoading(true);
               setError();
               setselectedEndDate('');
               setselectedStartDate('');
             } else {
-              
-              Alert.alert('Failed. Please try again');
+              setToast(true)
+              setType(ToastMessage.failure)
+              SetMessage(ToastMessage.message5)
+             
             }
           })
           .catch(function (error) {
@@ -138,19 +147,21 @@ const subscribedHome = ({route, navigation}) => {
         console.log('error: ', error);
       }
     }
+    setToast(false)
   };
 
   return isLoading ? (
     <Loader loading= {isLoading} />
   ) : (
     <View style={styles.cont}>
-    <ScrollView>
+    <ScrollView  showsVerticalScrollIndicator={false}>
       <StatusBar
         barStyle="light-content"
         hidden={false}
         backgroundColor="#FF5C00"
         translucent={false}
       />
+       {showtoast? (<ToastComponent type = {type}  message = {message}/>): null}
      <Loader loading = {loader} />
 
       <Picker
@@ -275,7 +286,7 @@ const subscribedHome = ({route, navigation}) => {
           ({alignItems: 'center', justifyContent: 'center'}, styles.loginBtn)
         }
         onPress={cancelHandler}>
-        <Text style={styles.loginText}>APPLY</Text>
+        <Text style={styles.loginText}>Apply</Text>
       </TouchableOpacity>
     </ScrollView>
     </View>
