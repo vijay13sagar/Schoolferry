@@ -17,7 +17,7 @@ import vehicleList from '../modules/Admin/vehicle';
 import vehicle_Details from '../modules/Admin/vehicle_details';
 import userList from '../modules/Admin/user';
 import user_Details from '../modules/Admin/user_Details';
-import userSubscription from '../modules/Admin/usersubscription';
+
 import child_Details from '../modules/Admin/child_Details';
 import Home_page from '../modules/Admin/home';
 import Trip_Details from '../modules/Admin/daily trip details';
@@ -134,11 +134,7 @@ function UserStack() {
         component={user_Details}
         options={{ title: 'Customer Details' }}
       />
-       <Stack.Screen
-        name="userSubscription"
-        component={userSubscription}
-        options={{ title: 'Child Details' }}
-      />
+      
       <Stack.Screen
         name="child_Details"
         component={child_Details}

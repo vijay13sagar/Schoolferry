@@ -20,6 +20,7 @@ import {
 import Ngrok from '../../constants/ngrok';
 import Loader from '../../components/Loader';
 import axios from 'axios';
+import styles from '../../components/styles_admin'
 
 const MyPieChart = () => {
   const [loading, setLoading] = useState(false);
@@ -72,7 +73,7 @@ const MyPieChart = () => {
     //   data: [0.4, 0.7, 0.8]
     // };
   return (
-    <View>
+    <View style={styles.container1}>
        <Loader loading={loading} />
       <StatusBar
         barStyle="light-content"
@@ -87,26 +88,9 @@ const MyPieChart = () => {
       />
     <ScrollView>
       <Text style={styles.header}>SUBSCRIPTION STATS</Text>
-      {/* style={{alignSelf:'flex-start'}} */}
+      
       {isLoading ? <ActivityIndicator/>:<View >
-        {/* <ProgressChart
-  data={prog}
-  width={400}
-  height={220}
-  strokeWidth={16}
-  radius={32}
-  chartConfig={{
-    backgroundColor: '#1cc910',
-    backgroundGradientFrom: '#eff3ff',
-    backgroundGradientTo: '#efefef',
-    //decimalPlaces: 0,
-    color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-    style: {
-      borderRadius: 16,
-    },
-  }}
-  hideLegend={false}
-/> */}
+        
         <PieChart
         data={[
           {
@@ -217,31 +201,7 @@ const MyPieChart = () => {
 };
 
 export default MyPieChart;
-const styles = StyleSheet.create({
-  container: {
-    padding: 50,
-    flex: 1,
-    backgroundColor: "#F9F2F2",
-    alignItems: "center",
-  },
-  histBtn: {
-    width: "20%",
-    borderRadius: 10,
-    height: 41,
-    alignItems: "center",
-    justifyContent: "center",
-    marginVertical: 15,
-    backgroundColor: "#ff5c8d",
-    marginHorizontal:"2%"
-  },
-  header: {
-    textAlign: 'center',
-    fontWeight: 'bold',
-    fontSize: 18,
-    padding: 16,
-    marginTop: 16,
-  },
-});
+
 
 
 

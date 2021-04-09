@@ -9,14 +9,15 @@ import {
   Button,
   TouchableOpacity,
 } from "react-native";
+import styles from '../../components/styles_admin'
  
 export default function vehicle_Details({ route, navigation }){
 
 
   console.log("this.props",route.params.item.releaseYear);
   return (
-    <View style={styles.container}>
-       <View style={{marginRight:90,width:"70%"}}>
+    <View style={styles.container2}>
+       <View style={{marginRight:225,marginTop:40,}}>
         <Text>Vehicle Number</Text></View> 
       <View style={styles. details}>
         <Text >
@@ -25,7 +26,7 @@ export default function vehicle_Details({ route, navigation }){
           
         </Text>
       </View>
-      <View style={{marginRight:90,width:"70%"}}>
+      <View style={{marginRight:245}}>
         <Text>GPS Number</Text></View> 
       <View style={styles. details}>
        
@@ -37,7 +38,7 @@ export default function vehicle_Details({ route, navigation }){
        
         
       </View>
-      <View style={{marginRight:90,width:"70%"}}>
+      <View style={{marginRight:285}}>
         <Text>Type</Text></View> 
       <View style={styles. details}>
       <Text>
@@ -46,7 +47,7 @@ export default function vehicle_Details({ route, navigation }){
           
         </Text>
       </View>
-      <View style={{marginRight:90,width:"70%"}}>
+      <View style={{marginRight:285}}>
         <Text>Model</Text></View> 
       <View style={styles. details}>
        
@@ -57,7 +58,7 @@ export default function vehicle_Details({ route, navigation }){
        </Text>
        
      </View>
-     <View style={{marginRight:90,width:"70%"}}>
+     <View style={{marginRight:275}}>
         <Text>Capacity</Text></View> 
       <View style={styles. details}>
       <Text >
@@ -66,72 +67,7 @@ export default function vehicle_Details({ route, navigation }){
           
         </Text>
       </View>
-      
-      
-     
-      
-      
-        {/* <TouchableOpacity style={styles.loginBtn} >
-            <Text style={styles.loginText}>Daily Check List</Text>
-            
-            
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.loginBtn} >
-            <Text style={styles.loginText}>Track Vehicle</Text>
-            
-            
-        </TouchableOpacity> */}
       </View>
   );
 }
  
-const styles = StyleSheet.create({
-    container: {
-      padding: 50,
-      flex:1,
-        backgroundColor: "#F9F2F2",
-        alignItems: "center",
-        
-      },
-    
-      
-      
-      details:{
-       
-        backgroundColor: "#d3d3d3",
-        //borderWidth: 1,
-        borderRadius: 12,
-        //borderColor: '#ff5c8d',
-        width: '105%',
-        padding: 8,
-        alignSelf: "center"
-    
-      },
-    
-      TextInput: {
-        height: 50,
-        alignItems:"flex-start",
-        padding: 10,
-        marginLeft:10,
-    
-      },
-    
-      forgot_button: {
-        height: 30,
-        marginBottom: 15,
-        color: '#1e90ff',
-    
-      },
-    
-      loginBtn: {
-        width: "50%",
-        borderRadius: 10,
-        height: 38,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#ff5c8d",
-        alignSelf: "center",
-        marginTop: 20,
-      },
-  
-});

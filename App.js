@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { NavigationContainer, useNavigation  } from '@react-navigation/native';
 import Onboarding from './src/navigation/onboardingnavigation';
@@ -61,7 +62,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Onboarding/>
+      <AdminNav/>
     </NavigationContainer>
   );
 }
