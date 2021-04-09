@@ -143,7 +143,7 @@ const location = ({navigation}) => {
             <TouchableOpacity
               style={styles.closeModal}
               onPress={modalButtonHandler}>
-              <Text style={{fontSize: 17}}>Okay</Text>
+              <Text style={styles.loginText}>Okay</Text>
             </TouchableOpacity>
           </View>
         </View>

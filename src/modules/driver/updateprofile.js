@@ -3,12 +3,15 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'reac
 import Ngrok from '../../constants/ngrok'
 import AsyncStorage from '@react-native-community/async-storage';
 import styles from '../../components/style';
-
+import ToastComponent from '../../components/Toaster';
+import* as ToastMessage from '../../constants/ToastMessages';
 
 const Checklist = ({navigation,route}) => {
   const [contact, setContact] = useState(route.params.con)
   const [address, setAddress] = useState(route.params.add)
   const [{ error }, setError] = useState(" ")
+  const [showtoast,setToast] = useState(false)
+  const [message, SetMessage] = useState()
 
   const presshandler = async () => {
     let token = await AsyncStorage.getItem('token')
@@ -38,16 +41,20 @@ const Checklist = ({navigation,route}) => {
         .then(responseJson => {
           console.log(responseJson);
           if (responseJson.message == "data updated successfully") {
-            navigation.goBack()
+            setToast(true)
+            SetMessage(ToastMessage.picmess)
+            //navigation.goBack()
           }
         })
         .catch(err => {
           console.log(err);
         });
     }
+    setToast(false)
   }
   return (
     <View style={styles.cont}>
+      {showtoast? (<ToastComponent type = {ToastMessage.success}  message = {message}/>): null}
       <Text style={styles.text}>Enter your new details</Text>
       <View style={styles.inputView} >
         <TextInput
