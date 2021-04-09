@@ -8,6 +8,7 @@ import {
   Alert,
   StatusBar,
   ScrollView,
+  FlatList,
 } from "react-native";
 import Ngrok from '../../constants/ngrok';
 import axios from 'axios';
@@ -15,19 +16,22 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { Picker } from '@react-native-picker/picker';
 import Loader from '../../components/Loader';
 import styles from '../../components/styles_admin'
+import ToastComponent from '../../components/Toaster';
+import* as ToastMessage from '../../constants/ToastMessages';
 const Employee = ({ navigation }) => {
 
   const [title, settitle] = useState("");
-  const [message, setmessage] = useState("");
+  const [message1, setmessage1] = useState("");
   const [{ emptyFields }, setemptyFeilds] = useState("");
   const [role, setrole] = useState("")
   const [isloading, setLoading] = useState(false);
-
+  const [showtoast,setToast] = useState(false)
+  const [message, SetMessage] = useState()
 
 
   const validateFunction = () => {
 
-    if (!title || !role || !message) {
+    if (!title || !role || !message1) {
       setemptyFeilds({ emptyFields: "Please Enter All The Details" })
 
       return false
@@ -66,7 +70,7 @@ const Employee = ({ navigation }) => {
             receiver: role,
 
             title: title,
-            msg: message,
+            msg: message1,
 
 
           }
@@ -85,7 +89,8 @@ const Employee = ({ navigation }) => {
             console.log(error.response.data.error) //Please Authenticate or whatever returned from server
             if (error.response.status == 401) {
 
-              Alert.alert('Please try again!')
+              // Alert.alert('Please try again!')
+              setToast(true)
             }
 
           })
@@ -96,10 +101,12 @@ const Employee = ({ navigation }) => {
         console.log("errordetails", error);
       }
     }
+    setToast(false)
   }
   
   return (
     <View style={styles.container1}>
+      {showtoast? (<ToastComponent type = {ToastMessage.failure}  message = {ToastMessage.message5}/>): null}
 
       <StatusBar
         barStyle="light-content"
@@ -148,7 +155,7 @@ const Employee = ({ navigation }) => {
       <Text style={{ fontSize: 17,fontWeight:'800'}}>Title</Text>
       <View style={styles.inputView}>
         <TextInput
-          style={styles.TextInput}
+          style={styles.TextInput2}
 
           keyboardType="numeric"
           placeholderTextColor="#929292"
@@ -158,10 +165,10 @@ const Employee = ({ navigation }) => {
       <Text style={{ fontSize: 17,fontWeight:'800' }}>Message</Text>
       <View style={styles.inputView}>
         <TextInput
-          style={styles.TextInput}
+          style={styles.TextInput2}
           placeholderTextColor="#929292"
           multiline={true}
-          onChangeText={(message) => setmessage(message)}
+          onChangeText={(message1) => setmessage1(message1)}
         />
       </View>
       </View>

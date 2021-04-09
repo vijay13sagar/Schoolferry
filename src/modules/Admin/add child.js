@@ -14,11 +14,14 @@ import Loader from '../../components/Loader';
 import Ngrok from '../../constants/ngrok';
 import axios from 'axios';
 import styles from '../../components/styles_admin';
-
+import ToastComponent from '../../components/Toaster';
+import* as ToastMessage from '../../constants/ToastMessages';
 
 
 export default function add_Child({ route,navigation}) {
   const [isloading, setLoading] = useState(false);
+  const [showtoast,setToast] = useState(false)
+  const [message, SetMessage] = useState()
   let c = route.params.tripid1;
   console.log("sfsdffasdas", c);
   let childid = route.params.item.childId;
@@ -45,7 +48,8 @@ let age = route.params.item.age
         if (responseJson.message == "child added") {
          Alert. alert('Added Successfully','', [{text: 'Proceed', onPress:() => navigation.navigate('Home_page',)}])
         } else {
-         Alert. alert('Try again!')
+        //  Alert. alert('Try again!')
+        setToast(true)
         }
         //alert(JSON.stringify(response))
       })
@@ -54,12 +58,13 @@ let age = route.params.item.age
         console.log(err);
       });
   
-
+      setToast(false)
 }
 
 
 return (
   <View style={styles.container1}>
+    {showtoast? (<ToastComponent type = {ToastMessage.failure}  message = {ToastMessage.message5}/>): null}
   <ScrollView>
     <Loader loading={isloading} />
    

@@ -10,13 +10,16 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-
+import ToastComponent from '../../components/Toaster';
+import* as ToastMessage from '../../constants/ToastMessages';
 import Ngrok from '../../constants/ngrok';
 
 import Loader from '../../components/Loader';
 import styles from '../../components/styles_admin'
 
 export default function Edit_Driver({ route,navigation }) {
+  const [showtoast,setToast] = useState(false)
+  const [message, SetMessage] = useState()
   const [isloading, setLoading] = useState(false);
   let c = route.params.tripid1;
   console.log("sfsdffasdas", c);
@@ -45,21 +48,23 @@ export default function Edit_Driver({ route,navigation }) {
         if (responseJson.message == "driver changed") {
           Alert.alert('Changed Successfully','', [{text: 'Proceed', onPress:() => navigation.navigate('Home_page')}])
         } else {
-          Alert.alert('Try again!')
+          setToast(true)
         }
         //alert(JSON.stringify(response))
       })
       .catch(err => {
         setLoading(false);
         console.log(err);
+        setToast(true)
       });
   
-
+      setToast(false)
 }
 
 
 return (
 <View style={styles.container1}>
+{showtoast? (<ToastComponent type = {ToastMessage.failure}  message = {ToastMessage.message5}/>): null}
   <ScrollView>
      <Loader loading={isloading} />
     
