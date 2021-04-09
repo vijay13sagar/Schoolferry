@@ -10,3 +10,6 @@ export const message7 = 'Failed. You have exhausted maximum attempts';
 export const message8 = 'Child addition successful';
 export const message9 = 'Card Deleted Successfully';
 export const message10 = 'Payment failed. Please contact your bank';
+export const updateProfile = 'Profile Updated Successfully';
+export const incorrectOtp = 'Incorrect OTP';
+export const ResendOTP = 'OTP not sent, click on resend OTP';

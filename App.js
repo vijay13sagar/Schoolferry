@@ -31,7 +31,7 @@ export default function App() {
 
     // foreground message handler 
     foreground = messaging().onMessage(async remoteMessage => {
-      alert('A new notification arrived!', JSON.stringify(remoteMessage));
+     // alert('A new notification arrived!', JSON.stringify(remoteMessage));
       console.log('Message handled in the foreground!', remoteMessage);
     });
 
@@ -62,7 +62,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <AdminNav/>
+      <Onboarding/>
     </NavigationContainer>
   );
 }
