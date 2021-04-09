@@ -178,8 +178,8 @@ const DriverTab = () => {
         },
       })}
       tabBarOptions={{
-        activeTintColor: '#e91e63',
-        inactiveTintColor: 'gray',
+        activeTintColor: '#FF5C00',
+        inactiveTintColor: 'grey',
       }}
     >
       <Tab.Screen name="Home" component={Homepage} />

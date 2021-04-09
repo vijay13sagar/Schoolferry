@@ -13,6 +13,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {Content, Card, CardItem, Body} from 'native-base';
 import {useFocusEffect} from '@react-navigation/native';
 import Loader from '../../components/Loader';
+import styles from '../../components/style';
 
 const oldmap = ({navigation}) => {
   const [flag, setflag] = useState(true);
@@ -34,7 +35,7 @@ const oldmap = ({navigation}) => {
           );
 
           console.log('tracking page:', response.data.payment);
-          console.log('Trip Status:', response2.data);
+          //console.log('Trip Status:', response2.data);
 
           let data = response.data.payment;
           setripDetails(response2.data);
@@ -62,7 +63,7 @@ const oldmap = ({navigation}) => {
         <View style={styles.body}>
           <Text style={styles.name}>No subscription added</Text>
         </View>
-        <Text style={styles.centerview}>
+        <Text style={styles.centerview1}>
           Tracking service is only available with subscription. Check service
           availability at your area.
         </Text>
@@ -144,98 +145,3 @@ const oldmap = ({navigation}) => {
 };
 
 export default oldmap;
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F9F2F2',
-  },
-
-  centerview: {
-    justifyContent: 'center',
-    marginVertical: 10,
-    alignSelf: 'center',
-    fontSize: 17,
-    textAlign: 'center',
-    marginHorizontal: 3,
-  },
-  name: {
-    fontSize: 22,
-    color: 'black',
-    fontWeight: '700',
-  },
-  body: {
-    marginVertical: 40,
-    alignSelf: 'center',
-  },
-  headertext: {
-    fontSize: 13,
-    marginTop: 15,
-    marginLeft: 35,
-    alignItems: 'center',
-  },
-
-  loginBtn: {
-    width: '60%',
-    borderRadius: 10,
-    height: 38,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#ff5c8d',
-    alignSelf: 'center',
-    marginTop: 20,
-  },
-  nameText: {
-    fontSize: 19,
-    fontWeight: '700',
-  },
-  tripBtn: {
-    width: '100%',
-    height: 45,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#e91e63',
-    alignItems: 'center',
-    justifyContent: 'center',
-    // backgroundColor: "#ff5c8d",
-    alignSelf: 'center',
-  },
-  mainHeading: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    marginTop: 20,
-    textAlign: 'center',
-  },
-  flatlist: {
-    marginTop: 10,
-    width: '95%',
-    marginLeft: 10,
-  },
-  bodyView: {
-    // borderRadius: 10,
-    borderWidth: 1,
-    width: '100%',
-    padding: 5,
-  },
-  trackVehicle: {
-    width: '50%',
-    height: 38,
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#ff5c8d',
-    alignSelf: 'center',
-    marginTop: 11,
-    marginBottom: 5,
-  },
-  disabled: {
-    width: '50%',
-    height: 38,
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#a9a9a9',
-    alignSelf: 'center',
-    marginTop: 11,
-    marginBottom: 5,
-  },
-});

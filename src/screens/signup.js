@@ -13,6 +13,11 @@ import Ngrok from '../constants/ngrok';
 import axios from 'axios';
 import Login from './login';
 import Loader from '../components/Loader';
+import styles from '../components/style';
+import ToastComponent from '../components/Toaster';
+import* as ToastMessage from '../constants/ToastMessages';
+
+
 export default function App({route,navigation}) {
   const [email, setEmail] = useState("");
   const [Name, setName] = useState("");
@@ -21,6 +26,8 @@ export default function App({route,navigation}) {
   const [password2, setpassword2] = useState("");
   const [isloading, setLoading] = useState(false);
   const [{ emptyFields }, setemptyFeilds] = useState("");
+  const [showtoast,setToast] = useState(false)
+  const[message, SetMessage] = useState()
   
   const validateEmail = (email) => {
     const regex_mail = /^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)$/;
@@ -36,6 +43,7 @@ export default function App({route,navigation}) {
       return false;
     }
   };
+
   const validateFunction = () => {
     if (!Name || !email || !contact || !password1 || !password2) {
       setemptyFeilds({ emptyFields: "Please Enter All The Details" })
@@ -61,6 +69,7 @@ export default function App({route,navigation}) {
     }
    
   }
+
   const pressHandler = () => {
     if (validateFunction()) {
       setLoading(true);
@@ -97,10 +106,7 @@ export default function App({route,navigation}) {
             console.log(error.response.status); // 401
             console.log(error.response.data.message); //Please Authenticate or whatever returned from server
             if (error.response.status == 401) {
-              //redirect to login
-              Alert.alert(
-                'Contact Already Exists, pleae try with a new Contact',
-              );
+            setToast(true)
             }
           });
       } catch (error) {
@@ -108,15 +114,17 @@ export default function App({route,navigation}) {
         console.log('errordetails', error);
       }
     }
+    setToast(false)
   };
 
 
   return (
-    <View style={styles.container}>
+    <View style={styles.cont2}>
+       {showtoast? (<ToastComponent type = {ToastMessage.failure}  message = {ToastMessage.message3}/>): null}
       <Loader loading={isloading} />
-
-      <Image style={styles.image} source={require('../assets/Logo.png')} />
-
+<View>
+      <Image style={{width:280,height:170,marginBottom:20}} source={require('../assets/Logo.png')} />
+      </View>
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
@@ -155,7 +163,7 @@ export default function App({route,navigation}) {
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
-          placeholder="Confirm Password"
+          placeholder="Reenter Password"
           placeholderTextColor="#929292"
           secureTextEntry={true}
           onChangeText={(password2) => setpassword2(password2)}
@@ -169,57 +177,3 @@ export default function App({route,navigation}) {
     </View>
   );
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F9F2F2',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  image: {
-    marginBottom: 40,
-  },
-  inputView: {
-    borderWidth: 1,
-    borderColor: '#B0003A',
-    borderRadius: 10,
-    width: "87%",
-    height: 45,
-    alignItems: "center",
-    backgroundColor: "#fff",   //"#C4C4C4",
-    marginTop: 10,
-    //opacity: 0.5,
-  },
-  TextInput: {
-    height: 50,
-    flex: 1,
-    padding: 10,
-  },
-  error: {
-    padding: 1,
-    color: '#DC143C',
-    fontSize: 11,
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-  },
-  forgot_button: {
-    height: 30,
-    marginBottom: 15,
-    color: '#1E90FF',
-  },
-  loginBtn: {
-    width: '50%',
-    borderRadius: 10,
-    height: 38,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#FF5C8D',
-    alignSelf: 'center',
-    marginTop: 20,
-  },
-  registerTextStyle: {
-    marginTop: 10,
-    color: 'black',
-    fontSize: 13,
-  },
-});

@@ -1,15 +1,16 @@
 import * as React from 'react';
 import { Text, View, StatusBar, TouchableOpacity,Linking, StyleSheet, Image } from 'react-native';
+import styles from '../../components/style';
+
 export default function trip_Details({ route, navigation }) {
   console.log("this.props", route.params.item);
   return (
-    <View style={styles.container} >
+    <View style={styles.cont} >
       <StatusBar
         barStyle="light-content"
         hidden={false}
-        backgroundColor='#E91E63'
+        backgroundColor='#FF5C00'
       />
-      <View style={styles.textview}>
         {route.params.item.startedTripAt ? <Text style={styles.startTripText}>Trip Started</Text> : null}
         <Text style={styles.headertext}>Location:</Text>
         <Text style={styles.details}>{route.params.item.location}</Text>
@@ -21,7 +22,6 @@ export default function trip_Details({ route, navigation }) {
         <Text style={styles.details}>{route.params.item.driverInfo.driverContact}</Text>
         <Text style={styles.headertext}>Vehicle No:</Text>
         <Text style={styles.details}>{route.params.item.vehicle}</Text>
-      </View>
       <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('Child List', route.params.item)} >
         <Text style={styles.loginText}>Child List</Text>
       </TouchableOpacity>
@@ -31,123 +31,3 @@ export default function trip_Details({ route, navigation }) {
     </View>
   );
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#F9F2F2",
-    justifyContent:'center'
-  },
-  avatar: {
-    width: 120,
-    height: 120,
-    borderRadius: 63,
-    borderWidth: 1,
-    borderColor: "black",
-    //marginBottom: 10,
-    alignSelf: 'center',
-    position: 'absolute',
-    justifyContent: 'flex-start',
-    marginTop: 50
-  },
-  startTripText: {
-    fontSize: 22,
-    textAlign: "center",
-    marginTop: 30,
-    marginBottom: 10,
-
-  },
-  showcase: {
-    padding: 10,
-    marginLeft: 20,
-    flexDirection: 'row',
-  },
-  sidehead: {
-    fontWeight: 'bold',
-    marginLeft: 8,
-    alignSelf: 'flex-start',
-    //position:'relative',
-    justifyContent: 'space-around'
-  },
-  inputView: {
-    borderWidth: 1,
-    borderColor: '#B0003A',
-    borderRadius: 10,
-    padding: 10,
-    width: "80%",
-    height: 45,
-    alignItems: "center",
-    alignSelf: 'center',
-    backgroundColor: "#fff",   //"#C4C4C4",
-    margin: 8,
-    //opacity: 0.5,
-  },
-  name: {
-    fontSize: 22,
-    color: "black",
-    fontWeight: '600',
-  },
-  body: {
-    marginTop: 180,
-    alignItems: 'center'
-  },
-  textview: {
-    margin: 20,
-  },
-  headertext: {
-    fontSize: 13,
-    marginLeft: 30,
-  },
-  details: {
-    height: 40,
-    backgroundColor: "#D3D3D3",
-    //borderWidth: 1,
-    borderRadius: 12,
-    //borderColor: '#FF5C8D',
-    //marginTop: 3,
-    width: '85%',
-    padding: 8,
-    alignSelf: "center"
-  },
-  details2: {
-    height: 320,
-    backgroundColor: "white",
-    borderWidth: 1,
-    borderRadius: 12,
-    borderColor: '#4DAFCE',
-    //marginTop: 3,
-    width: '85%',
-    padding: 8,
-    alignSelf: "center"
-  },
-  loginBtn: {
-    width: "50%",
-    borderRadius: 10,
-    height: 38,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#FF5C8D",
-    alignSelf: "center",
-    marginTop: 20,
-  },
-  loginText: {
-    color: 'black',
-    fontSize: 15,
-    // fontWeight:'700'
-  },
-  CallBtn: {
-    width: "80%",
-    borderRadius: 10,
-    height: 40,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 'auto',
-    backgroundColor: "#32CD32",
-    alignSelf: 'center',
-    marginBottom: 30,
-  },
-});
-
-
-
-
-

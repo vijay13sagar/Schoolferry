@@ -12,7 +12,7 @@ import Support from '../modules/parent/support';
 import Profile_Parent from '../modules/parent/profile';
 import Addchild from '../modules/parent/addingchild';
 import Pauseplan from '../modules/parent/pauseplan';
-import Cancelrides from '../modules/parent/cancelride';
+//import Cancelrides from '../modules/parent/cancelride';
 import Plandetails from '../modules/parent/plandetails';
 import Payment from '../modules/parent/cardpay';
 import Subscriptionlist from '../modules/parent/subscriptionlist';
@@ -60,11 +60,11 @@ function Subscriptions() {
         component={Pauseplan}
         options={{ title: 'Pause Plan' }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="Cancel Rides"
         component={Cancelrides}
         options={{ title: 'Cancel Rides' }}
-      />
+      /> */}
       <Stack.Screen
         name="Plan Details"
         component={Plandetails}
@@ -78,12 +78,12 @@ function Subscriptions() {
       <Stack.Screen
         name="PaymentScreen"
         component={Payment}
-        options={{ title: 'Payment Screen' }}
+        options={{ title: 'Make Payment' }}
       />
       <Stack.Screen
         name="Upiscreen"
         component={Upipay}
-        options={{ title: 'Payment Screen' }}
+        options={{ title: 'Payment' }}
       />
       
     </Stack.Navigator>
@@ -230,7 +230,7 @@ const TabNavigator = () => {
         },
       })}
       tabBarOptions={{
-        activeTintColor: '#e91e63',
+        activeTintColor: '#FF5C00',
         inactiveTintColor: 'gray',
       }}
     >

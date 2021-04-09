@@ -59,10 +59,10 @@ export default class Notificationlist extends Component {
     const { data, isLoading } = this.state;
     const { modalVisible } = this.state;
     return (
-      <View style={{ flex: 1, padding: 3, backgroundColor: "#F9F2F2", }}>
+      <View style={{ flex: 1, padding: 3, backgroundColor: "#FCFDDB", }}>
         <Loader loading = {isLoading}/>
  <StatusBar
-         barStyle = "light-content" hidden = {false} backgroundColor = "#e91e63" translucent = {true}
+         barStyle = "light-content" hidden = {false} backgroundColor = "#FF5C00" translucent = {true}
       />
             <FlatList
               data={data}
@@ -101,9 +101,9 @@ export default class Notificationlist extends Component {
             <Text style={styles.modalheading}> {this.state.selectedTitle}</Text>
             <View style={{flexDirection:'row',alignSelf: 'center',justifyContent: 'center'}}>
               <Text style={styles.modalheading}>Date of Notice:</Text>
-              <Text style={styles.message}>{this.state.selectedDate}</Text>
+              <Text style={styles.notice}>{this.state.selectedDate}</Text>
             </View>
-              <Text style={styles.message}>{this.state.selectedData}</Text>
+              <Text style={styles.notice}>{this.state.selectedData}</Text>
             </View>
           </View>
         </Modal>

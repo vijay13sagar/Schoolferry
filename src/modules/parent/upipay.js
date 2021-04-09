@@ -18,6 +18,7 @@ import {
 import Ngrok from '../../constants/ngrok';
 import axios from 'axios';
 //import AsyncStorage from '@react-native-community/async-storage';
+import styles from '../../components/style';
 
 export default function App({ route,navigation }) {
   const [UPI, setUPI] = useState("");
@@ -115,13 +116,13 @@ export default function App({ route,navigation }) {
   return (
 
 
-    <View style={{backgroundColor: "#F9F2F2",justifyContent:'center',marginVertical:10,}}>
+    <View style={styles.cont}>
       <StatusBar
         barStyle="light-content"
         // dark-content, light-content and default
         hidden={false}
         //To hide statusBar
-        backgroundColor="#e91e63"
+        backgroundColor="#FF5C00"
         //Background color of statusBar only works for Android
         translucent={false}
       //allowing light, but not detailed shapes
@@ -178,7 +179,7 @@ export default function App({ route,navigation }) {
           //setModalVisible(true);
         }}
       >
-        <Text style={styles.textStyle}>Confirm</Text>
+        <Text style={styles.loginText}>Confirm</Text>
       </TouchableHighlight>
 
     </View>
@@ -187,124 +188,124 @@ export default function App({ route,navigation }) {
 }
 
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#F9F2F2",
-    justifyContent: "center",
-  },
-  check: {
-    marginLeft: 35,
-  },
+// const styles = StyleSheet.create({
+//   container: {
+//     backgroundColor: "#F9F2F2",
+//     justifyContent: "center",
+//   },
+//   check: {
+//     marginLeft: 35,
+//   },
 
-  image: {
-    marginBottom: 40,
-  },
-  error: {
-    color: '#dc143c',
-    fontSize: 11,
-    //marginTop: 2,
-    alignSelf: 'center',
-    marginBottom:5,
-  },
+//   image: {
+//     marginBottom: 40,
+//   },
+//   error: {
+//     color: '#dc143c',
+//     fontSize: 11,
+//     //marginTop: 2,
+//     alignSelf: 'center',
+//     marginBottom:5,
+//   },
 
-  inputView: {
-    borderWidth: 1,
-    borderColor: '#b0003a',
-    borderRadius: 10,
-    width: "80%",
-    height: 45, alignSelf: "center",
-    alignItems: "center",
-    backgroundColor: "#fff",   //"#C4C4C4",
-    marginTop: 5,
-    //opacity: 0.5,
-  },
-  textview: {
-    justifyContent:'center',
-    marginBottom: 7,
+//   inputView: {
+//     borderWidth: 1,
+//     borderColor: '#b0003a',
+//     borderRadius: 10,
+//     width: "80%",
+//     height: 45, alignSelf: "center",
+//     alignItems: "center",
+//     backgroundColor: "#fff",   //"#C4C4C4",
+//     marginTop: 5,
+//     //opacity: 0.5,
+//   },
+//   textview: {
+//     justifyContent:'center',
+//     marginBottom: 7,
 
-  },
-  headertext: {
-    fontSize: 14,
-    marginTop: 15,
-   // marginLeft: 35,
-    alignSelf:'center'
-  },
+//   },
+//   headertext: {
+//     fontSize: 14,
+//     marginTop: 15,
+//     marginLeft: 30,
+//     //alignSelf:'center'
+//   },
 
-  TextInput: {
-    height: 50,
-    flex: 1,
-    padding: 10,
-    marginLeft: 20,
+//   TextInput: {
+//     height: 50,
+//     flex: 1,
+//     padding: 10,
+//     marginLeft: 20,
 
-  },
+//   },
 
-  forgot_button: {
-    height: 30,
-    marginBottom: 15,
-    color: '#1e90ff',
+//   forgot_button: {
+//     height: 30,
+//     marginBottom: 15,
+//     color: '#1e90ff',
 
-  },
+//   },
 
-  loginBtn: {
-    width: "50%",
-    borderRadius: 10,
-    height: 38,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#ff5c8d",
-    alignSelf: "center",
-    marginBottom: 90,
-  },
-  registerTextStyle: {
-    marginTop: 10,
-    color: 'black',
-    fontSize: 13,
-    alignSelf: "center",
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5
-  },
-  openButton: {
-    width: '70%',
-    backgroundColor: "#4DAFCE",
-    borderRadius: 15,
-    padding: 10,
-    elevation: 2,
-    marginBottom: 180,
-  },
-  openButtono: {
-    backgroundColor: "#4DAFCE",
-    borderRadius: 15,
-    padding: 10,
-    elevation: 2,
-  },
-  textStyle: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center"
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: "center",
-    color: "red",
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22
-  }
+//   loginBtn: {
+//     width: "50%",
+//     borderRadius: 10,
+//     height: 38,
+//     alignItems: "center",
+//     justifyContent: "center",
+//     backgroundColor: "#ff5c8d",
+//     alignSelf: "center",
+//     marginBottom: 90,
+//   },
+//   registerTextStyle: {
+//     marginTop: 10,
+//     color: 'black',
+//     fontSize: 13,
+//     alignSelf: "center",
+//   },
+//   modalView: {
+//     margin: 20,
+//     backgroundColor: "white",
+//     borderRadius: 20,
+//     padding: 35,
+//     alignItems: "center",
+//     shadowColor: "#000",
+//     shadowOffset: {
+//       width: 0,
+//       height: 2
+//     },
+//     shadowOpacity: 0.25,
+//     shadowRadius: 3.84,
+//     elevation: 5
+//   },
+//   openButton: {
+//     width: '70%',
+//     backgroundColor: "#4DAFCE",
+//     borderRadius: 15,
+//     padding: 10,
+//     elevation: 2,
+//     marginBottom: 180,
+//   },
+//   openButtono: {
+//     backgroundColor: "#4DAFCE",
+//     borderRadius: 15,
+//     padding: 10,
+//     elevation: 2,
+//   },
+//   textStyle: {
+//     color: "white",
+//     fontWeight: "bold",
+//     textAlign: "center"
+//   },
+//   modalText: {
+//     marginBottom: 15,
+//     textAlign: "center",
+//     color: "red",
+//   },
+//   centeredView: {
+//     flex: 1,
+//     justifyContent: "center",
+//     alignItems: "center",
+//     marginTop: 22
+//   }
 
-});
+// });

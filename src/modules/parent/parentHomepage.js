@@ -12,6 +12,7 @@ import Ngrok from '../../constants/ngrok';
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 import Loader from '../../components/Loader';
+import styles from '../../components/style';
 
 const HomeScreen = ({navigation}) => {
   const [userType, setUserType] = useState(false);
@@ -40,7 +41,7 @@ const HomeScreen = ({navigation}) => {
       <StatusBar
         barStyle="light-content"
         hidden={false}
-        backgroundColor="#E91E63"
+        backgroundColor="#FF5C00"
         //Background color of statusBar only works for Android
         translucent={false}
       />
@@ -51,7 +52,7 @@ const HomeScreen = ({navigation}) => {
       <StatusBar
         barStyle="light-content"
         hidden={false}
-        backgroundColor="#E91E63"
+        backgroundColor="#FF5C00"
         //Background color of statusBar only works for Android
         translucent={false}
       />
@@ -66,9 +67,3 @@ const HomeScreen = ({navigation}) => {
 
 export default HomeScreen;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F9F2F2',
-  },
-});

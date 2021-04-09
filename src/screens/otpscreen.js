@@ -2,13 +2,10 @@
 import React, { useState, useEffect } from "react";
 import {
     StyleSheet,
-    StatusBar,
     Text,
     View,
     TextInput,
-    Button, autoFocus,
     TouchableOpacity,
-    Alert,
 } from "react-native";
 import axios from 'axios';
 import Ngrok from '../constants/ngrok';
@@ -151,7 +148,7 @@ const Otpscreen = ({ route, navigation }) => {
             </TouchableOpacity>
             <Text style={styles.error}>{otpError}</Text>
             <TouchableOpacity style={styles.loginBtn} onPress={() => Validateotp()}>
-                <Text>Submit</Text>
+                <Text style={styles.loginText}>Submit</Text>
             </TouchableOpacity>
         </View>
     );

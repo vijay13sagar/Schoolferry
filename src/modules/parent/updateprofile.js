@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity,Alert } from 'react-native';
 import Ngrok from '../../constants/ngrok'
 import AsyncStorage from '@react-native-community/async-storage';
-import Loader from '../../components/Loader'
+import Loader from '../../components/Loader';
+import styles from '../../components/style';
 
 const updateProfile = ({route, navigation}) => {
   const [name,setName] =  useState(route.params.name)
@@ -62,7 +63,7 @@ const updateProfile = ({route, navigation}) => {
 
 
   return (
-    <View style={styles.container}>
+    <View style={styles.cont}>
       <Text style={styles.text}>Enter details to be changed</Text>
       <View style={styles.inputView} >
         <TextInput
@@ -118,56 +119,3 @@ const updateProfile = ({route, navigation}) => {
 }
 
 export default updateProfile;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    backgroundColor: "#F9F2F2"
-    //alignItems:'center'
-  },
-  text: {
-    fontSize: 18,
-    alignSelf: 'center',
-    marginBottom: 10,
-
-  },
-  error: {
-    color: '#DC143C',
-    fontSize: 14,
-    alignSelf: 'center',
-    marginTop: 5
-  },
-  inputView: {
-    borderWidth: 1,
-    borderColor: '#ff5c8d',
-    borderRadius: 10,
-    width: "80%",
-    height: 45,
-    alignItems: "center",
-    alignSelf: 'center',
-    backgroundColor: '#fff',
-    marginTop: 15,
-    //opacity: 0.5,
-  },
-  TextInput: {
-    height: 50,
-    flex: 1,
-    alignItems: 'center',
-  },
-  loginBtn: {
-    width: "50%",
-    borderRadius: 10,
-    height: 40,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#ff5c8d",
-    alignSelf: "center",
-    marginTop: 30,
-  },
-  loginText: {
-    fontSize: 15,
-  }
-
-
-})

@@ -16,6 +16,9 @@ import Ngrok from '../../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
 import {useFocusEffect} from '@react-navigation/native';
 import Loader from '../../components/Loader';
+import styles from '../../components/style';
+import ToastComponent from '../../components/Toaster';
+import* as ToastMessage from '../../constants/ToastMessages';
 
 const subscribedHome = ({route, navigation}) => {
   const [selectedStartDate, setselectedStartDate] = useState('');
@@ -30,6 +33,9 @@ const subscribedHome = ({route, navigation}) => {
   const [error, setError] = useState();
   const [count, setCount] = useState(0);
   const [loader,setLoader] = useState(false)
+  const [showtoast,setToast] = useState(false)
+  const [message, SetMessage] = useState()
+  const [type,setType] =useState()
 
   const onDateChange = (date, type) => {
     if (type === 'END_DATE') {
@@ -118,15 +124,19 @@ const subscribedHome = ({route, navigation}) => {
             setLoader(false)
 
             if (response.status == 200) {
-              Alert.alert('Ride cancelled successfully');
+             // Alert.alert('Ride cancelled successfully');
+              setToast(true)
+              setType(ToastMessage.success)
+              SetMessage(ToastMessage.message4)
               setCount(count + 1);
-              //setLoading(true);
               setError();
               setselectedEndDate('');
               setselectedStartDate('');
             } else {
-              
-              Alert.alert('Failed. Please try again');
+              setToast(true)
+              setType(ToastMessage.failure)
+              SetMessage(ToastMessage.message5)
+             
             }
           })
           .catch(function (error) {
@@ -137,18 +147,21 @@ const subscribedHome = ({route, navigation}) => {
         console.log('error: ', error);
       }
     }
+    setToast(false)
   };
 
   return isLoading ? (
     <Loader loading= {isLoading} />
   ) : (
-    <ScrollView>
+    <View style={styles.cont}>
+    <ScrollView  showsVerticalScrollIndicator={false}>
       <StatusBar
         barStyle="light-content"
         hidden={false}
-        backgroundColor="#e91e63"
+        backgroundColor="#FF5C00"
         translucent={false}
       />
+       {showtoast? (<ToastComponent type = {type}  message = {message}/>): null}
      <Loader loading = {loader} />
 
       <Picker
@@ -172,8 +185,8 @@ const subscribedHome = ({route, navigation}) => {
       <View>
         {Boolean(value1[0].trips.length) ?
         value1[0].trips.map((item)=>(
-        <TouchableOpacity style={styles.trips} onPress={()=> navigation.navigate('Trip_details',item)}>
-        <Text style={{justifyContent:'center',marginTop:6,marginLeft:10}}>{item.tripId}</Text>
+        <TouchableOpacity key = {item.tripId} style={styles.trips} onPress={()=> navigation.navigate('Trip_details',item)}>
+        <Text  style={{justifyContent:'center',marginTop:6,marginLeft:10}}>{item.tripId}</Text>
         </TouchableOpacity>
         ))
         :
@@ -239,7 +252,7 @@ const subscribedHome = ({route, navigation}) => {
       </View>
       <View
         style={{
-          backgroundColor: '#ffe4e1',
+          backgroundColor: '#FBF0B2',
           width: 250,
           alignSelf: 'center',
           margin: 10,
@@ -253,12 +266,13 @@ const subscribedHome = ({route, navigation}) => {
           width={250}
           height={250}
           maxRangeDuration={10}
-          todayBackgroundColor="#ff5c8d"
-          selectedDayColor="#ff5c8d"
+          todayBackgroundColor="lightgrey"
+          selectedDayColor="#FF5C00"
           selectedDayTextColor="#FFFFFF"
           onDateChange={onDateChange}
-        />
-        <View>
+        />    
+      </View>
+      <View style={{alignSelf:'center',marginTop:10}}>
           <Text style={styles.registerTextStyle}>
             Selected Start Date: {startDate}
           </Text>
@@ -266,94 +280,17 @@ const subscribedHome = ({route, navigation}) => {
             Selected End Date: {endDate}
           </Text>
         </View>
-      </View>
       <Text style={styles.error}>{error}</Text>
       <TouchableOpacity
         style={
           ({alignItems: 'center', justifyContent: 'center'}, styles.loginBtn)
         }
         onPress={cancelHandler}>
-        <Text style={styles.loginText}>APPLY</Text>
+        <Text style={styles.loginText}>Apply</Text>
       </TouchableOpacity>
     </ScrollView>
+    </View>
   );
 };
 // }
 export default subscribedHome;
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F9F2F2',
-    justifyContent: 'center',
-  },
-  error: {
-    padding: 1,
-    color: '#DC143C',
-    fontSize: 14,
-    textAlign: 'center',
-  },
-
-  name: {
-    fontSize: 22,
-    color: 'black',
-    fontWeight: '600',
-  },
-  body: {
-    marginTop: 180,
-    alignItems: 'center',
-  },
-  textview: {
-    marginBottom: 7,
-  },
-  headertext: {
-    fontSize: 13,
-    marginLeft: 30,
-  },
-  details: {
-    height: 40,
-    backgroundColor: '#d3d3d3',
-    borderRadius: 10,
-    width: '85%',
-    padding: 8,
-    alignSelf: 'center',
-  },
-  trips: {
-    height: 40,
-    backgroundColor: 'white',
-
-    width: '95%',
-    marginTop: 5,
-    alignSelf: 'center',
-  },
-  loginBtn: {
-    width: '50%',
-    borderRadius: 10,
-    height: 38,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#FF5C8D',
-    alignSelf: 'center',
-    marginTop: 10,
-    marginBottom: 20,
-  },
-  Picker: {
-    width: '45%',
-    marginVertical: 10,
-    borderRadius: 10,
-    height: 30,
-    borderWidth: 1,
-    alignContent: 'center',
-    alignSelf: 'flex-end',
-  },
-  inputViews: {
-    borderWidth: 1,
-    borderColor: '#B0003A',
-    borderRadius: 10,
-    width: '80%',
-    height: 100,
-    alignItems: 'center',
-    backgroundColor: '#fff', //"#C4C4C4",
-    marginTop: 5,
-    //opacity: 0.5,
-  },
-});

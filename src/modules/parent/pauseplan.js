@@ -1,19 +1,19 @@
 import React, {useState, useEffect} from 'react';
 import {
-  StyleSheet,
   ScrollView,
   Text,
-  StatusBar,
   TouchableOpacity,
   View,
-  ActivityIndicator,
   Alert,
 } from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
 import axios from 'axios';
 import Ngrok from '../../constants/ngrok';
-import Loader from '../../components/Loader'
+import Loader from '../../components/Loader';
+import styles from '../../components/style';
+import ToastComponent from '../../components/Toaster';
+import* as ToastMessage from '../../constants/ToastMessages';
 
 const PausePlan = ({route, navigation}) => {
   const [selectedStartDate, setselectedStartDate] = useState('');
@@ -26,7 +26,10 @@ const PausePlan = ({route, navigation}) => {
   const [isLoading, setLoading] = useState(true);
   const [count, setCount] = useState(0);
   const [error, setError] = useState();
-  const [loader, setLoader] = useState(false)
+  const [loader, setLoader] = useState(false);
+  const [showtoast,setToast] = useState(false)
+  const [message, SetMessage] = useState()
+  const [type,setType] =useState()
 
   const childid = route.params.childid;
 
@@ -60,7 +63,7 @@ const PausePlan = ({route, navigation}) => {
     if (startDate == 'Invalid date' || endDate == 'Invalid date') {
       setError('Please select start/end date');
     } else {
-      setLoader(true)
+      setLoader(true);
       try {
         axios
           .post(`${Ngrok.url}/api/subscription/pause`, {
@@ -71,42 +74,58 @@ const PausePlan = ({route, navigation}) => {
           .then(function (response) {
             // console.log('data: ', response.data);
             console.log('message: ', response.data.message);
-            setLoader(false)
+            setLoader(false);
 
             if (response.status == 200) {
-              Alert.alert('Plan paused successful');
+              //Alert.alert('Plan paused successful');
+              setToast(true)
+              setType(ToastMessage.success)
+              SetMessage(ToastMessage.message6)
               setCount(count + 1);
-              setError()
-              setselectedEndDate('')
-              setselectedStartDate('')
+              setError();
+              setselectedEndDate('');
+              setselectedStartDate('');
             } else {
-              Alert.alert('Failed. Please try again');
+              setToast(true)
+              setType(ToastMessage.failure)
+              SetMessage(ToastMessage.message5)
             }
           })
           .catch(function (error) {
             console.log('err', error.response.data);
-            setLoader(false)
-            
+            setLoader(false);
+
             if (error.response.data.status == 409) {
-              Alert.alert(JSON.stringify(error.response.data.message));
+              //Alert.alert(JSON.stringify(error.response.data.message));
+              setToast(true)
+              setType(ToastMessage.failure)
+              SetMessage(JSON.stringify(error.response.data.message))
             } else if (error.response.data.status == 401) {
-              Alert.alert('Failed. You have exhausted maximum attempts');
+             // Alert.alert('Failed. You have exhausted maximum attempts');
+              setToast(true)
+              setType(ToastMessage.failure)
+              SetMessage(ToastMessage.message7)
+
             }
           });
       } catch (error) {
         console.log(error);
       }
     }
+    setToast(false)
   };
 
   return isLoading ? (
-    <Loader loading= {isLoading} />
+    <View style={styles.container}>
+      <Loader loading={isLoading} />
+    </View>
   ) : (
-    <ScrollView style={styles.container}>
-      <Loader loading = {loader} />
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+        {showtoast? (<ToastComponent type = {type}  message = {message}/>): null}
+      <Loader loading={loader} />
 
       <View style={[data.pauseEndDate ? styles.biggerBox : styles.pausePlan]}>
-        <Text style={styles.mainHeading}>Pause Plan Details</Text>
+        <Text style={styles.mainHeading1}>Pause Plan Details</Text>
         <Text style={styles.heading}>Total number of pauses - 03</Text>
 
         {!data.pauseEndDate ? null : (
@@ -128,7 +147,7 @@ const PausePlan = ({route, navigation}) => {
           marginLeft: 20,
           alignSelf: 'flex-start',
           justifyContent: 'center',
-          marginTop: 30,
+          marginTop: 20,
         }}>
         <Text style={{fontWeight: 'bold', fontSize: 20}}>Pause Plan :-</Text>
       </View>
@@ -144,7 +163,7 @@ const PausePlan = ({route, navigation}) => {
       </View>
       <View
         style={{
-          backgroundColor: '#FFE4E1',
+          backgroundColor: '#FBF0B2',
           width: 250,
           alignSelf: 'center',
           margin: 10,
@@ -158,136 +177,28 @@ const PausePlan = ({route, navigation}) => {
           width={250}
           height={250}
           maxRangeDuration={10}
-          todayBackgroundColor="#F2E"
-          selectedDayColor="#FF5C8D"
+          todayBackgroundColor="lightgrey"
+          selectedDayColor="#FF5C00"
           selectedDayTextColor="#FFFFFF"
           onDateChange={onDateChange}
         />
-        <View>
-          <Text style={styles.registerTextStyle}>
-            Selected Start Date: {startDate}
-          </Text>
-          <Text style={styles.registerTextStyle}>
-            Selected End Date: {endDate}
-          </Text>
-        </View>
+      </View>
+      <View style={{alignSelf: 'center'}}>
+        <Text style={styles.registerTextStyle}>
+          Selected Start Date: {startDate}
+        </Text>
+        <Text style={styles.registerTextStyle}>
+          Selected End Date: {endDate}
+        </Text>
       </View>
       <Text style={styles.error}>{error}</Text>
       <TouchableOpacity
-        style={
-          ({alignItems: 'center', justifyContent: 'center'}, styles.loginBtn)
-        }
+        style={{...styles.loginBtn, marginTop: 5}}
         onPress={pauseHandler}>
-        <Text style={styles.loginText}>APPLY</Text>
+        <Text style={styles.loginText}>Apply</Text>
       </TouchableOpacity>
     </ScrollView>
   );
 };
 // }
 export default PausePlan;
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F9F2F2',
-    //justifyContent: 'center',
-  },
-  pausePlan: {
-    borderWidth: 1,
-    borderRadius: 10,
-    marginTop: 20,
-    height: 110,
-    width: '85%',
-    alignSelf: 'center',
-    //alignItems: 'center',
-    backgroundColor: 'white',
-  },
-  biggerBox: {
-    borderWidth: 1,
-    borderRadius: 10,
-    marginTop: 20,
-    height: 160,
-    width: '85%',
-    alignSelf: 'center',
-    //alignItems: 'center',
-    backgroundColor: 'white',
-  },
-  mainHeading: {
-    fontSize: 20,
-    fontWeight: '700',
-    textAlign: 'center',
-    marginTop: 5,
-  },
-  heading: {
-    fontSize: 18,
-    marginTop: 4,
-    marginLeft: 10,
-  },
-  error: {
-    padding: 1,
-    color: '#DC143C',
-    fontSize: 14,
-    textAlign: 'center',
-  },
-  name: {
-    fontSize: 22,
-    color: 'black',
-    fontWeight: '600',
-  },
-  body: {
-    marginTop: 180,
-    alignItems: 'center',
-  },
-  textview: {
-    marginBottom: 7,
-  },
-  headertext: {
-    fontSize: 13,
-    marginLeft: 30,
-  },
-  details: {
-    height: 40,
-    backgroundColor: '#D3D3D3',
-    borderRadius: 10,
-    width: '85%',
-    padding: 8,
-    alignSelf: 'center',
-  },
-  trips: {
-    height: 40,
-    backgroundColor: 'white',
-    width: '95%',
-    marginTop: 5,
-    alignSelf: 'center',
-  },
-  loginBtn: {
-    width: '50%',
-    borderRadius: 10,
-    height: 38,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#FF5C8D',
-    alignSelf: 'center',
-    marginTop: 5,
-    marginBottom: 20,
-  },
-  Picker: {
-    width: '45%',
-    marginVertical: 10,
-    borderRadius: 10,
-    height: 30,
-    borderWidth: 1,
-    alignContent: 'center',
-    alignSelf: 'flex-end',
-  },
-  inputViews: {
-    borderWidth: 1,
-    borderColor: '#B0003A',
-    borderRadius: 10,
-    width: '80%',
-    height: 100,
-    alignItems: 'center',
-    backgroundColor: '#fff', //"#C4C4C4",
-    marginTop: 5,
-    //opacity: 0.5,
-  },
-});
