@@ -144,7 +144,7 @@ const showplanScreen = ({route, navigation}) => {
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           data={Boolean(value1.length) && value1[0].plans}
-          keyExtractor={(item, index) => item.childId}
+          keyExtractor={(item, index) => {return item.term}}
           renderItem={({item}) => (
             <View style={{flex: 1}}>
               <TouchableOpacity
@@ -219,7 +219,7 @@ const showplanScreen = ({route, navigation}) => {
           <Text style={styles.loginText}>Pause subscription</Text>
         </TouchableOpacity>
       ) : null}
-      {Boolean(value1.length) && value1[0].status == 'subscribed' ? (
+      {/*Boolean(value1.length) && value1[0].status == 'subscribed' ? (
         <TouchableOpacity
           style={{...styles.logoutBtn, width:'75%',marginTop:15,marginBottom:15,}}
           onPress={() => navigation.navigate('Pause Plan',{
@@ -228,7 +228,7 @@ const showplanScreen = ({route, navigation}) => {
           })}>
           <Text style={styles.loginText}>Cancel subscription</Text>
         </TouchableOpacity>
-      ) : null}
+        ) : null*/}
     </ScrollView>
   );
 };
