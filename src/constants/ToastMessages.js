@@ -14,3 +14,6 @@ export const drivecheck = 'Checklist Successfully Updated';
 export const drivestart = 'Trip Started Successfully';
 export const driveend = 'Trip Completed Successfully';
 export const picmess = 'Picture Updated Successfully';
+export const updateProfile = 'Profile Updated Successfully';
+export const incorrectOtp = 'Incorrect OTP';
+export const ResendOTP = 'OTP not sent, click on resend OTP';

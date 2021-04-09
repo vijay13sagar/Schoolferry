@@ -1,5 +1,3 @@
-
-
 import React, { useState } from "react";
 import {
   StyleSheet,
@@ -14,7 +12,9 @@ import Ngrok from '../../constants/ngrok';
 import axios from 'axios';
 import Loader from '../../components/Loader';
 import styles from '../../components/styles_admin';
- 
+import ToastComponent from '../../components/Toaster';
+import* as ToastMessage from '../../constants/ToastMessages';
+
 export default function Add_Driver({navigation}) {
   const [isloading, setLoading] = useState(false);
   const [VH, setVH] = useState("");
@@ -23,7 +23,8 @@ export default function Add_Driver({navigation}) {
   const [Cap, setCap] = useState("");
   const [Type, setType] = useState();
   const [{ emptyFields }, setemptyFeilds] = useState("");
-
+  const [showtoast,setToast] = useState(false)
+  const [message, SetMessage] = useState()
   const validateFunction = () => {
     
     if (!VH||!Gps || !Model || !Type|| !Cap ) {
@@ -71,11 +72,13 @@ export default function Add_Driver({navigation}) {
         .catch(function (error) {
           setLoading(false);
           console.log(error.response.status) // 401
-          console.log(error.response.data.error) //Please Authenticate or whatever returned from server
+          console.log(error.response.data.error) 
+          setToast(true)//Please Authenticate or whatever returned from server
         if(error.response.status==401){
           //redirect to login
           setLoading(false);
-          Alert.alert('Phone Number Alredy Exist!')
+          // Alert.alert('Phone Number Alredy Exist!')
+          setToast(true)
         }
      
         })
@@ -83,18 +86,22 @@ export default function Add_Driver({navigation}) {
        catch(error){
         setLoading(false);
         console.log("errordetails",error);
+        setToast(true)
        }
      }
+     setToast(false)
    }
   
  
    return (
     <View style={styles.container}>
+            {showtoast? (<ToastComponent type = {ToastMessage.failure}  message = {ToastMessage.message5}/>): null}
+
       <Loader loading={isloading} />
       {/* <StatusBar style="auto" /> */}
       <View style={styles.inputView}>
         <TextInput
-          style={styles.TextInput1}
+          style={styles.TextInput2}
           placeholder="Enter Vehicle Number"
           placeholderTextColor="#929292"
           onChangeText={(VH) => setVH(VH)}
@@ -102,7 +109,7 @@ export default function Add_Driver({navigation}) {
       </View>
       <View style={styles.inputView}>
         <TextInput
-          style={styles.TextInput1}
+          style={styles.TextInput2}
           placeholder="Enter GPS Tracking Number"
           placeholderTextColor="#929292"
           onChangeText={(Gps) => setGps(Gps)}
@@ -110,7 +117,7 @@ export default function Add_Driver({navigation}) {
       </View>
       <View style={styles.inputView}>
         <TextInput
-          style={styles.TextInput1}
+          style={styles.TextInput2}
           placeholder="Enter Type"
           placeholderTextColor="#929292"
           onChangeText={(Type) => setType(Type)}
@@ -118,7 +125,7 @@ export default function Add_Driver({navigation}) {
       </View>
        <View style={styles.inputView}>
         <TextInput
-          style={styles.TextInput1}
+          style={styles.TextInput2}
           placeholder="Enter Model"
           placeholderTextColor="#929292"
           onChangeText={(Model) => setModel(Model)}
@@ -126,7 +133,7 @@ export default function Add_Driver({navigation}) {
       </View> 
       <View style={styles.inputView}>
         <TextInput
-          style={styles.TextInput1}
+          style={styles.TextInput2}
           placeholder="Capacity"
           placeholderTextColor="#929292"
           onChangeText={(Cap) => setCap(Cap)}
