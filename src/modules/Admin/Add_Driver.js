@@ -16,6 +16,8 @@ import axios from 'axios';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from '../../components/styles_admin';
 import ImagePicker from 'react-native-image-crop-picker';
+import ToastComponent from '../../components/Toaster';
+import* as ToastMessage from '../../constants/ToastMessages';
 
 
 
@@ -38,6 +40,8 @@ const [pic, setPic] = useState(false);
   const [licimg1, setlicimg] = useState('https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg');
 const [licpic1, setlicPic] = useState(false);
 const [modalVisible1, setModalVisible1] = useState(false);
+const [showtoast,setToast] = useState(false)
+  const [message, SetMessage] = useState()
 
 
   const validatecontact = (contact) => {
@@ -178,7 +182,8 @@ const [modalVisible1, setModalVisible1] = useState(false);
             if (error.response.status == 401) {
               setLoading(false);
               //redirect to login
-              Alert.alert('Phone Number Alredy Exist!')
+              // Alert.alert('Phone Number Alredy Exist!')
+              setToast(true)
             }
 
           })
@@ -190,12 +195,13 @@ const [modalVisible1, setModalVisible1] = useState(false);
         console.log("errordetails", error);
       }
     }
-
+    setToast(false)
   }
 
 
   return (
     <View style={styles.container3}>
+      {showtoast? (<ToastComponent type = {ToastMessage.failure}  message = {ToastMessage.message3}/>): null}
       {pic ?
       <View style={{  width:"100%",height:"100%",backgroundColor: 'black' }}>
       <Modal animationType="slide" transparent={true} visible={modalVisible}>

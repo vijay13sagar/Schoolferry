@@ -15,12 +15,15 @@ import Ngrok from '../../constants/ngrok';
 import axios from 'axios';
 import Loader from '../../components/Loader';
 import styles from '../../components/styles_admin'
+import ToastComponent from '../../components/Toaster';
+import* as ToastMessage from '../../constants/ToastMessages';
 
 
 
 export default function remove_Child({ route,navigation }) {
   const [isloading, setLoading] = useState(false);
-  
+  const [showtoast,setToast] = useState(false)
+  const [message, SetMessage] = useState()
   let c = route.params.tripid;
   console.log("sfsdffasdas", c);
   let childid = route.params.item.childId;
@@ -48,7 +51,8 @@ export default function remove_Child({ route,navigation }) {
           Alert.alert('Removed Successfully','', [{text: 'Proceed', onPress:() => navigation.navigate('Home_page')}])
         } else {
           setLoading(false);
-          Alert.alert('Try again!')
+          //Alert.alert('Try again!')
+          setToast(true)
         }
         //alert(JSON.stringify(response))
       })
@@ -56,13 +60,14 @@ export default function remove_Child({ route,navigation }) {
         setLoading(false);
         console.log(err);
       });
-  
+      setToast(false)
 
 }
 
 
 return (
 <View style={styles.container1}>
+{showtoast? (<ToastComponent type = {ToastMessage.failure}  message = {ToastMessage.message5}/>): null}
   <ScrollView>
     <Loader loading={isloading} />
     

@@ -215,13 +215,13 @@ export default StyleSheet.create({
       },
       TextInput3: {
         marginTop:10,
-        color:"black", 
+        color:"white", 
         alignSelf:"center"
     
       },
       TextInput2: {
         height: 50,
-        color:"white", 
+        color:"black", 
         alignSelf:"center",
         padding: 10,
         marginLeft: 10,
@@ -239,8 +239,7 @@ export default StyleSheet.create({
     
         color: '#dc143c',
         fontSize: 11,
-        alignItems: 'flex-start',
-        justifyContent: 'center'
+       alignSelf:"center"
       },
 
       container3: {
