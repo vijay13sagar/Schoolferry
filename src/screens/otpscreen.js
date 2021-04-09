@@ -11,6 +11,7 @@ import axios from 'axios';
 import Ngrok from '../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
 import Loader from '../components/Loader';
+import styles from '../components/style';
 
 const Otpscreen = ({ route, navigation }) => {
     const [otp, setOtp] = useState(['-', '-', '-', '-', '-', '-']);
@@ -113,7 +114,7 @@ const Otpscreen = ({ route, navigation }) => {
         }
     }
     return (
-        <View style={styles.container}>
+        <View style={styles.cont2}>
             <Loader loading = {isloading}/>
             <Text style={styles.tripsTitleText}>Verify Your Mobile Number</Text>
             <Text style={{ marginVertical: 20, fontWeight: "300" }}>Enter your OTP here</Text>
@@ -155,45 +156,45 @@ const Otpscreen = ({ route, navigation }) => {
 }
 
 export default Otpscreen;
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#F9F2F2",
-        alignItems: "center",
-        justifyContent: 'center'
-    },
-    tripsTitleText: {
-        fontSize: 25,
-        marginTop: 10,
-        fontWeight: "bold"
-    },
-    otpBoxesContainer: {
-        flexDirection: 'row'
-    },
-    error: {
-        color: '#DC143C',
-        fontSize: 11,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    otpBox: {
-        padding: 10,
-        marginRight: 10,
-        borderWidth: 1,
-        fontSize: 25,
-        borderColor: 'lightgrey',
-        height: 50,
-        width: 50,
-        textAlign: 'center'
-    },
-    loginBtn: {
-        width: "50%",
-        borderRadius: 10,
-        height: 38,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#ff5c8d",
-        alignSelf: "center",
-        marginTop: 20,
-    },
-});
+// const styles = StyleSheet.create({
+//     container: {
+//         flex: 1,
+//         backgroundColor: "#F9F2F2",
+//         alignItems: "center",
+//         justifyContent: 'center'
+//     },
+//     tripsTitleText: {
+//         fontSize: 25,
+//         marginTop: 10,
+//         fontWeight: "bold"
+//     },
+//     otpBoxesContainer: {
+//         flexDirection: 'row'
+//     },
+//     error: {
+//         color: '#DC143C',
+//         fontSize: 11,
+//         alignItems: 'center',
+//         justifyContent: 'center',
+//     },
+//     otpBox: {
+//         padding: 10,
+//         marginRight: 10,
+//         borderWidth: 1,
+//         fontSize: 25,
+//         borderColor: 'lightgrey',
+//         height: 50,
+//         width: 50,
+//         textAlign: 'center'
+//     },
+//     loginBtn: {
+//         width: "50%",
+//         borderRadius: 10,
+//         height: 38,
+//         alignItems: "center",
+//         justifyContent: "center",
+//         backgroundColor: "#ff5c8d",
+//         alignSelf: "center",
+//         marginTop: 20,
+//     },
+// });

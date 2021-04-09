@@ -70,7 +70,7 @@ const oldmap = ({navigation}) => {
         <TouchableOpacity
           style={styles.loginBtn}
           onPress={() => navigation.navigate('location', {refresh: true})}>
-          <Text style={{fontSize: 16}}>Check availability</Text>
+          <Text style={styles.loginText}>Check availability</Text>
         </TouchableOpacity>
       </View>
     );

@@ -13,7 +13,7 @@ export default class App extends React.Component {
     super();
     this.state = {
       ready: false,
-      where: { lat: null, lng: null },
+      where: { lat: 16.002, lng: 34.93 },
       error: null,
       isloading:true
     }
@@ -122,10 +122,10 @@ export default class App extends React.Component {
         )}
         { this.state.ready && (
           <View>
-            {/* <Text >{
+            <Text >{
               `Latitude: ${this.state.where.lat}
                     Longitude: ${this.state.where.lng}`
-            }</Text> */}
+            }</Text>
             <MapView
               style={{ height: "90%", width: "100%" }}
               //showsUserLocation
