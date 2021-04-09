@@ -213,6 +213,12 @@ export default StyleSheet.create({
         marginLeft: 10,
     
       },
+      TextInput3: {
+        marginTop:10,
+        color:"black", 
+        alignSelf:"center"
+    
+      },
       TextInput2: {
         height: 50,
         color:"white", 
@@ -251,7 +257,6 @@ export default StyleSheet.create({
         modalContainer: {
         backgroundColor: '#000000',
         flex: 1,
-        //height: '50%',
         justifyContent: 'center'
         },
         modalBody1: {

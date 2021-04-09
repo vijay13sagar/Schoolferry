@@ -164,7 +164,7 @@ const [modalVisible, setModalVisible] = useState(false);
   return (
     <View style={styles.container3}>
     {pic ?
-    <View style={{ flex: 1, backgroundColor: 'black' }}>
+    <View style={{ width:"100%",height:"100%",backgroundColor: 'black'}}>
     <Modal animationType="slide" transparent={true} visible={modalVisible}>
     <View style={styles.modalContainer}>
     <Ionicons

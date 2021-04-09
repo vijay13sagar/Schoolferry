@@ -35,6 +35,9 @@ const [pic, setPic] = useState(false);
   const [{ emailError }, setEmailError] = useState("");
   const [{ contactError }, setcontactError] = useState("");
   const [{ emptyFields }, setemptyFeilds] = useState("");
+  const [licimg1, setlicimg] = useState('https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg');
+const [licpic1, setlicPic] = useState(false);
+const [modalVisible1, setModalVisible1] = useState(false);
 
 
   const validatecontact = (contact) => {
@@ -79,6 +82,37 @@ const [pic, setPic] = useState(false);
     const pick=()=>{
     setModalVisible(true);
     }
+    const gallery1 = () => {
+      ImagePicker.openPicker({
+      // width: 350,
+      // height: 175,
+      compressImageMaxHeight: 350,
+      compressImageMaxHeight: 175,
+      cropping: true
+      }).then(image => {
+      console.log(image);
+      setlicImg(image.path)
+      });
+      }
+      const Camera1 = () => {
+      ImagePicker.openCamera({
+      compressImageMaxHeight: 350,
+      compressImageMaxHeight: 175,
+      cropping: true,
+      }).then(image => {
+      console.log(image);
+      setlicImg(image.path)
+      });
+      }
+      const press1 = () => {
+      setlicPic(true)
+      }
+      const backpress1 = () => {
+      setlicPic(false)
+      }
+      const pick1=()=>{
+      setModalVisible1(true);
+      }
 
   const validateFunction = () => {
 
@@ -163,7 +197,7 @@ const [pic, setPic] = useState(false);
   return (
     <View style={styles.container3}>
       {pic ?
-      <View style={{ flex: 1, backgroundColor: 'black' }}>
+      <View style={{  width:"100%",height:"100%",backgroundColor: 'black' }}>
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
       <View style={styles.modalContainer}>
       <Ionicons
@@ -230,7 +264,11 @@ const [pic, setPic] = useState(false);
      
       </View>
       }
-         
+         <View>
+           <Text style={styles.TextInput3}>
+             uploade image
+           </Text>
+         </View>
         <View style={styles.inputView1}>
           <TextInput
             style={styles.TextInput2}
