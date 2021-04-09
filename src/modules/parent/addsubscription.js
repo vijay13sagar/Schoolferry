@@ -20,7 +20,7 @@ const addsubscreen = ({navigation}) =>  {
             </View>
             <Text style={{fontSize:18,marginTop:15,textAlign:'center', }} >To subscribe to a plan , check service availability at your area and get started.</Text>
             <TouchableOpacity style={styles.loginBtn} onPress={()=>navigation.navigate('location')}>
-              <Text style={{fontSize:16,}}>Check availability</Text>
+              <Text style={styles.loginText}>Check availability</Text>
             </TouchableOpacity>
             
           </View>

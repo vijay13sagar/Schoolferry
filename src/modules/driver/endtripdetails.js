@@ -68,7 +68,7 @@ const Checklist = ({ route, navigation }) => {
                 </View>
             </Modal>
             {/* <ScrollView> */}
-            <View style={styles.firstbox} >
+            <View style={styles.firstbox1} >
                     <Text style={styles.textTitle}>Trip ID - {route.params.item.trip_id}</Text>
                     {/* <View style={styles.detailsBox}> */}
                         <View style={{flexDirection:'row',flexWrap:'wrap'}}>
