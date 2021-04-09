@@ -527,30 +527,30 @@ typeOfSubscription: {
   fontWeight: '700',
   alignSelf: 'center',
   marginTop: 2,
-  color:'black'
+  color:'white'
 },
 serviceDetails: {
   fontSize: 18,
   fontWeight: '700',
   marginLeft: 10,
-  color:'black'
+  color:'white'
 },
 price: {
   alignSelf: 'center',
   fontSize: 18,
   fontWeight: '700',
-  color:'black'
+  color:'white'
 },
 totalText: {
   fontSize: 22,
   fontWeight: '700',
   marginLeft: 10,
-  color:'black'
+  color:'white'
 },
 totalCost: {
   fontSize: 22,
   fontWeight: '700',
-  color:'black'
+  color:'white'
 },
 randomText: {
   //marginTop: 5,
@@ -564,7 +564,7 @@ addChildContainer: {
   borderWidth: 1,
   borderRadius: 10,
   marginTop: 10,
-  height: 130,
+  //height: 130,
   width: '90%',
   alignSelf: 'center',
   alignItems: 'center',
@@ -804,7 +804,7 @@ inputView1: {
   borderColor: '#FF5C00',
   borderRadius: 10,
   width: "80%",
-  height: 45,
+  //height: 45,
   flexWrap:'wrap',
   alignSelf: "center",
   alignItems:'center',
@@ -877,7 +877,7 @@ licence: {
   alignSelf: 'center'
   },
   idproof:{
-    width:320,
+    width:"85%",
     height:170,
     alignSelf:'center'
   },

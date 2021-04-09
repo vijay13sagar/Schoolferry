@@ -7,6 +7,8 @@ import Loader from '../../components/Loader';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ImagePicker from 'react-native-image-crop-picker';
 import styles from '../../components/style';
+import ToastComponent from '../../components/Toaster';
+import* as ToastMessage from '../../constants/ToastMessages';
 
 const Profile = ({ navigation }) => {
   const [data, getData] = useState([])
@@ -14,27 +16,37 @@ const Profile = ({ navigation }) => {
   const [img, setImg] = useState('https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg');
   const [pic, setPic] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [showtoast,setToast] = useState(false)
+  const [message, SetMessage] = useState()
   const gallery = () => {
     ImagePicker.openPicker({
       // width: 350,
       // height: 175,
-      compressImageMaxHeight: 350,
-      compressImageMaxHeight: 175,
+      // compressImageMaxHeight: 350,
+      // compressImageMaxHeight: 175,
       cropping: true
     }).then(image => {
       console.log(image);
       setImg(image.path)
+      setModalVisible(false)
+      // setToast(true)
+      // SetMessage(ToastMessage.picmess)
     });
+    //setToast(false)
   }
   const Camera = () => {
     ImagePicker.openCamera({
-      compressImageMaxHeight: 350,
-      compressImageMaxHeight: 175,
+      // compressImageMaxHeight: 350,
+      // compressImageMaxHeight: 175,
       cropping: true,
     }).then(image => {
       console.log(image);
       setImg(image.path)
+      setModalVisible(false)
+      // setToast(true)
+      // SetMessage(ToastMessage.picmess)
     });
+    //setToast(false)
   }
   const press = () => {
     setPic(true)
@@ -87,6 +99,7 @@ const Profile = ({ navigation }) => {
   return (
     <View style={styles.container}>{pic ?
       <View style={{ flex: 1, backgroundColor: 'black' }}>
+        {showtoast? (<ToastComponent type = {ToastMessage.success}  message = {message}/>): null}
         <Modal animationType="slide" transparent={true} visible={modalVisible}>
           <View style={styles.modalContainer}>
             <Ionicons
@@ -98,7 +111,7 @@ const Profile = ({ navigation }) => {
             />
             <View style={styles.modalBody1}>
               <TouchableOpacity
-                style={{ alignSelf: 'center', marginTop: 5 }}
+                style={{ alignSelf: 'center', marginVertical: 20 }}
                 onPress={Camera}>
                 <Text
                   style={{
@@ -113,7 +126,7 @@ const Profile = ({ navigation }) => {
               </TouchableOpacity>
 
               <TouchableOpacity
-                style={{ alignSelf: 'center', marginTop: 20 }}
+                style={{ alignSelf: 'center', marginVertical: 20 }}
                 onPress={gallery}>
                 <Text
                   style={{

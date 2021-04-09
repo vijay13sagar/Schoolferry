@@ -7,6 +7,8 @@ import Ngrok from '../../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
 import Loader from '../../components/Loader';
 import styles from '../../components/style';
+import ToastComponent from '../../components/Toaster';
+import* as ToastMessage from '../../constants/ToastMessages';
 
 export default class App extends React.Component {
   constructor() {
@@ -15,7 +17,9 @@ export default class App extends React.Component {
       ready: false,
       where: { lat: 16.002, lng: 34.93 },
       error: null,
-      isloading:true
+      isloading:true,
+      showtoast:false,
+      message:"Nope",
     }
   }
   componentDidMount() {
@@ -26,7 +30,7 @@ export default class App extends React.Component {
     console.log("entering");
     clearInterval(this.interval)
   }
-  Endtrip = () => {
+  Endtrip = async() => {
     this.setState({isloading:true})
     try {
       fetch(`${Ngrok.url}/api/driver/trip/end`, {
@@ -39,10 +43,13 @@ export default class App extends React.Component {
           tripid: this.props.route.params.tripid,
         })
       })
-        .then(function (response) {
-          this.setState({isloading:false})
+        .then( (response) => {
+          this.setState({isloading:false});
           if (response.status == 200) {
-            Alert.alert('Trip Ended')
+            //Alert.alert('Trip Ended')
+            this.setState({showtoast:true});
+            this.setState({message:ToastMessage.driveend});
+            console.log("hshsh",this.state.showtoast);
           }
           console.log("response for end trip", response.status);
         })
@@ -54,6 +61,7 @@ export default class App extends React.Component {
     catch (error) {
       console.log("errordetails", error);
     }
+    this.setState({showtoast:false});
   };
   updateloc = async() => {
     let geoOptions = {
@@ -111,9 +119,11 @@ export default class App extends React.Component {
     this.setState({ error: err.message });
   }
   render() {
+     const {isloading,message,showtoast}=this.state;
     return (
       <View style={styles.container}>
-        <Loader loading = {this.state.isloading}/>
+        {showtoast? (<ToastComponent type = {ToastMessage.success}  message = {message}/>): null}
+        <Loader loading = {isloading}/>
         {/* { !this.state.ready && (
            <Text style={styles.big}>Using Geolocation in React Native</Text>
         )} */}
@@ -122,10 +132,10 @@ export default class App extends React.Component {
         )}
         { this.state.ready && (
           <View>
-            <Text >{
+            {/* <Text >{
               `Latitude: ${this.state.where.lat}
                     Longitude: ${this.state.where.lng}`
-            }</Text>
+            }</Text> */}
             <MapView
               style={{ height: "90%", width: "100%" }}
               //showsUserLocation

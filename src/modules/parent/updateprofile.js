@@ -45,7 +45,7 @@ const updateProfile = ({route, navigation}) => {
           setLoading(false)
           if (responseJson.message == "data updated successfully") {
             //Alert.alert('Profile Updated Successfully')
-            navigation.goBack()
+            //navigation.goBack()
           }
           else if ( responseJson.status == 401 ){
             Alert.alert("Contact already exists. please try with a different contact number")

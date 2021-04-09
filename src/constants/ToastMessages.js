@@ -10,3 +10,7 @@ export const message7 = 'Failed. You have exhausted maximum attempts';
 export const message8 = 'Child addition successful';
 export const message9 = 'Card Deleted Successfully';
 export const message10 = 'Payment failed. Please contact your bank';
+export const drivecheck = 'Checklist Successfully Updated';
+export const drivestart = 'Trip Started Successfully';
+export const driveend = 'Trip Completed Successfully';
+export const picmess = 'Picture Updated Successfully';
