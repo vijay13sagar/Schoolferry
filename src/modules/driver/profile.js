@@ -82,7 +82,6 @@ const Profile = ({ navigation }) => {
     //AsyncStorage.removeItem('token');
     //window.localStorage.clear();
     //AsyncStorage.clear()
-
   }
 
   return (
