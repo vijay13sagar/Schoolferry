@@ -351,7 +351,7 @@ export default function Add_Nanny({ navigation }) {
         }
         <View>
           <Text style={styles.TextInput4}>
-            uploade Licence
+            uploade ID Proof
            </Text>
         </View>
       </View>
