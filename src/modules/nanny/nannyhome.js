@@ -45,7 +45,7 @@ export default class Triplist extends Component {
           {isLoading ? <ActivityIndicator /> : (
             <FlatList
               data={data}
-              keyExtractor={({ id }, index) => id}
+              keyExtractor={(item) => item.trip_id}
               renderItem={({ item }) => (
                 <Card style= { item.endedTripAt ? styles.card2 :styles.card}>
                   <CardItem style={item.endedTripAt ? {backgroundColor:'lightgrey'}:{backgroundColor:'white'}} button disabled={item.endedTripAt ? true : false} onPress={() => this.props.navigation.navigate('Tripdetails', { item: item })}>
