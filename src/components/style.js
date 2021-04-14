@@ -143,7 +143,7 @@ export default StyleSheet.create({
 
     },
     modalContainer: {
-        backgroundColor: '#000000',
+        backgroundColor: '#00000080',
         flex: 1,
         //height: '50%',
         justifyContent: 'center'
@@ -286,7 +286,7 @@ export default StyleSheet.create({
       name: {
         fontSize: 22,
         color: "black",
-        fontWeight: '600',
+        fontWeight: '700',
     
       },
       details: {
@@ -392,10 +392,10 @@ note:{
   centerview1: {
     justifyContent: 'center',
     marginVertical: 10,
-    alignSelf: 'center',
-    fontSize: 17,
+    fontSize: 16,
     textAlign: 'center',
     marginHorizontal: 3,
+   //paddingHorizontal:5,
   },
   body: {
     marginVertical: 20,
@@ -450,13 +450,13 @@ note:{
 
   },
   slogans:{
-    borderWidth: 1,
-      borderColor: '#b0003a',
+      borderWidth: 1,
+      borderColor: '#FF5C00',
       borderRadius: 10,
       width: "85%",
       height: 490,
       padding:2,
-      backgroundColor:'#ffe4e1',   //"#C4C4C4",
+      backgroundColor:'#fff',   //"#C4C4C4",
       marginVertical: 5,
 
   },
@@ -527,30 +527,30 @@ typeOfSubscription: {
   fontWeight: '700',
   alignSelf: 'center',
   marginTop: 2,
-  color:'black'
+  color:'white'
 },
 serviceDetails: {
   fontSize: 18,
   fontWeight: '700',
   marginLeft: 10,
-  color:'black'
+  color:'white'
 },
 price: {
   alignSelf: 'center',
   fontSize: 18,
   fontWeight: '700',
-  color:'black'
+  color:'white'
 },
 totalText: {
   fontSize: 22,
   fontWeight: '700',
   marginLeft: 10,
-  color:'black'
+  color:'white'
 },
 totalCost: {
   fontSize: 22,
   fontWeight: '700',
-  color:'black'
+  color:'white'
 },
 randomText: {
   //marginTop: 5,
@@ -564,7 +564,7 @@ addChildContainer: {
   borderWidth: 1,
   borderRadius: 10,
   marginTop: 10,
-  height: 130,
+  //height: 130,
   width: '90%',
   alignSelf: 'center',
   alignItems: 'center',
@@ -584,7 +584,7 @@ unsubscribeBtn: {
   justifyContent: 'center',
   backgroundColor: '#FF5C00',
   alignSelf: 'center',
-  marginTop: 10,
+  marginTop: 20,
 },
 message1: {
   fontSize: 22,
@@ -804,7 +804,7 @@ inputView1: {
   borderColor: '#FF5C00',
   borderRadius: 10,
   width: "80%",
-  height: 45,
+  //height: 45,
   flexWrap:'wrap',
   alignSelf: "center",
   alignItems:'center',
@@ -877,7 +877,7 @@ licence: {
   alignSelf: 'center'
   },
   idproof:{
-    width:320,
+    width:"85%",
     height:170,
     alignSelf:'center'
   },

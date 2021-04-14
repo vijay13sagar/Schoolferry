@@ -1,159 +1,176 @@
-
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from 'react';
 import {
-    StyleSheet,
-    Text,
-    View,
-    TextInput,
-    TouchableOpacity,
-} from "react-native";
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
 import axios from 'axios';
 import Ngrok from '../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
 import Loader from '../components/Loader';
 import styles from '../components/style';
+import ToastComponent from '../components/Toaster';
+import * as ToastMessage from '../constants/ToastMessages';
 
-const Otpscreen = ({ route, navigation }) => {
-    const [otp, setOtp] = useState(['-', '-', '-', '-', '-', '-']);
-    const [otpVal, setOtpVal] = useState('');
-    const [otpError, setOtpError] = useState('');
-    const [isloading, setLoading] = useState(false)
-    console.log("params", route.params);
-    const email = route.params.item;
-    console.log("email", email);
-    useEffect(() => {
-        Resendotp();
-    }, [])
-    const Resendotp = () => {
-        setLoading(true)
-        console.log("email", email);
-        axios
-            .get(`${Ngrok.url}/api/user/${email}`)
-            .then(function (response) {
-                console.log("otpstat", response.status);
-                console.log("otpmsg", response.data.message);
-                setLoading(false)
-            })
-            .catch(function (error) {
-                // handle error
-                console.log("error", error.message);
-            })
-            .finally(function () {
-                // always executed
-            });
-    }
-    const Validateotp = async () => {
-        setLoading(true)
-        if (otp == null) {
-            setOtpError("OTP Field Cannot be Empty");
-        } else {
-            let firebaseToken = await AsyncStorage.getItem('FBtoken');
-            console.log('FB token', firebaseToken);
-            try {
-                axios({
-                    method: 'POST',
-                    url: `${Ngrok.url}/api/user/match`,
-                    "headers": {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    data: {
-                        contact: email,
-                        otp: otp,
-                        token: firebaseToken
-                    }
-                })
-                    .then(function (response) {
-                        setLoading(false)
-                        if (response.status == 200) {
-                            console.log("hi", response.data.verificationStatus);
-                            if ((response.data.verificationStatus == "verified")) {
-                                setOtpError(null);
-                                console.log('response:', response.data);
-                                console.log("login", response.data.login);
+const Otpscreen = ({route, navigation}) => {
+  const [otp, setOtp] = useState(['-', '-', '-', '-', '-', '-']);
+  const [otpVal, setOtpVal] = useState('');
+  const [otpError, setOtpError] = useState('');
+  const [isloading, setLoading] = useState(false);
+  const [showtoast, setToast] = useState(false);
+  const [message, SetMessage] = useState();
 
-                                if (response.data.login[1] == 'Parent') {
-                                    AsyncStorage.setItem('token', response.data.login[0]);
-                                    navigation.replace('Parent Interface');
-                                } else if (response.data.login[1] == 'Driver') {
-                                    AsyncStorage.setItem('token', response.data.login[0]);
-                                    navigation.replace('Driver Interface');
-                                } else if (response.data.login[1] == 'Admin') {
-                                    AsyncStorage.setItem('token', response.data.login[0]);
-                                    navigation.replace('Admin Interface');
-                                } else if (response.data.login[1] == 'Nanny') {
-                                    AsyncStorage.setItem('token', response.data.login[0]);
-                                    navigation.replace('Nanny Interface');
-                                }
-                                // Alert.alert("OTP Verification successful","Please Login");
-                                // navigation.navigate('Login')
-                            } else if ((response.data.verificationStatus == "not verified")) {
-                                //Alert.alert("Incorrect OTP");
-                                setOtpError('Incorrect OTP');
-                            }
-                        } else if (response.status == 401) {
-                            if ((response.data.message == "OTP not sent")) {
-                                //Alert.alert("OTP not sent","click on resend otp")
-                                setOtpError('click on resend otp');
+  console.log('params', route.params);
+  const email = route.params.item;
+  console.log('email', email);
 
-                            } else if ((response.data.message == "Invalid Contact")) {
-                                //Alert.alert("Enter Valid Contact")
-                                setOtpError('Enter Valid Contact');
-                            }
-                        }
+  useEffect(() => {
+    Resendotp();
+  }, []);
 
-                        console.log("response", response.status);
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    })
+  const Resendotp = () => {
+    setLoading(true);
+    console.log('email', email);
+    axios
+      .get(`${Ngrok.url}/api/user/${email}`)
+      .then(function (response) {
+        console.log('otpstat', response.status);
+        console.log('otpmsg', response.data.message);
+        setLoading(false);
+      })
+      .catch(function (error) {
+        setLoading(false);
+        setToast(true);
+        SetMessage(ToastMessage.ResendOTP);
+        console.log('error', error.message);
+      })
+      .finally(function () {
+        // always executed
+      });
+      setToast(false);  
+  };
+
+  const Validateotp = async () => {
+    setLoading(true);
+    if (otp == null) {
+      setOtpError('OTP Field Cannot be Empty');
+    } else {
+      let firebaseToken = await AsyncStorage.getItem('FBtoken');
+      console.log('FB token', firebaseToken);
+      try {
+        axios({
+          method: 'POST',
+          url: `${Ngrok.url}/api/user/match`,
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          data: {
+            contact: email,
+            otp: otp,
+            token: firebaseToken,
+          },
+        })
+          .then(function (response) {
+            setLoading(false);
+            if (response.status == 200) {
+              console.log('hi', response.data.verificationStatus);
+              if (response.data.verificationStatus == 'verified') {
+                setOtpError(null);
+                console.log('response:', response.data);
+                console.log('login', response.data.login);
+
+                if (response.data.login[1] == 'Parent') {
+                  AsyncStorage.setItem('token', response.data.login[0]);
+                  navigation.replace('Parent Interface');
+                } else if (response.data.login[1] == 'Driver') {
+                  AsyncStorage.setItem('token', response.data.login[0]);
+                  navigation.replace('Driver Interface');
+                } else if (response.data.login[1] == 'Admin') {
+                  AsyncStorage.setItem('token', response.data.login[0]);
+                  navigation.replace('Admin Interface');
+                } else if (response.data.login[1] == 'Nanny') {
+                  AsyncStorage.setItem('token', response.data.login[0]);
+                  navigation.replace('Nanny Interface');
+                }
+ 
+              } else if (response.data.verificationStatus == 'not verified') {
+                setToast(true);
+                SetMessage(ToastMessage.incorrectOtp);
+              }
+            } else if (response.status == 401) {
+              if (response.data.message == 'OTP not sent') {
+                setToast(true);
+                SetMessage(ToastMessage.ResendOTP);
+                
+              } else if (response.data.message == 'Invalid Contact') {
+                //Alert.alert("Enter Valid Contact")
+                setOtpError('Enter Valid Contact');
+              }
             }
-            catch (error) {
-                console.log("errordetails", error);
-            }
-        }
-    }
-    return (
-        <View style={styles.cont2}>
-            <Loader loading = {isloading}/>
-            <Text style={styles.tripsTitleText}>Verify Your Mobile Number</Text>
-            <Text style={{ marginVertical: 20, fontWeight: "300" }}>Enter your OTP here</Text>
-            <TextInput
-                onChangeText={value => {
-                    if (value.length > 6) {
-                        return;
-                    }
-                    let val =
-                        value + '------'.substr(0, 6 - value.length);
-                    let a = [...val];
-                    setOtpVal(a),
-                        setOtp(value),
-                        console.log("value", otp);
-                }}
-                style={{ height: 0 }}
-                maxLength={6}
-                autoFocus={true}
-                keyboardType="numeric"
-            />
-            <View style={styles.otpBoxesContainer}>
-                {[0, 1, 2, 3, 4, 5].map((item, index) => (
-                    <Text style={styles.otpBox} key={index}>
-                        {otp[item]}
-                    </Text>
-                ))}
-            </View>
 
-            <Text style={{ marginVertical: 20, fontWeight: "300" }}>Didn't receive otp?</Text>
-            <TouchableOpacity onPress={() => Resendotp()}>
-                <Text style={{ textDecorationLine: 'underline', color: '#1E90FF', }}>Resend OTP</Text>
-            </TouchableOpacity>
-            <Text style={styles.error}>{otpError}</Text>
-            <TouchableOpacity style={styles.loginBtn} onPress={() => Validateotp()}>
-                <Text style={styles.loginText}>Submit</Text>
-            </TouchableOpacity>
-        </View>
-    );
-}
+            console.log('response', response.status);
+          })
+          .catch(function (error) {
+            setLoading(false);
+            setToast(true);
+            SetMessage(ToastMessage.message5);
+            console.log(error);
+          });
+      } catch (error) {
+        console.log('errordetails', error);
+      }
+    }
+    setToast(false)
+  };
+
+  return (
+    <View style={styles.cont2}>
+        {showtoast ? <ToastComponent type={ToastMessage.failure} message={message} /> : null}
+      <Loader loading={isloading} />
+      <Text style={styles.tripsTitleText}>Verify Your Mobile Number</Text>
+      <Text style={{marginVertical: 20, fontWeight: '300'}}>
+        Enter your OTP here
+      </Text>
+      <TextInput
+        onChangeText={(value) => {
+          if (value.length > 6) {
+            return;
+          }
+          let val = value + '------'.substr(0, 6 - value.length);
+          let a = [...val];
+          setOtpVal(a), setOtp(value), console.log('value', otp);
+        }}
+        style={{height: 0}}
+        maxLength={6}
+        autoFocus={true}
+        keyboardType="numeric"
+      />
+      <View style={styles.otpBoxesContainer}>
+        {[0, 1, 2, 3, 4, 5].map((item, index) => (
+          <Text style={styles.otpBox} key={index}>
+            {otp[item]}
+          </Text>
+        ))}
+      </View>
+
+      <Text style={{marginVertical: 20, fontWeight: '300'}}>
+        Didn't receive otp?
+      </Text>
+      <TouchableOpacity onPress={() => Resendotp()}>
+        <Text style={{textDecorationLine: 'underline', color: '#1E90FF'}}>
+          Resend OTP
+        </Text>
+      </TouchableOpacity>
+      <Text style={styles.error}>{otpError}</Text>
+      <TouchableOpacity style={styles.loginBtn} onPress={() => Validateotp()}>
+        <Text style={styles.loginText}>Submit</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
 
 export default Otpscreen;
 // const styles = StyleSheet.create({

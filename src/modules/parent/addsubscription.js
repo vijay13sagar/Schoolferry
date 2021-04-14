@@ -4,7 +4,7 @@ import styles from '../../components/style';
 
 const addsubscreen = ({navigation}) =>  {
     return (
-      <ScrollView style={styles.container} >
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false} >
       
           <View style={styles.body1}>
             <View style={styles.slogans}>
@@ -18,7 +18,7 @@ const addsubscreen = ({navigation}) =>  {
               <Text style={styles.sidehead}>Highly Safe</Text>
               <Text style={styles.content}>With a team of highly experienced drivers and advanced location tracking app, schoolferry provide you safety like never before. Nannies are also provided to take care of your little ones.</Text>
             </View>
-            <Text style={{fontSize:18,marginTop:15,textAlign:'center', }} >To subscribe to a plan , check service availability at your area and get started.</Text>
+            <Text style={{fontSize:16,marginTop:12,textAlign:'center',paddingHorizontal:3 }} >To subscribe to a plan , check service availability at your area and get started.</Text>
             <TouchableOpacity style={styles.loginBtn} onPress={()=>navigation.navigate('location')}>
               <Text style={styles.loginText}>Check availability</Text>
             </TouchableOpacity>

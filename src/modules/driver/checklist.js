@@ -7,6 +7,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 import CheckBox from '@react-native-community/checkbox';
 import Loader from '../../components/Loader';
 import styles from '../../components/style';
+import ToastComponent from '../../components/Toaster';
+import* as ToastMessage from '../../constants/ToastMessages';
 
 const today = new Date();
 const TD = moment(today).format('DD-MM-YYYY');
@@ -20,6 +22,10 @@ const App = ({ route, navigation }) => {
   console.log("dsg", route.params.TripID);
   let tripid = route.params.TripID;
   let vehid = route.params.VehicleID;
+  const [showtoast,setToast] = useState(false)
+  const [message, SetMessage] = useState()
+
+
 useEffect(() => {
   fetch(`${Ngrok.url}/api/driver/getchecklist/${tripid}`, {
     "method": "GET",
@@ -65,7 +71,9 @@ useEffect(() => {
         setLoading(false)
         console.log(responseJson);
         if (responseJson.message == "checklist updated successfully") {
-          Alert.alert('Checklist Updated','', [{text: 'Proceed', onPress:() => navigation.navigate('Trip Details',)}])
+          //Alert.alert('Checklist Updated','', [{text: 'Proceed', onPress:() => navigation.navigate('Trip Details',)}]);         
+          setToast(true)
+          SetMessage(ToastMessage.drivecheck)
         } else {
           Alert.alert('Try again!')
         }
@@ -75,11 +83,12 @@ useEffect(() => {
         console.log(err);
       });
 
-
+      setToast(false)
   }
   return (
     <View style={styles.container}>
       <Loader loading = {isloading}/>
+      {showtoast? (<ToastComponent type = {ToastMessage.success}  message = {message}/>): null}
       <Text style={{ alignSelf: "center" }}>{TD}</Text>
       <View style={{ alignItems: "flex-start", }}>
         <ScrollView style={{ alignSelf: "center", width: "100%" }}>

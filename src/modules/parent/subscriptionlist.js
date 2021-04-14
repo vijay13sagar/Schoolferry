@@ -10,6 +10,7 @@ import {
 import Ngrok from '../../constants/ngrok';
 import ToastComponent from '../../components/Toaster';
 import * as ToastMessage from '../../constants/ToastMessages';
+import styles from '../../components/style';
 
 const Subscriptions = ({route, navigation}) => {
   const [data, setData] = useState('');
@@ -121,84 +122,84 @@ const Subscriptions = ({route, navigation}) => {
 
 export default Subscriptions;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1, //#F9F2F2
-    backgroundColor: '#F9F2F2',
-  },
-  firstBox: {
-    height: '5%',
-    flexDirection: 'row',
-    marginTop: 20,
-    width: '100%',
-  },
-  planTitleText: {
-    fontSize: 23,
-    fontWeight: '700',
-    marginLeft: 10,
-  },
-  flatlist: {
-    flex: 1,
-  },
-  flatlistContainer: {
-    flex: 1,
-    width: 220,
-    borderWidth: 1,
-    borderRadius: 10,
-    marginHorizontal: 10,
-    backgroundColor: '#ff5c8d',
-    marginBottom: 5,
-  },
-  avatar: {
-    width: '100%',
-    height: '50%',
-  },
-  typeOfSubscription: {
-    fontSize: 22,
-    fontWeight: '700',
-    alignSelf: 'center',
-    marginTop: 8,
-  },
-  serviceDetails: {
-    fontSize: 18,
-    fontWeight: '700',
-    marginLeft: 10,
-  },
-  price: {
-    alignSelf: 'center',
-    fontSize: 18,
-    fontWeight: '700',
-  },
-  totalText: {
-    fontSize: 22,
-    fontWeight: '700',
-    marginLeft: 10,
-  },
-  totalCost: {
-    fontSize: 22,
-    fontWeight: '700',
-  },
-  randomText: {
-    fontSize: 15,
-    fontWeight: '700',
-    color: '#000',
-    marginTop: 5,
-    marginLeft: 15,
-  },
-  addChildContainer: {
-    borderWidth: 1,
-    borderRadius: 10,
-    marginTop: 15,
-    height: 130,
-    width: '90%',
-    alignSelf: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
-  },
-  addChildText: {
-    fontSize: 17,
-    fontWeight: '700',
-    padding: 5,
-    color: '#696969',
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1, //#F9F2F2
+//     backgroundColor: '#F9F2F2',
+//   },
+//   firstBox: {
+//     height: '5%',
+//     flexDirection: 'row',
+//     marginTop: 20,
+//     width: '100%',
+//   },
+//   planTitleText: {
+//     fontSize: 23,
+//     fontWeight: '700',
+//     marginLeft: 10,
+//   },
+//   flatlist: {
+//     flex: 1,
+//   },
+//   flatlistContainer: {
+//     flex: 1,
+//     width: 220,
+//     borderWidth: 1,
+//     borderRadius: 10,
+//     marginHorizontal: 10,
+//     backgroundColor: '#ff5c8d',
+//     marginBottom: 5,
+//   },
+//   avatar: {
+//     width: '100%',
+//     height: '50%',
+//   },
+//   typeOfSubscription: {
+//     fontSize: 22,
+//     fontWeight: '700',
+//     alignSelf: 'center',
+//     marginTop: 8,
+//   },
+//   serviceDetails: {
+//     fontSize: 18,
+//     fontWeight: '700',
+//     marginLeft: 10,
+//   },
+//   price: {
+//     alignSelf: 'center',
+//     fontSize: 18,
+//     fontWeight: '700',
+//   },
+//   totalText: {
+//     fontSize: 22,
+//     fontWeight: '700',
+//     marginLeft: 10,
+//   },
+//   totalCost: {
+//     fontSize: 22,
+//     fontWeight: '700',
+//   },
+//   randomText: {
+//     fontSize: 15,
+//     fontWeight: '700',
+//     color: '#000',
+//     marginTop: 5,
+//     marginLeft: 15,
+//   },
+//   addChildContainer: {
+//     borderWidth: 1,
+//     borderRadius: 10,
+//     marginTop: 15,
+//     height: 130,
+//     width: '90%',
+//     alignSelf: 'center',
+//     alignItems: 'center',
+//     backgroundColor: 'white',
+//   },
+//   addChildText: {
+//     fontSize: 17,
+//     fontWeight: '700',
+//     padding: 5,
+//     color: '#696969',
+//   },
+// });

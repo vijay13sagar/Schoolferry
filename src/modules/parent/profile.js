@@ -15,12 +15,13 @@ import styles from '../../components/style';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ImagePicker from 'react-native-image-crop-picker';
 
-const Profile = ({navigation}) => {
+const Profile = ({navigation, route}) => {
   const [data, getData] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [img, setImg] = useState('https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg');
   const [pic, setPic] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+
   const gallery = () => {
     ImagePicker.openPicker({
       // width: 350,
@@ -98,7 +99,7 @@ const Profile = ({navigation}) => {
       <Loader loading={isLoading} />
     </View>
   ) : (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       {pic ?
       <View style={{ flex: 1, backgroundColor: 'black' }}>
         <Modal animationType="slide" transparent={true} visible={modalVisible}>
@@ -217,7 +218,7 @@ style={styles.icon}
       </TouchableOpacity>
       </ScrollView>
     }
-    </View>
+    </ScrollView>
   );
 };
 

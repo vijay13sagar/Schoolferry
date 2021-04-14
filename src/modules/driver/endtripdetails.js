@@ -108,7 +108,7 @@ const Checklist = ({ route, navigation }) => {
                             </TouchableOpacity>
                         </View>
                     )}
-                    keyExtractor={item => item.id}
+                    keyExtractor={item => item.childId}
                 />
         </View>
     );
