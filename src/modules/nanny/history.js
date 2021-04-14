@@ -49,16 +49,11 @@ const Homescreen = ({ navigation }) => {
       <Loader loading = {isloading}/>
       <StatusBar
         barStyle="light-content"
-        // dark-content, light-content and default
         hidden={false}
-        //To hide statusBar
-        backgroundColor="#e91e63"
-        //Background color of statusBar only works for Android
+        backgroundColor= '#FF5C00'     
         translucent={false}
-      //allowing light, but not detailed shapes
 
       />
-
       <View >{stat ? <Text style={styles.startTripText}>Click to see Trip details</Text> : <Text style={styles.startTripText}>No Completed Trips</Text>}</View>
       <FlatList
         style={styles.flatlist}
