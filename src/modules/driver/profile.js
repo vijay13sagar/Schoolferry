@@ -8,55 +8,19 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import ImagePicker from 'react-native-image-crop-picker';
 import styles from '../../components/style';
 import ToastComponent from '../../components/Toaster';
-import* as ToastMessage from '../../constants/ToastMessages';
+import * as ToastMessage from '../../constants/ToastMessages';
+import storage from '@react-native-firebase/storage';
 
 const Profile = ({ navigation }) => {
   const [data, getData] = useState([])
   const [isloading, setLoading] = useState(false)
-  const [img, setImg] = useState('https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg');
+  const [img, setImg] = useState('');
+  const [id, setID] = useState('https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg');
   const [pic, setPic] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [showtoast,setToast] = useState(false)
+  const [showtoast, setToast] = useState(false)
   const [message, SetMessage] = useState()
-  const gallery = () => {
-    ImagePicker.openPicker({
-      // width: 350,
-      // height: 175,
-      // compressImageMaxHeight: 350,
-      // compressImageMaxHeight: 175,
-      cropping: true
-    }).then(image => {
-      console.log(image);
-      setImg(image.path)
-      setModalVisible(false)
-      // setToast(true)
-      // SetMessage(ToastMessage.picmess)
-    });
-    //setToast(false)
-  }
-  const Camera = () => {
-    ImagePicker.openCamera({
-      // compressImageMaxHeight: 350,
-      // compressImageMaxHeight: 175,
-      cropping: true,
-    }).then(image => {
-      console.log(image);
-      setImg(image.path)
-      setModalVisible(false)
-      // setToast(true)
-      // SetMessage(ToastMessage.picmess)
-    });
-    //setToast(false)
-  }
-  const press = () => {
-    setPic(true)
-  }
-  const backpress = () => {
-    setPic(false)
-  }
-  const pick = () => {
-    setModalVisible(true);
-  }
+
   useEffect(() => {
     const fetchData = navigation.addListener('focus', async () => {
       setLoading(true)
@@ -79,7 +43,125 @@ const Profile = ({ navigation }) => {
         });
     });
     fetchData;
+    retrieveimg();
   }, [navigation])
+  const gallery = () => {
+    ImagePicker.openPicker({
+      // width: 350,
+      // height: 175,
+      compressImageMaxHeight: 350,
+      compressImageMaxHeight: 175,
+      cropping: true
+    }).then(async(image) => {
+      console.log(image);
+      setImg(image.path)
+      setModalVisible(false);
+      upload();    
+    }
+    )
+    // setToast(true)
+    // SetMessage(ToastMessage.picmess)
+    //setToast(false)
+  }
+  const Camera = () => {
+    ImagePicker.openCamera({
+      compressImageMaxHeight: 350,
+      compressImageMaxHeight: 175,
+      cropping: true,
+    }).then(async (image) => {
+      console.log(image);
+      //setImg(image.path),()=>upload();
+      
+      await setImg(image.path)
+      upload();
+      console.log("shhs")
+      
+      // });
+      setModalVisible(false);
+      //upload();
+      // setToast(true)
+      // SetMessage(ToastMessage.picmess)
+    });
+    //setToast(false)
+  }
+  const upload = async () => {
+    console.log("img",img);
+    let token = await AsyncStorage.getItem('token')
+    let imageName = `${token}/profile`;
+    let s=decodeURI(img)
+    
+    // try {
+    //   await storage().ref(imageName).putFile(img);
+    //   Alert.alert('Image Uploaded Successfilly')
+    //      snapshot.ref.getDownloadURL().then(function(downloadURL) {
+    //        console.log("File available at", downloadURL);
+    //      });
+    // }
+    // catch(e){
+    //   Alert.alert('Uploading Failed')
+    //   setImg('https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg')
+    // }
+    storage()
+      .ref(imageName)
+      .putFile(s)
+      .then((snapshot) => {
+        //You can check the image is now uploaded in the storage bucket
+        console.log(`${imageName} has been successfully uploaded.`);
+        Alert.alert('Image Uploaded Successfilly')
+      })
+      .catch((e) => {
+        console.log('uploading image error => ', e);
+        Alert.alert('Uploading Failed');
+        //setImg('https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg');
+    }
+      );
+    
+    //   let reference=storage().ref(imageName);
+    //   let task=reference.putFile(img);
+    //   task.then(()=>{
+    //     console.log('Image uploaded to the bucket!');
+    //     Alert.alert('Image Uploaded Successfilly')
+    // }).catch((e) => {
+    //     //status = 'Something went wrong';
+    //     console.log('uploading image error => ', e);
+    //     Alert.alert('Uploading Failed')
+    //     setImg('https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg')
+
+    // });
+  }
+  const press = () => {
+    setPic(true)
+  }
+  const backpress = () => {
+    setPic(false)
+  }
+  const pick = () => {
+    setModalVisible(true);
+  }
+
+  const retrieveimg = async () => {
+    let token = await AsyncStorage.getItem('token')
+    storage()
+      .ref('/' + `${token}/profile`) //name in storage in firebase console
+      .getDownloadURL()
+      .then((url) => {
+        setImg(url);
+      })
+      .catch((e) => console.log('Errors while downloading => ', e));
+  }
+  const deleteimg = async () => {
+    let token = await AsyncStorage.getItem('token')
+    storage()
+      .ref('/' + `${token}/profile`) //name in storage in firebase console
+      .delete()
+      .then(() => {
+        console.log(`Image has been deleted successfully.`);
+        setImg(null);
+        //setImg('https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg')
+        Alert.alert('Image deleted successfully');
+      })
+      .catch((e) => console.log('error on image deletion => ', e));
+  }
   const onPressLogout = async () => {
     try {
       // const keys = await AsyncStorage.getAllKeys();
@@ -99,7 +181,7 @@ const Profile = ({ navigation }) => {
   return (
     <View style={styles.container}>{pic ?
       <View style={{ flex: 1, backgroundColor: 'black' }}>
-        {showtoast? (<ToastComponent type = {ToastMessage.success}  message = {message}/>): null}
+        {showtoast ? (<ToastComponent type={ToastMessage.success} message={message} />) : null}
         <Modal animationType="slide" transparent={true} visible={modalVisible}>
           <View style={styles.modalContainer}>
             <Ionicons
@@ -147,7 +229,11 @@ const Profile = ({ navigation }) => {
             color="#FFF" size={25}
             style={styles.icon}
           /></TouchableOpacity>
-          <TouchableOpacity onPress={pick} style={{ marginLeft: '80%' }}><Ionicons name="create"
+          <TouchableOpacity onPress={deleteimg} style={{ marginLeft: '35%' }}><Ionicons name="trash-bin"
+            color="#FFF" size={25}
+            style={styles.icon}
+          /></TouchableOpacity>
+          <TouchableOpacity onPress={pick} style={{ marginLeft: '35%' }}><Ionicons name="create"
             color="#FFF" size={25}
             style={styles.icon}
           /></TouchableOpacity>
@@ -156,7 +242,7 @@ const Profile = ({ navigation }) => {
       </View>
       : <ScrollView style={styles.container}>
         <Loader loading={isloading} />
-       
+
         <TouchableOpacity style={styles.edit}
           onPress={() => navigation.navigate('Update profile', {
             con: data.contact,
@@ -200,7 +286,7 @@ const Profile = ({ navigation }) => {
         </View>
         <View style={styles.textview}>
           <Text style={styles.headertext} >ID Proof</Text>
-          <Image style={styles.idproof} source={{ uri: img }} />
+          <Image style={styles.idproof} source={{ uri: id }} />
         </View>
         <TouchableOpacity style={styles.loginBtn}
         >
