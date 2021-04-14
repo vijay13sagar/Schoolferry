@@ -93,9 +93,11 @@ const MyPieChart = () => {
           height={220}
           yAxisLabel={''}
           chartConfig={{
-            backgroundColor: '#1CC910',
-            backgroundGradientFrom: 'lightblue',//'rgb(12, 99, 250)',//'#EFF3FF',
-            backgroundGradientTo: 'white',//'rgb(39, 143, 255)',//'#EFEFEF',
+            backgroundColor: '#ffefa0',
+            fillShadowGradient:'#FF5C00',
+            fillShadowGradientOpacity:1,
+            backgroundGradientFrom: '#f5a25d',//'rgb(12, 99, 250)',//'#EFF3FF',
+            backgroundGradientTo: '#ffefa0',//'rgb(39, 143, 255)',//'#EFEFEF',
             decimalPlaces: 1,
             barPercentage: 0.5,
             color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
@@ -148,9 +150,11 @@ const MyPieChart = () => {
           height={220}
           //yAxisLabel={''}
           chartConfig={{
-            backgroundColor: '#1CC910',
-            backgroundGradientFrom: 'lightblue',//'rgb(12, 99, 250)',//'#EFF3FF',
-            backgroundGradientTo: 'white',//'rgb(39, 143, 255)',//'#EFEFEF',
+            backgroundColor: '#ffefa0',
+            fillShadowGradient:'#FF5C00',
+            fillShadowGradientOpacity:1,
+            backgroundGradientFrom: '#f5a25d',//'rgb(12, 99, 250)',//'#EFF3FF',
+            backgroundGradientTo: '#ffefa0',//'rgb(39, 143, 255)',//'#EFEFEF',
             decimalPlaces: 1,
             barPercentage: 0.5,
             color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
