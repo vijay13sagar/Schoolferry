@@ -1,20 +1,15 @@
 
 import React, { useState } from "react";
 import {
-  StyleSheet,
   Text,
   View,
-  Image,
-  TextInput,
-  Button,
-  TouchableOpacity,
 } from "react-native";
 import styles from '../../components/styles_admin'
  
 export default function vehicle_Details({ route, navigation }){
 
 
-  console.log("this.props",route.params.item.releaseYear);
+  
   return (
     <View style={styles.container2}>
        <View style={{marginRight:225,marginTop:40,}}>

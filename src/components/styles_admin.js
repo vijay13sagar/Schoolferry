@@ -219,6 +219,12 @@ export default StyleSheet.create({
         alignSelf:"center"
     
       },
+      TextInput4: {
+        marginTop:10,
+        color:"black", 
+        alignSelf:"center"
+    
+      },
       TextInput2: {
         height: 50,
         color:"black", 
@@ -249,8 +255,7 @@ export default StyleSheet.create({
         licence: {
         marginTop:20,
         height: 100,
-        width: 100,
-        borderRadius:50,
+        width: 120,
         alignSelf: 'center'
         },
         modalContainer: {

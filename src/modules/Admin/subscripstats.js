@@ -96,14 +96,14 @@ const MyPieChart = () => {
           {
             name: '[Subscribed]',
             population:data.subscribedUsers,
-            color: 'rgba(131, 167, 234, 1)',
+            color: '#fca652',
             legendFontColor: 'black',
             legendFontSize: 12,
           },
           {
             name: '[Not Subscribed]',
             population: data.unSubscribedUsers,
-            color: '#F00',
+            color: '#FF5C00',
             legendFontColor: 'black',
             legendFontSize: 12,
           },
@@ -145,9 +145,11 @@ const MyPieChart = () => {
         height={220}
         yAxisLabel={''}
         chartConfig={{
-          backgroundColor: '#1CC910',
-          backgroundGradientFrom: 'lightblue',//'rgb(12, 99, 250)',//'#EFF3FF',
-          backgroundGradientTo: 'white',//'rgb(39, 143, 255)',//'#EFEFEF',
+          backgroundColor: '#ffefa0',
+     fillShadowGradient:'#FF5C00',
+    fillShadowGradientOpacity:1,
+          backgroundGradientFrom: '#f5a25d',//'rgb(12, 99, 250)',//'#EFF3FF',
+          backgroundGradientTo: '#ffefa0',//'rgb(39, 143, 255)',//'#EFEFEF',
           decimalPlaces: 0,
           barPercentage:1,
           color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
@@ -173,13 +175,16 @@ const MyPieChart = () => {
         }}
         fromZero
         showValuesOnTopOfBars	
+      
         width={Dimensions.get('window').width -30}
         height={220}
         yAxisLabel={''}
         chartConfig={{
-          backgroundColor: '#1CC910',
-          backgroundGradientFrom: 'lightblue',//'rgb(12, 99, 250)',//'#EFF3FF',
-          backgroundGradientTo: 'white',//'rgb(39, 143, 255)',//'#EFEFEF',
+          backgroundColor: '#ffefa0',
+          fillShadowGradient:'#FF5C00',
+    fillShadowGradientOpacity:1,
+          backgroundGradientFrom: '#f5a25d',//'rgb(12, 99, 250)',//'#EFF3FF',
+          backgroundGradientTo: '#ffefa0',//'rgb(39, 143, 255)',//'#EFEFEF',
           decimalPlaces: 0,
           barPercentage:1,
           color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
