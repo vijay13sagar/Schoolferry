@@ -205,11 +205,11 @@ const Profile = ({ navigation }) => {
                 onPress={Camera}>
                 <Text
                   style={{
-                    color: '#1E90FF',
+                    color: '#000',
                     fontSize: 19,
                   }}>
                   Open Camera <Ionicons name="camera"
-                    color="#1E90FF" size={25}
+                    color="#FF5C00" size={25}
                     style={styles.icon}
                   />
                 </Text>
@@ -220,11 +220,11 @@ const Profile = ({ navigation }) => {
                 onPress={gallery}>
                 <Text
                   style={{
-                    color: '#1E90FF',
+                    color: '#000',
                     fontSize: 19,
                   }}>
                   Choose From Gallery <Ionicons name="folder"
-                    color="#1E90FF" size={25}
+                    color="#FF5C00" size={25}
                     style={styles.icon}
                   />
                 </Text>
@@ -256,8 +256,10 @@ const Profile = ({ navigation }) => {
 
         <TouchableOpacity style={styles.edit}
           onPress={() => navigation.navigate('Update profile', {
-            con: data.contact,
-            add: data.address,
+            name:data.name,
+            email:data.email,
+            contact: data.contact,
+            address: data.address,
           })
           }>
           <Text style={styles.loginText} >Edit <Ionicons name="create"
@@ -285,11 +287,6 @@ const Profile = ({ navigation }) => {
         <View style={styles.body}>
           <Text style={styles.name}>Hello,{data.name}</Text>
         </View>
-
-        <View style={styles.textview}>
-          <Text style={styles.headertext} > User ID</Text>
-          <Text style={styles.details}>{data.id}</Text>
-        </View>
         <View style={styles.textview}>
           <Text style={styles.headertext} >Name</Text>
           <Text style={styles.details}>{data.name}</Text>
@@ -298,15 +295,14 @@ const Profile = ({ navigation }) => {
           <Text style={styles.headertext} >Contact</Text>
           <Text style={styles.details}>{data.contact}</Text>
         </View>
-
+        <View style={styles.textview}>
+          <Text style={styles.headertext} >Email</Text>
+          <Text style={styles.details}>{data.email}</Text>
+        </View>
         <View style={styles.textview}>
           <Text style={styles.headertext} >Address</Text>
           <Text style={styles.details}>{data.address}</Text>
         </View>
-        {/* <View style={styles.textview}>
-          <Text style={styles.headertext} >ID Proof</Text>
-          <Image style={styles.idproof} source={{ uri: id }} />
-        </View> */}
         <TouchableOpacity style={styles.loginBtn}
         >
           <Text style={styles.loginText} onPress={() => navigation.navigate("Change Password")}

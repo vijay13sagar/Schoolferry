@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Text, Alert, View, TouchableOpacity, Modal, Image } from 'react-native';
+import { Text, Alert, View, TouchableOpacity,ImageBackground, Modal, Image } from 'react-native';
 import Ngrok from '../../constants/ngrok'
 import AsyncStorage from '@react-native-community/async-storage';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -11,6 +11,7 @@ import ToastComponent from '../../components/Toaster';
 import * as ToastMessage from '../../constants/ToastMessages';
 import storage from '@react-native-firebase/storage';
 
+
 const Profile = ({ navigation }) => {
   const [data, getData] = useState([])
   const [isloading, setLoading] = useState(false)
@@ -21,6 +22,7 @@ const Profile = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [showtoast, setToast] = useState(false)
   const [message, SetMessage] = useState()
+  const [options,setOption] =useState(false)
 
   useEffect(() => {
     const fetchData = navigation.addListener('focus', async () => {
@@ -140,6 +142,7 @@ const Profile = ({ navigation }) => {
   }
   const pick = () => {
     setModalVisible(true);
+    //setOption(!options);
   }
 
   const retrieveimg = async () => {
@@ -223,11 +226,11 @@ const Profile = ({ navigation }) => {
                 onPress={Camera}>
                 <Text
                   style={{
-                    color: '#1E90FF',
+                    color: '#000',
                     fontSize: 19,
                   }}>
                   Open Camera <Ionicons name="camera"
-                    color="#1E90FF" size={25}
+                    color="#FF5C00" size={25}
                     style={styles.icon}
                   />
                 </Text>
@@ -238,11 +241,11 @@ const Profile = ({ navigation }) => {
                 onPress={gallery}>
                 <Text
                   style={{
-                    color: '#1E90FF',
+                    color: '#000',
                     fontSize: 19,
                   }}>
                   Choose From Gallery <Ionicons name="folder"
-                    color="#1E90FF" size={25}
+                    color="#FF5C00" size={25}
                     style={styles.icon}
                   />
                 </Text>
@@ -268,6 +271,8 @@ const Profile = ({ navigation }) => {
       color="grey" size={300}
       style={{alignSelf:'center',justifyContent:'center'}}
       />:<Image style={{ width: '100%', height: '50%', justifyContent: 'center' }} source={{ uri: img }} />}
+      <View style={{alignItems:'center',marginTop:"25%",justifyContent:'flex-end'}}>
+      </View>
       </View>
       : <ScrollView style={styles.container}>
         <Loader loading={isloading} />
