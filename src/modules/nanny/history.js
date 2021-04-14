@@ -37,6 +37,7 @@ const Homescreen = ({ navigation }) => {
         }
       })
       .catch(err => {
+        setLoading(false)
         console.log('error',err);
       });
     })

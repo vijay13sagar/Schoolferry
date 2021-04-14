@@ -22,7 +22,7 @@ export default class ChildList extends Component  {
             {/* <Text style={styles.sidehead} >Children List:</Text> */}
           <FlatList
             data={this.props.route.params.childList}
-            keyExtractor={({ id }, index) => id}
+            keyExtractor={(item) => item.childId}
             renderItem={({ item }) => (
         <TouchableOpacity style={styles.loginBtn} onPress = {()=>this.props.navigation.navigate('Child Details',{item:item})}>
           <Text style={styles.loginText}>{ item.childId } , {item.childName}</Text>
