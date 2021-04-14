@@ -206,7 +206,7 @@ export default function Add_Nanny({ navigation }) {
       <ScrollView>
       <View >
         {pic ?
-          <View style={{ width: "100%", height: "100%", backgroundColor: 'black' }}>
+          <View style={{ width: "70%", height: "70%", backgroundColor: 'black',alignSelf:"center" }}>
             <Modal animationType="slide" transparent={true} visible={modalVisible}>
               <View style={styles.modalContainer}>
                 <Ionicons
@@ -248,22 +248,22 @@ export default function Add_Nanny({ navigation }) {
                 </View>
               </View>
             </Modal>
-            <View style={{ flexDirection: 'row', marginBottom: '35%', marginLeft: 10, marginTop: 10 }}>
+            <View style={{ flexDirection: 'row', marginLeft: 10, marginTop: 10 }}>
               <TouchableOpacity onPress={backpress} style={{ justifyContent: 'flex-start' }}><Ionicons name="arrow-back"
                 color="#FFF" size={25}
                 style={styles.icon}
               /></TouchableOpacity>
-              <TouchableOpacity onPress={pick} style={{ marginLeft: '80%' }}><Ionicons name="create"
+              <TouchableOpacity onPress={pick} style={{ marginLeft: '75%' }}><Ionicons name="create"
                 color="#FFF" size={25}
                 style={styles.icon}
               /></TouchableOpacity>
             </View>
-            <Image style={{ width: '100%', height: '50%', justifyContent: 'center' }} source={{ uri: img }} />
+            <Image style={{ width: '100%', height: '75%', alignSelf: 'center' }} source={{ uri: img }} />
           </View>
           : <View>
             <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
               <TouchableOpacity onPress={press} >
-                <Image style={styles.licence} source={{ uri: img }} />
+                <Image style={styles.licence1} source={{ uri: img }} />
                 {/* <Ionicons name="camera"
       color="white" size={20}
       style={{backgroundColor:'#FF5C00',marginTop:90,borderRadius:25,justifyContent:'flex-end',alignSelf:'flex-end'}}
@@ -278,11 +278,11 @@ export default function Add_Nanny({ navigation }) {
             uploade image
            </Text>
         </View>
-      </View>
-      <View>
+        </View>
+        <View>
         {pic1 ?
-          <View style={{ width: "100%", height: "100%", backgroundColor: 'black' }}>
-            <Modal animationType="slide" transparent={true} visible={modalVisible1}>
+          <View style={{width: "70%", height: "70%", backgroundColor: 'black',alignSelf:"center"}}>
+            <Modal animationType="slide"  transparent={true} visible={modalVisible1}>
               <View style={styles.modalContainer}>
                 <Ionicons
                   name="close-circle-outline"
@@ -323,19 +323,19 @@ export default function Add_Nanny({ navigation }) {
                 </View>
               </View>
             </Modal>
-            <View style={{ flexDirection: 'row', marginBottom: '35%', marginLeft: 10, marginTop: 10 }}>
+            <View style={{ flexDirection: 'row',  marginLeft: 10, marginTop: 10 }}>
               <TouchableOpacity onPress={backpress1} style={{ justifyContent: 'flex-start' }}><Ionicons name="arrow-back"
                 color="#FFF" size={25}
                 style={styles.icon}
               /></TouchableOpacity>
-              <TouchableOpacity onPress={pick1} style={{ marginLeft: '80%' }}><Ionicons name="create"
+              <TouchableOpacity onPress={pick1} style={{ marginLeft: '75%' }}><Ionicons name="create"
                 color="#FFF" size={25}
                 style={styles.icon}
               /></TouchableOpacity>
             </View>
-            <Image style={{ width: '100%', height: '50%', justifyContent: 'center' }} source={{ uri: img1 }} />
+            <Image style={{ width: '100%', height: '75%', alignSelf: 'center'  }} source={{ uri: img1 }} />
           </View>
-
+         
           : <View>
             <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
               <TouchableOpacity onPress={press1} >
@@ -351,10 +351,10 @@ export default function Add_Nanny({ navigation }) {
         }
         <View>
           <Text style={styles.TextInput4}>
-            uploade ID Proof
+            uploade Licence
            </Text>
         </View>
-      </View>
+        </View>
 
 
 
