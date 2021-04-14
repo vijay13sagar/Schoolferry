@@ -36,7 +36,11 @@ export default class Triplist extends Component {
       <View style={styles.container}>
         <Loader loading = {isLoading}/>
         <StatusBar
-         barStyle = "light-content" hidden = {false} backgroundColor = "#FF5C00" translucent = {true}
+        barStyle="light-content"
+        hidden={false}
+        backgroundColor="#FF5C00"
+        //Background color of statusBar only works for Android
+        translucent={false}
       />
         <View style={styles.pendingTrips}>
         <Text style={styles.tripsTitleText}>Today's Trips</Text>

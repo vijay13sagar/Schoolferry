@@ -27,7 +27,7 @@ export default function trip_Details({ route, navigation }) {
       <Text style={styles.sidehead} >List of Children:</Text>
           <FlatList
             data={route.params.item.childList}
-            keyExtractor={({ id }, index) => id}
+            keyExtractor={(item) => item.childId}
             renderItem={({ item }) => (
         <TouchableOpacity style={styles.loginBtn} onPress = {()=>navigation.navigate('oldChild Details',{item:item})}>
           <Text style={styles.loginText}>{ item.childId } , {item.childName}</Text>
