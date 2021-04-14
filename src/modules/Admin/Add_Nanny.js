@@ -18,6 +18,7 @@ import styles from '../../components/styles_admin';
 import ImagePicker from 'react-native-image-crop-picker';
 import ToastComponent from '../../components/Toaster';
 import * as ToastMessage from '../../constants/ToastMessages';
+import storage from '@react-native-firebase/storage';
 
 export default function Add_Nanny({ navigation }) {
   const [isloading, setLoading] = useState(false);
@@ -109,6 +110,42 @@ export default function Add_Nanny({ navigation }) {
       setImg(image.path)
     });
   }
+  const upload1 = async (id) => {
+    console.log("img",img);
+    let imageName = `${id}/profile`;
+    let s=decodeURI(img)
+    storage()
+      .ref(imageName)
+      .putFile(s)
+      .then((snapshot) => {
+        console.log(`${imageName} has been successfully uploaded.`);
+        Alert.alert('Image Uploaded Successfully')
+      })
+      .catch((e) => {
+        console.log('uploading image error => ', e);
+        Alert.alert('Uploading Failed');
+        //setImg('https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg');
+    }
+      );
+  }
+  const upload2 = async (id) => {
+    console.log("img",img1);
+    let imageName = `${id}/license`;
+    let s=decodeURI(img1)
+    storage()
+      .ref(imageName)
+      .putFile(s)
+      .then((snapshot) => {
+        console.log(`${imageName} has been successfully uploaded.`);
+        Alert.alert('Image Uploaded Successfully')
+      })
+      .catch((e) => {
+        console.log('uploading image error => ', e);
+        Alert.alert('Uploading Failed');
+        //setImg('https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg');
+    }
+      );
+  }
   const press = () => {
     setPic(true)
   }
@@ -170,9 +207,12 @@ export default function Add_Nanny({ navigation }) {
 
           }
         })
-          .then(function (response) {
+          .then(async function (response) {
             setLoading(false);
             if (response.status == 200) {
+              console.log("ID",response.data);
+              upload1(response.data);
+              upload2(response.data);
               Alert.alert('Registration Successful', '', [{ text: 'Proceed', onPress: () => navigation.navigate('Employee',) }])
             }
 
@@ -373,6 +413,7 @@ export default function Add_Nanny({ navigation }) {
           style={styles.TextInput2}
           placeholder="Mobile Number"
           keyboardType="numeric"
+          maxLength={10}
           placeholderTextColor="#929292"
           onChangeText={(contact) => setcontact(contact)}
         />

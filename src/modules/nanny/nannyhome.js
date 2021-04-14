@@ -36,7 +36,11 @@ export default class Triplist extends Component {
       <View style={styles.container}>
         <Loader loading = {isLoading}/>
         <StatusBar
-         barStyle = "light-content" hidden = {false} backgroundColor = "#FF5C00" translucent = {true}
+        barStyle="light-content"
+        hidden={false}
+        backgroundColor="#FF5C00"
+        //Background color of statusBar only works for Android
+        translucent={false}
       />
         <View style={styles.pendingTrips}>
         <Text style={styles.tripsTitleText}>Today's Trips</Text>
@@ -45,7 +49,7 @@ export default class Triplist extends Component {
           {isLoading ? <ActivityIndicator /> : (
             <FlatList
               data={data}
-              keyExtractor={({ id }, index) => id}
+              keyExtractor={(item) => item.trip_id}
               renderItem={({ item }) => (
                 <Card style= { item.endedTripAt ? styles.card2 :styles.card}>
                   <CardItem style={item.endedTripAt ? {backgroundColor:'lightgrey'}:{backgroundColor:'white'}} button disabled={item.endedTripAt ? true : false} onPress={() => this.props.navigation.navigate('Tripdetails', { item: item })}>

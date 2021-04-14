@@ -423,7 +423,7 @@ note:{
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#ff5c8d',
+    backgroundColor: '#FF5C00',
     alignSelf: 'center',
     marginTop: 11,
     marginBottom: 5,
@@ -553,28 +553,25 @@ totalCost: {
   color:'white'
 },
 randomText: {
-  //marginTop: 5,
+  marginLeft:13,
   fontSize: 15,
-  alignSelf: 'center',
   fontWeight: '700',
-  color: '#ce1212',
+  color: '#000',
   marginVertical: 5,
 },
 addChildContainer: {
   borderWidth: 1,
   borderRadius: 10,
   marginTop: 10,
-  //height: 130,
   width: '90%',
   alignSelf: 'center',
-  alignItems: 'center',
   backgroundColor: '#fff',
 },
 addChildText: {
   fontSize: 17,
   fontWeight: '700',
-  padding: 10,
-  textAlign: 'center',
+  padding: 6,
+ color:'#000'
 },
 unsubscribeBtn: {
   width: '75%',

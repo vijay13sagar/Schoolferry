@@ -60,7 +60,7 @@ const Subscriptions = ({route, navigation}) => {
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           data={data}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item, index) => {return item.term}}
           renderItem={({item}) => (
             <View style={{flex: 1}}>
               <TouchableOpacity

@@ -54,18 +54,8 @@ const App = ({ route, navigation }) => {
   console.log("to",tomorrow);
   return (
     <View style={styles.container}>
-      <StatusBar
-        barStyle="light-content"
-        // dark-content, light-content and default
-        hidden={false}
-        //To hide statusBar
-        backgroundColor="#FF5C00"
-        //Background color of statusBar only works for Android
-        translucent={false}
-      //allowing light, but not detailed shapes
-
-      />
-      <ScrollView>
+  
+      <ScrollView  showsVerticalScrollIndicator={false}>
         <Text style={styles.headertext1} >Start Date</Text>
         <View style={{ backgroundColor: '#FBF0B2', width: 250, alignSelf: 'center', margin: 10 }}>
           <CalendarPicker

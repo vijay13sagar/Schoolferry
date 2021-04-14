@@ -8,6 +8,7 @@ import AdminNav from './src/navigation/admin_tabbar';
 import NannyNav from './src/navigation/nanny_tabbar_nav';
 import messaging from '@react-native-firebase/messaging';
 import AsyncStorage from '@react-native-community/async-storage';
+import {Alert} from 'react-native';
 
 
 // for accessing driver interface temporarily use - <DriverNav /> - in place of <Onboarding />
@@ -31,7 +32,7 @@ export default function App() {
 
     // foreground message handler 
     foreground = messaging().onMessage(async remoteMessage => {
-     // alert('A new notification arrived!', JSON.stringify(remoteMessage));
+      Alert.alert(remoteMessage.notification.body);
       console.log('Message handled in the foreground!', remoteMessage);
     });
 
@@ -62,7 +63,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <AdminNav/>
+      <Onboarding/>
     </NavigationContainer>
   );
 }

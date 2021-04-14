@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import styles from '../../components/style';
 import ToastComponent from '../../components/Toaster';
 import* as ToastMessage from '../../constants/ToastMessages';
+import Loader from '../../components/Loader';
 
 const Checklist = ({navigation,route}) => {
   const [contact, setContact] = useState(route.params.con)
@@ -12,6 +13,7 @@ const Checklist = ({navigation,route}) => {
   const [{ error }, setError] = useState(" ")
   const [showtoast,setToast] = useState(false)
   const [message, SetMessage] = useState()
+  const [isloading, setLoading] = useState(false);
 
   const presshandler = async () => {
     let token = await AsyncStorage.getItem('token')
@@ -25,6 +27,7 @@ const Checklist = ({navigation,route}) => {
       Alert.alert("Please enter valid contact number")
     }
     else {
+      setLoading(true);
       fetch(`${Ngrok.url}/api/profileupdate/driver`, {
         "method": "POST",
         "headers": {
@@ -40,13 +43,15 @@ const Checklist = ({navigation,route}) => {
         .then(response => response.json())
         .then(responseJson => {
           console.log(responseJson);
+          setLoading(false);
           if (responseJson.message == "data updated successfully") {
             setToast(true)
-            SetMessage(ToastMessage.picmess)
+            SetMessage(ToastMessage.updateProfile)
             //navigation.goBack()
           }
         })
         .catch(err => {
+          setLoading(false);
           console.log(err);
         });
     }
@@ -55,6 +60,7 @@ const Checklist = ({navigation,route}) => {
   return (
     <View style={styles.cont}>
       {showtoast? (<ToastComponent type = {ToastMessage.success}  message = {message}/>): null}
+      <Loader loading={isloading} />
       <Text style={styles.text}>Enter your new details</Text>
       <View style={styles.inputView} >
         <TextInput
@@ -82,9 +88,6 @@ const Checklist = ({navigation,route}) => {
         <Text style={styles.loginText}>
           Update Profile</Text>
       </TouchableOpacity>
-
-
-
     </View>
 
   );
