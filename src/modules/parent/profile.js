@@ -108,7 +108,7 @@ const Profile = ({ navigation }) => {
       .then((snapshot) => {
         //You can check the image is now uploaded in the storage bucket
         console.log(`${imageName} has been successfully uploaded.`);
-        Alert.alert('Image Uploaded Successfilly');
+        Alert.alert('Image Uploaded Successfully');
         setAvatar(false)
       })
       .catch((e) => {
@@ -246,7 +246,10 @@ const Profile = ({ navigation }) => {
             style={styles.icon}
           /></TouchableOpacity>
         </View>
-        <Image style={{ width: '100%', height: '50%', justifyContent: 'center' }} source={{ uri: img }} />
+        {avatar? <Ionicons name="camera"
+      color="grey" size={300}
+      style={{alignSelf:'center',justifyContent:'center'}}
+      />:<Image style={{ width: '100%', height: '50%', justifyContent: 'center' }} source={{ uri: img }} />}
       </View>
       : <ScrollView style={styles.container}>
         <Loader loading={isloading} />
@@ -266,7 +269,7 @@ const Profile = ({ navigation }) => {
           {avatar ? <TouchableOpacity onPress={press} >
             {/* <Image style={styles.licence} source={{ uri: img }} /> */}
             <Ionicons name="camera"
-      color="black" size={100}
+      color="grey" size={100}
       style={styles.licence}
       />
           </TouchableOpacity>

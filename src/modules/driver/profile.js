@@ -15,6 +15,7 @@ const Profile = ({ navigation }) => {
   const [data, getData] = useState([])
   const [isloading, setLoading] = useState(false)
   const [img, setImg] = useState('');
+  const [avatar, setAvatar] = useState(true);
   const [id, setID] = useState('https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg');
   const [pic, setPic] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -44,6 +45,7 @@ const Profile = ({ navigation }) => {
     });
     fetchData;
     retrieveimg();
+    retrieveimg2();
   }, [navigation])
   const gallery = () => {
     ImagePicker.openPicker({
@@ -107,7 +109,8 @@ const Profile = ({ navigation }) => {
       .then((snapshot) => {
         //You can check the image is now uploaded in the storage bucket
         console.log(`${imageName} has been successfully uploaded.`);
-        Alert.alert('Image Uploaded Successfilly')
+        setAvatar(false)
+        Alert.alert('Image Uploaded Successfully')
       })
       .catch((e) => {
         console.log('uploading image error => ', e);
@@ -145,7 +148,29 @@ const Profile = ({ navigation }) => {
       .ref('/' + `${token}/profile`) //name in storage in firebase console
       .getDownloadURL()
       .then((url) => {
+        console.log("url",url);
         setImg(url);
+        if(img==null){
+          setAvatar(true)
+        }else{
+          setAvatar(false)
+        }
+      })
+      .catch((e) => console.log('Errors while downloading => ', e));
+  }
+  const retrieveimg2 = async () => {
+    let token = await AsyncStorage.getItem('token')
+    storage()
+      .ref('/' + `${token}/license`) //name in storage in firebase console
+      .getDownloadURL()
+      .then((url) => {
+        console.log("url",url);
+        setID(url);
+        if(img==null){
+          setAvatar(true)
+        }else{
+          setAvatar(false)
+        }
       })
       .catch((e) => console.log('Errors while downloading => ', e));
   }
@@ -157,6 +182,7 @@ const Profile = ({ navigation }) => {
       .then(() => {
         console.log(`Image has been deleted successfully.`);
         setImg(null);
+        setAvatar(true);
         //setImg('https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg')
         Alert.alert('Image deleted successfully');
       })
@@ -238,7 +264,10 @@ const Profile = ({ navigation }) => {
             style={styles.icon}
           /></TouchableOpacity>
         </View>
-        <Image style={{ width: '100%', height: '50%', justifyContent: 'center' }} source={{ uri: img }} />
+        {avatar? <Ionicons name="camera"
+      color="grey" size={300}
+      style={{alignSelf:'center',justifyContent:'center'}}
+      />:<Image style={{ width: '100%', height: '50%', justifyContent: 'center' }} source={{ uri: img }} />}
       </View>
       : <ScrollView style={styles.container}>
         <Loader loading={isloading} />
@@ -255,13 +284,21 @@ const Profile = ({ navigation }) => {
           /></Text>
         </TouchableOpacity>
         <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+        {avatar ? <TouchableOpacity onPress={press} >
+            {/* <Image style={styles.licence} source={{ uri: img }} /> */}
+            <Ionicons name="camera"
+      color="grey" size={100}
+      style={styles.licence}
+      />
+          </TouchableOpacity>
+          :
           <TouchableOpacity onPress={press} >
             <Image style={styles.licence} source={{ uri: img }} />
             {/* <Ionicons name="camera"
       color="white" size={20}
       style={{backgroundColor:'#FF5C00',marginTop:90,borderRadius:25,justifyContent:'flex-end',alignSelf:'flex-end'}}
       /> */}
-          </TouchableOpacity>
+          </TouchableOpacity>}
         </View>
         <View style={styles.body}>
           <Text style={styles.name}>Hello,{data.name}</Text>

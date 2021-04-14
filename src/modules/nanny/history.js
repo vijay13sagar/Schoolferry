@@ -48,7 +48,13 @@ const Homescreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Loader loading = {isloading}/>
+      <StatusBar
+        barStyle="light-content"
+        hidden={false}
+        backgroundColor= '#FF5C00'     
+        translucent={false}
 
+      />
       <View >{stat ? <Text style={styles.startTripText}>Click to see Trip details</Text> : <Text style={styles.startTripText}>No Completed Trips</Text>}</View>
       <FlatList
         style={styles.flatlist}
