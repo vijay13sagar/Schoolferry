@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import styles from '../../components/style';
 import ToastComponent from '../../components/Toaster';
 import* as ToastMessage from '../../constants/ToastMessages';
+import Loader from '../../components/Loader';
 
 const Checklist = ({route,navigation}) => {
  
@@ -12,11 +13,13 @@ const Checklist = ({route,navigation}) => {
   const [address,setAddress] = useState(route.params.add)
   const [showtoast,setToast] = useState(false)
   const [message, SetMessage] = useState()
+  const [isloading, setLoading] = useState(false);
 
   const presshandler = async () => {
     if(!contact && !address){
       Alert.alert("Failed","Fields should not be empty");
     }else{
+      setLoading(true);
     let token = await AsyncStorage.getItem('token')
     fetch(`${Ngrok.url}/api/profileupdate/nanny`, {
       "method": "POST",
@@ -33,15 +36,17 @@ const Checklist = ({route,navigation}) => {
       .then(response => response.json())
       .then(responseJson => {
         console.log(responseJson);
+        setLoading(false);
         if (responseJson.message == "data updated successfully") {
           //navigation.goBack()
           setToast(true)
-          SetMessage(ToastMessage.picmess)
+          SetMessage(ToastMessage.updateProfile)
         } else {
           Alert.alert('Failed','Number already exist')
         }
       })
       .catch(err => {
+        setLoading(false);
         console.log(err);
       });
     }
@@ -50,6 +55,7 @@ const Checklist = ({route,navigation}) => {
   return (
     <View style={styles.cont}>
       {showtoast? (<ToastComponent type = {ToastMessage.success}  message = {message}/>): null}
+      <Loader loading={isloading} />
       <Text style={styles.text}>Enter your new details</Text>
         <View style={styles.inputView} >
           <TextInput
