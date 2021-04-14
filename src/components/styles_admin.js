@@ -221,6 +221,7 @@ export default StyleSheet.create({
       },
       TextInput4: {
         marginTop:10,
+        marginBottom:19,
         color:"black", 
         alignSelf:"center"
     
@@ -255,8 +256,8 @@ export default StyleSheet.create({
         licence: {
         marginTop:20,
         
-        height: 140,
-        width: 190,
+        height: 250,
+        width: 350,
         alignSelf: 'center'
         },
         licence1: {
