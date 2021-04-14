@@ -892,5 +892,20 @@ licence: {
     marginTop: 5,
     //opacity: 0.5,
   },
+  //profile.js
+  modalContainer3: {
+    backgroundColor: '#00000080',
+    flex: 1,
+    height: '50%',
+    justifyContent: 'flex-end',
+  },
+  modalBody3: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    height: 280,
+    width: '88%',
+    alignSelf: 'center',
+    justifyContent: 'center',
+  },
     })
     

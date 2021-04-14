@@ -222,11 +222,11 @@ const Profile = ({ navigation }) => {
                 onPress={Camera}>
                 <Text
                   style={{
-                    color: '#1E90FF',
+                    color: '#000',
                     fontSize: 19,
                   }}>
                   Open Camera <Ionicons name="camera"
-                    color="#1E90FF" size={25}
+                    color="#FF5C00" size={25}
                     style={styles.icon}
                   />
                 </Text>
@@ -237,11 +237,11 @@ const Profile = ({ navigation }) => {
                 onPress={gallery}>
                 <Text
                   style={{
-                    color: '#1E90FF',
+                    color: '#000',
                     fontSize: 19,
                   }}>
                   Choose From Gallery <Ionicons name="folder"
-                    color="#1E90FF" size={25}
+                    color="#FF5C00" size={25}
                     style={styles.icon}
                   />
                 </Text>
