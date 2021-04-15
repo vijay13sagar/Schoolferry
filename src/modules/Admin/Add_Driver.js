@@ -67,14 +67,14 @@ export default function Add_Driver({ navigation }) {
       setModalVisible1(false)
     });
   }
-  const press1 = () => {
-    setPic1(true)
-  }
+  
   const backpress1 = () => {
     setPic1(false)
+   setModalVisible1(!modalVisible1)
   }
   const pick1 = () => {
     setModalVisible1(true);
+    setPic1(true)
   }
 
 
@@ -149,14 +149,14 @@ export default function Add_Driver({ navigation }) {
     }
       );
   }
-  const press = () => {
-    setPic(true)
-  }
+  
   const backpress = () => {
     setPic(false)
+     setModalVisible(!modalVisible)
   }
   const pick = () => {
     setModalVisible(true);
+    setPic(true)
   }
 
   const validateFunction = () => {
@@ -250,7 +250,7 @@ export default function Add_Driver({ navigation }) {
         
           <View >
         {pic ?
-          <View style={{ width: "100%", height: "100%", backgroundColor: 'black' }}>
+          <View >
             <Modal animationType="slide" transparent={true} visible={modalVisible}>
               <View style={styles.modalContainer}>
                 <Ionicons
@@ -258,7 +258,7 @@ export default function Add_Driver({ navigation }) {
                   color="#fff"
                   size={30}
                   style={styles.icon}
-                  onPress={(modalVisible) => setModalVisible(!modalVisible)}
+                  onPress={backpress}
                 />
                 <View style={styles.modalBody1}>
                   <TouchableOpacity
@@ -291,23 +291,12 @@ export default function Add_Driver({ navigation }) {
                   </TouchableOpacity>
                 </View>
               </View>
-            </Modal>
-            <View style={{ flexDirection: 'row', marginBottom: '35%', marginLeft: 10, marginTop: 10 }}>
-              <TouchableOpacity onPress={backpress} style={{ justifyContent: 'flex-start' }}><Ionicons name="arrow-back"
-                color="#FFF" size={25}
-                style={styles.icon}
-              /></TouchableOpacity>
-              <TouchableOpacity onPress={pick} style={{ marginLeft: '80%' }}><Ionicons name="create"
-                color="#FFF" size={25}
-                style={styles.icon}
-              /></TouchableOpacity>
-            </View>
-            <Image style={{ width: '100%', height: '50%', justifyContent: 'center' }} source={{ uri: img }} />
+            </Modal>        
           </View>
           : <View>
             <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-              <TouchableOpacity onPress={press} >
-                <Image style={styles.licence} source={{ uri: img }} />
+              <TouchableOpacity onPress={pick} >
+                <Image style={styles.licence1} source={{ uri: img }} />
                 {/* <Ionicons name="camera"
       color="white" size={20}
       style={{backgroundColor:'#FF5C00',marginTop:90,borderRadius:25,justifyContent:'flex-end',alignSelf:'flex-end'}}
@@ -319,83 +308,7 @@ export default function Add_Driver({ navigation }) {
         }
         <View>
           <Text style={styles.TextInput4}>
-            uploade image
-           </Text>
-        </View>
-        </View>
-        <View>
-        {pic1 ?
-          <View style={{width: "100%", height: "100%",   backgroundColor: 'black' }}>
-            <Modal animationType="slide"  transparent={true} visible={modalVisible1}>
-              <View style={styles.modalContainer}>
-                <Ionicons
-                  name="close-circle-outline"
-                  color="#fff"
-                  size={30}
-                  style={styles.icon}
-                  onPress={(modalVisible1) => setModalVisible1(!modalVisible1)}
-                />
-                <View style={styles.modalBody1}>
-                  <TouchableOpacity
-                    style={{ alignSelf: 'center', marginTop: 5 }}
-                    onPress={Camera1}>
-                    <Text
-                      style={{
-                        color: 'black',
-                        fontSize: 19,
-                      }}>
-                      Open Camera <Ionicons name="camera"
-                        color="#FF5C00" size={25}
-                        style={styles.icon}
-                      />
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={{ alignSelf: 'center', marginTop: 20 }}
-                    onPress={gallery1}>
-                    <Text
-                      style={{
-                        color: 'black',
-                        fontSize: 19,
-                      }}>
-                      Choose From Gallery <Ionicons name="folder"
-                        color="#FF5C00" size={25}
-                        style={styles.icon}
-                      />
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </Modal>
-            <View style={{ flexDirection: 'row', marginBottom: '35%', marginLeft: 10, marginTop: 10 }}>
-              <TouchableOpacity onPress={backpress1} style={{ justifyContent: 'flex-start' }}><Ionicons name="arrow-back"
-                color="#FFF" size={25}
-                style={styles.icon}
-              /></TouchableOpacity>
-              <TouchableOpacity onPress={pick1} style={{ marginLeft: '80%' }}><Ionicons name="create"
-                color="#FFF" size={25}
-                style={styles.icon}
-              /></TouchableOpacity>
-            </View>
-            <Image style={{ width: '100%', height: '50%', justifyContent: 'center' }} source={{ uri: img1 }} />
-          </View>
-         
-          : <View>
-            <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-              <TouchableOpacity onPress={press1} >
-                <Image style={styles.licence} source={{ uri: img1 }} />
-                {/* <Ionicons name="camera"
-      color="white" size={20}
-      style={{backgroundColor:'#FF5C00',marginTop:90,borderRadius:25,justifyContent:'flex-end',alignSelf:'flex-end'}}
-      /> */}
-              </TouchableOpacity>
-            </View>
-
-          </View>
-        }
-        <View>
-          <Text style={styles.TextInput4}>
-            uploade Licence
+            user image
            </Text>
         </View>
         </View>
@@ -437,6 +350,8 @@ export default function Add_Driver({ navigation }) {
             onChangeText={(EXP) => setEXP(EXP)}
           />
         </View>
+
+       
         <View style={styles.inputView1}>
           <TextInput
             style={styles.TextInput2}
@@ -456,7 +371,72 @@ export default function Add_Driver({ navigation }) {
             onChangeText={(password) => setpassword(password)}
           />
         </View>
+        <View >
+        {pic1 ?
+          <View >
+            <Modal animationType="slide"  transparent={true} visible={modalVisible1}>
+              <View style={styles.modalContainer}>
+                <Ionicons
+                  name="close-circle-outline"
+                  color="#fff"
+                  size={30}
+                  style={styles.icon}
+                  onPress={backpress1}
+                />
+                <View style={styles.modalBody1}>
+                  <TouchableOpacity
+                    style={{ alignSelf: 'center', marginTop: 5 }}
+                    onPress={Camera1}>
+                    <Text
+                      style={{
+                        color: 'black',
+                        fontSize: 19,
+                      }}>
+                      Open Camera <Ionicons name="camera"
+                        color="#FF5C00" size={25}
+                        style={styles.icon}
+                      />
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={{ alignSelf: 'center', marginTop: 20 }}
+                    onPress={gallery1}>
+                    <Text
+                      style={{
+                        color: 'black',
+                        fontSize: 19,
+                      }}>
+                      Choose From Gallery <Ionicons name="folder"
+                        color="#FF5C00" size={25}
+                        style={styles.icon}
+                      />
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </Modal>
+          </View>
+         
+          : <View>
+            <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+              <TouchableOpacity onPress={pick1} >
+                <Image style={styles.licence} source={{ uri: img1 }} />
+                {/* <Ionicons name="camera"
+      color="white" size={20}
+      style={{backgroundColor:'#FF5C00',marginTop:90,borderRadius:25,justifyContent:'flex-end',alignSelf:'flex-end'}}
+      /> */}
+              </TouchableOpacity>
+            </View>
 
+          </View>
+        }
+        <View>
+          <Text style={styles.TextInput4}>
+           Licence
+           </Text>
+        </View>
+        </View>
+       
         <Text style={styles.error}>{emptyFields}</Text>
         <Text style={styles.error}>{emailError}</Text>
         <Text style={styles.error}>{contactError}</Text>

@@ -18,7 +18,6 @@ import styles from '../../components/styles_admin';
 import ImagePicker from 'react-native-image-crop-picker';
 import ToastComponent from '../../components/Toaster';
 import * as ToastMessage from '../../constants/ToastMessages';
-import storage from '@react-native-firebase/storage';
 
 export default function Add_Nanny({ navigation }) {
   const [isloading, setLoading] = useState(false);
@@ -49,7 +48,8 @@ export default function Add_Nanny({ navigation }) {
       cropping: true
     }).then(image => {
       console.log(image);
-      setImg1(image.path)
+      setImg1(image.path);
+      setModalVisible1(false)
     });
   }
   const Camera1 = () => {
@@ -60,16 +60,16 @@ export default function Add_Nanny({ navigation }) {
     }).then(image => {
       console.log(image);
       setImg1(image.path)
+      setModalVisible1(false)
     });
-  }
-  const press1 = () => {
-    setPic1(true)
   }
   const backpress1 = () => {
     setPic1(false)
+   setModalVisible1(!modalVisible1)
   }
   const pick1 = () => {
     setModalVisible1(true);
+    setPic1(true)
   }
   const validateEmail = (email) => {
     const regex_mail = /^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)$/;
@@ -146,14 +146,16 @@ export default function Add_Nanny({ navigation }) {
     }
       );
   }
-  const press = () => {
-    setPic(true)
-  }
+  // const press = () => {
+  //   setPic(true)
+  // }
   const backpress = () => {
     setPic(false)
+     setModalVisible(!modalVisible)
   }
   const pick = () => {
     setModalVisible(true);
+    setPic(true)
   }
 
 
@@ -210,9 +212,8 @@ export default function Add_Nanny({ navigation }) {
           .then(async function (response) {
             setLoading(false);
             if (response.status == 200) {
-              console.log("ID",response.data);
-              upload1(response.data);
-              upload2(response.data);
+              await upload1(response.data);
+              await upload2(response.data);
               Alert.alert('Registration Successful', '', [{ text: 'Proceed', onPress: () => navigation.navigate('Employee',) }])
             }
 
@@ -242,11 +243,13 @@ export default function Add_Nanny({ navigation }) {
 
   return (
     <View style={styles.container3}>
+       <Loader loading={isloading} />
+
       {showtoast ? (<ToastComponent type={ToastMessage.failure} message={ToastMessage.message3} />) : null}
       <ScrollView>
       <View >
         {pic ?
-          <View style={{ width: "100%", height: "100%", backgroundColor: 'black' }}>
+          <View >
             <Modal animationType="slide" transparent={true} visible={modalVisible}>
               <View style={styles.modalContainer}>
                 <Ionicons
@@ -254,7 +257,7 @@ export default function Add_Nanny({ navigation }) {
                   color="#fff"
                   size={30}
                   style={styles.icon}
-                  onPress={(modalVisible) => setModalVisible(!modalVisible)}
+                  onPress={backpress}
                 />
                 <View style={styles.modalBody1}>
                   <TouchableOpacity
@@ -287,23 +290,12 @@ export default function Add_Nanny({ navigation }) {
                   </TouchableOpacity>
                 </View>
               </View>
-            </Modal>
-            <View style={{ flexDirection: 'row', marginBottom: '35%', marginLeft: 10, marginTop: 10 }}>
-              <TouchableOpacity onPress={backpress} style={{ justifyContent: 'flex-start' }}><Ionicons name="arrow-back"
-                color="#FFF" size={25}
-                style={styles.icon}
-              /></TouchableOpacity>
-              <TouchableOpacity onPress={pick} style={{ marginLeft: '80%' }}><Ionicons name="create"
-                color="#FFF" size={25}
-                style={styles.icon}
-              /></TouchableOpacity>
-            </View>
-            <Image style={{ width: '100%', height: '50%', justifyContent: 'center' }} source={{ uri: img }} />
+            </Modal>        
           </View>
           : <View>
             <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-              <TouchableOpacity onPress={press} >
-                <Image style={styles.licence} source={{ uri: img }} />
+              <TouchableOpacity onPress={pick} >
+                <Image style={styles.licence1} source={{ uri: img }} />
                 {/* <Ionicons name="camera"
       color="white" size={20}
       style={{backgroundColor:'#FF5C00',marginTop:90,borderRadius:25,justifyContent:'flex-end',alignSelf:'flex-end'}}
@@ -315,21 +307,60 @@ export default function Add_Nanny({ navigation }) {
         }
         <View>
           <Text style={styles.TextInput4}>
-            uploade image
+            user image
            </Text>
         </View>
+        </View>
+       
+      
+
+     
+      <View style={styles.inputView1}>
+        <TextInput
+          style={styles.TextInput2}
+          placeholder="Name"
+          placeholderTextColor="#929292"
+          onChangeText={(name) => setname(name)}
+        />
       </View>
-      <View>
+      <View style={styles.inputView1}>
+        <TextInput
+          style={styles.TextInput2}
+          placeholder="Mobile Number"
+          keyboardType="numeric"
+          placeholderTextColor="#929292"
+          onChangeText={(contact) => setcontact(contact)}
+        />
+      </View>
+
+      <View style={styles.inputView1}>
+        <TextInput
+          style={styles.TextInput2}
+          placeholder="Address"
+          placeholderTextColor="#929292"
+          onChangeText={(ADR) => setADR(ADR)}
+        />
+      </View>
+      <View style={styles.inputView1}>
+        <TextInput
+          style={styles.TextInput2}
+          placeholder="Password"
+          placeholderTextColor="#929292"
+          secureTextEntry={true}
+          onChangeText={(password) => setpassword(password)}
+        />
+      </View>
+      <View >
         {pic1 ?
-          <View style={{ width: "100%", height: "100%", backgroundColor: 'black' }}>
-            <Modal animationType="slide" transparent={true} visible={modalVisible1}>
+          <View >
+            <Modal animationType="slide"  transparent={true} visible={modalVisible1}>
               <View style={styles.modalContainer}>
                 <Ionicons
                   name="close-circle-outline"
                   color="#fff"
                   size={30}
                   style={styles.icon}
-                  onPress={(modalVisible1) => setModalVisible1(!modalVisible1)}
+                  onPress={backpress1}
                 />
                 <View style={styles.modalBody1}>
                   <TouchableOpacity
@@ -363,22 +394,11 @@ export default function Add_Nanny({ navigation }) {
                 </View>
               </View>
             </Modal>
-            <View style={{ flexDirection: 'row', marginBottom: '35%', marginLeft: 10, marginTop: 10 }}>
-              <TouchableOpacity onPress={backpress1} style={{ justifyContent: 'flex-start' }}><Ionicons name="arrow-back"
-                color="#FFF" size={25}
-                style={styles.icon}
-              /></TouchableOpacity>
-              <TouchableOpacity onPress={pick1} style={{ marginLeft: '80%' }}><Ionicons name="create"
-                color="#FFF" size={25}
-                style={styles.icon}
-              /></TouchableOpacity>
-            </View>
-            <Image style={{ width: '100%', height: '50%', justifyContent: 'center' }} source={{ uri: img1 }} />
           </View>
-
+         
           : <View>
             <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-              <TouchableOpacity onPress={press1} >
+              <TouchableOpacity onPress={pick1} >
                 <Image style={styles.licence} source={{ uri: img1 }} />
                 {/* <Ionicons name="camera"
       color="white" size={20}
@@ -391,51 +411,10 @@ export default function Add_Nanny({ navigation }) {
         }
         <View>
           <Text style={styles.TextInput4}>
-            uploade ID Proof
+           Licence
            </Text>
         </View>
-      </View>
-
-
-
-      <Loader loading={isloading} />
-
-      <View style={styles.inputView1}>
-        <TextInput
-          style={styles.TextInput2}
-          placeholder="Name"
-          placeholderTextColor="#929292"
-          onChangeText={(name) => setname(name)}
-        />
-      </View>
-      <View style={styles.inputView1}>
-        <TextInput
-          style={styles.TextInput2}
-          placeholder="Mobile Number"
-          keyboardType="numeric"
-          maxLength={10}
-          placeholderTextColor="#929292"
-          onChangeText={(contact) => setcontact(contact)}
-        />
-      </View>
-
-      <View style={styles.inputView1}>
-        <TextInput
-          style={styles.TextInput2}
-          placeholder="Address"
-          placeholderTextColor="#929292"
-          onChangeText={(ADR) => setADR(ADR)}
-        />
-      </View>
-      <View style={styles.inputView1}>
-        <TextInput
-          style={styles.TextInput2}
-          placeholder="Password"
-          placeholderTextColor="#929292"
-          secureTextEntry={true}
-          onChangeText={(password) => setpassword(password)}
-        />
-      </View>
+        </View>
       <Text style={styles.error}>{emptyFields}</Text>
       <Text style={styles.error}>{emailError}</Text>
       <Text style={styles.error}>{contactError}</Text>
