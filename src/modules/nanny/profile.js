@@ -272,7 +272,7 @@ const Profile = ({ navigation }) => {
         <Loader loading={isloading} />
 
         <TouchableOpacity style={styles.edit}
-          onPress={() => navigation.navigate('Update profile', {
+          onPress={() => navigation.navigate('Updateprof', {
             con: data.contact,
             add: data.address,
           })
