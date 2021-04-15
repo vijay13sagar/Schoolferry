@@ -53,7 +53,6 @@ export default function Add_Driver({ navigation }) {
     }).then(image => {
       console.log(image);
       setImg1(image.path)
-      setModalVisible1(false)
     });
   }
   const Camera1 = () => {
@@ -64,7 +63,6 @@ export default function Add_Driver({ navigation }) {
     }).then(image => {
       console.log(image);
       setImg1(image.path)
-      setModalVisible1(false)
     });
   }
   
@@ -99,7 +97,6 @@ export default function Add_Driver({ navigation }) {
     }).then(image => {
       console.log(image);
       setImg(image.path)
-      setModalVisible(false)
     });
   }
   const Camera = () => {
@@ -110,7 +107,6 @@ export default function Add_Driver({ navigation }) {
     }).then(image => {
       console.log(image);
       setImg(image.path)
-      setModalVisible(false)
     });
   }
   const upload1 = async (id) => {
@@ -122,7 +118,7 @@ export default function Add_Driver({ navigation }) {
       .putFile(s)
       .then((snapshot) => {
         console.log(`${imageName} has been successfully uploaded.`);
-        //Alert.alert('Image Uploaded Successfully')
+        Alert.alert('Image Uploaded Successfully')
       })
       .catch((e) => {
         console.log('uploading image error => ', e);
@@ -140,7 +136,7 @@ export default function Add_Driver({ navigation }) {
       .putFile(s)
       .then((snapshot) => {
         console.log(`${imageName} has been successfully uploaded.`);
-        //Alert.alert('Image Uploaded Successfully')
+        Alert.alert('Image Uploaded Successfully')
       })
       .catch((e) => {
         console.log('uploading image error => ', e);
@@ -266,11 +262,11 @@ export default function Add_Driver({ navigation }) {
                     onPress={Camera}>
                     <Text
                       style={{
-                        color: 'black',
+                        color: '#1E90FF',
                         fontSize: 19,
                       }}>
                       Open Camera <Ionicons name="camera"
-                        color="#FF5C00" size={25}
+                        color="#1E90FF" size={25}
                         style={styles.icon}
                       />
                     </Text>
@@ -280,11 +276,11 @@ export default function Add_Driver({ navigation }) {
                     onPress={gallery}>
                     <Text
                       style={{
-                        color: 'black',
+                        color: '#1E90FF',
                         fontSize: 19,
                       }}>
                       Choose From Gallery <Ionicons name="folder"
-                        color="#FF5C00" size={25}
+                        color="#1E90FF" size={25}
                         style={styles.icon}
                       />
                     </Text>
@@ -389,11 +385,11 @@ export default function Add_Driver({ navigation }) {
                     onPress={Camera1}>
                     <Text
                       style={{
-                        color: 'black',
+                        color: '#1E90FF',
                         fontSize: 19,
                       }}>
                       Open Camera <Ionicons name="camera"
-                        color="#FF5C00" size={25}
+                        color="#1E90FF" size={25}
                         style={styles.icon}
                       />
                     </Text>
@@ -403,11 +399,11 @@ export default function Add_Driver({ navigation }) {
                     onPress={gallery1}>
                     <Text
                       style={{
-                        color: 'black',
+                        color: '#1E90FF',
                         fontSize: 19,
                       }}>
                       Choose From Gallery <Ionicons name="folder"
-                        color="#FF5C00" size={25}
+                        color="#1E90FF" size={25}
                         style={styles.icon}
                       />
                     </Text>

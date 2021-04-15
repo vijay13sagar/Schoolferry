@@ -119,7 +119,7 @@ export default function Add_Nanny({ navigation }) {
       .putFile(s)
       .then((snapshot) => {
         console.log(`${imageName} has been successfully uploaded.`);
-        //Alert.alert('Image Uploaded Successfully')
+        Alert.alert('Image Uploaded Successfully')
       })
       .catch((e) => {
         console.log('uploading image error => ', e);
@@ -137,7 +137,7 @@ export default function Add_Nanny({ navigation }) {
       .putFile(s)
       .then((snapshot) => {
         console.log(`${imageName} has been successfully uploaded.`);
-        //Alert.alert('Image Uploaded Successfully')
+        Alert.alert('Image Uploaded Successfully')
       })
       .catch((e) => {
         console.log('uploading image error => ', e);
@@ -265,11 +265,11 @@ export default function Add_Nanny({ navigation }) {
                     onPress={Camera}>
                     <Text
                       style={{
-                        color: 'black',
+                        color: '#1E90FF',
                         fontSize: 19,
                       }}>
                       Open Camera <Ionicons name="camera"
-                        color="#FF5C00" size={25}
+                        color="#1E90FF" size={25}
                         style={styles.icon}
                       />
                     </Text>
@@ -279,11 +279,11 @@ export default function Add_Nanny({ navigation }) {
                     onPress={gallery}>
                     <Text
                       style={{
-                        color: 'black',
+                        color: '#1E90FF',
                         fontSize: 19,
                       }}>
                       Choose From Gallery <Ionicons name="folder"
-                        color="#FF5C00" size={25}
+                        color="#1E90FF" size={25}
                         style={styles.icon}
                       />
                     </Text>
@@ -368,11 +368,11 @@ export default function Add_Nanny({ navigation }) {
                     onPress={Camera1}>
                     <Text
                       style={{
-                        color: 'black',
+                        color: '#1E90FF',
                         fontSize: 19,
                       }}>
                       Open Camera <Ionicons name="camera"
-                        color="#FF5C00" size={25}
+                        color="#1E90FF" size={25}
                         style={styles.icon}
                       />
                     </Text>
@@ -382,11 +382,11 @@ export default function Add_Nanny({ navigation }) {
                     onPress={gallery1}>
                     <Text
                       style={{
-                        color: 'black',
+                        color: '#1E90FF',
                         fontSize: 19,
                       }}>
                       Choose From Gallery <Ionicons name="folder"
-                        color="#FF5C00" size={25}
+                        color="#1E90FF" size={25}
                         style={styles.icon}
                       />
                     </Text>
