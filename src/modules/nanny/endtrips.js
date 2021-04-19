@@ -1,18 +1,12 @@
 import * as React from 'react';
-import { Text, View, StatusBar, TouchableOpacity,FlatList, StyleSheet, Image } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { Text, View, StatusBar, TouchableOpacity,FlatList,  Image } from 'react-native';
 import styles from '../../components/style';
 
 export default function trip_Details({ route, navigation }) {
-  console.log("this.props", route.params.item);
   return (
     <View style={styles.container} >
       <StatusBar
-        barStyle="light-content"
-        // dark-content, light-content and default
-        hidden={false}
-        //To hide statusBar
-        backgroundColor='#FF5C00'
+        barStyle="light-content" hidden={false} backgroundColor="#FF5C00" translucent={true}
       />
         <Text style={styles.headertext}>Location:</Text>
         <Text style={styles.details}>{route.params.item.location}</Text>

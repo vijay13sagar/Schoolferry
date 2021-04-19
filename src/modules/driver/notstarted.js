@@ -1,19 +1,12 @@
 import * as React from 'react';
-import { Text, View,StatusBar, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { Text, View,StatusBar, TouchableOpacity} from 'react-native';
 import styles from '../../components/style';
 
-const oldmap = ({navigation}) =>  {
+const Nomap = ({navigation}) =>  {
     return (
       <View style={styles.container} >
         <StatusBar
-        barStyle="light-content"
-        // dark-content, light-content and default
-        hidden={false}
-        //To hide statusBar
-        backgroundColor="#FF5C00"
-        //Background color of statusBar only works for Android
-        translucent={false}
-      //allowing light, but not detailed shapes
+        barStyle="light-content" hidden={false} backgroundColor="#FF5C00" translucent={true}
       />
           <View style={{flex:1,justifyContent:'center',alignContent:'center'}}>
             
@@ -27,4 +20,4 @@ const oldmap = ({navigation}) =>  {
     );
   }
 
-export default oldmap;
+export default Nomap;

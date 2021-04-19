@@ -7,11 +7,10 @@ import {
   Image,
   TouchableOpacity,
   Alert,
-  Modal, ImageBackground, CameraRoll, ScrollView,
+  Modal, ScrollView,
 
 } from "react-native";
 import Ngrok from '../../constants/ngrok';
-import Loader from '../../components/Loader';
 import axios from 'axios';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from '../../components/styles_admin';
@@ -45,14 +44,16 @@ export default function Add_Driver({ navigation }) {
   const [modalVisible1, setModalVisible1] = useState(false);
   const gallery1 = () => {
     ImagePicker.openPicker({
-      // width: 350,
-      // height: 175,
-      compressImageMaxHeight: 350,
+      compressImageMaxWidth:350,
+      //compressImageMaxHeight: 350,
       compressImageMaxHeight: 175,
       cropping: true
-    }).then(image => {
-      console.log(image);
-      setImg1(image.path)
+    })
+    .then( async image => {
+     
+      await setImg1(image.path);
+      upload2();
+      
     });
   }
   const Camera1 = () => {
@@ -60,15 +61,16 @@ export default function Add_Driver({ navigation }) {
       compressImageMaxHeight: 350,
       compressImageMaxHeight: 175,
       cropping: true,
-    }).then(image => {
-      console.log(image);
-      setImg1(image.path)
+    }).then(async image => {
+      
+      await setImg1(image.path)
+      upload2();
     });
   }
   
   const backpress1 = () => {
     setPic1(false)
-   setModalVisible1(!modalVisible1)
+   setModalVisible1(false)
   }
   const pick1 = () => {
     setModalVisible1(true);
@@ -89,14 +91,15 @@ export default function Add_Driver({ navigation }) {
 
   const gallery = () => {
     ImagePicker.openPicker({
-      // width: 350,
-      // height: 175,
+     
       compressImageMaxHeight: 350,
       compressImageMaxHeight: 175,
       cropping: true
-    }).then(image => {
-      console.log(image);
-      setImg(image.path)
+    }).then(async image => {
+      
+      await setImg(image.path)
+      upload1();
+      
     });
   }
   const Camera = () => {
@@ -104,51 +107,60 @@ export default function Add_Driver({ navigation }) {
       compressImageMaxHeight: 350,
       compressImageMaxHeight: 175,
       cropping: true,
-    }).then(image => {
-      console.log(image);
-      setImg(image.path)
+    }).then(async image => {
+     
+      await setImg(image.path)
+      upload1();
     });
   }
-  const upload1 = async (id) => {
-    console.log("img",img);
-    let imageName = `${id}/profile`;
+  const upload1 = async () => {
+    let imageName  =`Driver/profile/${uuidv4()}`;
+    //let imageName = `${id}/profile`;
     let s=decodeURI(img)
     storage()
       .ref(imageName)
       .putFile(s)
-      .then((snapshot) => {
-        console.log(`${imageName} has been successfully uploaded.`);
-        Alert.alert('Image Uploaded Successfully')
+      .then(async (snapshot) => {
+       
+        Alert.alert('Image Uploaded Successfully');
+        let imageRef=storage().ref(imageName)
+       
+        const url1 =await imageRef.getDownloadURL().catch((error) => { throw error });
+        console.log("url",url1);
       })
       .catch((e) => {
-        console.log('uploading image error => ', e);
+        
         Alert.alert('Uploading Failed');
-        //setImg('https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg');
+        
     }
       );
   }
-  const upload2 = async (id) => {
-    console.log("img",img1);
-    let imageName = `${id}/license`;
+  const upload2 = () => {
+    let imageName  =`Driver/id/${uuidv4()}`;
+    console.log("name",imageName);
+    //let imageName = `${id}/license`;
     let s=decodeURI(img1)
     storage()
       .ref(imageName)
       .putFile(s)
-      .then((snapshot) => {
-        console.log(`${imageName} has been successfully uploaded.`);
+      .then(async (snapshot) => {
+       console.log("snapshot",snapshot);
         Alert.alert('Image Uploaded Successfully')
-      })
+        let imageRef=storage().ref(imageName)
+        const url2 =await imageRef.getDownloadURL().catch((error) => { throw error });
+  console.log("url",url2);
+        })
       .catch((e) => {
-        console.log('uploading image error => ', e);
+        
         Alert.alert('Uploading Failed');
-        //setImg('https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg');
+       
     }
       );
   }
   
   const backpress = () => {
     setPic(false)
-     setModalVisible(!modalVisible)
+     setModalVisible(false)
   }
   const pick = () => {
     setModalVisible(true);
@@ -177,10 +189,10 @@ export default function Add_Driver({ navigation }) {
   }
 
   function pressHandler() {
-    console.log("validation", validateFunction())
+   
     if (validateFunction()) {
       
-      console.log("apistarts")
+      
 
       try {
         setLoading(true);
@@ -194,12 +206,11 @@ export default function Add_Driver({ navigation }) {
           },
           data: {
             name: name,
-            //email: email,
             contact: contact,
             address: ADR,
             experience: EXP,
-            photourl: "NULL",
-            idproofurl: "NULL",
+            photourl: url1,
+            idproofurl: url2,
             password: password
 
           }
@@ -207,22 +218,17 @@ export default function Add_Driver({ navigation }) {
           .then(async function (response) {
             setLoading(false);
             if (response.status == 200) {
-              console.log("ID",response.data);
-              await upload1(response.data);
-              await upload2(response.data);
               Alert.alert('Registration Successful', '', [{ text: 'Proceed', onPress: () => navigation.navigate('Employee',) }])
             }
 
-            console.log("response", response.status);
+           
           })
           .catch(function (error) {
             setLoading(false);
-            console.log(error.response.status) // 401
-            console.log(error.response.data.error) //Please Authenticate or whatever returned from server
+            
             if (error.response.status == 401) {
               setLoading(false);
-              //redirect to login
-              // Alert.alert('Phone Number Alredy Exist!')
+             
               setToast(true)
             }
 
@@ -232,7 +238,7 @@ export default function Add_Driver({ navigation }) {
       catch (error) {
 
         setLoading(false);
-        console.log("errordetails", error);
+       
       }
     }
     setToast(false)
@@ -262,11 +268,11 @@ export default function Add_Driver({ navigation }) {
                     onPress={Camera}>
                     <Text
                       style={{
-                        color: '#1E90FF',
+                        color: 'black',
                         fontSize: 19,
                       }}>
                       Open Camera <Ionicons name="camera"
-                        color="#1E90FF" size={25}
+                        color="#FF5C00" size={25}
                         style={styles.icon}
                       />
                     </Text>
@@ -276,11 +282,11 @@ export default function Add_Driver({ navigation }) {
                     onPress={gallery}>
                     <Text
                       style={{
-                        color: '#1E90FF',
+                        color: 'black',
                         fontSize: 19,
                       }}>
                       Choose From Gallery <Ionicons name="folder"
-                        color="#1E90FF" size={25}
+                        color="#FF5C00" size={25}
                         style={styles.icon}
                       />
                     </Text>
@@ -293,10 +299,6 @@ export default function Add_Driver({ navigation }) {
             <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
               <TouchableOpacity onPress={pick} >
                 <Image style={styles.licence1} source={{ uri: img }} />
-                {/* <Ionicons name="camera"
-      color="white" size={20}
-      style={{backgroundColor:'#FF5C00',marginTop:90,borderRadius:25,justifyContent:'flex-end',alignSelf:'flex-end'}}
-      /> */}
               </TouchableOpacity>
             </View>
 
@@ -385,11 +387,11 @@ export default function Add_Driver({ navigation }) {
                     onPress={Camera1}>
                     <Text
                       style={{
-                        color: '#1E90FF',
+                        color: 'black',
                         fontSize: 19,
                       }}>
                       Open Camera <Ionicons name="camera"
-                        color="#1E90FF" size={25}
+                        color="#FF5C00" size={25}
                         style={styles.icon}
                       />
                     </Text>
@@ -399,11 +401,11 @@ export default function Add_Driver({ navigation }) {
                     onPress={gallery1}>
                     <Text
                       style={{
-                        color: '#1E90FF',
+                        color: 'black',
                         fontSize: 19,
                       }}>
                       Choose From Gallery <Ionicons name="folder"
-                        color="#1E90FF" size={25}
+                        color="#FF5C00" size={25}
                         style={styles.icon}
                       />
                     </Text>
@@ -417,10 +419,7 @@ export default function Add_Driver({ navigation }) {
             <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
               <TouchableOpacity onPress={pick1} >
                 <Image style={styles.licence} source={{ uri: img1 }} />
-                {/* <Ionicons name="camera"
-      color="white" size={20}
-      style={{backgroundColor:'#FF5C00',marginTop:90,borderRadius:25,justifyContent:'flex-end',alignSelf:'flex-end'}}
-      /> */}
+                
               </TouchableOpacity>
             </View>
 
@@ -444,4 +443,3 @@ export default function Add_Driver({ navigation }) {
     </View>
   );
 }
-
