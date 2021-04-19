@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, Modal ,TouchableOpacity,StyleSheet, FlatList, Text, View } from 'react-native';
-import { Container, Header, Content, Card, CardItem, Body } from 'native-base';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ActivityIndicator, FlatList, Text, View } from 'react-native';
+import {  Card, CardItem, Body } from 'native-base';
 import Ngrok from '../../constants/ngrok';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-
 import styles from '../../components/styles_admin'
 
 export default class freeDrivertrip_list extends Component  {
@@ -14,8 +11,6 @@ export default class freeDrivertrip_list extends Component  {
     this.state = {
       data: [],
       isLoading: true,
-      //modalVisible:false,
-      //selectedData:'',
     };
   }
  
@@ -39,7 +34,7 @@ export default class freeDrivertrip_list extends Component  {
     const { data, isLoading } = this.state;
     const { modalVisible } = this.state;
     const tripid1 = this.props.route.params.s;
-  console.log("sfsdffasdas", tripid1);
+ 
     
     return (
       <View style={styles.container1}>

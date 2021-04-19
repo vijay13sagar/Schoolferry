@@ -17,12 +17,11 @@ export default function user_Details({ route, navigation }) {
 
 
   const [childlists, getData] = useState()
-  console.log("this.props", route.params.item);
+
 
 
   useEffect(() => {
     let take1 = route.params.item.id
-    console.log("token", take1);
     fetch(`${Ngrok.url}/api/parent/detail/childlist/${take1}`, {
       "method": "GET",
       "headers": {
@@ -32,8 +31,7 @@ export default function user_Details({ route, navigation }) {
     })
       .then(response => response.json())
       .then(responseJson => {
-        console.log("cl", typeof (responseJson));
-        console.log("cl", responseJson);
+       
         getData(responseJson)
       })
       .catch(err => {

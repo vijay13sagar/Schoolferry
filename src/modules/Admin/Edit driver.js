@@ -22,9 +22,9 @@ export default function Edit_Driver({ route,navigation }) {
   const [message, SetMessage] = useState()
   const [isloading, setLoading] = useState(false);
   let c = route.params.tripid1;
-  console.log("sfsdffasdas", c);
+ 
   let driverid = route.params.item.id;
-  console.log("apistarts", driverid)
+
 
   const pressHandler = () => {
 
@@ -44,17 +44,17 @@ export default function Edit_Driver({ route,navigation }) {
       .then(response => response.json())
       .then(responseJson => {
         setLoading(false);
-        console.log(responseJson);
+      
         if (responseJson.message == "driver changed") {
           Alert.alert('Changed Successfully','', [{text: 'Proceed', onPress:() => navigation.navigate('Home_page')}])
         } else {
           setToast(true)
         }
-        //alert(JSON.stringify(response))
+    
       })
       .catch(err => {
         setLoading(false);
-        console.log(err);
+       
         setToast(true)
       });
   

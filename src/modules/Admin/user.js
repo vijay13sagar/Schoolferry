@@ -18,7 +18,7 @@ export default class userList extends Component  {
       .then((response) => response.json())
       .then((json) => {
         this.setState({ data: json });
-        console.log("json",json)
+       
       })
       .catch((error) => console.error(error))
       .finally(() => {

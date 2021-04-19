@@ -14,8 +14,6 @@ export default class freeNannytrip_list extends Component  {
     this.state = {
       data: [],
       isLoading: true,
-      //modalVisible:false,
-      //selectedData:'',
     };
   }
  
@@ -33,20 +31,13 @@ export default class freeNannytrip_list extends Component  {
         this.setState({ isLoading: false });
       });
   }
-  // setModalVisible = (visible) => {
-  //   this.setState({ modalVisible: visible });
-  // }
-  // _selectedItem = (data) => {
-  //   this.setState({selectedData: data});
-  //   this.setModalVisible(true);
-  // }
+  
 
   render() {
     const { data, isLoading } = this.state;
     const { modalVisible } = this.state;
     const tripid1 = this.props.route.params.s;
-  console.log("sfsdffasdas", tripid1);
-    
+
     return (
       <View style={styles.container1}>
         {isLoading ? <ActivityIndicator/> : (

@@ -7,7 +7,7 @@ import {
   Image,
   TouchableOpacity,
   Alert,
-  Modal, ImageBackground, CameraRoll, ScrollView,
+  Modal,ScrollView,
 
 } from "react-native";
 import Ngrok from '../../constants/ngrok';
@@ -18,21 +18,18 @@ import styles from '../../components/styles_admin';
 import ImagePicker from 'react-native-image-crop-picker';
 import ToastComponent from '../../components/Toaster';
 import * as ToastMessage from '../../constants/ToastMessages';
+import storage from '@react-native-firebase/storage';
 
 export default function Add_Nanny({ navigation }) {
   const [isloading, setLoading] = useState(false);
   const [img, setImg] = useState('https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg');
   const [pic, setPic] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [email, setEmail] = useState("");
   const [name, setname] = useState("");
   const [password, setpassword] = useState("");
   const [contact, setcontact] = useState("");
   const [ADR, setADR] = useState("");
-
-  const [EXP, setEXP] = useState("");
-  const [{ emailError }, setEmailError] = useState("");
-  const [{ contactError }, setcontactError] = useState("");
+ 
   const [{ emptyFields }, setemptyFeilds] = useState("");
   const [showtoast, setToast] = useState(false)
   const [message, SetMessage] = useState()
@@ -41,14 +38,14 @@ export default function Add_Nanny({ navigation }) {
   const [modalVisible1, setModalVisible1] = useState(false);
   const gallery1 = () => {
     ImagePicker.openPicker({
-      // width: 350,
-      // height: 175,
+     
       compressImageMaxHeight: 350,
       compressImageMaxHeight: 175,
       cropping: true
     }).then(image => {
-      console.log(image);
-      setImg1(image.path)
+     
+      setImg1(image.path);
+      
     });
   }
   const Camera1 = () => {
@@ -57,8 +54,9 @@ export default function Add_Nanny({ navigation }) {
       compressImageMaxHeight: 175,
       cropping: true,
     }).then(image => {
-      console.log(image);
+      
       setImg1(image.path)
+     
     });
   }
   const backpress1 = () => {
@@ -88,14 +86,14 @@ export default function Add_Nanny({ navigation }) {
   };
   const gallery = () => {
     ImagePicker.openPicker({
-      // width: 350,
-      // height: 175,
+     
       compressImageMaxHeight: 350,
       compressImageMaxHeight: 175,
       cropping: true
     }).then(image => {
-      console.log(image);
+      
       setImg(image.path)
+      
     });
   }
   const Camera = () => {
@@ -104,10 +102,48 @@ export default function Add_Nanny({ navigation }) {
       compressImageMaxHeight: 175,
       cropping: true,
     }).then(image => {
-      console.log(image);
+     
       setImg(image.path)
+      
     });
   }
+  const upload1 = async (id) => {
+    
+    let imageName = `${id}/profile`;
+    let s=decodeURI(img)
+    storage()
+      .ref(imageName)
+      .putFile(s)
+      .then((snapshot) => {
+       
+        Alert.alert('Image Uploaded Successfully')
+      })
+      .catch((e) => {
+        
+        Alert.alert('Uploading Failed');
+        
+    }
+      );
+  }
+  const upload2 = async (id) => {
+  
+    let imageName = `${id}/license`;
+    let s=decodeURI(img1)
+    storage()
+      .ref(imageName)
+      .putFile(s)
+      .then((snapshot) => {
+       
+        Alert.alert('Image Uploaded Successfully')
+      })
+      .catch((e) => {
+        
+        Alert.alert('Uploading Failed');
+       
+    }
+      );
+  }
+  
   const backpress = () => {
     setPic(false)
      setModalVisible(!modalVisible)
@@ -121,16 +157,12 @@ export default function Add_Nanny({ navigation }) {
   const validateFunction = () => {
 
     if (!name || !contact || !ADR || !password) {
-      setemptyFeilds({ emptyFields: "Please Enter All The Details" })
-      setcontactError({ contactError: null })
-      setEmailError({ emailError: null })
+      setemptyFeilds({ emptyFields:"Please Enter All The Details" })
       return false
     }
 
     else if (!validatecontact(contact)) {
-      setcontactError({ contactError: "Enter Valid Phone Number" })
-      setEmailError({ emailError: null })
-      setemptyFeilds({ emptyFields: null })
+      setemptyFeilds({ emptyFields: "Enter Valid Phone Number" })
       return false
     }
 
@@ -139,12 +171,9 @@ export default function Add_Nanny({ navigation }) {
   }
 
   function pressHandler() {
-    console.log("validation", validateFunction())
+   
     if (validateFunction()) {
-
-      console.log("apistarts")
-
-      try {
+ try {
         setLoading(true);
 
         axios({
@@ -157,10 +186,8 @@ export default function Add_Nanny({ navigation }) {
           },
           data: {
             name: name,
-            email: email,
             contact: contact,
             address: ADR,
-            experience: EXP,
             photourl: "NULL",
             idproofurl: "NULL",
             password: password
@@ -168,35 +195,31 @@ export default function Add_Nanny({ navigation }) {
 
           }
         })
-          .then(function (response) {
+          .then(async function (response) {
             setLoading(false);
             if (response.status == 200) {
+              await upload1(response.data);
+              await upload2(response.data);
               Alert.alert('Registration Successful', '', [{ text: 'Proceed', onPress: () => navigation.navigate('Employee',) }])
             }
-
-            console.log("response", response.status);
           })
           .catch(function (error) {
             setLoading(false);
-            console.log(error.response.status) // 401
-            console.log(error.response.data.error) //Please Authenticate or whatever returned from server
+           
             if (error.response.status == 401) {
-              //redirect to login
-              // Alert.alert('Phone Number Alredy Exist!')
+              
               setToast(true)
               setLoading(false);
             }
-
           })
       }
       catch (error) {
         setLoading(false);
-        console.log("errordetails", error);
+       
       }
     }
     setToast(false)
   }
-
 
   return (
     <View style={styles.container3}>
@@ -222,11 +245,11 @@ export default function Add_Nanny({ navigation }) {
                     onPress={Camera}>
                     <Text
                       style={{
-                        color: '#1E90FF',
+                        color: 'black',
                         fontSize: 19,
                       }}>
                       Open Camera <Ionicons name="camera"
-                        color="#1E90FF" size={25}
+                        color="#FF5C00" size={25}
                         style={styles.icon}
                       />
                     </Text>
@@ -236,11 +259,11 @@ export default function Add_Nanny({ navigation }) {
                     onPress={gallery}>
                     <Text
                       style={{
-                        color: '#1E90FF',
+                        color: 'black',
                         fontSize: 19,
                       }}>
                       Choose From Gallery <Ionicons name="folder"
-                        color="#1E90FF" size={25}
+                        color="#FF5C00" size={25}
                         style={styles.icon}
                       />
                     </Text>
@@ -253,10 +276,7 @@ export default function Add_Nanny({ navigation }) {
             <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
               <TouchableOpacity onPress={pick} >
                 <Image style={styles.licence1} source={{ uri: img }} />
-                {/* <Ionicons name="camera"
-      color="white" size={20}
-      style={{backgroundColor:'#FF5C00',marginTop:90,borderRadius:25,justifyContent:'flex-end',alignSelf:'flex-end'}}
-      /> */}
+                
               </TouchableOpacity>
             </View>
 
@@ -285,6 +305,7 @@ export default function Add_Nanny({ navigation }) {
           style={styles.TextInput2}
           placeholder="Mobile Number"
           keyboardType="numeric"
+          maxLength={10}
           placeholderTextColor="#929292"
           onChangeText={(contact) => setcontact(contact)}
         />
@@ -325,11 +346,11 @@ export default function Add_Nanny({ navigation }) {
                     onPress={Camera1}>
                     <Text
                       style={{
-                        color: '#1E90FF',
+                        color: 'black',
                         fontSize: 19,
                       }}>
                       Open Camera <Ionicons name="camera"
-                        color="#1E90FF" size={25}
+                        color="#FF5C00" size={25}
                         style={styles.icon}
                       />
                     </Text>
@@ -339,11 +360,11 @@ export default function Add_Nanny({ navigation }) {
                     onPress={gallery1}>
                     <Text
                       style={{
-                        color: '#1E90FF',
+                        color: 'black',
                         fontSize: 19,
                       }}>
                       Choose From Gallery <Ionicons name="folder"
-                        color="#1E90FF" size={25}
+                        color="#FF5C00" size={25}
                         style={styles.icon}
                       />
                     </Text>
@@ -357,10 +378,7 @@ export default function Add_Nanny({ navigation }) {
             <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
               <TouchableOpacity onPress={pick1} >
                 <Image style={styles.licence} source={{ uri: img1 }} />
-                {/* <Ionicons name="camera"
-      color="white" size={20}
-      style={{backgroundColor:'#FF5C00',marginTop:90,borderRadius:25,justifyContent:'flex-end',alignSelf:'flex-end'}}
-      /> */}
+              
               </TouchableOpacity>
             </View>
 
@@ -373,8 +391,6 @@ export default function Add_Nanny({ navigation }) {
         </View>
         </View>
       <Text style={styles.error}>{emptyFields}</Text>
-      <Text style={styles.error}>{emailError}</Text>
-      <Text style={styles.error}>{contactError}</Text>
       <TouchableOpacity style={styles.loginBtn} onPress={pressHandler} >
         <Text style={styles.TextInput}>Confirm</Text>
 

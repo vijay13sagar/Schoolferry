@@ -1,18 +1,13 @@
 import React, { useState } from "react";
 import {
-  StyleSheet,
   Text,
   View,
-  Image,
   StatusBar,
   Alert,
-  TextInput,
   TouchableOpacity,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { event } from "react-native-reanimated";
 import Ngrok from '../../constants/ngrok';
-import axios from 'axios';
 import Loader from '../../components/Loader';
 import styles from '../../components/styles_admin'
 import ToastComponent from '../../components/Toaster';
@@ -25,9 +20,9 @@ export default function Edit_Nanny({ route,navigation }) {
   const [message, SetMessage] = useState()
   const [isloading, setLoading] = useState(false);
   let c = route.params.tripid1;
-  console.log("sfsdffasdas", c);
+  
   let nannyid = route.params.item.id;
-  console.log("apistarts", nannyid)
+ 
 
   const pressHandler = () => {
     setLoading(true);
@@ -46,19 +41,19 @@ export default function Edit_Nanny({ route,navigation }) {
       .then(response => response.json())
       .then(responseJson => {
         setLoading(false);
-        console.log(responseJson);
+
         if (responseJson.message == "nanny changed") {
           Alert.alert('Changed Successfully','', [{text: 'Proceed', onPress:() => navigation.navigate('Home_page')}])
         } else {
-          //Alert.alert('Try again!')
+          
           setToast(true)
         }
-        //alert(JSON.stringify(response))
+        
       })
       .catch(err => {
         setToast(true)
         setLoading(false);
-        console.log(err);
+
       });
   
       setToast(false)

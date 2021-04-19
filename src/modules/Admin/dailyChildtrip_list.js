@@ -38,7 +38,7 @@ export default class dailyChildtrip_list extends Component  {
     const { data, isLoading } = this.state;
     const { modalVisible } = this.state;
     const tripid = this.props.route.params.s;
-    console.log("sfsfs",tripid);
+   
 
     
     return (

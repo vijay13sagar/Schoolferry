@@ -16,14 +16,12 @@ const Homescreen = ({ navigation }) => {
       />
       <ScrollView>
       <View style={{alignSelf:'center',alignItems:'center'}}>
-        {/* <Text style={styles.tripsTitleText}>Management</Text> */}
         <Image  style={styles.logo} source={require('../../assets/analytics.png')} />
       </View>
       <View style={{marginVertical:20,}}>
           <Card style={styles.card1}>
             <CardItem button onPress={() => navigation.navigate('RevStats')}>
               <Body style={{ flexDirection: 'row' }}>
-              {/* ./src/assets/UPI1.png */}
               <Image  style={styles.payicon} source={require('../../assets/RevenueIcon.png')} />
                 <Text style={{ fontSize: 17, fontWeight: '700',marginLeft:100 }}>
                 Revenue Stats :

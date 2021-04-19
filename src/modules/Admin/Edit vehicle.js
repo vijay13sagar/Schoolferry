@@ -24,9 +24,9 @@ export default function Edit_Vehicle({ route ,navigation}) {
   const [message, SetMessage] = useState()
   const [isloading, setLoading] = useState(false);
   let c = route.params.tripid1;
-  console.log("sfsdffasdas", c);
+  
   let vehicleid = route.params.item.id;
-  console.log("apistarts",vehicleid)
+
 
   const pressHandler = () => {
     setLoading(true);
@@ -45,19 +45,19 @@ export default function Edit_Vehicle({ route ,navigation}) {
       .then(response => response.json())
       .then(responseJson => {
         setLoading(false);
-        console.log(responseJson);
+      
         if (responseJson.message == "vehicle changed") {
           Alert.alert('Changed Successfully','', [{text: 'Proceed', onPress:() => navigation.navigate('Home_page')}])
         } else {
-          //Alert.alert('Try again!')
+
           setToast(true)
         }
-        //alert(JSON.stringify(response))
+      
       })
       .catch(err => {
         setLoading(false);
         setToast(true)
-        console.log(err);
+       
       });
   
       setToast(false)

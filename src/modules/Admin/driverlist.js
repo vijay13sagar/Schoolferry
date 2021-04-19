@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, FlatList, Text, View } from 'react-native';
+import { ActivityIndicator, FlatList, Text, Image
+  ,View } from 'react-native';
 import { Card, CardItem, Body } from 'native-base';
 
 import Ngrok from '../../constants/ngrok';
 import styles from '../../components/styles_admin'
 export default class driverList extends Component  {
+
   
   constructor(props) {
     super(props);
@@ -20,7 +22,7 @@ export default class driverList extends Component  {
       .then((response) => response.json())
       .then((json) => {
         this.setState({ data: json });
-        console.log("json",json)
+       
       })
       .catch((error) => console.error(error))
       .finally(() => {
@@ -30,6 +32,7 @@ export default class driverList extends Component  {
 
   render() {
     const { data, isLoading } = this.state;
+    const img = 'https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg';
    
 
     return (
@@ -48,6 +51,7 @@ export default class driverList extends Component  {
                      item.name
                    }
                 </Text>
+                {/* <Image style={styles.licence1} source={{ uri: img }} /> */}
               </Body>
             </CardItem>
             </Card>

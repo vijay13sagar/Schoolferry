@@ -99,12 +99,12 @@ export default function App({route,navigation}) {
                 },
               ]);
             }
-            //console.log("response", response);
+           
           })
           .catch(function (error) {
             setLoading(false);
-            console.log(error.response.status); // 401
-            console.log(error.response.data.message); //Please Authenticate or whatever returned from server
+            console.log(error.response.status);
+            console.log(error.response.data.message); 
             if (error.response.status == 401) {
             setToast(true)
             }

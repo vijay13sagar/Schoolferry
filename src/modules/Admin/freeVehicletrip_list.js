@@ -39,8 +39,6 @@ export default class freeVehicletrip_list extends Component  {
     const { data, isLoading } = this.state;
     const { modalVisible } = this.state;
     const tripid1 = this.props.route.params.s;
-  console.log("sfsdffasdas", tripid1);
-    
     return (
       <View style={styles.Container}>
         {isLoading ? <ActivityIndicator/> : (

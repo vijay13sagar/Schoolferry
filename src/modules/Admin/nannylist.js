@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { ActivityIndicator,TouchableOpacity,StyleSheet, FlatList, Text, View } from 'react-native';
-import { Container, Header, Content, Card, CardItem, Body } from 'native-base';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ActivityIndicator, FlatList, Text, View } from 'react-native';
+import {  Card, CardItem, Body } from 'native-base';
 import Ngrok from '../../constants/ngrok';
 import styles from '../../components/styles_admin'
 

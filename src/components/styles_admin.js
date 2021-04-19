@@ -20,10 +20,14 @@ export default StyleSheet.create({
         alignItems: "center",
       
       },
+      container4: {
+       
+        flex: 1,
+        backgroundColor: "#FCFDDB",
+        
+      
+      },
      
-        
-        
-        
         message1: {
         fontSize: 22,
         textAlign: 'center',
@@ -60,6 +64,8 @@ export default StyleSheet.create({
         alignSelf: "center",
         marginTop: 20,
       },
+     
+     
       pendingTrips1: {
         backgroundColor: "#fff",
         height: 80,
@@ -292,7 +298,18 @@ export default StyleSheet.create({
         alignSelf: 'flex-end',
         marginRight: 10,
         },
-
+        card2: {
+          
+          backgroundColor:'lightgrey',
+          width: "50%",
+          borderRadius: 10,
+          height: 38,
+          alignItems: "center",
+          justifyContent: "center",
+         
+          alignSelf: "center",
+          marginTop: 20,
+        },
       
 
     })
