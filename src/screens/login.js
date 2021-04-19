@@ -1,14 +1,11 @@
 import React, {useState} from 'react';
 import {
-  StyleSheet,
   StatusBar,
   Text,
   View,
   Image,
   TextInput,
-  Button,
   TouchableOpacity,
-  Alert,
 } from 'react-native';
 import Ngrok from '../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -16,24 +13,22 @@ import axios from 'axios';
 import Loader from '../components/Loader';
 import styles from '../components/style';
 import ToastComponent from '../components/Toaster';
-import* as ToastMessage from '../constants/ToastMessages';
+import * as ToastMessage from '../constants/ToastMessages';
 
 export default function Login({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [{emailError}, setEmailError] = useState('');
-  const [{passwordError}, setPasswordError] = useState('');
   const [isloading, setLoading] = useState(false);
-  const [showtoast,setToast] = useState(false)
-  const [message, SetMessage] = useState()
+  const [showtoast, setToast] = useState(false);
+  const [message, SetMessage] = useState();
 
   const pressHandler = () => {
     navigation.navigate('Sign up');
   };
   validateEmail = (email) => {
-    //var regex_mail = /^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)$/;
     var regex_phone = /^((\+91)?|91)?[789][0-9]{9}/;
-    //return regex_mail.test(email)
+
     if (regex_phone.test(email)) {
       return true;
     }
@@ -55,98 +50,68 @@ export default function Login({navigation}) {
     return true;
   };
   const gotootpscreen = () => {
-    console.log('number', email);
     navigation.navigate('OTPscreen', {item: email});
   };
   const handleSubmitpPress = async () => {
     let firebaseToken = await AsyncStorage.getItem('FBtoken');
-    console.log('FB token', firebaseToken);
     if (validateFunction()) {
-      /* const body = {
-         id: email,
-          password: password
-       }*/
-      //let response = await loginApi(body)/
       setLoading(true);
-      fetch(`${Ngrok.url}/api/login`, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+      axios
+        .post(`${Ngrok.url}/api/login`, {
           id: email,
           password: password,
           token: firebaseToken,
-        }),
-      })
-        .then((response) => response.json())
-        .then((responseJson) => {
-          // console.log('response:', responseJson);
-          //console.log("status", responseJson.status);
+        })
+        .then(function (response) {
           setLoading(false);
-
-          if (responseJson[1] == 'Parent') {
-            AsyncStorage.setItem('token', responseJson[0]);
+          if (response.data[1] == 'Parent') {
+            AsyncStorage.setItem('token', response.data[0]);
             navigation.replace('Parent Interface');
-          } else if (responseJson[1] == 'Driver') {
-            AsyncStorage.setItem('token', responseJson[0]);
+          } else if (response.data[1] == 'Driver') {
+            AsyncStorage.setItem('token', response.data[0]);
             navigation.replace('Driver Interface');
-          } else if (responseJson[1] == 'Admin') {
-            AsyncStorage.setItem('token', responseJson[0]);
+          } else if (response.data[1] == 'Admin') {
+            AsyncStorage.setItem('token', response.data[0]);
             navigation.replace('Admin Interface');
-          } else if (responseJson[1] == 'Nanny') {
-            AsyncStorage.setItem('token', responseJson[0]);
+          } else if (response.data[1] == 'Nanny') {
+            AsyncStorage.setItem('token', response.data[0]);
             navigation.replace('Nanny Interface');
           }
-
-          if (responseJson.status == 401) {
-            console.log('message:', responseJson.message);
-            if (responseJson.message == 'Token not provided') {
-              //Alert.alert('Not an exsisting user, please sign up first !');
-              setToast(true)
-              SetMessage(ToastMessage.message2)
-              
-            } else if (responseJson.message == 'OTP verification not done') {
-              //Alert.alert("OTP verification need to be done")
+        })
+        .catch(function (error) {
+          setLoading(false);
+          if (error.response.status == 401) {
+            if (error.response.data.message == 'Token not provided') {
+              setToast(true);
+              SetMessage(ToastMessage.message2);
+            } else if (
+              error.response.data.message == 'OTP verification not done'
+            ) {
               gotootpscreen();
             } else if (
-              responseJson.message == 'Invalid contact/password' ||
-              responseJson.message == 'Invalid contact/Password'
+              error.response.data.message == 'Invalid contact/password' ||
+              error.response.data.message == 'Invalid contact/Password'
             ) {
-              //Alert.alert('Incorrect contact/password');
-              //return <ToastMessage />;
-              setToast(true)
-              SetMessage(ToastMessage.message1)
+              setToast(true);
+              SetMessage(ToastMessage.message1);
             }
           }
-        })
-        .catch((error) => {
-          setLoading(false);
-          console.log('error', error.message); // 401
-          // if(error.responseJson.status == 401){
-          //   //redirect to login
-          //   Alert.alert('Phone Number Alredy Exist!')
-          // }
         });
-        setToast(false)
+      setToast(false);
     }
-    
   };
 
   return (
     <View style={styles.cont2}>
-      {showtoast? (<ToastComponent type = {ToastMessage.failure}  message = {message}/>): null}
+      {showtoast ? (
+        <ToastComponent type={ToastMessage.failure} message={message} />
+      ) : null}
       <Loader loading={isloading} />
       <StatusBar
         barStyle="light-content"
-        // dark-content, light-content and default
         hidden={false}
-        //To hide statusBar
-        backgroundColor="#FF5C00" //"#26A7FF"
-        //Background color of statusBar only works for Android
+        backgroundColor="#FF5C00"
         translucent={false}
-        //allowing light, but not detailed shapes
       />
       <Image
         style={{width: '80%', height: '25%', marginBottom: 20}}
@@ -162,7 +127,7 @@ export default function Login({navigation}) {
           onChangeText={(email) => setEmail(email)}
         />
       </View>
-     
+
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}

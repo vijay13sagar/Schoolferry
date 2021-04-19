@@ -5,7 +5,7 @@ export default StyleSheet.create({
     //checklist.js
     container: {
       flex: 1,
-      backgroundColor: '#FCFDDB',//"#B19CD1",//"#F9F2F2",
+      backgroundColor: '#FCFDDB',
     },
     sidehead: {
       fontWeight: 'bold',
@@ -347,17 +347,7 @@ export default StyleSheet.create({
     padding: 7,
   },
   //nanny interface
-  //changepwd.js
-  cont:{
-    flex:1,
-    justifyContent:'center',
-    backgroundColor:'#FCFDDB',//'#263165'
-    },
-  //childdetails.js
 
-//   textview: {
-//     margin: 20,
-//   },
   //childlist.js
   list:{
     flex:1,
@@ -892,5 +882,34 @@ licence: {
     marginTop: 5,
     //opacity: 0.5,
   },
-    })
+// parent trip details
+  tripDetailsCard:{
+    width: '95%',
+    alignSelf: 'center',
+    marginTop: 20
+  },
+  headingText:{
+    fontSize: 17,
+     fontWeight: '700'
+  },
+  tripdetailsSubHeading:{
+    fontSize: 15
+  },
+  subDetails:{
+    fontSize: 15,
+    marginLeft: 10,
+    fontWeight: '700',
+  },
+  tripdDetailsImage:{
+    height:130,
+    width:120,
+    borderRadius:10,
+    alignSelf:'center',
+  },
+  detailsBox:{
+    flex:1,
+    alignSelf:'center', 
+    marginLeft:20
+  }
+})
     

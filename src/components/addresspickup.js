@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import { View, StyleSheet} from 'react-native';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import API_KEY from '../../config';
 
@@ -10,7 +10,6 @@ const address_pickup = ({placeholderText, fetchAddress}) => {
     const name = data.structured_formatting.main_text;
     const address = data.description;
     const schooladdress = data.description;
-    //fetchAddress (lat, lng, address)
     fetchAddress(lat, lng, name, address, schooladdress);
   };
 

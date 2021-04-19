@@ -1,13 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {
-  StyleSheet,
-  StatusBar,
-  Text,
-  View,
-  Image,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
+import React, {useState} from 'react';
+import {Text, View, Image, TextInput, TouchableOpacity} from 'react-native';
 import Ngrok from '../../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
@@ -52,7 +44,6 @@ export default function addchild({route, navigation}) {
   };
 
   const handlePress = async () => {
-    console.log('distance', route.params.distance);
     let token = await AsyncStorage.getItem('token');
     if (validateFunction()) {
       setLoading(true);
@@ -77,11 +68,9 @@ export default function addchild({route, navigation}) {
           },
         })
           .then(function (response) {
-            console.log('status', response.status);
             setLoading(false);
 
             if (response.status == 200) {
-
               setCN('');
               setCA('');
               setPickerValue('');
@@ -116,8 +105,6 @@ export default function addchild({route, navigation}) {
   };
 
   const handleConfirm = (date) => {
-    console.log('time: ', moment(date).format('HH:mm'));
-
     if (timerValue == '1') {
       setST(moment(date).format('HH:mm'));
       setTimerValue(0);
@@ -127,12 +114,10 @@ export default function addchild({route, navigation}) {
       setTimerValue(0);
       setTextFlag2(true);
     }
-
     setVisible(false);
   };
 
   const handleDatePicked = (date) => {
-    console.log('A date has been picked: ', moment(date).format('DD-MM-yyyy'));
     setCA(moment(date).format('DD-MM-yyyy'));
     setDateFlag(true);
     setDatePickerVisible(false);

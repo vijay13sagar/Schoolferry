@@ -62,7 +62,6 @@ export default class Button extends PureComponent {
 const styles = StyleSheet.create({
   button: {  
     height: 42,
-    // minWidth: 250,
     width: '60%',
     borderRadius: 10,
     backgroundColor: '#1e90ff',

@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import {
   Text,
   View,
-  StyleSheet,
   FlatList,
   TouchableOpacity,
   ScrollView,
@@ -35,8 +34,6 @@ const showplanScreen = ({route, navigation}) => {
           );
           setPickerValue(res.data);
           setValue(res.data[0].childName);
-          // console.log('selectedvalue:', selectedValue)
-          console.log('subsciption refresh:', res.data[0].childName);
           setisLoading(false);
         } catch (error) {
           console.error(error);
@@ -44,8 +41,6 @@ const showplanScreen = ({route, navigation}) => {
       };
 
       fetchUser();
-
-      //return null;
     }, []),
   );
 
@@ -67,14 +62,11 @@ const showplanScreen = ({route, navigation}) => {
   const value1 =
     pickerValue.length && selectedValue
       ? pickerValue.filter((item) => {
-          //console.log('check value',pickerValue, selectedValue)
           return item.childName
             .toLowerCase()
             .includes(selectedValue.toLowerCase());
         })
       : [];
-
-  //console.log('status', value1[0].childId);
 
   const verifyHandler = () => {
     setModalVisible(false);
@@ -86,7 +78,6 @@ const showplanScreen = ({route, navigation}) => {
     navigation.navigate('Add Child', {
       distance: Boolean(value1.length) && value1[0].distance,
       schooladdress: Boolean(value1.length) && value1[0].address,
-      // homeaddress: Homeaddress,
     });
   };
 

@@ -1,22 +1,18 @@
 import React, {useState, useEffect} from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
+import {Text, View, FlatList, TouchableOpacity, Image} from 'react-native';
 import Ngrok from '../../constants/ngrok';
 import ToastComponent from '../../components/Toaster';
 import * as ToastMessage from '../../constants/ToastMessages';
 import styles from '../../components/style';
+import axios from 'axios';
+import Loader from '../../components/Loader';
 
 const Subscriptions = ({route, navigation}) => {
   const [data, setData] = useState('');
   const [childid, setChild] = useState(route.params.childID);
   const [showtoast, setToast] = useState(false);
   const [message, SetMessage] = useState();
+  const [isloading, setLoading] = useState(true);
 
   const skool = route.params.school;
   const Homeaddress = route.params.homeaddress;
@@ -25,32 +21,32 @@ const Subscriptions = ({route, navigation}) => {
   useEffect(() => {
     async function fetchData() {
       let token = await childid;
-      fetch(`${Ngrok.url}/api/package/${token}`, {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      })
-        .then((response) => response.json())
-        .then((responseJson) => {
-          // console.log(responseJson);
-          setData(responseJson);
-          setToast(true);
-          SetMessage(ToastMessage.message8);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-        setToast(false)
+      try {
+        const response = await axios
+          .get(`${Ngrok.url}/api/package/${token}`)
+          .then(function (response) {
+            setToast(true);
+            SetMessage(ToastMessage.message8);
+            setData(response.data);
+            setLoading(false);
+          });
+      } catch (error) {
+        setLoading(false);
+      }
     }
-
+    setToast(false);
     fetchData();
   }, []);
 
-  return (
+  return isloading ? (
     <View style={styles.container}>
-        {showtoast ? <ToastComponent type={ToastMessage.success} message={message} /> : null}
+      <Loader loading={isloading} />
+    </View>
+  ) : (
+    <View style={styles.container}>
+      {showtoast ? (
+        <ToastComponent type={ToastMessage.success} message={message} />
+      ) : null}
       <View style={styles.firstBox}>
         <Text style={styles.planTitleText}>Subscription Plans </Text>
       </View>
@@ -60,7 +56,9 @@ const Subscriptions = ({route, navigation}) => {
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           data={data}
-          keyExtractor={(item, index) => {return item.term}}
+          keyExtractor={(item, index) => {
+            return item.term;
+          }}
           renderItem={({item}) => (
             <View style={{flex: 1}}>
               <TouchableOpacity
@@ -121,85 +119,3 @@ const Subscriptions = ({route, navigation}) => {
 };
 
 export default Subscriptions;
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1, //#F9F2F2
-//     backgroundColor: '#F9F2F2',
-//   },
-//   firstBox: {
-//     height: '5%',
-//     flexDirection: 'row',
-//     marginTop: 20,
-//     width: '100%',
-//   },
-//   planTitleText: {
-//     fontSize: 23,
-//     fontWeight: '700',
-//     marginLeft: 10,
-//   },
-//   flatlist: {
-//     flex: 1,
-//   },
-//   flatlistContainer: {
-//     flex: 1,
-//     width: 220,
-//     borderWidth: 1,
-//     borderRadius: 10,
-//     marginHorizontal: 10,
-//     backgroundColor: '#ff5c8d',
-//     marginBottom: 5,
-//   },
-//   avatar: {
-//     width: '100%',
-//     height: '50%',
-//   },
-//   typeOfSubscription: {
-//     fontSize: 22,
-//     fontWeight: '700',
-//     alignSelf: 'center',
-//     marginTop: 8,
-//   },
-//   serviceDetails: {
-//     fontSize: 18,
-//     fontWeight: '700',
-//     marginLeft: 10,
-//   },
-//   price: {
-//     alignSelf: 'center',
-//     fontSize: 18,
-//     fontWeight: '700',
-//   },
-//   totalText: {
-//     fontSize: 22,
-//     fontWeight: '700',
-//     marginLeft: 10,
-//   },
-//   totalCost: {
-//     fontSize: 22,
-//     fontWeight: '700',
-//   },
-//   randomText: {
-//     fontSize: 15,
-//     fontWeight: '700',
-//     color: '#000',
-//     marginTop: 5,
-//     marginLeft: 15,
-//   },
-//   addChildContainer: {
-//     borderWidth: 1,
-//     borderRadius: 10,
-//     marginTop: 15,
-//     height: 130,
-//     width: '90%',
-//     alignSelf: 'center',
-//     alignItems: 'center',
-//     backgroundColor: 'white',
-//   },
-//   addChildText: {
-//     fontSize: 17,
-//     fontWeight: '700',
-//     padding: 5,
-//     color: '#696969',
-//   },
-// });
