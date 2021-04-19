@@ -1,6 +1,6 @@
 
 import React, { useState} from 'react';
-import { StyleSheet,Alert,TouchableOpacity, Text, View } from 'react-native';
+import { StatusBar,Alert,TouchableOpacity, Text, View } from 'react-native';
 import geolocation from 'react-native-geolocation-service';
 import MapView, { Marker, AnimatedRegion } from 'react-native-maps';
 import Ngrok from '../../constants/ngrok';
@@ -27,7 +27,6 @@ export default class App extends React.Component {
     this.interval = setInterval(() => { this.updateloc() }, 5000)
   }
   componentWillUnmount() {
-    console.log("entering");
     clearInterval(this.interval)
   }
   Endtrip = async() => {
@@ -46,12 +45,9 @@ export default class App extends React.Component {
         .then( (response) => {
           this.setState({isloading:false});
           if (response.status == 200) {
-            //Alert.alert('Trip Ended')
             this.setState({showtoast:true});
             this.setState({message:ToastMessage.driveend});
-            console.log("hshsh",this.state.showtoast);
           }
-          console.log("response for end trip", response.status);
         })
         .catch(function (error) {
           console.log("ERROR", error);
@@ -74,7 +70,6 @@ export default class App extends React.Component {
       this.geoFailure,
       geoOptions);
       this.setState({isloading:false})
-      console.log("load",this.state.isloading);
       let token = await AsyncStorage.getItem('token')
         try {
             fetch(`${Ngrok.url}/api/driver/tracking`, {
@@ -91,11 +86,6 @@ export default class App extends React.Component {
                 })
             })
                 .then(function (response) {
-                    if (response.status == 200) {
-                        //Alert.alert('Location Updated')
-                    }
-
-                    console.log("response for tracking", response.status);
                 })
                 .catch(function (error) {
                     console.log("ERR", error);
@@ -107,7 +97,6 @@ export default class App extends React.Component {
         }
   }
   geoSuccess = (position) => {
-    console.log(position.coords.latitude);
     this.setState({
       ready: true,
       error:null,
@@ -122,6 +111,9 @@ export default class App extends React.Component {
      const {isloading,message,showtoast}=this.state;
     return (
       <View style={styles.container}>
+        <StatusBar
+        barStyle="light-content" hidden={false} backgroundColor="#FF5C00" translucent={true}
+      />
         {showtoast? (<ToastComponent type = {ToastMessage.success}  message = {message}/>): null}
         <Loader loading = {isloading}/>
         {/* { !this.state.ready && (
@@ -132,13 +124,8 @@ export default class App extends React.Component {
         )}
         { this.state.ready && (
           <View>
-            {/* <Text >{
-              `Latitude: ${this.state.where.lat}
-                    Longitude: ${this.state.where.lng}`
-            }</Text> */}
             <MapView
               style={{ height: "90%", width: "100%" }}
-              //showsUserLocation
               followsUserLocation
               mapType='standard'
               pitchEnabled
@@ -157,7 +144,7 @@ export default class App extends React.Component {
               >
               </Marker >
             </MapView>
-            <TouchableOpacity style={styles.loginBtn} onPress={()=>{//this.props.navigation.replace('Home',{refresh:true})
+            <TouchableOpacity style={styles.loginBtn} onPress={()=>{
         this.Endtrip()
         this.props.navigation.navigate('Homey',{refresh:true})
         this.props.navigation.replace('Tripnotstarted',{refresh:true})

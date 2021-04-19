@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
+import {  Text, View, StatusBar,TextInput, TouchableOpacity, Alert } from 'react-native';
 import Ngrok from '../../constants/ngrok'
 import AsyncStorage from '@react-native-community/async-storage';
 import styles from '../../components/style';
 import ToastComponent from '../../components/Toaster';
+import axios from 'axios';
 import* as ToastMessage from '../../constants/ToastMessages';
 import Loader from '../../components/Loader';
 
-const Checklist = ({navigation,route}) => {
+const Updateprofile = ({navigation,route}) => {
   const [contact, setContact] = useState(route.params.con)
   const [address, setAddress] = useState(route.params.add)
   const [{ error }, setError] = useState(" ")
@@ -28,37 +29,31 @@ const Checklist = ({navigation,route}) => {
     }
     else {
       setLoading(true);
-      fetch(`${Ngrok.url}/api/profileupdate/driver`, {
-        "method": "POST",
-        "headers": {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
+      axios
+        .post(`${Ngrok.url}/api/profileupdate/driver`, {
           id: token,
           contact: contact,
           address: address
         })
-      })
-        .then(response => response.json())
-        .then(responseJson => {
-          console.log(responseJson);
+        .then(function (response) {
           setLoading(false);
-          if (responseJson.message == "data updated successfully") {
+          if (response.data.message == "data updated successfully") {
             setToast(true)
             SetMessage(ToastMessage.updateProfile)
-            //navigation.goBack()
           }
         })
-        .catch(err => {
+        .catch(function (error) {
           setLoading(false);
-          console.log(err);
+          console.log(error);
         });
     }
     setToast(false)
   }
   return (
     <View style={styles.cont}>
+      <StatusBar
+        barStyle="light-content" hidden={false} backgroundColor="#FF5C00" translucent={true}
+      />
       {showtoast? (<ToastComponent type = {ToastMessage.success}  message = {message}/>): null}
       <Loader loading={isloading} />
       <Text style={styles.text}>Enter your new details</Text>
@@ -93,5 +88,5 @@ const Checklist = ({navigation,route}) => {
   );
 }
 
-export default Checklist;
+export default Updateprofile;
 

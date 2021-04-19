@@ -1,22 +1,13 @@
 import * as React from 'react';
-import { Text, View, TouchableOpacity, StatusBar,StyleSheet, Image } from 'react-native';
+import { Text, View, TouchableOpacity, StatusBar, Image } from 'react-native';
 import styles from '../../components/style';
 
 const nannyhome = ({ route }) =>  {
     return (
       <View style={styles.cont} >
         <StatusBar
-        barStyle="light-content"
-        // dark-content, light-content and default
-        hidden={false}
-        //To hide statusBar
-        backgroundColor="#FF5C00"
-        //Background color of statusBar only works for Android
-        translucent={false}
-      //allowing light, but not detailed shapes
-
+        barStyle="light-content" hidden={false} backgroundColor="#FF5C00" translucent={true}
       /> 
-            {/* <Text style={styles.sidehead} >Child details:</Text> */}
             
               <Text style={styles.headertext}>child name:</Text>
               <Text style={styles.details}>{route.params.item.childName}</Text>
@@ -38,14 +29,7 @@ const nannyhome = ({ route }) =>  {
 
                 <Text style={styles.headertext}>Child Address:</Text>
                 <Text style={styles.details}>{route.params.item.address}</Text>
-                
-                {/* <Text style={styles.headertext}>Child photo:</Text>
-               
-              <View style={styles.imageview}>
-                 <Image style={styles.id} source={{ uri: 'https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg' }} />
-              </View>  */}
-            </View>
-         
+            </View>        
     );
   }
 

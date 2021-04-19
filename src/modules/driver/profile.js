@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Text, Alert, View, TouchableOpacity,ImageBackground, Modal, Image } from 'react-native';
+import { Text, Alert, View,StatusBar, TouchableOpacity, Modal, Image } from 'react-native';
 import Ngrok from '../../constants/ngrok'
 import AsyncStorage from '@react-native-community/async-storage';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -37,8 +37,9 @@ const Profile = ({ navigation }) => {
       })
         .then(response => response.json())
         .then(responseJson => {
-          //console.log(responseJson);
           getData(responseJson)
+          setPic(responseJson.photoUrl)
+          setID(responseJson.idProofUrl)
           setLoading(false)
         })
         .catch(err => {
@@ -46,26 +47,20 @@ const Profile = ({ navigation }) => {
         });
     });
     fetchData;
-    retrieveimg();
-    retrieveimg2();
+    //retrieveimg();
+    //retrieveimg2();
   }, [navigation])
   const gallery = () => {
     ImagePicker.openPicker({
-      // width: 350,
-      // height: 175,
       compressImageMaxHeight: 350,
       compressImageMaxHeight: 175,
       cropping: true
     }).then(async(image) => {
-      console.log(image);
       setImg(image.path)
       setModalVisible(false);
       upload();    
     }
     )
-    // setToast(true)
-    // SetMessage(ToastMessage.picmess)
-    //setToast(false)
   }
   const Camera = () => {
     ImagePicker.openCamera({
@@ -73,66 +68,27 @@ const Profile = ({ navigation }) => {
       compressImageMaxHeight: 175,
       cropping: true,
     }).then(async (image) => {
-      console.log(image);
-      //setImg(image.path),()=>upload();
-      
       await setImg(image.path)
       upload();
-      console.log("shhs")
-      
-      // });
       setModalVisible(false);
-      //upload();
-      // setToast(true)
-      // SetMessage(ToastMessage.picmess)
     });
-    //setToast(false)
   }
   const upload = async () => {
-    console.log("img",img);
     let token = await AsyncStorage.getItem('token')
     let imageName = `${token}/profile`;
     let s=decodeURI(img)
-    
-    // try {
-    //   await storage().ref(imageName).putFile(img);
-    //   Alert.alert('Image Uploaded Successfilly')
-    //      snapshot.ref.getDownloadURL().then(function(downloadURL) {
-    //        console.log("File available at", downloadURL);
-    //      });
-    // }
-    // catch(e){
-    //   Alert.alert('Uploading Failed')
-    //   setImg('https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg')
-    // }
     storage()
       .ref(imageName)
       .putFile(s)
       .then((snapshot) => {
-        //You can check the image is now uploaded in the storage bucket
-        console.log(`${imageName} has been successfully uploaded.`);
         setAvatar(false)
         Alert.alert('Image Uploaded Successfully')
       })
       .catch((e) => {
         console.log('uploading image error => ', e);
         Alert.alert('Uploading Failed');
-        //setImg('https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg');
     }
       );
-    
-    //   let reference=storage().ref(imageName);
-    //   let task=reference.putFile(img);
-    //   task.then(()=>{
-    //     console.log('Image uploaded to the bucket!');
-    //     Alert.alert('Image Uploaded Successfilly')
-    // }).catch((e) => {
-    //     //status = 'Something went wrong';
-    //     console.log('uploading image error => ', e);
-    //     Alert.alert('Uploading Failed')
-    //     setImg('https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg')
-
-    // });
   }
   const press = () => {
     setPic(true)
@@ -148,10 +104,9 @@ const Profile = ({ navigation }) => {
   const retrieveimg = async () => {
     let token = await AsyncStorage.getItem('token')
     storage()
-      .ref('/' + `${token}/profile`) //name in storage in firebase console
+      .ref('/' + `${token}/profile`)
       .getDownloadURL()
       .then((url) => {
-        console.log("url",url);
         setImg(url);
         if(img==null){
           setAvatar(true)
@@ -164,10 +119,9 @@ const Profile = ({ navigation }) => {
   const retrieveimg2 = async () => {
     let token = await AsyncStorage.getItem('token')
     storage()
-      .ref('/' + `${token}/license`) //name in storage in firebase console
+      .ref('/' + `${token}/license`)
       .getDownloadURL()
       .then((url) => {
-        console.log("url",url);
         setID(url);
         if(img==null){
           setAvatar(true)
@@ -183,32 +137,28 @@ const Profile = ({ navigation }) => {
       .ref('/' + `${token}/profile`) //name in storage in firebase console
       .delete()
       .then(() => {
-        console.log(`Image has been deleted successfully.`);
         setImg(null);
         setAvatar(true);
-        //setImg('https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg')
         Alert.alert('Image deleted successfully');
       })
       .catch((e) => console.log('error on image deletion => ', e));
   }
   const onPressLogout = async () => {
     try {
-      // const keys = await AsyncStorage.getAllKeys();
-      // await AsyncStorage.multiRemove(keys);
       AsyncStorage.removeItem('token');
-      console.log("working");
       navigation.replace('Login');
       Alert.alert('You have been logged out');
     } catch (error) {
       console.error('Error clearing app data.');
     }
-    //AsyncStorage.removeItem('token');
-    //window.localStorage.clear();
-    //AsyncStorage.clear()
   }
 
   return (
-    <View style={styles.container}>{pic ?
+    <View style={styles.container}>
+      <StatusBar
+        barStyle="light-content" hidden={false} backgroundColor="#FF5C00" translucent={true}
+      />
+      {pic ?
       <View style={{ flex: 1, backgroundColor: 'black' }}>
         {showtoast ? (<ToastComponent type={ToastMessage.success} message={message} />) : null}
         <Modal animationType="slide" transparent={true} visible={modalVisible}>
@@ -290,7 +240,6 @@ const Profile = ({ navigation }) => {
         </TouchableOpacity>
         <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
         {avatar ? <TouchableOpacity onPress={press} >
-            {/* <Image style={styles.licence} source={{ uri: img }} /> */}
             <Ionicons name="camera"
       color="grey" size={100}
       style={styles.licence}
@@ -299,10 +248,6 @@ const Profile = ({ navigation }) => {
           :
           <TouchableOpacity onPress={press} >
             <Image style={styles.licence} source={{ uri: img }} />
-            {/* <Ionicons name="camera"
-      color="white" size={20}
-      style={{backgroundColor:'#FF5C00',marginTop:90,borderRadius:25,justifyContent:'flex-end',alignSelf:'flex-end'}}
-      /> */}
           </TouchableOpacity>}
         </View>
         <View style={styles.body}>

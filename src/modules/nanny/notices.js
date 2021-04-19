@@ -33,7 +33,6 @@ export default class Notificationlist extends Component {
       .then((json) => {
         this.setState({ data: json });
         this.setState({item1:json.map(child=>({...child,attend:false}))})
-        console.log("not",this.state.item1);
       })
       .catch((error) => console.error(error))
       .finally(() => {
@@ -55,7 +54,6 @@ export default class Notificationlist extends Component {
       }
       return child
       })
-      console.log("why",data1);
       this.setState({item1:data1})
   }
   render() {
@@ -97,9 +95,6 @@ export default class Notificationlist extends Component {
                 <Text style={styles.notice}>{item.date}</Text>
               </View>
               <Text style={styles.notice}>{item.message}</Text>
-                  {/* <Text>
-                    {item.title},{item.date},{item.message}
-                  </Text> */}
                 </Body>
               </Card> : null}
             </View>

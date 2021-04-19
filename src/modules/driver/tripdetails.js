@@ -1,12 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import {
   RefreshControl,
-  SafeAreaView,
   Text,
   View,
   ScrollView,
   Alert,
-  StyleSheet,
+  StatusBar,
   FlatList,
   TouchableOpacity,
   Modal,
@@ -36,33 +35,25 @@ const Checklist = ({route, navigation}) => {
   const [showtoast, setToast] = useState(false);
   const [message, SetMessage] = useState();
 
-  //const [len, setLen] = useState(0);
-
   const onRefresh = React.useCallback(() => {
-    // setLen(route.params.item.destination.length)
-    // console.log("lenght", len);
     setRefreshing(true);
     Children();
     wait(2000).then(() => setRefreshing(false));
   }, []);
 
   const Children = () => {
-    fetch(`${Ngrok.url}/api/driver/trip/${TripID}`, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
+    axios
+    .get(`${Ngrok.url}/api/driver/trip/${TripID}`)
+    .then(function (response) {
+      setInfo(response.data.noOfChildrenAbsent);
+      setLoc(response.data.startedTripAt);
+      setDet(response.data.childList);
     })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        setInfo(responseJson.noOfChildrenAbsent);
-        setLoc(responseJson.startedTripAt);
-        setDet(responseJson.childList);
-      })
-      .catch((err) => {
-        console.log('error', err);
-      });
+    .catch(function (error) {
+      console.log("error",error.message);
+    })
+    .finally(function () {
+    });
   };
   useEffect(() => {
     Children();
@@ -70,19 +61,13 @@ const Checklist = ({route, navigation}) => {
 
   const SetSwitchValue = (id, value) => {
     try {
-      axios({
-        method: 'POST',
-        url: `${Ngrok.url}/api/driver/attendance`,
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        data: {
-          childid: id, //item1.childId
-          tripid: TripID, //route.params.item.trip_id
-          attendance: value,
-        },
-      }).then(function (response) {
+      axios
+      .post(`${Ngrok.url}/api/driver/attendance`, {
+        childid: id,
+        tripid: TripID, 
+        attendance: value,
+      })
+      .then(function (response) {
         if (response.data.message == 'attendance marked') {
           onRefresh();
         }
@@ -94,29 +79,17 @@ const Checklist = ({route, navigation}) => {
 
   const starting = async () => {
     setBut('Trip Inprogress');
-    //setLoc(false);
-
     try {
-      axios({
-        method: 'POST',
-        url: `${Ngrok.url}/api/driver/trip/start`,
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        data: {
-          tripid: route.params.item.trip_id,
-        },
-      }).then(function (response) {
-        if (response.status == 200) {
-          
+      axios
+      .post(`${Ngrok.url}/api/driver/trip/start`, {
+        tripid: route.params.item.trip_id,
+      })
+      .then(function (response) {
+        if (response.status == 200) {    
           setToast(true);
           SetMessage(ToastMessage.drivestart);
-          console.log('toast', showtoast);
-
           onRefresh();
         }
-        console.log('response for starttrip', response.status);
       });
     } catch (error) {
       console.log('errordetails', error);
@@ -152,6 +125,9 @@ const Checklist = ({route, navigation}) => {
   };
   return (
     <View style={styles.container}>
+      <StatusBar
+        barStyle="light-content" hidden={false} backgroundColor="#FF5C00" translucent={true}
+      />
       {showtoast ? (
         <ToastComponent type={ToastMessage.success} message={message} />
       ) : null}
@@ -259,7 +235,7 @@ const Checklist = ({route, navigation}) => {
         </TouchableOpacity>
         <Text style={styles.absent}>Marked Absent</Text>
         <FlatList
-          data={details} //item2
+          data={details}
           renderItem={({item}) => (
             <View
               style={{
@@ -275,11 +251,9 @@ const Checklist = ({route, navigation}) => {
                 }}>
                 <Text style={styles.itemText}>
                   {item.childName}
-                  {/*item.childId*/}
                 </Text>
               </TouchableOpacity>
               <Switch
-                //trackColor={{true: 'red', false: 'grey'}}
                 value={item.attendance}
                 onValueChange={(value) => {
                   SetSwitchValue(item.childId, value);

@@ -4,10 +4,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import Notifications from '../modules/nanny/notices';
+import Notifications from '../components/notification';
 import Trips from '../modules/nanny/nannyhome';
 import Profile_Nanny from '../modules/nanny/profile';
-import change_pwd from '../modules/nanny/changepwd';
+import changePassword from '../components/changepassword';
 import Trip_details from '../modules/nanny/tripdetails';
 import Child_list from '../modules/nanny/childlist';
 import Child_details from '../modules/nanny/childdetails';
@@ -18,95 +18,13 @@ import Old_childdetails from '../modules/nanny/oldchilddetails';
 
 const Tab = createBottomTabNavigator()
 const Stack=createStackNavigator()
-function Notification() {
-  return (
-    <Stack.Navigator
-    
-    initialRouteName="Notification page"
-    screenOptions={{
-    //  headerStyle: { backgroundColor: '#42F44B' },
-    //   headerTintColor: '#fff',
-      headerTitleStyle: { fontWeight: 'bold' },
-      headerTitleAlign:'center'
-    }}
-    >
-     <Stack.Screen
-        name="Notifications page"
-        component={Notifications}
-        options={{ title: 'Notifications' }}
-      />
-    </Stack.Navigator>
-  );
-}
-function Triphistory() {
-  return (
-    <Stack.Navigator
-    
-    initialRouteName="History page"
-    screenOptions={{
-      // headerStyle: { backgroundColor: '#42F44B' },
-      // headerTintColor: '#fff',
-      headerTitleStyle: { fontWeight: 'bold' },
-      headerTitleAlign:'center'
-    }}
-    >
-     <Stack.Screen
-        name="History page"
-        component={History}
-        options={{ title: 'Trip History' }}
-      />
-      <Stack.Screen
-        name="trip_ended"
-        component={End_trips}
-        options={{ title: 'Trip Details' }}
-      />
-      <Stack.Screen
-        name="oldChild Details"
-        component={Old_childdetails}
-        options={{ title: 'Child Details' }}
-      />
-    </Stack.Navigator>
-  );
-}
-function Profile() {
-  return (
-    <Stack.Navigator
-    
-    initialRouteName="Profile_screen"
-    screenOptions={{
-    //  headerStyle: { backgroundColor: '#f06292' },
-    //   headerTintColor: '#fff',
-      headerTitleStyle: { fontWeight: 'bold' },
-      headerTitleAlign:'center'
-      
-    }}
-    >
-     <Stack.Screen
-        name="Profile_screen"
-        component={Profile_Nanny}
-        options={{ title: 'Profile ' }}
-      />
-      <Stack.Screen
-        name="Passwordchange"
-        component={change_pwd}
-        options={{ title: 'Change Password' }}
-      />
-      <Stack.Screen
-        name="Updateprof"
-        component={updateprof}
-        options={{ title: 'Update Profile' }}
-      />
-    </Stack.Navigator>
-  );
-}
+
 function Home() {
   return (
     <Stack.Navigator
     
     initialRouteName="Home_screen"
     screenOptions={{
-    //  headerStyle: { backgroundColor: '#42F44B' },
-    //   headerTintColor: '#fff',
       headerTitleStyle: { fontWeight: 'bold' },
       headerTitleAlign:'center'
     }}
@@ -135,6 +53,85 @@ function Home() {
     </Stack.Navigator>
   );
 }
+
+function Triphistory() {
+  return (
+    <Stack.Navigator
+    
+    initialRouteName="History page"
+    screenOptions={{
+      headerTitleStyle: { fontWeight: 'bold' },
+      headerTitleAlign:'center'
+    }}
+    >
+     <Stack.Screen
+        name="History page"
+        component={History}
+        options={{ title: 'Trip History' }}
+      />
+      <Stack.Screen
+        name="trip_ended"
+        component={End_trips}
+        options={{ title: 'Trip Details' }}
+      />
+      <Stack.Screen
+        name="oldChild Details"
+        component={Old_childdetails}
+        options={{ title: 'Child Details' }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function Notification() {
+  return (
+    <Stack.Navigator
+    
+    initialRouteName="Notification page"
+    screenOptions={{
+      headerTitleStyle: { fontWeight: 'bold' },
+      headerTitleAlign:'center'
+    }}
+    >
+     <Stack.Screen
+        name="Notifications page"
+        component={Notifications}
+        options={{ title: 'Notifications' }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function Profile() {
+  return (
+    <Stack.Navigator
+    
+    initialRouteName="Profile_screen"
+    screenOptions={{
+      headerTitleStyle: { fontWeight: 'bold' },
+      headerTitleAlign:'center'
+      
+    }}
+    >
+     <Stack.Screen
+        name="Profile_screen"
+        component={Profile_Nanny}
+        options={{ title: 'Profile ' }}
+      />
+      <Stack.Screen
+        name="Change Password"
+        component={changePassword}
+        options={{ title: 'Change Password' }}
+      />
+      <Stack.Screen
+        name="Updateprof"
+        component={updateprof}
+        options={{ title: 'Update Profile' }}
+      />
+    </Stack.Navigator>
+  );
+}
+
 const NannyTab = () => {
     return (
     <Tab.Navigator
@@ -147,7 +144,7 @@ const NannyTab = () => {
           }
            else if (route.name === 'Notifications') {
             iconName = focused ? 'notifications' : 'notifications-outline';
-          }//clipboard or receipt  icon name for history
+          }
           else if (route.name === 'Trip History') {
             iconName = focused ? 'clipboard' : 'clipboard-outline';
           }

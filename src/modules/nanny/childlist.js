@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ActivityIndicator,TouchableOpacity,StyleSheet, FlatList, Text, View } from 'react-native';
+import { ActivityIndicator,TouchableOpacity, FlatList, Text, View } from 'react-native';
 import { Container, Header, Content, Card, CardItem, Body } from 'native-base';
 import { ScrollView } from 'react-native-gesture-handler';
 import Ngrok from '../../constants/ngrok';
@@ -15,11 +15,8 @@ export default class ChildList extends Component  {
   }
   render() {
     const { data, isLoading } = this.state;
-    console.log("json",this.props.route.params.childList[0].childId);
     return (
       <View style={styles.cont}>
-        
-            {/* <Text style={styles.sidehead} >Children List:</Text> */}
           <FlatList
             data={this.props.route.params.childList}
             keyExtractor={(item) => item.childId}

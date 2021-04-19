@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, StyleSheet, TextInput, TouchableOpacity, Alert, View } from "react-native";
+import { Text, StatusBar, TouchableOpacity, Alert, View } from "react-native";
 import moment from 'moment';
 import { ScrollView } from "react-native-gesture-handler";
 import Ngrok from '../../constants/ngrok';
@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import CheckBox from '@react-native-community/checkbox';
 import Loader from '../../components/Loader';
 import styles from '../../components/style';
+import axios from 'axios';
 import ToastComponent from '../../components/Toaster';
 import* as ToastMessage from '../../constants/ToastMessages';
 
@@ -19,7 +20,6 @@ const App = ({ route, navigation }) => {
   const [extinguisher, setextinguisher] = useState(false);
   const [tyre, settyre] = useState(false);
   const [isloading,setLoading] = useState(false)
-  console.log("dsg", route.params.TripID);
   let tripid = route.params.TripID;
   let vehid = route.params.VehicleID;
   const [showtoast,setToast] = useState(false)
@@ -27,66 +27,58 @@ const App = ({ route, navigation }) => {
 
 
 useEffect(() => {
-  fetch(`${Ngrok.url}/api/driver/getchecklist/${tripid}`, {
-    "method": "GET",
-    "headers": {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    },
-  })
-    .then(response => response.json())
-    .then(responseJson => {
-      setfuel(responseJson.fuel)
-      settyre(responseJson.tyrePressure);
-      setengine(responseJson.engine);
-      setextinguisher(responseJson.extinguisher);
-      setfirstaid(responseJson.firstAid)
+  axios
+    .get(`${Ngrok.url}/api/driver/getchecklist/${tripid}`)
+    .then(function (response) {
+      setfuel(response.data.fuel)
+      settyre(response.data.tyrePressure);
+      setengine(response.data.engine);
+      setextinguisher(response.data.extinguisher);
+      setfirstaid(response.data.firstAid)
     })
-    .catch(err => {
-
+    .catch(function (error) {
+      console.log("error",error.message);
+    })
+    .finally(function () {
     });
 }, [])
 
   const pressHandler = () => {
     setLoading(true)
-    fetch(`${Ngrok.url}/api/driver/checklist`, {
-      "method": "POST",
-      "headers": {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        vehicleno: vehid,
+    try {
+      axios
+        .post(`${Ngrok.url}/api/driver/checklist`, {
+          vehicleno: vehid,
         tripid: tripid,
         fuel: fuel,
         engine: engine,
         tyre: tyre,
         firstaid: firstaid,
         extinguisher: extinguisher,
-
-      })
-    })
-      .then(response => response.json())
-      .then(responseJson => {
-        setLoading(false)
-        console.log(responseJson);
-        if (responseJson.message == "checklist updated successfully") {
-          //Alert.alert('Checklist Updated','', [{text: 'Proceed', onPress:() => navigation.navigate('Trip Details',)}]);         
+        })
+        .then(function (response) {
+          
+          setLoading(false)
+        if (response.data.message == "checklist updated successfully") {         
           setToast(true)
           SetMessage(ToastMessage.drivecheck)
         } else {
           Alert.alert('Try again!')
         }
-        //alert(JSON.stringify(response))
-      })
-      .catch(err => {
-        console.log(err);
-      });
-
-      setToast(false)
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+    setToast(false)
   }
   return (
     <View style={styles.container}>
+      <StatusBar
+        barStyle="light-content" hidden={false} backgroundColor="#FF5C00" translucent={true}
+      />
       <Loader loading = {isloading}/>
       {showtoast? (<ToastComponent type = {ToastMessage.success}  message = {message}/>): null}
       <Text style={{ alignSelf: "center" }}>{TD}</Text>
