@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View, TouchableOpacity, StatusBar,StyleSheet, Image } from 'react-native';
+import { Text, View, TouchableOpacity, StatusBar, Image } from 'react-native';
 import styles from '../../components/style';
 
 const nannyhome = ({ route }) =>  {
@@ -29,12 +29,7 @@ const nannyhome = ({ route }) =>  {
 
                 <Text style={styles.headertext}>Child Address:</Text>
                 <Text style={styles.details}>{route.params.item.address}</Text>
-                
-                {/* <Text style={styles.headertext}>Child photo:</Text>
-               
-              <View style={styles.imageview}>
-                 <Image style={styles.id} source={{ uri: 'https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg' }} />
-              </View>  */}
+              
             </View>
          
     );

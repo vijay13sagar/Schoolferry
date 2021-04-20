@@ -19,6 +19,9 @@ import ImagePicker from 'react-native-image-crop-picker';
 import ToastComponent from '../../components/Toaster';
 import * as ToastMessage from '../../constants/ToastMessages';
 import storage from '@react-native-firebase/storage';
+import AsyncStorage from '@react-native-community/async-storage';
+import 'react-native-get-random-values';
+import { v4 as uuidv4 } from "uuid";
 
 export default function Add_Nanny({ navigation }) {
   const [isloading, setLoading] = useState(false);
@@ -42,9 +45,10 @@ export default function Add_Nanny({ navigation }) {
       compressImageMaxHeight: 350,
       compressImageMaxHeight: 175,
       cropping: true
-    }).then(image => {
+    }).then(async image => {
      
-      setImg1(image.path);
+      await setImg1(image.path);
+      upload2();
       
     });
   }
@@ -53,10 +57,10 @@ export default function Add_Nanny({ navigation }) {
       compressImageMaxHeight: 350,
       compressImageMaxHeight: 175,
       cropping: true,
-    }).then(image => {
+    }).then(async image => {
       
-      setImg1(image.path)
-     
+      await setImg1(image.path)
+      upload2();
     });
   }
   const backpress1 = () => {
@@ -90,9 +94,10 @@ export default function Add_Nanny({ navigation }) {
       compressImageMaxHeight: 350,
       compressImageMaxHeight: 175,
       cropping: true
-    }).then(image => {
+    }).then(async image => {
       
-      setImg(image.path)
+      await setImg(image.path)
+      upload1();
       
     });
   }
@@ -101,22 +106,25 @@ export default function Add_Nanny({ navigation }) {
       compressImageMaxHeight: 350,
       compressImageMaxHeight: 175,
       cropping: true,
-    }).then(image => {
+    }).then(async image => {
      
-      setImg(image.path)
-      
+      await setImg(image.path)
+      upload1();
     });
   }
-  const upload1 = async (id) => {
-    
-    let imageName = `${id}/profile`;
+  const upload1 = async () => {
+    let imageName  =`Driver/profile/${uuidv4()}`;
+    //let imageName = `${id}/profile`;
     let s=decodeURI(img)
     storage()
       .ref(imageName)
       .putFile(s)
-      .then((snapshot) => {
+      .then(async (snapshot) => {
        
-        Alert.alert('Image Uploaded Successfully')
+        Alert.alert('Image Uploaded Successfully');
+        let imageRef=storage().ref(imageName)
+        const url1 =await imageRef.getDownloadURL().catch((error) => { throw error });
+        console.log("url",url1);
       })
       .catch((e) => {
         
@@ -125,17 +133,21 @@ export default function Add_Nanny({ navigation }) {
     }
       );
   }
-  const upload2 = async (id) => {
-  
-    let imageName = `${id}/license`;
+  const upload2 = () => {
+    let imageName  =`Driver/id/${uuidv4()}`;
+    console.log("name",imageName);
+    //let imageName = `${id}/license`;
     let s=decodeURI(img1)
     storage()
       .ref(imageName)
       .putFile(s)
-      .then((snapshot) => {
-       
+      .then(async (snapshot) => {
+       console.log("snapshot",snapshot);
         Alert.alert('Image Uploaded Successfully')
-      })
+        let imageRef=storage().ref(imageName)
+        const url2 =await imageRef.getDownloadURL().catch((error) => { throw error });
+  console.log("url",url2);
+        })
       .catch((e) => {
         
         Alert.alert('Uploading Failed');
@@ -188,8 +200,8 @@ export default function Add_Nanny({ navigation }) {
             name: name,
             contact: contact,
             address: ADR,
-            photourl: "NULL",
-            idproofurl: "NULL",
+            photourl: url1,
+            idproofurl: url2,
             password: password
 
 
@@ -207,7 +219,7 @@ export default function Add_Nanny({ navigation }) {
             setLoading(false);
            
             if (error.response.status == 401) {
-              
+            
               setToast(true)
               setLoading(false);
             }
@@ -400,4 +412,3 @@ export default function Add_Nanny({ navigation }) {
     
   );
 }
-

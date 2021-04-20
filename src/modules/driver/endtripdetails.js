@@ -2,26 +2,17 @@ import React, { useState, useEffect } from 'react';
 import {
     Text,
     View,
-    ScrollView, Alert,
-    StyleSheet,
-    FlatList,
+    ScrollView,
+    FlatList,StatusBar,
     TouchableOpacity,
     Modal,
-    Switch,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from '../../components/style';
 
-const Checklist = ({ route, navigation }) => {
+const Endedtrips = ({ route, navigation }) => {
     const [modalVisible, setModalVisible] = useState(false);
-    //const [att,setAtt] = useState("");
-    const [nannyID, setNannyid] = useState(route.params.item.nannyInfo.nannyId);
-    const [but, setBut] = useState('Start Trip')
-    //let [details,setDet]= useState("");
-    const v = route.params.item.trip_id;
     const [item1, setItem1] = useState([]);
-    //let [childId,setChildId]= useState(item1.childId);
-    const [childId, setChildId] = useState(item1.childId);
     const [item2, setItem2] = useState(route.params.item.childList);
 
     const Nannyprofile = () => {
@@ -44,6 +35,9 @@ const Checklist = ({ route, navigation }) => {
     }
     return (
         <View style={styles.container}>
+            <StatusBar
+        barStyle="light-content" hidden={false} backgroundColor="#FF5C00" translucent={true}
+      />
             <Modal
                 animationType="slide"
                 transparent={true}
@@ -114,4 +108,4 @@ const Checklist = ({ route, navigation }) => {
     );
 }
 
-export default Checklist;
+export default Endedtrips;

@@ -1,15 +1,12 @@
 import * as React from 'react';
-import { Text, View, StatusBar, TouchableOpacity,Linking, StyleSheet, Image } from 'react-native';
+import { Text, View, StatusBar, TouchableOpacity, Image } from 'react-native';
 import styles from '../../components/style';
 
 export default function trip_Details({ route, navigation }) {
-  console.log("this.props", route.params.item);
   return (
     <View style={styles.cont} >
       <StatusBar
-        barStyle="light-content"
-        hidden={false}
-        backgroundColor='#FF5C00'
+        barStyle="light-content" hidden={false} backgroundColor="#FF5C00" translucent={true}
       />
         {route.params.item.startedTripAt ? <Text style={styles.startTripText}>Trip Started</Text> : null}
         <Text style={styles.headertext}>Location:</Text>
@@ -25,9 +22,6 @@ export default function trip_Details({ route, navigation }) {
       <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('Child List', route.params.item)} >
         <Text style={styles.loginText}>Child List</Text>
       </TouchableOpacity>
-      {/* <TouchableOpacity style={styles.CallBtn} onPress={() => { Linking.openURL('tel:{route.params.item.driverInfo.driverContact}') }}  >
-        <Text style={styles.loginText}>Contact Driver</Text>
-      </TouchableOpacity> */}
     </View>
   );
 }

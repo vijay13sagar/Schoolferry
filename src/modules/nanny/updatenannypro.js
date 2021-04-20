@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
-import { StyleSheet,Alert, Text, View, TextInput, TouchableOpacity } from 'react-native';
-import Ngrok from '../../constants/ngrok'
+import { Statusbar,Alert, Text, View, TextInput, TouchableOpacity } from "react-native";
+import Ngrok from '../../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
 import styles from '../../components/style';
 import ToastComponent from '../../components/Toaster';
@@ -35,10 +35,8 @@ const Checklist = ({route,navigation}) => {
     })
       .then(response => response.json())
       .then(responseJson => {
-        console.log(responseJson);
         setLoading(false);
         if (responseJson.message == "data updated successfully") {
-          //navigation.goBack()
           setToast(true)
           SetMessage(ToastMessage.updateProfile)
         } else {
@@ -82,9 +80,6 @@ const Checklist = ({route,navigation}) => {
           <Text style={styles.loginText}>
             Update Profile</Text>
         </TouchableOpacity>
-
-
-
     </View>
 
   );
