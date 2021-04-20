@@ -8,7 +8,7 @@ import Checklist from '../modules/driver/checklist';
 import Notifications from '../components/notification';
 import Profile_Driver from '../modules/driver/profile';
 import changePassword from '../components/changepassword';
-import updateProfile from '../modules/driver/updateprofile';
+import updateProfile from '../components/updateprofile';
 import tripDetails from '../modules/driver/tripdetails'
 import Trackee from '../modules/driver/map';
 import Notstarted from '../modules/driver/notstarted';

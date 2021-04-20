@@ -22,7 +22,7 @@ const Triphistory = ({ navigation }) => {
     .then(function (response) {
       setLoading(false)
           getData( response.data)
-          if((rresponse.data[0].endedTripAt==false)){
+          if((response.data[0].endedTripAt==false)){
             setStat(false)
           }else{
             setStat(true)

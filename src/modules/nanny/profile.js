@@ -36,7 +36,7 @@ const Profile = ({ navigation }) => {
         .then(response => response.json())
         .then(responseJson => {
           getData(responseJson)
-          setPic(responseJson.photoUrl)
+          setImg(responseJson.photoUrl)
           setID(responseJson.idProofUrl)
           setLoading(false)
         })

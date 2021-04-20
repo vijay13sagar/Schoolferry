@@ -6,6 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-community/async-storage';
 import Loader from '../../components/Loader';
 import styles from '../../components/style';
+import axios from 'axios';
 
 export default class Triplist extends Component {
   constructor(props) {
@@ -17,15 +18,18 @@ export default class Triplist extends Component {
   }
   async componentDidMount() {
     let token = await AsyncStorage.getItem('token')
-    fetch(`${Ngrok.url}/api/nanny/tripdetails/${token}`)
-      .then((response) => response.json())
-      .then((json) => {
-        this.setState({ data: json });
-      })
-      .catch((error) => console.error(error))
-      .finally(() => {
-        this.setState({ isLoading: false });
-      });
+    var self=this;
+    axios
+    .get(`${Ngrok.url}/api/nanny/tripdetails/${token}`)
+    .then(function (response) {
+      self.setState({ data: response.data });
+    })
+    .catch(function (error) {
+      console.log("error",error.message);
+    })
+    .finally(function () {
+      self.setState({ isLoading: false });
+    });
   }
   render() {
     const { data, isLoading } = this.state;
