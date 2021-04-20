@@ -6,6 +6,7 @@ import Ngrok from '../../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
 import Loader from '../../components/Loader';
 import styles from '../../components/style';
+import axios from 'axios';
 
 const Homescreen = ({ navigation }) => {
   const [stat,setStat] = useState(false)
@@ -16,27 +17,23 @@ const Homescreen = ({ navigation }) => {
       setLoading(true)
     const fetchData = navigation.addListener('focus', async () => {
     let token = await AsyncStorage.getItem('token')
-    fetch(`${Ngrok.url}/api/nanny/tripdetails/${token}`, {
-      "method": "GET",
-      "headers": {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
+    axios
+    .get(`${Ngrok.url}/api/nanny/tripdetails/${token}`)
+    .then(function (response) {
+      setLoading(false);
+          getData( response.data)
+          if((response.data[0].endedTripAt==false)){
+            setStat(false)
+          }else{
+            setStat(true)
+          }
     })
-      .then(response => response.json())
-      .then(responseJson => {
-        setLoading(false);
-        getData( responseJson)
-        if((responseJson[0].endedTripAt==false)){
-          setStat(false)
-        }else{
-          setStat(true)
-        }
-      })
-      .catch(err => {
-        setLoading(false)
-        console.log('error',err);
-      });
+    .catch(function (error) {
+      setLoading(false)
+      console.log("error",error.message);
+    })
+    .finally(function () {
+    });
     })
     fetchData
     })();
