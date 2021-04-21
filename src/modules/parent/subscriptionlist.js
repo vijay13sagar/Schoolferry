@@ -29,9 +29,11 @@ const Subscriptions = ({route, navigation}) => {
             SetMessage(ToastMessage.message8);
             setData(response.data);
             setLoading(false);
+
           });
       } catch (error) {
         setLoading(false);
+        console.log(error)
       }
     }
     setToast(false);

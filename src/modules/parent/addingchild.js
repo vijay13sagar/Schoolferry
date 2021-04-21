@@ -1,5 +1,13 @@
 import React, {useState} from 'react';
-import {Text, View, Image, TextInput, TouchableOpacity} from 'react-native';
+import {
+  Text,
+  View,
+  Image,
+  TextInput,
+  TouchableOpacity,
+  ScrollView,
+  Modal,
+} from 'react-native';
 import Ngrok from '../../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
@@ -11,6 +19,10 @@ import Loader from '../../components/Loader';
 import styles from '../../components/style';
 import ToastComponent from '../../components/Toaster';
 import * as ToastMessage from '../../constants/ToastMessages';
+import ImagePicker from 'react-native-image-crop-picker';
+import storage from '@react-native-firebase/storage';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import {v4 as uuidv4} from 'uuid';
 
 export default function addchild({route, navigation}) {
   const [CN, setCN] = useState('');
@@ -31,6 +43,11 @@ export default function addchild({route, navigation}) {
   const [showtoast, setToast] = useState(false);
   const [message, SetMessage] = useState();
   const [type, setType] = useState();
+  const [modalVisible, setModalVisible] = useState(false);
+  const [url, setUrl] = useState();
+  const [image, setImage] = useState(
+    'https://www.shareicon.net/data/512x512/2016/06/25/786525_people_512x512.png',
+  );
 
   const distanceCal = route.params.distance;
 
@@ -47,59 +64,55 @@ export default function addchild({route, navigation}) {
     let token = await AsyncStorage.getItem('token');
     if (validateFunction()) {
       setLoading(true);
-      try {
-        axios({
-          method: 'POST',
-          url: `${Ngrok.url}/api/child`,
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          data: {
-            name: CN,
-            dob: CA,
-            bloodgroup: pickerValue,
-            address: HA,
-            school: SA,
-            starttime: ST,
-            endtime: ET,
-            distance: Number(distanceCal),
-            parentid: token,
-          },
-        })
-          .then(function (response) {
-            setLoading(false);
-
-            if (response.status == 200) {
-              setCN('');
-              setCA('');
-              setPickerValue('');
-              setError('');
-              setST('');
-              setET('');
-              setTextFlag(false);
-              setTextFlag2(false);
-              setDateFlag(false);
-              navigation.navigate('Subscription_list', {
-                childID: response.data,
-                school: SA,
-              });
-            } else {
-              setToast(true);
-              setType(ToastMessage.failure);
-              SetMessage(ToastMessage.message5);
-            }
-          })
-          .catch(function (error) {
-            setLoading(false);
-            console.log(error);
+      axios({
+        method: 'POST',
+        url: `${Ngrok.url}/api/child`,
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        data: {
+          name: CN,
+          dob: CA,
+          bloodgroup: pickerValue,
+          photourl: url,
+          address: HA,
+          school: SA,
+          starttime: ST,
+          endtime: ET,
+          distance: Number(distanceCal),
+          parentid: token,
+        },
+      })
+        .then(function (response) {
+          setLoading(false);
+          if (response.status == 200) {
+            setCN('');
+            setCA('');
+            setPickerValue('');
+            setError('');
+            setST('');
+            setET('');
+            setTextFlag(false);
+            setTextFlag2(false);
+            setDateFlag(false);
+            navigation.navigate('Subscription_list', {
+              childID: response.data,
+              school: SA,
+            });
+          } else {
             setToast(true);
             setType(ToastMessage.failure);
             SetMessage(ToastMessage.message5);
-          });
-      } catch (error) {
-        console.log('errordetails', error);
-      }
+          }
+        })
+        .catch(function (error) {
+          setLoading(false);
+          console.error(error);
+          setToast(true);
+          setType(ToastMessage.failure);
+          SetMessage(ToastMessage.message5);
+        });
     }
     setToast(false);
   };
@@ -123,10 +136,116 @@ export default function addchild({route, navigation}) {
     setDatePickerVisible(false);
   };
 
+  const imagePickerHandler = () => {
+    setModalVisible(true);
+  };
+
+  const gallery = () => {
+    ImagePicker.openPicker({
+      compressImageMaxWidth: 350,
+      compressImageMaxHeight: 175,
+      cropping: true,
+    }).then((image) => {
+      setImage(image.path);
+      upload(image.path);
+    });
+    setModalVisible(false);
+  };
+
+  const Camera = () => {
+    ImagePicker.openCamera({
+      compressImageMaxHeight: 350,
+      compressImageMaxHeight: 175,
+      cropping: true,
+    }).then((image) => {
+      setImage(image.path);
+      upload(image.path);
+    });
+    setModalVisible(false);
+  };
+
+  const upload = (value) => {
+    const uploadUri = value;
+    let imageName = `Child/Profile/${uuidv4()}`;
+    storage()
+      .ref(imageName)
+      .putFile(uploadUri)
+      .then(async (snapshot) => {
+        let imageRef = storage().ref(imageName);
+        const url = await imageRef.getDownloadURL().catch((error) => {
+          throw error;
+        });
+        if (url) {
+          setToast(true);
+          setType(ToastMessage.success);
+          SetMessage(ToastMessage.ImageSuccessful);
+        } else {
+          setToast(true);
+          setType(ToastMessage.failure);
+          SetMessage(ToastMessage.message5);
+        }
+        setUrl(url);
+      })
+      .catch((e) => {
+        setToast(true);
+        setType(ToastMessage.failure);
+        SetMessage(ToastMessage.message5);
+      });
+    setToast(false);
+  };
+
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       {showtoast ? <ToastComponent type={type} message={message} /> : null}
       <Loader loading={isLoading} />
+      <Modal animationType="slide" transparent={true} visible={modalVisible}>
+        <View style={styles.modalContainer}>
+          <Ionicons
+            name="close-circle-outline"
+            color="#fff"
+            size={30}
+            style={styles.icon}
+            onPress={(modalVisible) => setModalVisible(!modalVisible)}
+          />
+          <View style={styles.modalBody1}>
+            <TouchableOpacity
+              style={{alignSelf: 'center', marginTop: 5}}
+              onPress={Camera}>
+              <Text
+                style={{
+                  color: 'black',
+                  fontSize: 19,
+                }}>
+                Open Camera{' '}
+                <Ionicons
+                  name="camera"
+                  color="#FF5C00"
+                  size={25}
+                  style={styles.icon}
+                />
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{alignSelf: 'center', marginTop: 20}}
+              onPress={gallery}>
+              <Text
+                style={{
+                  color: 'black',
+                  fontSize: 19,
+                }}>
+                Choose From Gallery{' '}
+                <Ionicons
+                  name="folder"
+                  color="#FF5C00"
+                  size={25}
+                  style={styles.icon}
+                />
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
       <DateTimePickerModal
         isVisible={visible}
         mode="time"
@@ -143,8 +262,14 @@ export default function addchild({route, navigation}) {
         maximumDate={new Date(2021, 11, 31)}
         minimumDate={new Date(2002, 0, 1)}
       />
+      <TouchableOpacity style={styles.profileView} onPress={imagePickerHandler}>
+        <Image
+          style={{height: '100%', width: '100%', borderRadius: 50}}
+          source={{uri: image}}
+        />
+      </TouchableOpacity>
 
-      <View style={{marginTop: 60}}>
+      <View style={{marginTop: 10}}>
         <View style={styles.inputView}>
           <TextInput
             style={styles.TextInput1}
@@ -224,17 +349,15 @@ export default function addchild({route, navigation}) {
         <Picker.Item label="O -ve" value="O-" />
       </Picker>
 
-      <Text style={styles.error}>{value_error}</Text>
+      <Text style={{...styles.error, marginBottom: 2}}>{value_error}</Text>
       <TouchableOpacity
-        style={
-          ({alignItems: 'center', justifyContent: 'center'}, styles.loginBtn)
-        }
+        style={{...styles.loginBtn, marginTop: 2}}
         onPress={handlePress}>
         <Text style={styles.loginText}>Add Child</Text>
       </TouchableOpacity>
       <Text style={styles.serviceText}>
         * Nanny service is only provided for children of age below 9 years.
       </Text>
-    </View>
+    </ScrollView>
   );
 }

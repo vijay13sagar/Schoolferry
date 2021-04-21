@@ -392,11 +392,11 @@ note:{
     alignSelf: 'center',
   },
   nameText: {
-    fontSize: 19,
+    fontSize: 18,
     fontWeight: '700',
   },
   mainHeading: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: 'bold',
     marginTop: 20,
     textAlign: 'center',
@@ -489,21 +489,23 @@ firstBox: {
   justifyContent:'space-between'
 },
 planTitleText: {
-  fontSize: 23,
+  fontSize: 20,
   fontWeight: '700',
-  marginLeft: 10,
+  marginLeft: 14,
 },
 flatlist: {
   flex: 1,
   marginTop: 15,
   height: 150,
+  width:'95%',
+  alignSelf:'center'
 },
 flatlistContainer: {
   flex: 1,
   width: 220,
   borderWidth: 1,
   borderRadius: 10,
-  marginHorizontal: 10,
+  marginHorizontal: 5,
   backgroundColor: '#FF8A00',
   marginBottom: 5,
 },
@@ -513,32 +515,33 @@ avatar: {
   borderRadius:10
 },
 typeOfSubscription: {
-  fontSize: 22,
+  fontSize: 19,
   fontWeight: '700',
   alignSelf: 'center',
   marginTop: 2,
+  marginBottom:5,
   color:'white'
 },
 serviceDetails: {
-  fontSize: 18,
+  fontSize: 17,
   fontWeight: '700',
   marginLeft: 10,
   color:'white'
 },
 price: {
   alignSelf: 'center',
-  fontSize: 18,
+  fontSize: 17,
   fontWeight: '700',
   color:'white'
 },
 totalText: {
-  fontSize: 22,
+  fontSize: 20,
   fontWeight: '700',
   marginLeft: 10,
   color:'white'
 },
 totalCost: {
-  fontSize: 22,
+  fontSize: 20,
   fontWeight: '700',
   color:'white'
 },
@@ -582,7 +585,7 @@ message1: {
   padding: 7,
 },
 randomText2: {
-  fontSize: 19,
+  fontSize: 17,
   fontWeight: '700',
   color: '#4169e1',
   marginVertical: 8,
@@ -642,10 +645,11 @@ bg2:{
 },
 serviceText:{
   color:'#ce1212',
-  fontSize:16,
-  marginTop:15,
-  marginLeft:10,
-  //marginRight:5,
+  fontSize:14,
+  marginTop:10,
+  marginHorizontal:5,
+  marginBottom:10,
+  textAlign:'center'
 },
 //locations.js
 scrollview: {
@@ -707,9 +711,13 @@ newsText1: {
 trips: {
   height: 40,
   backgroundColor: 'white',
-  width: '95%',
+  width: '90%',
   marginTop: 5,
   alignSelf: 'center',
+  marginBottom:10,
+  flexDirection:'row',
+  borderWidth:0.5,
+  justifyContent:'space-between'
 },
 Picker: {
   width: '35%',
@@ -721,30 +729,28 @@ pausePlan: {
   borderWidth: 1,
   borderRadius: 10,
   marginTop: 20,
-  height: 110,
+  height: 100,
   width: '85%',
   alignSelf: 'center',
-  //alignItems: 'center',
   backgroundColor: 'white',
 },
 biggerBox: {
   borderWidth: 1,
   borderRadius: 10,
   marginTop: 20,
-  height: 160,
+  height: 150,
   width: '85%',
   alignSelf: 'center',
-  //alignItems: 'center',
   backgroundColor: 'white',
 },
 mainHeading1: {
-  fontSize: 20,
+  fontSize: 19,
   fontWeight: '700',
   textAlign: 'center',
   marginTop: 5,
 },
 heading: {
-  fontSize: 18,
+  fontSize: 16,
   marginTop: 4,
   marginLeft: 10,
 },
@@ -784,6 +790,8 @@ card1: {
 headertext1: {
   fontSize: 13,
   marginLeft: 40,
+  marginTop:10,
+  fontWeight:'700'
 },
 inputView1: {
   padding: 10,
@@ -791,14 +799,12 @@ inputView1: {
   borderColor: '#FF5C00',
   borderRadius: 10,
   width: "80%",
-  //height: 45,
   flexWrap:'wrap',
   alignSelf: "center",
   alignItems:'center',
   justifyContent:'center',
   backgroundColor: "#fff",   //"#C4C4C4",
   marginTop: 15,
-  //opacity: 0.5,
 },
 //upipay.js
 inputView: {
@@ -910,6 +916,28 @@ licence: {
     flex:1,
     alignSelf:'center', 
     marginLeft:20
+  },
+  //profile.js
+  modalContainer3: {
+    backgroundColor: '#00000080',
+    flex: 1,
+    height: '50%',
+    justifyContent: 'flex-end',
+  },
+  modalBody3: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    height: 280,
+    width: '88%',
+    alignSelf: 'center',
+    justifyContent: 'center',
+  },
+  profileView:{
+    width:100,
+    height:100,
+    alignSelf:'center',
+    marginTop:15,
+    
   }
 })
     

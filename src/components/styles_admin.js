@@ -221,6 +221,7 @@ export default StyleSheet.create({
       },
       TextInput4: {
         marginTop:10,
+        marginBottom:19,
         color:"black", 
         alignSelf:"center"
     
@@ -254,10 +255,18 @@ export default StyleSheet.create({
         },
         licence: {
         marginTop:20,
-        height: 100,
-        width: 120,
+        
+        height: 250,
+        width: 350,
         alignSelf: 'center'
         },
+        licence1: {
+          marginTop:20,
+          height: 150,
+          width: 150,
+          borderRadius:75,
+          alignSelf: 'center'
+          },
         modalContainer: {
         backgroundColor: '#000000',
         flex: 1,

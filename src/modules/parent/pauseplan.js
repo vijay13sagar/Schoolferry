@@ -105,7 +105,7 @@ const PausePlan = ({route, navigation}) => {
       <Loader loading={loader} />
 
       <View style={[data.pauseEndDate ? styles.biggerBox : styles.pausePlan]}>
-        <Text style={styles.mainHeading1}>Pause Plan Details</Text>
+        <Text style={{...styles.mainHeading1,marginBottom:5,}}>Pause Plan Details</Text>
         <Text style={styles.heading}>Total number of pauses - 03</Text>
 
         {!data.pauseEndDate ? null : (
@@ -129,7 +129,7 @@ const PausePlan = ({route, navigation}) => {
           justifyContent: 'center',
           marginTop: 20,
         }}>
-        <Text style={{fontWeight: 'bold', fontSize: 20}}>Pause Plan :-</Text>
+        <Text style={{fontWeight: 'bold', fontSize: 18}}>Pause Plan :-</Text>
       </View>
       <View style={styles.headertext}>
         <Text style={styles.registerTextStyle}>

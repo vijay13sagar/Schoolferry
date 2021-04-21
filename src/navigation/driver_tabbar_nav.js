@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { Text, View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import Home from '../modules/driver/homepage';
 import Checklist from '../modules/driver/checklist';
-import Notifications from '../modules/driver/notification';
+import Notifications from '../components/notification';
 import Profile_Driver from '../modules/driver/profile';
 import changePassword from '../components/changepassword';
 import updateProfile from '../modules/driver/updateprofile';
@@ -29,7 +28,6 @@ function Homepage() {
         headerTintColor: 'black',
         headerTitleStyle: { fontWeight: 'bold' },
         headerTitleAlign: 'center',
-        //headerShown: false
       }}>
       <Stack.Screen
         name="Homey"
@@ -59,7 +57,6 @@ function Map() {
         headerTintColor: 'black',
         headerTitleStyle: { fontWeight: 'bold' },
         headerTitleAlign: 'center'
-        //headerShown: false
       }}>
       <Stack.Screen
         name="Tripnotstarted"
@@ -84,7 +81,6 @@ function History() {
         headerTintColor: 'black',
         headerTitleStyle: { fontWeight: 'bold' },
         headerTitleAlign: 'center'
-        //headerShown: false
       }}>
       <Stack.Screen
         name="Trip_history"
@@ -102,16 +98,15 @@ function History() {
 function Notices() {
   return (
     <Stack.Navigator
-      initialRouteName="notifications"
+      initialRouteName="Notifications page"
       screenOptions={{
         headerStyle: { backgroundColor: '#fff' },
         headerTintColor: 'black',
         headerTitleStyle: { fontWeight: 'bold' },
         headerTitleAlign: 'center'
-        //headerShown: false
       }}>
       <Stack.Screen
-        name="notifications"
+        name="Notifications page"
         component={Notifications}
         options={{ title: 'Notifications' }}
       />

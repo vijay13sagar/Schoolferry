@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, StatusBar, TouchableOpacity,Linking, StyleSheet, FlatList, Text, View } from 'react-native';
+import { ActivityIndicator, StatusBar, TouchableOpacity,Linking, FlatList, Text, View } from 'react-native';
 import { Container, Header, Content, Card, CardItem, Body } from 'native-base';
-import { ScrollView } from 'react-native-gesture-handler';
 import Ngrok from '../../constants/ngrok';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -36,11 +35,7 @@ export default class Triplist extends Component {
       <View style={styles.container}>
         <Loader loading = {isLoading}/>
         <StatusBar
-        barStyle="light-content"
-        hidden={false}
-        backgroundColor="#FF5C00"
-        //Background color of statusBar only works for Android
-        translucent={false}
+        barStyle="light-content" hidden={false} backgroundColor="#FF5C00" translucent={true}
       />
         <View style={styles.pendingTrips}>
         <Text style={styles.tripsTitleText}>Today's Trips</Text>

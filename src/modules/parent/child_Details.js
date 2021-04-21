@@ -5,7 +5,8 @@ import {Card, CardItem, Body} from 'native-base';
 
 export default function Trip_Details({route}) {
   const nannyid = route.params.nannyId;
-  console.log(route.params)
+  const driverPhoto = route.params.driverPhotoUrl;
+  const NannyPhoto = route.params.nannyphotoUrl;
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -15,13 +16,22 @@ export default function Trip_Details({route}) {
         </CardItem>
         <CardItem bordered>
           <Body style={{flexDirection: 'row'}}>
-            <Image
-              style={styles.tripdDetailsImage}
-              source={{
-                uri:
-                  'https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg',
-              }}
-            />
+            {driverPhoto && driverPhoto !== 'NULL' ? (
+              <Image
+                style={styles.tripdDetailsImage}
+                source={{
+                  uri: route.params.driverPhotoUrl,
+                }}
+              />
+            ) : (
+              <Image
+                style={styles.tripdDetailsImage}
+                source={{
+                  uri:
+                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQS0E1095uZGr8SfFNizuXsMxB3S9iNuisOtw&usqp=CAU',
+                }}
+              />
+            )}
             <View style={styles.detailsBox}>
               <View
                 style={{
@@ -63,13 +73,22 @@ export default function Trip_Details({route}) {
           </CardItem>
           <CardItem bordered>
             <Body style={{flexDirection: 'row'}}>
+            {NannyPhoto && NannyPhoto !== 'NULL' ? (
+              <Image
+                style={styles.tripdDetailsImage}
+                source={{
+                  uri: route.params.nannyphotoUrl,
+                }}
+              />
+            ) : (
               <Image
                 style={styles.tripdDetailsImage}
                 source={{
                   uri:
-                    'https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg',
+                    'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/grandma_elderly_nanny_avatar-512.png',
                 }}
               />
+            )}
               <View style={styles.detailsBox}>
                 <View
                   style={{
@@ -116,7 +135,7 @@ export default function Trip_Details({route}) {
               style={styles.tripdDetailsImage}
               source={{
                 uri:
-                  'https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg',
+                  'https://assets.classy.org/7540108/fda4573e-f7ea-11e8-b8cd-0e0b3a1f72a8.png',
               }}
             />
             <View style={styles.detailsBox}>

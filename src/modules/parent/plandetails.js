@@ -68,17 +68,17 @@ const App = ({route, navigation}) => {
         <View>
           <Text style={styles.inputView1}>{maxDate}</Text>
         </View>
-        <View style={styles.textview}>
+        <View>
           <Text style={styles.headertext1}>End Date</Text>
-          <Text style={styles.inputView1}>{tomorrow}</Text>
+          <Text style={{...styles.inputView1,marginTop:3}}>{tomorrow}</Text>
         </View>
-        <View style={styles.textview}>
+        <View>
           <Text style={styles.headertext1}>Cost</Text>
-          <Text style={styles.inputView1}>{route.params.item.total}</Text>
+          <Text style={{...styles.inputView1,marginTop:3}}>{route.params.item.total}</Text>
         </View>
-        <View style={styles.textview}>
+        <View>
           <Text style={styles.headertext1}>School Name</Text>
-          <Text style={styles.inputView1}>{route.params.schooladdress}</Text>
+          <Text style={{...styles.inputView1,marginTop:3}}>{route.params.schooladdress}</Text>
         </View>
         <Text style={styles.error}>{valueError}</Text>
         <TouchableOpacity

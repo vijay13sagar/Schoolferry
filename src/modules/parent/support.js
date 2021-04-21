@@ -23,7 +23,7 @@ const Support = () => {
         title="AdminSchoolferry@gmail.com">
         <Text style={styles.loginText}>
           {' '}
-          Write a Mail <Ionicons name="mail" color="white" size={20} />
+          Write a Mail <Ionicons name="mail" color="white" size={19}/>
         </Text>
       </TouchableOpacity>
       <View style={{marginTop: 70}}>
@@ -36,7 +36,7 @@ const Support = () => {
             Linking.openURL('tel:8192856814');
           }}>
           <Text style={styles.loginText}>
-            Make a Call <Ionicons name="call" color="white" size={20} />
+            Make a Call <Ionicons name="call" color="white" size={19} />
           </Text>
         </TouchableOpacity>
       </View>

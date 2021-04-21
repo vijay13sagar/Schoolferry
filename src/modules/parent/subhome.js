@@ -5,6 +5,7 @@ import {
   StatusBar,
   TouchableOpacity,
   View,
+  Image,
 } from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
@@ -17,6 +18,7 @@ import Loader from '../../components/Loader';
 import styles from '../../components/style';
 import ToastComponent from '../../components/Toaster';
 import * as ToastMessage from '../../constants/ToastMessages';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const subscribedHome = ({route, navigation}) => {
   const [selectedStartDate, setselectedStartDate] = useState('');
@@ -53,7 +55,6 @@ const subscribedHome = ({route, navigation}) => {
           const response = await axios(
             `${Ngrok.url}/api/parent/childlist/${token}`,
           );
-
           setPickerValue(response.data.childList);
           setValue(response.data.childList[0].name);
           setLoading(false);
@@ -90,10 +91,8 @@ const subscribedHome = ({route, navigation}) => {
           return data;
         })
       : [];
-
   const cancelHandler = async () => {
     let child_id = await value1[0].id;
-
     if (startDate == 'Invalid date' || endDate == 'Invalid date') {
       setError('Please select start/end date');
     } else {
@@ -153,13 +152,31 @@ const subscribedHome = ({route, navigation}) => {
           onValueChange={(value) => setValue(value)}>
           {myUsers()}
         </Picker>
+
+        <TouchableOpacity style={{...styles.profileView,marginTop:0,marginBottom:8}}>
+          {Boolean(value1[0].photoUrl) && value1[0].photoUrl !== 'NULL' ? (
+            <Image
+              style={{height: '100%', width: '100%', borderRadius: 50}}
+              source={{uri: value1[0].photoUrl}}
+            />
+          ) : (
+            <Image
+              style={{height: '100%', width: '100%', borderRadius: 50}}
+              source={{
+                uri:
+                  'https://www.shareicon.net/data/512x512/2016/06/25/786525_people_512x512.png',
+              }}
+            />
+          )}
+        </TouchableOpacity>
+
         <View
           style={{
             marginLeft: 20,
             alignSelf: 'flex-start',
             justifyContent: 'center',
           }}>
-          <Text style={{fontWeight: 'bold', fontSize: 21}}>
+          <Text style={{fontWeight: 'bold', fontSize: 18}}>
             Trips For Today :-
           </Text>
         </View>
@@ -172,12 +189,16 @@ const subscribedHome = ({route, navigation}) => {
                 onPress={() => navigation.navigate('Trip_details', item)}>
                 <Text
                   style={{
-                    justifyContent: 'center',
-                    marginTop: 6,
-                    marginLeft: 10,
+                    marginLeft:10,
+                    fontSize:15,
+                    alignSelf:'center'
                   }}>
                   {item.tripId}
                 </Text>
+                <Ionicons name="chevron-forward-outline"
+                  color="#000" size={19}
+                  style={{alignSelf:'center',marginRight:10}}
+                />
               </TouchableOpacity>
             ))
           ) : (
@@ -192,7 +213,7 @@ const subscribedHome = ({route, navigation}) => {
             alignSelf: 'flex-start',
             justifyContent: 'center',
           }}>
-          <Text style={{fontWeight: 'bold', fontSize: 21}}>
+          <Text style={{fontWeight: 'bold', fontSize: 18}}>
             Plan Details :-
           </Text>
         </View>
@@ -232,7 +253,7 @@ const subscribedHome = ({route, navigation}) => {
             justifyContent: 'center',
             marginTop: 10,
           }}>
-          <Text style={{fontWeight: 'bold', fontSize: 20}}>
+          <Text style={{fontWeight: 'bold', fontSize: 18}}>
             Cancelation of Ride :-
           </Text>
         </View>

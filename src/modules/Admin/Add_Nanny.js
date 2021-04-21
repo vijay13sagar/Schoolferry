@@ -7,7 +7,7 @@ import {
   Image,
   TouchableOpacity,
   Alert,
-  Modal, ImageBackground, CameraRoll, ScrollView,
+  Modal,ScrollView,
 
 } from "react-native";
 import Ngrok from '../../constants/ngrok';
@@ -19,21 +19,20 @@ import ImagePicker from 'react-native-image-crop-picker';
 import ToastComponent from '../../components/Toaster';
 import * as ToastMessage from '../../constants/ToastMessages';
 import storage from '@react-native-firebase/storage';
+import AsyncStorage from '@react-native-community/async-storage';
+import 'react-native-get-random-values';
+import { v4 as uuidv4 } from "uuid";
 
 export default function Add_Nanny({ navigation }) {
   const [isloading, setLoading] = useState(false);
   const [img, setImg] = useState('https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg');
   const [pic, setPic] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [email, setEmail] = useState("");
   const [name, setname] = useState("");
   const [password, setpassword] = useState("");
   const [contact, setcontact] = useState("");
   const [ADR, setADR] = useState("");
-
-  const [EXP, setEXP] = useState("");
-  const [{ emailError }, setEmailError] = useState("");
-  const [{ contactError }, setcontactError] = useState("");
+ 
   const [{ emptyFields }, setemptyFeilds] = useState("");
   const [showtoast, setToast] = useState(false)
   const [message, SetMessage] = useState()
@@ -42,14 +41,15 @@ export default function Add_Nanny({ navigation }) {
   const [modalVisible1, setModalVisible1] = useState(false);
   const gallery1 = () => {
     ImagePicker.openPicker({
-      // width: 350,
-      // height: 175,
+     
       compressImageMaxHeight: 350,
       compressImageMaxHeight: 175,
       cropping: true
-    }).then(image => {
-      console.log(image);
-      setImg1(image.path)
+    }).then(async image => {
+     
+      await setImg1(image.path);
+      upload2();
+      
     });
   }
   const Camera1 = () => {
@@ -57,19 +57,19 @@ export default function Add_Nanny({ navigation }) {
       compressImageMaxHeight: 350,
       compressImageMaxHeight: 175,
       cropping: true,
-    }).then(image => {
-      console.log(image);
-      setImg1(image.path)
+    }).then(async image => {
+      
+      await setImg1(image.path)
+      upload2();
     });
-  }
-  const press1 = () => {
-    setPic1(true)
   }
   const backpress1 = () => {
     setPic1(false)
+   setModalVisible1(!modalVisible1)
   }
   const pick1 = () => {
     setModalVisible1(true);
+    setPic1(true)
   }
   const validateEmail = (email) => {
     const regex_mail = /^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)$/;
@@ -90,14 +90,15 @@ export default function Add_Nanny({ navigation }) {
   };
   const gallery = () => {
     ImagePicker.openPicker({
-      // width: 350,
-      // height: 175,
+     
       compressImageMaxHeight: 350,
       compressImageMaxHeight: 175,
       cropping: true
-    }).then(image => {
-      console.log(image);
-      setImg(image.path)
+    }).then(async image => {
+      
+      await setImg(image.path)
+      upload1();
+      
     });
   }
   const Camera = () => {
@@ -105,71 +106,75 @@ export default function Add_Nanny({ navigation }) {
       compressImageMaxHeight: 350,
       compressImageMaxHeight: 175,
       cropping: true,
-    }).then(image => {
-      console.log(image);
-      setImg(image.path)
+    }).then(async image => {
+     
+      await setImg(image.path)
+      upload1();
     });
   }
-  const upload1 = async (id) => {
-    console.log("img",img);
-    let imageName = `${id}/profile`;
+  const upload1 = async () => {
+    let imageName  =`Driver/profile/${uuidv4()}`;
+    //let imageName = `${id}/profile`;
     let s=decodeURI(img)
     storage()
       .ref(imageName)
       .putFile(s)
-      .then((snapshot) => {
-        console.log(`${imageName} has been successfully uploaded.`);
-        Alert.alert('Image Uploaded Successfully')
+      .then(async (snapshot) => {
+       
+        Alert.alert('Image Uploaded Successfully');
+        let imageRef=storage().ref(imageName)
+        const url1 =await imageRef.getDownloadURL().catch((error) => { throw error });
+        console.log("url",url1);
       })
       .catch((e) => {
-        console.log('uploading image error => ', e);
+        
         Alert.alert('Uploading Failed');
-        //setImg('https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg');
+        
     }
       );
   }
-  const upload2 = async (id) => {
-    console.log("img",img1);
-    let imageName = `${id}/license`;
+  const upload2 = () => {
+    let imageName  =`Driver/id/${uuidv4()}`;
+    console.log("name",imageName);
+    //let imageName = `${id}/license`;
     let s=decodeURI(img1)
     storage()
       .ref(imageName)
       .putFile(s)
-      .then((snapshot) => {
-        console.log(`${imageName} has been successfully uploaded.`);
+      .then(async (snapshot) => {
+       console.log("snapshot",snapshot);
         Alert.alert('Image Uploaded Successfully')
-      })
+        let imageRef=storage().ref(imageName)
+        const url2 =await imageRef.getDownloadURL().catch((error) => { throw error });
+  console.log("url",url2);
+        })
       .catch((e) => {
-        console.log('uploading image error => ', e);
+        
         Alert.alert('Uploading Failed');
-        //setImg('https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg');
+       
     }
       );
   }
-  const press = () => {
-    setPic(true)
-  }
+  
   const backpress = () => {
     setPic(false)
+     setModalVisible(!modalVisible)
   }
   const pick = () => {
     setModalVisible(true);
+    setPic(true)
   }
 
 
   const validateFunction = () => {
 
     if (!name || !contact || !ADR || !password) {
-      setemptyFeilds({ emptyFields: "Please Enter All The Details" })
-      setcontactError({ contactError: null })
-      setEmailError({ emailError: null })
+      setemptyFeilds({ emptyFields:"Please Enter All The Details" })
       return false
     }
 
     else if (!validatecontact(contact)) {
-      setcontactError({ contactError: "Enter Valid Phone Number" })
-      setEmailError({ emailError: null })
-      setemptyFeilds({ emptyFields: null })
+      setemptyFeilds({ emptyFields: "Enter Valid Phone Number" })
       return false
     }
 
@@ -178,12 +183,9 @@ export default function Add_Nanny({ navigation }) {
   }
 
   function pressHandler() {
-    console.log("validation", validateFunction())
+   
     if (validateFunction()) {
-
-      console.log("apistarts")
-
-      try {
+ try {
         setLoading(true);
 
         axios({
@@ -196,12 +198,10 @@ export default function Add_Nanny({ navigation }) {
           },
           data: {
             name: name,
-            email: email,
             contact: contact,
             address: ADR,
-            experience: EXP,
-            photourl: "NULL",
-            idproofurl: "NULL",
+            photourl: url1,//"NULL",
+            idproofurl: url2,//"NULL",
             password: password
 
 
@@ -210,43 +210,36 @@ export default function Add_Nanny({ navigation }) {
           .then(async function (response) {
             setLoading(false);
             if (response.status == 200) {
-              console.log("ID",response.data);
-              upload1(response.data);
-              upload2(response.data);
               Alert.alert('Registration Successful', '', [{ text: 'Proceed', onPress: () => navigation.navigate('Employee',) }])
             }
-
-            console.log("response", response.status);
           })
           .catch(function (error) {
             setLoading(false);
-            console.log(error.response.status) // 401
-            console.log(error.response.data.error) //Please Authenticate or whatever returned from server
+           
             if (error.response.status == 401) {
-              //redirect to login
-              // Alert.alert('Phone Number Alredy Exist!')
+              console.log("sgyg");
               setToast(true)
               setLoading(false);
             }
-
           })
       }
       catch (error) {
         setLoading(false);
-        console.log("errordetails", error);
+       
       }
     }
     setToast(false)
   }
 
-
   return (
     <View style={styles.container3}>
+       <Loader loading={isloading} />
+
       {showtoast ? (<ToastComponent type={ToastMessage.failure} message={ToastMessage.message3} />) : null}
       <ScrollView>
       <View >
         {pic ?
-          <View style={{ width: "100%", height: "100%", backgroundColor: 'black' }}>
+          <View >
             <Modal animationType="slide" transparent={true} visible={modalVisible}>
               <View style={styles.modalContainer}>
                 <Ionicons
@@ -254,7 +247,7 @@ export default function Add_Nanny({ navigation }) {
                   color="#fff"
                   size={30}
                   style={styles.icon}
-                  onPress={(modalVisible) => setModalVisible(!modalVisible)}
+                  onPress={backpress}
                 />
                 <View style={styles.modalBody1}>
                   <TouchableOpacity
@@ -262,11 +255,11 @@ export default function Add_Nanny({ navigation }) {
                     onPress={Camera}>
                     <Text
                       style={{
-                        color: '#1E90FF',
+                        color: 'black',
                         fontSize: 19,
                       }}>
                       Open Camera <Ionicons name="camera"
-                        color="#1E90FF" size={25}
+                        color="#FF5C00" size={25}
                         style={styles.icon}
                       />
                     </Text>
@@ -276,38 +269,24 @@ export default function Add_Nanny({ navigation }) {
                     onPress={gallery}>
                     <Text
                       style={{
-                        color: '#1E90FF',
+                        color: 'black',
                         fontSize: 19,
                       }}>
                       Choose From Gallery <Ionicons name="folder"
-                        color="#1E90FF" size={25}
+                        color="#FF5C00" size={25}
                         style={styles.icon}
                       />
                     </Text>
                   </TouchableOpacity>
                 </View>
               </View>
-            </Modal>
-            <View style={{ flexDirection: 'row', marginBottom: '35%', marginLeft: 10, marginTop: 10 }}>
-              <TouchableOpacity onPress={backpress} style={{ justifyContent: 'flex-start' }}><Ionicons name="arrow-back"
-                color="#FFF" size={25}
-                style={styles.icon}
-              /></TouchableOpacity>
-              <TouchableOpacity onPress={pick} style={{ marginLeft: '80%' }}><Ionicons name="create"
-                color="#FFF" size={25}
-                style={styles.icon}
-              /></TouchableOpacity>
-            </View>
-            <Image style={{ width: '100%', height: '50%', justifyContent: 'center' }} source={{ uri: img }} />
+            </Modal>        
           </View>
           : <View>
             <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-              <TouchableOpacity onPress={press} >
-                <Image style={styles.licence} source={{ uri: img }} />
-                {/* <Ionicons name="camera"
-      color="white" size={20}
-      style={{backgroundColor:'#FF5C00',marginTop:90,borderRadius:25,justifyContent:'flex-end',alignSelf:'flex-end'}}
-      /> */}
+              <TouchableOpacity onPress={pick} >
+                <Image style={styles.licence1} source={{ uri: img }} />
+                
               </TouchableOpacity>
             </View>
 
@@ -315,91 +294,14 @@ export default function Add_Nanny({ navigation }) {
         }
         <View>
           <Text style={styles.TextInput4}>
-            uploade image
+            user image
            </Text>
         </View>
-      </View>
-      <View>
-        {pic1 ?
-          <View style={{ width: "100%", height: "100%", backgroundColor: 'black' }}>
-            <Modal animationType="slide" transparent={true} visible={modalVisible1}>
-              <View style={styles.modalContainer}>
-                <Ionicons
-                  name="close-circle-outline"
-                  color="#fff"
-                  size={30}
-                  style={styles.icon}
-                  onPress={(modalVisible1) => setModalVisible1(!modalVisible1)}
-                />
-                <View style={styles.modalBody1}>
-                  <TouchableOpacity
-                    style={{ alignSelf: 'center', marginTop: 5 }}
-                    onPress={Camera1}>
-                    <Text
-                      style={{
-                        color: '#1E90FF',
-                        fontSize: 19,
-                      }}>
-                      Open Camera <Ionicons name="camera"
-                        color="#1E90FF" size={25}
-                        style={styles.icon}
-                      />
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={{ alignSelf: 'center', marginTop: 20 }}
-                    onPress={gallery1}>
-                    <Text
-                      style={{
-                        color: '#1E90FF',
-                        fontSize: 19,
-                      }}>
-                      Choose From Gallery <Ionicons name="folder"
-                        color="#1E90FF" size={25}
-                        style={styles.icon}
-                      />
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </Modal>
-            <View style={{ flexDirection: 'row', marginBottom: '35%', marginLeft: 10, marginTop: 10 }}>
-              <TouchableOpacity onPress={backpress1} style={{ justifyContent: 'flex-start' }}><Ionicons name="arrow-back"
-                color="#FFF" size={25}
-                style={styles.icon}
-              /></TouchableOpacity>
-              <TouchableOpacity onPress={pick1} style={{ marginLeft: '80%' }}><Ionicons name="create"
-                color="#FFF" size={25}
-                style={styles.icon}
-              /></TouchableOpacity>
-            </View>
-            <Image style={{ width: '100%', height: '50%', justifyContent: 'center' }} source={{ uri: img1 }} />
-          </View>
-
-          : <View>
-            <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-              <TouchableOpacity onPress={press1} >
-                <Image style={styles.licence} source={{ uri: img1 }} />
-                {/* <Ionicons name="camera"
-      color="white" size={20}
-      style={{backgroundColor:'#FF5C00',marginTop:90,borderRadius:25,justifyContent:'flex-end',alignSelf:'flex-end'}}
-      /> */}
-              </TouchableOpacity>
-            </View>
-
-          </View>
-        }
-        <View>
-          <Text style={styles.TextInput4}>
-            uploade ID Proof
-           </Text>
         </View>
-      </View>
+       
+      
 
-
-
-      <Loader loading={isloading} />
-
+     
       <View style={styles.inputView1}>
         <TextInput
           style={styles.TextInput2}
@@ -436,9 +338,69 @@ export default function Add_Nanny({ navigation }) {
           onChangeText={(password) => setpassword(password)}
         />
       </View>
+      <View >
+        {pic1 ?
+          <View >
+            <Modal animationType="slide"  transparent={true} visible={modalVisible1}>
+              <View style={styles.modalContainer}>
+                <Ionicons
+                  name="close-circle-outline"
+                  color="#fff"
+                  size={30}
+                  style={styles.icon}
+                  onPress={backpress1}
+                />
+                <View style={styles.modalBody1}>
+                  <TouchableOpacity
+                    style={{ alignSelf: 'center', marginTop: 5 }}
+                    onPress={Camera1}>
+                    <Text
+                      style={{
+                        color: 'black',
+                        fontSize: 19,
+                      }}>
+                      Open Camera <Ionicons name="camera"
+                        color="#FF5C00" size={25}
+                        style={styles.icon}
+                      />
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={{ alignSelf: 'center', marginTop: 20 }}
+                    onPress={gallery1}>
+                    <Text
+                      style={{
+                        color: 'black',
+                        fontSize: 19,
+                      }}>
+                      Choose From Gallery <Ionicons name="folder"
+                        color="#FF5C00" size={25}
+                        style={styles.icon}
+                      />
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </Modal>
+          </View>
+         
+          : <View>
+            <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+              <TouchableOpacity onPress={pick1} >
+                <Image style={styles.licence} source={{ uri: img1 }} />
+              
+              </TouchableOpacity>
+            </View>
+
+          </View>
+        }
+        <View>
+          <Text style={styles.TextInput4}>
+           Licence
+           </Text>
+        </View>
+        </View>
       <Text style={styles.error}>{emptyFields}</Text>
-      <Text style={styles.error}>{emailError}</Text>
-      <Text style={styles.error}>{contactError}</Text>
       <TouchableOpacity style={styles.loginBtn} onPress={pressHandler} >
         <Text style={styles.TextInput}>Confirm</Text>
 
@@ -448,4 +410,3 @@ export default function Add_Nanny({ navigation }) {
     
   );
 }
-

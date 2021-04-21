@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import {  StatusBar, FlatList, Text, View } from 'react-native';
 import { Card, CardItem, Body } from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Ngrok from '../../constants/ngrok';
+import Ngrok from '../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
-import Loader from '../../components/Loader';
-import styles from '../../components/style';
+import Loader from './Loader';
+import styles from './style';
 
 
 export default class Notificationlist extends Component {
@@ -33,7 +33,6 @@ export default class Notificationlist extends Component {
       .then((json) => {
         this.setState({ data: json });
         this.setState({item1:json.map(child=>({...child,attend:false}))})
-        console.log("not",this.state.item1);
       })
       .catch((error) => console.error(error))
       .finally(() => {
@@ -55,7 +54,6 @@ export default class Notificationlist extends Component {
       }
       return child
       })
-      console.log("why",data1);
       this.setState({item1:data1})
   }
   render() {
@@ -97,9 +95,6 @@ export default class Notificationlist extends Component {
                 <Text style={styles.notice}>{item.date}</Text>
               </View>
               <Text style={styles.notice}>{item.message}</Text>
-                  {/* <Text>
-                    {item.title},{item.date},{item.message}
-                  </Text> */}
                 </Body>
               </Card> : null}
             </View>

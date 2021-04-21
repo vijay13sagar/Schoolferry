@@ -79,6 +79,7 @@ export default function Login({navigation}) {
           }
         })
         .catch(function (error) {
+          console.error(error);
           setLoading(false);
           if (error.response.status == 401) {
             if (error.response.data.message == 'Token not provided') {
@@ -95,6 +96,9 @@ export default function Login({navigation}) {
               setToast(true);
               SetMessage(ToastMessage.message1);
             }
+          } else {
+            setToast(true);
+            SetMessage(ToastMessage.message5);
           }
         });
       setToast(false);

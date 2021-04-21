@@ -17,3 +17,4 @@ export const picmess = 'Picture Updated Successfully';
 export const updateProfile = 'Profile Updated Successfully';
 export const incorrectOtp = 'Incorrect OTP';
 export const ResendOTP = 'OTP not sent, click on resend OTP';
+export const ImageSuccessful = 'Profile picture uploaded successfully'
