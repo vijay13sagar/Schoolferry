@@ -129,9 +129,9 @@ const showplanScreen = ({route, navigation}) => {
         </Picker>
       </View>
 
-      <View style={{height: 320}}>
+      <View style={{height: 325}}>
         <FlatList
-          style={{...styles.flatlist, marginTop: 5}}
+          style={{...styles.flatlist, marginTop: 10}}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           data={Boolean(value1.length) && value1[0].plans}
@@ -183,7 +183,7 @@ const showplanScreen = ({route, navigation}) => {
         />
       </View>
       {Boolean(value1.length) && value1[0].status == 'subscribed' ? (
-        <Text style={{color: '#ce1212', marginHorizontal: 5, marginTop: 5,fontWeight:'700'}}>
+        <Text style={{color: '#ce1212', marginHorizontal: 5, marginTop: 10,fontWeight:'700'}}>
           {' '}
           * Nanny service is compulsory for children below 9 years.
         </Text>

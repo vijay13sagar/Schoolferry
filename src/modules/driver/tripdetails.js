@@ -8,9 +8,10 @@ import {
   StatusBar,
   FlatList,
   TouchableOpacity,
-  Modal,
+  Modal,Image,
   Switch,
 } from 'react-native';
+import { Card, CardItem, Body } from 'native-base'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
 import Ngrok from '../../constants/ngrok';
@@ -141,7 +142,7 @@ const Checklist = ({route, navigation}) => {
             onPress={(modalVisible) => setModalVisible(!modalVisible)}
           />
           <View style={styles.modalBody}>
-            <Text style={styles.message}>Child Details</Text>
+            <Image style={styles.licence1} source={require('../../assets/UPI1.png')} />
             <Text style={styles.newsText}>Name - {item1.childName} </Text>
             <Text style={styles.newsText}>Age - {item1.age}</Text>
             <Text style={styles.newsText}>
@@ -243,7 +244,20 @@ const Checklist = ({route, navigation}) => {
                 marginTop: 20,
                 alignSelf: 'center',
               }}>
-              <TouchableOpacity
+
+              <Card style={styles.card3}>
+                <CardItem button onPress={() =>{setModalVisible(!modalVisible)
+                  setItem1(item);
+                }}>
+                  <Body style={{ flexDirection: 'row' }}>
+                    <Image style={styles.payicon} source={require('../../assets/UPI1.png')} />
+                    <Text style={{ fontSize: 17, fontWeight: '700', marginLeft: 100 }}>
+                    {item.childName}
+                </Text>
+                  </Body>
+                </CardItem>
+              </Card>
+              {/* <TouchableOpacity
                 style={styles.childcard}
                 onPress={() => {
                   setModalVisible(!modalVisible);
@@ -252,7 +266,7 @@ const Checklist = ({route, navigation}) => {
                 <Text style={styles.itemText}>
                   {item.childName}
                 </Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
               <Switch
                 value={item.attendance}
                 onValueChange={(value) => {
