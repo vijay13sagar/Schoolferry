@@ -1,17 +1,12 @@
 import React, {useState} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
+import {Text, View, TextInput, TouchableOpacity} from 'react-native';
 import Ngrok from '../../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
 import Loader from '../../components/Loader';
 import styles from '../../components/style';
 import ToastComponent from '../../components/Toaster';
 import * as ToastMessage from '../../constants/ToastMessages';
+import axios from 'axios';
 
 const updateProfile = ({route, navigation}) => {
   const [name, setName] = useState(route.params.name);
@@ -31,33 +26,27 @@ const updateProfile = ({route, navigation}) => {
     if (!name || !contact || !email || !address) {
       setError({error: 'Please fill all details'});
     } else if (!regex_phone.test(contact)) {
-      alert('Please enter valid contact number');
+      setError({error: 'Please enter valid contact'});
     } else {
       setLoading(true);
-      fetch(`${Ngrok.url}/api/profileupdate/parent`, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+      axios
+        .post(`${Ngrok.url}/api/profileupdate/parent`, {
           id: token,
           contact: contact,
           email: email,
           address: address,
-        }),
-      })
-        .then((response) => response.json())
-        .then((responseJson) => {
-          console.log(responseJson.message);
+        })
+        .then(function (response) {
           setLoading(false);
-          if (responseJson.message == 'data updated successfully') {
-            //Alert.alert('Profile Updated Successfully')
+          if (response.data.message == 'data updated successfully') {
             setToast(true);
             setType(ToastMessage.success);
             SetMessage(ToastMessage.updateProfile);
-           
-          } else if (responseJson.status == 401) {
+          }
+        })
+        .catch(function (error) {
+          setLoading(false);
+          if (error.response.status == 401) {
             setToast(true);
             setType(ToastMessage.failure);
             SetMessage(ToastMessage.message3);
@@ -66,17 +55,13 @@ const updateProfile = ({route, navigation}) => {
             setType(ToastMessage.failure);
             SetMessage(ToastMessage.message5);
           }
-        })
-        .catch((err) => {
-          setLoading(false);
-          console.log(err);
         });
     }
-    setToast(false)
+    setToast(false);
   };
 
   return (
-    <View style={styles.cont}>
+    <View style={styles.container}>
       {showtoast ? <ToastComponent type={type} message={message} /> : null}
       <Loader loading={isloading} />
       <Text style={styles.text}>Enter details to be changed</Text>
@@ -109,7 +94,6 @@ const updateProfile = ({route, navigation}) => {
           value={email}
         />
       </View>
-
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}

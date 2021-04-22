@@ -14,26 +14,30 @@ import styles from '../../components/styles_admin'
 
 export default function child_Details({ route, navigation }){
  
- 
 
-  
+  const [userrimg, setuserImg] = useState(route.params.item.photoUrl);
+  const [dimg, setdImg] = useState('https://www.shareicon.net/data/512x512/2016/06/25/786525_people_512x512.png');
  
   
   return (
     
-   
+    <ScrollView>
     <View style={styles.container}>
+      
       <StatusBar style="auto" />
-        <View style={{width:"70%",marginRight:50,}}>
-        <Text>Name</Text></View> 
+      <Image style={styles.licence1} source={userrimg ? {uri:userrimg} : {uri:dimg}} />
         
-        <View style={styles.details}>
-        <Text>
-          
-          {route.params.item.childName}
-          
-        </Text>
-      </View>
+       <View style={{marginTop:10,marginBottom:10,alignSelf: "center",}}>
+       
+        
+       <Text style={{ fontSize: 22,
+       color: "black",
+       fontWeight: '700',
+       
+   }}>
+         {route.params.item.childName}
+         </Text>
+     </View> 
       <View style={{width:"70%",marginRight:50}}>
         <Text>school</Text></View> 
       
@@ -90,9 +94,9 @@ export default function child_Details({ route, navigation }){
       <Text  style={styles.subText}>Cost:- {route.params.item.subscription.cost} </Text>
      
       </View>
-
+     
     </View>
-   
+    </ScrollView>
 
   );
 

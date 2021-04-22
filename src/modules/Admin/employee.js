@@ -1,6 +1,5 @@
 import React , { useState } from "react";
 import {
-  StyleSheet,
   Text,
   View,
   TextInput,
@@ -8,11 +7,9 @@ import {
   Alert,
   StatusBar,
   ScrollView,
-  FlatList,
 } from "react-native";
 import Ngrok from '../../constants/ngrok';
 import axios from 'axios';
-import AsyncStorage from '@react-native-community/async-storage';
 import { Picker } from '@react-native-picker/picker';
 import Loader from '../../components/Loader';
 import styles from '../../components/styles_admin'
@@ -54,9 +51,7 @@ const Employee = ({ navigation }) => {
   }
 
   function pressHandler() {
-
     if (validateFunction()) {
-      console.log("start");
       try {
         setLoading(true);
         axios({
@@ -80,16 +75,12 @@ const Employee = ({ navigation }) => {
               setLoading(false);
               Alert.alert('Notification Sent')
             }
-
-            console.log("response", response.status);
           })
           .catch(function (error) {
             setLoading(false);
-            console.log(error.response.status) // 401
-            console.log(error.response.data.error) //Please Authenticate or whatever returned from server
             if (error.response.status == 401) {
 
-              // Alert.alert('Please try again!')
+              
               setToast(true)
             }
 
@@ -98,7 +89,8 @@ const Employee = ({ navigation }) => {
       }
       catch (error) {
         setLoading(false);
-        console.log("errordetails", error);
+        
+        setToast(true)
       }
     }
     setToast(false)
@@ -109,14 +101,10 @@ const Employee = ({ navigation }) => {
       {showtoast? (<ToastComponent type = {ToastMessage.failure}  message = {ToastMessage.message5}/>): null}
 
       <StatusBar
-        barStyle="light-content"
-        // dark-content, light-content and default
-        hidden={false}
-        //To hide statusBar
+        barStyle="light-content"       
+        hidden={false}        
         backgroundColor='#FF5C00'
-        //Background color of statusBar only works for Android
         translucent={false}
-      //allowing light, but not detailed shapes
 
       />
       <Loader loading={isloading} />
@@ -157,7 +145,7 @@ const Employee = ({ navigation }) => {
         <TextInput
           style={styles.TextInput2}
 
-          keyboardType="numeric"
+         
           placeholderTextColor="#929292"
           onChangeText={(title) => settitle(title)}
         />

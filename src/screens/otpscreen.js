@@ -1,11 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
+import {Text, View, TextInput, TouchableOpacity} from 'react-native';
 import axios from 'axios';
 import Ngrok from '../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -22,9 +16,7 @@ const Otpscreen = ({route, navigation}) => {
   const [showtoast, setToast] = useState(false);
   const [message, SetMessage] = useState();
 
-  console.log('params', route.params);
   const email = route.params.item;
-  console.log('email', email);
 
   useEffect(() => {
     Resendotp();
@@ -32,12 +24,9 @@ const Otpscreen = ({route, navigation}) => {
 
   const Resendotp = () => {
     setLoading(true);
-    console.log('email', email);
     axios
       .get(`${Ngrok.url}/api/user/${email}`)
       .then(function (response) {
-        console.log('otpstat', response.status);
-        console.log('otpmsg', response.data.message);
         setLoading(false);
       })
       .catch(function (error) {
@@ -46,10 +35,8 @@ const Otpscreen = ({route, navigation}) => {
         SetMessage(ToastMessage.ResendOTP);
         console.log('error', error.message);
       })
-      .finally(function () {
-        // always executed
-      });
-      setToast(false);  
+      .finally(function () {});
+    setToast(false);
   };
 
   const Validateotp = async () => {
@@ -58,7 +45,6 @@ const Otpscreen = ({route, navigation}) => {
       setOtpError('OTP Field Cannot be Empty');
     } else {
       let firebaseToken = await AsyncStorage.getItem('FBtoken');
-      console.log('FB token', firebaseToken);
       try {
         axios({
           method: 'POST',
@@ -76,11 +62,8 @@ const Otpscreen = ({route, navigation}) => {
           .then(function (response) {
             setLoading(false);
             if (response.status == 200) {
-              console.log('hi', response.data.verificationStatus);
               if (response.data.verificationStatus == 'verified') {
                 setOtpError(null);
-                console.log('response:', response.data);
-                console.log('login', response.data.login);
 
                 if (response.data.login[1] == 'Parent') {
                   AsyncStorage.setItem('token', response.data.login[0]);
@@ -95,7 +78,6 @@ const Otpscreen = ({route, navigation}) => {
                   AsyncStorage.setItem('token', response.data.login[0]);
                   navigation.replace('Nanny Interface');
                 }
- 
               } else if (response.data.verificationStatus == 'not verified') {
                 setToast(true);
                 SetMessage(ToastMessage.incorrectOtp);
@@ -104,14 +86,10 @@ const Otpscreen = ({route, navigation}) => {
               if (response.data.message == 'OTP not sent') {
                 setToast(true);
                 SetMessage(ToastMessage.ResendOTP);
-                
               } else if (response.data.message == 'Invalid Contact') {
-                //Alert.alert("Enter Valid Contact")
                 setOtpError('Enter Valid Contact');
               }
             }
-
-            console.log('response', response.status);
           })
           .catch(function (error) {
             setLoading(false);
@@ -123,12 +101,14 @@ const Otpscreen = ({route, navigation}) => {
         console.log('errordetails', error);
       }
     }
-    setToast(false)
+    setToast(false);
   };
 
   return (
     <View style={styles.cont2}>
-        {showtoast ? <ToastComponent type={ToastMessage.failure} message={message} /> : null}
+      {showtoast ? (
+        <ToastComponent type={ToastMessage.failure} message={message} />
+      ) : null}
       <Loader loading={isloading} />
       <Text style={styles.tripsTitleText}>Verify Your Mobile Number</Text>
       <Text style={{marginVertical: 20, fontWeight: '300'}}>
@@ -173,45 +153,3 @@ const Otpscreen = ({route, navigation}) => {
 };
 
 export default Otpscreen;
-// const styles = StyleSheet.create({
-//     container: {
-//         flex: 1,
-//         backgroundColor: "#F9F2F2",
-//         alignItems: "center",
-//         justifyContent: 'center'
-//     },
-//     tripsTitleText: {
-//         fontSize: 25,
-//         marginTop: 10,
-//         fontWeight: "bold"
-//     },
-//     otpBoxesContainer: {
-//         flexDirection: 'row'
-//     },
-//     error: {
-//         color: '#DC143C',
-//         fontSize: 11,
-//         alignItems: 'center',
-//         justifyContent: 'center',
-//     },
-//     otpBox: {
-//         padding: 10,
-//         marginRight: 10,
-//         borderWidth: 1,
-//         fontSize: 25,
-//         borderColor: 'lightgrey',
-//         height: 50,
-//         width: 50,
-//         textAlign: 'center'
-//     },
-//     loginBtn: {
-//         width: "50%",
-//         borderRadius: 10,
-//         height: 38,
-//         alignItems: "center",
-//         justifyContent: "center",
-//         backgroundColor: "#ff5c8d",
-//         alignSelf: "center",
-//         marginTop: 20,
-//     },
-// });

@@ -1,40 +1,142 @@
 import React, { useState } from "react";
 import {
-  StyleSheet,
   Text,
   View,
   Image,
   StatusBar,
-  TextInput,
+  Modal,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
-import { event } from "react-native-reanimated";
 import styles from '../../components/styles_admin'
-
+import ImagePicker from 'react-native-image-crop-picker';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default function driver_Details({ route, navigation }){
+  const [dimg, setdImg] = useState('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQS0E1095uZGr8SfFNizuXsMxB3S9iNuisOtw&usqp=CAU');
+  const [dimg1, setdImg1] = useState('https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/grandma_elderly_nanny_avatar-512.png    ');
+  const [img, setImg] = useState(route.params.item.idProofUrl);
+  const [userrimg, setuserImg] = useState(route.params.item.photoUrl);
+  const [modalVisible, setModalVisible] = useState(false);
  
   
-  console.log("this.props",route.params.item.releaseYear);
+const [pic, setPic] = useState(false);
+const gallery = () => {
+  ImagePicker.openPicker({
+    
+    compressImageMaxHeight: 350,
+    compressImageMaxHeight: 175,
+    cropping: true
+  }).then(image => {
+   
+    setImg(image.path)
+  });
+}
+const Camera = () => {
+  ImagePicker.openCamera({
+    compressImageMaxHeight: 350,
+    compressImageMaxHeight: 175,
+    cropping: true,
+  }).then(image => {
+    
+    setImg(image.path)
+  });
+}
+const backpress = () => {
+  setPic(false)
+   setModalVisible(false)
+}
+const pick = () => {
+  setModalVisible(true);
+  setPic(true)
+}
+
   return (
     
     
-    <View style={styles.container2}>
+    <View style={styles.container4}>
+      <ScrollView>
       <StatusBar style="auto" />
-      
-        <View style={{marginRight:285,marginTop:40}}>
-        <Text>Name</Text></View> 
+      <Image style={styles.licence1} source={userrimg == "NULL" ? {uri:dimg} : {uri:userrimg}} />
+      <View style={{marginTop:10,marginBottom:10,alignSelf: "center",}}>
+       
         
-      <View style={styles. details}>
-        <Text>
-          
+        <Text style={{ fontSize: 22,
+        color: "black",
+        fontWeight: '700',
+        
+    }}>
           {route.params.item.name}
-          
           </Text>
-      </View>
+      </View> 
+      <View >
+        {pic ?
+          <View >
+            <Modal animationType="slide" transparent={true} visible={modalVisible}>
+              <View style={styles.modalContainer}>
+                <Ionicons
+                  name="close-circle-outline"
+                  color="#fff"
+                  size={30}
+                  style={styles.icon}
+                  onPress={backpress}
+                />
+                <View style={styles.modalBody1}>
+                  <TouchableOpacity
+                    style={{ alignSelf: 'center', marginTop: 5 }}
+                    onPress={Camera}>
+                    <Text
+                      style={{
+                        color: 'black',
+                        fontSize: 19,
+                      }}>
+                      Open Camera <Ionicons name="camera"
+                        color="#FF5C00" size={25}
+                        style={styles.icon}
+                      />
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={{ alignSelf: 'center', marginTop: 20 }}
+                    onPress={gallery}>
+                    <Text
+                      style={{
+                        color: 'black',
+                        fontSize: 19,
+                      }}>
+                      Choose From Gallery <Ionicons name="folder"
+                        color="#FF5C00" size={25}
+                        style={styles.icon}
+                      />
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </Modal>        
+          </View>
+          : <View>
+            <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+              <TouchableOpacity onPress={pick} >
+                <Image style={styles.licence} source={img=="NULL" ? {uri:dimg1} : {uri:img}} />
+                
+              </TouchableOpacity>
+            </View>
+
+          </View>
+        }
+        
+        </View>
+        <View style={{marginTop:10,marginBottom:10,alignSelf: "center",}}>
+          <Text style={{fontSize: 19,
+        color: "black",
+        fontWeight: '700',
+        
+        alignSelf:"center"}}>
+         License
+           </Text>
+        </View>
      
-      <View style={{marginRight:230}}>
+      <View style={{marginRight:230,alignItems: "center",}}>
         <Text>Phone Number</Text></View> 
         
         <View style={styles. details}>
@@ -45,7 +147,7 @@ export default function driver_Details({ route, navigation }){
           </Text>
       </View>
      
-      <View style={{marginRight:265}}>
+      <View style={{marginRight:265,alignItems: "center",}}>
         <Text>Address</Text></View> 
      
        
@@ -58,7 +160,7 @@ export default function driver_Details({ route, navigation }){
       </View>
      
     
-      <View style={{marginRight:250}}>
+      <View style={{marginRight:250,alignItems: "center",}}>
         <Text>Experience</Text></View> 
        
         <View style={styles. details}>
@@ -68,6 +170,8 @@ export default function driver_Details({ route, navigation }){
           
           </Text>
       </View>
+      
+</ScrollView>
     </View>
     
 

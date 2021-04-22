@@ -18,7 +18,6 @@ import ImagePicker from 'react-native-image-crop-picker';
 import ToastComponent from '../../components/Toaster';
 import * as ToastMessage from '../../constants/ToastMessages';
 import storage from '@react-native-firebase/storage';
-import AsyncStorage from '@react-native-community/async-storage';
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from "uuid";
 
@@ -26,7 +25,7 @@ import { v4 as uuidv4 } from "uuid";
 
 export default function Add_Driver({ navigation }) {
   const [isloading, setLoading] = useState(false);
-  const [img, setImg] = useState('https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg');
+  const [img, setImg] = useState('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQS0E1095uZGr8SfFNizuXsMxB3S9iNuisOtw&usqp=CAU');
   const [pic, setPic] = useState(false);
   const [name, setname] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
@@ -176,14 +175,14 @@ export default function Add_Driver({ navigation }) {
 
     if (!name || !EXP || !contact || !ADR || !LIN || !password) {
       setemptyFeilds({ emptyFields: "Please Enter All The Details" })
-      setcontactError({ contactError: null })
+     
 
       return false
     }
 
     else if (!validatecontact(contact)) {
-      setcontactError({ contactError: "Enter Valid Phone Number" })
-      setEmailError({ emailError: null })
+      setemptyFeilds({ emptyFields:  "Enter Valid Phone Number" })
+     
 
       return false
     }
@@ -201,7 +200,7 @@ export default function Add_Driver({ navigation }) {
 
       try {
         setLoading(true);
-
+        console.log("start",);
         axios({
           method: 'POST',
           url: `${Ngrok.url}/api/admin/register/driver`,
@@ -212,11 +211,11 @@ export default function Add_Driver({ navigation }) {
           data: {
             name: name,
             contact: contact,
-            address: ADR,
-            experience: EXP,
-            photourl: link1,
-            idproofurl: link2,
-            password: password
+            address:ADR,
+            experience:EXP,
+             photourl:link1,
+             idproofurl:link2,
+            password:password
 
           }
         })
@@ -311,7 +310,7 @@ export default function Add_Driver({ navigation }) {
           }
           <View>
             <Text style={styles.TextInput4}>
-              user image
+            Profile Image
            </Text>
           </View>
         </View>
@@ -432,14 +431,13 @@ export default function Add_Driver({ navigation }) {
           }
           <View>
             <Text style={styles.TextInput4}>
-              Licence
+              License
            </Text>
           </View>
         </View>
 
         <Text style={styles.error}>{emptyFields}</Text>
-        <Text style={styles.error}>{emailError}</Text>
-        <Text style={styles.error}>{contactError}</Text>
+       
         <TouchableOpacity style={styles.loginBtn} onPress={pressHandler} >
           <Text style={styles.TextInput}>Confirm</Text>
 

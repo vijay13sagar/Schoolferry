@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, Modal ,TouchableOpacity,StyleSheet, FlatList, Text, View } from 'react-native';
+import { ActivityIndicator,FlatList, Text, View } from 'react-native';
 import {  Card, CardItem, Body } from 'native-base';
-import { ScrollView } from 'react-native-gesture-handler';
 import Ngrok from '../../constants/ngrok';
 import styles from '../../components/styles_admin';
-
+import axios from 'axios';
 
 export default class freeChildtrip_list extends Component  {
   constructor(props) {
@@ -13,31 +12,30 @@ export default class freeChildtrip_list extends Component  {
     this.state = {
       data: [],
       isLoading: true,
-      //modalVisible:false,
-      //selectedData:'',
     };
   }
  
   componentDidMount() {
    ;
-    
-    fetch(`${Ngrok.url}/api/admin/trips/children/waiting`)
-      .then((response) => response.json())
-      .then((json) => {
-        this.setState({ data: json });
-       
-      })
-      .catch((error) => console.error(error))
-      .finally(() => {
-        this.setState({ isLoading: false });
-      });
+   var self=this;
+   axios
+   .get(`${Ngrok.url}/api/admin/trips/children/waiting`)
+   .then(function (response) {
+    self.setState({ data: response.data });
+   })
+   .catch(function (error) {
+     console.log("error",error.message);
+   })
+   .finally(function () {
+    self.setState({ isLoading: false });
+   });
   }
   
   render() {
     const { data, isLoading } = this.state;
     const { modalVisible } = this.state;
     const tripid1 = this.props.route.params.tripid;
-  console.log("sfsdffasdas", tripid1);
+
     
     return (
       <View style={styles.container1}>

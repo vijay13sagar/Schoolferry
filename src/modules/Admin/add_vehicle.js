@@ -31,17 +31,11 @@ export default function Add_Driver({navigation}) {
       setemptyFeilds({ emptyFields: "Please Enter All The Details" })
        return false
     }
-    
     return true
-    
   }
-
     function  pressHandler() {
-      console.log("validation",typeof(Number(Type)))
+     
       if (validateFunction()) {
-   
-      console.log("apistarts")
-    
     try {
       setLoading(true);
 
@@ -67,17 +61,16 @@ export default function Add_Driver({navigation}) {
             Alert.alert('Registration Successful','', [{text: 'Proceed', onPress:() => navigation.navigate('vehicleList',)}])
           }
 
-          console.log("response", response.status);
+          
         })
         .catch(function (error) {
           setLoading(false);
-          console.log(error.response.status) // 401
-          console.log(error.response.data.error) 
-          setToast(true)//Please Authenticate or whatever returned from server
+         
+          setToast(true)
         if(error.response.status==401){
-          //redirect to login
+         
           setLoading(false);
-          // Alert.alert('Phone Number Alredy Exist!')
+         
           setToast(true)
         }
      
@@ -85,7 +78,7 @@ export default function Add_Driver({navigation}) {
     }
        catch(error){
         setLoading(false);
-        console.log("errordetails",error);
+      
         setToast(true)
        }
      }
@@ -98,7 +91,7 @@ export default function Add_Driver({navigation}) {
             {showtoast? (<ToastComponent type = {ToastMessage.failure}  message = {ToastMessage.message5}/>): null}
 
       <Loader loading={isloading} />
-      {/* <StatusBar style="auto" /> */}
+      
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput2}

@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { Text, View } from 'react-native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import {createStackNavigator} from '@react-navigation/stack'
+import {Text, View} from 'react-native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createStackNavigator} from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import location_details from '../modules/parent/locations';
@@ -24,70 +24,66 @@ import Paymode from '../modules/parent/paymode';
 import Upipay from '../modules/parent/upipay';
 import Trip_Details from '../modules/parent/child_Details';
 
-
 const Stack = createStackNavigator();
-const Tab = createBottomTabNavigator()
+const Tab = createBottomTabNavigator();
 
 function Subscriptions() {
   return (
     <Stack.Navigator
-    
-    initialRouteName="Profile_screen"
-    screenOptions={{
-     /* headerStyle: { backgroundColor: '#42F44B' },
-      headerTintColor: '#fff',*/
-      headerTitleStyle: { fontWeight: 'bold' },
-      headerTitleAlign:'center'
-    }}
-    >
-     <Stack.Screen
+      initialRouteName="Profile_screen"
+      screenOptions={{
+        headerTitleStyle: {fontWeight: 'bold'},
+        headerTitleAlign: 'center',
+      }}>
+      <Stack.Screen
         name="New_sub_screen"
         component={subscriptions}
-        options={{ title: 'Subscriptions ' ,headerLeft:null,gestureEnabled:false}}
+        options={{
+          title: 'Subscriptions ',
+          headerLeft: null,
+          gestureEnabled: false,
+        }}
       />
       <Stack.Screen
         name="Add Child"
         component={Addchild}
-        options={{ title: 'Child Details' }}
+        options={{title: 'Child Details'}}
       />
       <Stack.Screen
         name="Subscription_list"
         component={Subscriptionlist}
-        options={{ title: 'Subscriptions' ,headerLeft:null,gestureEnabled:false}} // headerShown: false
+        options={{
+          title: 'Subscriptions',
+          headerLeft: null,
+          gestureEnabled: false,
+        }} // headerShown: false
       />
       <Stack.Screen
         name="Pause Plan"
         component={Pauseplan}
-        options={{ title: 'Pause Plan' }}
+        options={{title: 'Pause Plan'}}
       />
-      {/* <Stack.Screen
-        name="Cancel Rides"
-        component={Cancelrides}
-        options={{ title: 'Cancel Rides' }}
-      /> */}
       <Stack.Screen
         name="Plan Details"
         component={Plandetails}
-        options={{ title: 'Plan Details' }}
+        options={{title: 'Plan Details'}}
       />
       <Stack.Screen
         name="Pay Mode"
         component={Paymode}
-        options={{ title: 'Payment Mode' }}
+        options={{title: 'Payment Mode'}}
       />
       <Stack.Screen
         name="PaymentScreen"
         component={Payment}
-        options={{ title: 'Make Payment' }}
+        options={{title: 'Make Payment'}}
       />
       <Stack.Screen
         name="Upiscreen"
         component={Upipay}
-        options={{ title: 'Payment' }}
+        options={{title: 'Payment'}}
       />
-      
     </Stack.Navigator>
-    
   );
 }
 
@@ -96,23 +92,25 @@ function Mappage() {
     <Stack.Navigator
       initialRouteName="NoTrips"
       screenOptions={{
-        headerStyle: { backgroundColor: "#fff" },
+        headerStyle: {backgroundColor: '#fff'},
         headerTintColor: 'black',
-        headerTitleStyle: { fontWeight: 'bold' },
-        headerTitleAlign: 'center'
-      }}
-    >
+        headerTitleStyle: {fontWeight: 'bold'},
+        headerTitleAlign: 'center',
+      }}>
       <Stack.Screen
         name="NoTrips"
         component={Notrips}
-        options={{ title: 'Vehicle Tracking ',headerLeft:null,gestureEnabled:false }}
+        options={{
+          title: 'Vehicle Tracking ',
+          headerLeft: null,
+          gestureEnabled: false,
+        }}
       />
       <Stack.Screen
         name="Track"
         component={Vehicle_Tracking}
-        options={{ title: 'Vehicle Tracking' }}
+        options={{title: 'Vehicle Tracking'}}
       />
-
     </Stack.Navigator>
   );
 }
@@ -121,18 +119,16 @@ function Supportpage() {
     <Stack.Navigator
       initialRouteName="support"
       screenOptions={{
-        headerStyle: { backgroundColor: "#fff" },
+        headerStyle: {backgroundColor: '#fff'},
         headerTintColor: 'black',
-        headerTitleStyle: { fontWeight: 'bold' },
-        headerTitleAlign: 'center'
-      }}
-    >
+        headerTitleStyle: {fontWeight: 'bold'},
+        headerTitleAlign: 'center',
+      }}>
       <Stack.Screen
         name="support"
         component={Support}
-        options={{ title: 'Support',headerLeft:null,gestureEnabled:false }}
+        options={{title: 'Support', headerLeft: null, gestureEnabled: false}}
       />
-
     </Stack.Navigator>
   );
 }
@@ -141,33 +137,31 @@ function Homepage() {
     <Stack.Navigator
       initialRouteName="Home"
       screenOptions={{
-        headerStyle: { backgroundColor: "#fff" },
+        headerStyle: {backgroundColor: '#fff'},
         headerTintColor: 'black',
-        headerTitleStyle: { fontWeight: 'bold' },
+        headerTitleStyle: {fontWeight: 'bold'},
         headerTitleAlign: 'center',
-      }}
-    >
+      }}>
       <Stack.Screen
         name="Home"
         component={Home}
-        options={{ title: 'Home ',headerLeft:null,gestureEnabled:false }}
+        options={{title: 'Home ', headerLeft: null, gestureEnabled: false}}
       />
       <Stack.Screen
         name="location"
         component={location_details}
-        options={{ title: 'Enter Location' }}
+        options={{title: 'Location Verification'}}
       />
       <Stack.Screen
         name="subscribedhome"
         component={Subhome}
-        options={{ title: 'Home' }}
+        options={{title: 'Home'}}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="Trip_details"
         component={Trip_Details}
-        options={{ title: 'Trip Details' }}
+        options={{title: 'Trip Details'}}
       />
-     
     </Stack.Navigator>
   );
 }
@@ -175,54 +169,47 @@ function Homepage() {
 function Profiles() {
   return (
     <Stack.Navigator
-
       initialRouteName="Profile_screen"
       screenOptions={{
-        headerStyle: { backgroundColor: "#fff" },
+        headerStyle: {backgroundColor: '#fff'},
         headerTintColor: 'black',
-        headerTitleStyle: { fontWeight: 'bold' },
-        headerTitleAlign: 'center'
-      }}
-    >
+        headerTitleStyle: {fontWeight: 'bold'},
+        headerTitleAlign: 'center',
+      }}>
       <Stack.Screen
         name="Profile_screen"
         component={Profile_Parent}
-        options={{ title: 'Profile ',headerLeft:null,gestureEnabled:false  }}
+        options={{title: 'Profile ', headerLeft: null, gestureEnabled: false}}
       />
       <Stack.Screen
         name="Change Password"
         component={changePassword}
-        options={{ title: 'Change Password'}}
+        options={{title: 'Change Password'}}
       />
       <Stack.Screen
         name="Update profile"
         component={updateProfile}
-        options={{ title: 'Edit Profile' }}
+        options={{title: 'Edit Profile'}}
       />
-
     </Stack.Navigator>
   );
 }
 const TabNavigator = () => {
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
+      screenOptions={({route}) => ({
+        tabBarIcon: ({focused, color, size}) => {
           let iconName;
 
           if (route.name === 'Home') {
             iconName = focused ? 'home' : 'home-outline';
-          }
-          else if (route.name === 'Track') {
+          } else if (route.name === 'Track') {
             iconName = focused ? 'bus' : 'bus-outline';
-          }
-          else if (route.name === 'Subscriptions') {
+          } else if (route.name === 'Subscriptions') {
             iconName = focused ? 'add-circle' : 'add-circle-outline';
-          }
-          else if (route.name === 'Support') {
+          } else if (route.name === 'Support') {
             iconName = focused ? 'mail' : 'mail-outline';
-          }
-          else if (route.name === 'Profile') {
+          } else if (route.name === 'Profile') {
             iconName = focused ? 'person' : 'person-outline';
           }
 
@@ -232,18 +219,15 @@ const TabNavigator = () => {
       tabBarOptions={{
         activeTintColor: '#FF5C00',
         inactiveTintColor: 'gray',
-      }}
-    >
+      }}>
       <Tab.Screen name="Home" component={Homepage} />
       <Tab.Screen name="Track" component={Mappage} />
       <Tab.Screen name="Subscriptions" component={Subscriptions} />
-      
+
       <Tab.Screen name="Support" component={Supportpage} />
       <Tab.Screen name="Profile" component={Profiles} />
     </Tab.Navigator>
-
-          
   );
-}
+};
 
 export default TabNavigator;

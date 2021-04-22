@@ -1,10 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {
-  StyleSheet,
-  View,
-  StatusBar,
-  ScrollView,
-} from 'react-native';
+import {View, StatusBar, ScrollView} from 'react-native';
 
 import Subhome from './subhome';
 import Unsubhome from './unsubscribedhome';
@@ -24,8 +19,6 @@ const HomeScreen = ({navigation}) => {
       let response = await axios(
         `${Ngrok.url}/api/parent/subscription/${token}`,
       );
-
-      console.log(response.data.payment);
       let data = response.data.payment;
 
       if (data == 'subscribed') {
@@ -42,7 +35,6 @@ const HomeScreen = ({navigation}) => {
         barStyle="light-content"
         hidden={false}
         backgroundColor="#FF5C00"
-        //Background color of statusBar only works for Android
         translucent={false}
       />
       <Loader loading={isLoading} />
@@ -53,7 +45,6 @@ const HomeScreen = ({navigation}) => {
         barStyle="light-content"
         hidden={false}
         backgroundColor="#FF5C00"
-        //Background color of statusBar only works for Android
         translucent={false}
       />
       {userType ? (
@@ -66,4 +57,3 @@ const HomeScreen = ({navigation}) => {
 };
 
 export default HomeScreen;
-

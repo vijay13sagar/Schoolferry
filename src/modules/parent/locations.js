@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {
   Text,
   View,
-  StyleSheet,
   ScrollView,
   TouchableOpacity,
   Modal,
@@ -14,6 +13,7 @@ import {getDistance, getPreciseDistance} from 'geolib';
 import Loader from '../../components/Loader';
 import styles from '../../components/style';
 import Ngrok from '../../constants/ngrok';
+import axios from 'axios';
 
 const location = ({navigation}) => {
   const [pincode, setPincode] = useState('');
@@ -34,7 +34,6 @@ const location = ({navigation}) => {
   const [isLoading, setLoading] = useState(false);
 
   const fetchCoords = (lat, lng, name, address, schooladdress) => {
-    console.log(lat, lng);
     setOrigin({
       latitude1: lat,
       longitude1: lng,
@@ -43,7 +42,6 @@ const location = ({navigation}) => {
   };
 
   const fetchDestinationCoords = (lat, lng, name, address, schooladdress) => {
-    console.log(lat, lng);
     setDestination({
       latitude2: lat,
       longitude2: lng,
@@ -61,15 +59,12 @@ const location = ({navigation}) => {
       {latitude: origin.latitude1, longitude: origin.longitude1},
       {latitude: destination.latitude2, longitude: destination.longitude2},
     );
-    // alert(`Distance\n\n${dis} Meter\nOR\n${dis / 1000} KM`);
     let finalDistance = dis / 1000;
     setDistance(finalDistance);
     return finalDistance;
   };
 
   const submitHandler = async () => {
-    // const dis = await calculateDistance();
-    // console.log(dis);
 
     if (!schoolAddress || !residenceAddress || !pincode) {
       setError({error: 'Please enter all fields'});
@@ -84,21 +79,10 @@ const location = ({navigation}) => {
       const responseSchool = await fetch(
         `${Ngrok.url}/api/locations/schools/${schoolAddress}`,
       );
-      console.log('school:',responseSchool.status);
-      console.log('pincode:',responsePincode.status);
 
       setLoading(false);
-
       if (responsePincode.status == 200 && responseSchool.status == 200) {
         setModal1Visible(true);
-        // navigation.navigate('Subscriptions', {
-        //     screen: 'Add Child',
-        //     params: {
-        //             distance: dis,
-        //             schooladdress:schoolAddress,
-        //             homeaddress: residenceAddress,
-        //          },
-        //   })
       } else {
         setModalVisible(true);
       }
@@ -107,8 +91,6 @@ const location = ({navigation}) => {
 
   const modal1ButtonHandler = async () => {
     const dis = await calculateDistance();
-    console.log('distance', dis);
-
     navigation.navigate('Subscriptions', {
       screen: 'Add Child',
       params: {

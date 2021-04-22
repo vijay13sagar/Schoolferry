@@ -22,21 +22,25 @@ export default class Home_page extends Component {
   
   
   componentDidMount() {
+ 
   
     this._unsubscribe = this.props.navigation.addListener('focus', () => {
-
-    fetch(`${Ngrok.url}/api/admin/today/trips`)
-    .then((response) => response.json())
-    .then((json) => {
-      this.setState({ data: json });
-      console.log("json",json)
-    })
-    .catch((error) => console.error(error))
-    .finally(() => {
-      this.setState({ isLoading: false });
+      var self=this;
+      axios
+      .get(`${Ngrok.url}/api/admin/today/trips`)
+      .then(function (response) {
+        self.setState({ data: response.data });
+      })
+      .catch(function (error) {
+        console.log("error",error.message);
+      })
+      .finally(function () {
+        self.setState({ isLoading: false });
       });
+    
+       });
       
-    });
+  
   }
   componentWillUnmount() {
     this._unsubscribe();
@@ -59,15 +63,15 @@ export default class Home_page extends Component {
             Alert.alert('Trip Generation Successful',)
           }
 
-          console.log("response", response.status);
+        
         })
         .catch(function (error) {
       
-          console.log(error);
+          
         })
     }
     catch (error) {
-      console.log("errordetails", error);
+      
     }
   }
   render() {
@@ -82,18 +86,14 @@ export default class Home_page extends Component {
       <View style={styles.container1}>
         <StatusBar
           barStyle="light-content"
-          // dark-content, light-content and default
           hidden={false}
-          //To hide statusBar
           backgroundColor='#FF5C00'
-          //Background color of statusBar only works for Android
           translucent={false}
-        //allowing light, but not detailed shapes
 
         />
         <Text style={{ alignSelf: "center" }}>{TD}</Text>
         <View>
-          <TouchableOpacity style={styles.loginBtn} onPress={this.onpressHandler} >
+          <TouchableOpacity disabled={data ? false : true} style= { data? styles.loginBtn :styles.card2} onPress={this.onpressHandler} >
             <Text style={styles.TextInput}>Schedule Trips</Text>
             
 

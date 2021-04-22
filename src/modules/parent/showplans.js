@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import {
   Text,
   View,
-  StyleSheet,
   FlatList,
   TouchableOpacity,
   ScrollView,
@@ -35,17 +34,13 @@ const showplanScreen = ({route, navigation}) => {
           );
           setPickerValue(res.data);
           setValue(res.data[0].childName);
-          // console.log('selectedvalue:', selectedValue)
-          console.log('subsciption refresh:', res.data[0].childName);
           setisLoading(false);
         } catch (error) {
-          console.error(error);
+          console.log(error);
         }
       };
 
       fetchUser();
-
-      //return null;
     }, []),
   );
 
@@ -67,14 +62,11 @@ const showplanScreen = ({route, navigation}) => {
   const value1 =
     pickerValue.length && selectedValue
       ? pickerValue.filter((item) => {
-          //console.log('check value',pickerValue, selectedValue)
           return item.childName
             .toLowerCase()
             .includes(selectedValue.toLowerCase());
         })
       : [];
-
-  //console.log('status', value1[0].childId);
 
   const verifyHandler = () => {
     setModalVisible(false);
@@ -86,12 +78,11 @@ const showplanScreen = ({route, navigation}) => {
     navigation.navigate('Add Child', {
       distance: Boolean(value1.length) && value1[0].distance,
       schooladdress: Boolean(value1.length) && value1[0].address,
-      // homeaddress: Homeaddress,
     });
   };
 
   return isLoading ? null : (
-    <ScrollView style={styles.container}  showsVerticalScrollIndicator={false}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <View style={styles.modalContainer}>
           <Ionicons
@@ -101,12 +92,11 @@ const showplanScreen = ({route, navigation}) => {
             style={styles.icon}
             onPress={(modalVisible) => setModalVisible(!modalVisible)}
           />
-          <View style={styles.modalBody1}>
-            <Text style={styles.message1}>
+          <View style={{...styles.modalBody1,height:220}}>
+            <Text style={{...styles.message1,fontSize:18}}>
               In case location of residence/school is different , plese verify.
             </Text>
-
-            <TouchableOpacity style={styles.closeModal} onPress={verifyHandler}>
+            <TouchableOpacity style={{...styles.closeModal,height:35,marginTop:25}} onPress={verifyHandler}>
               <Text style={styles.loginText}>Verify</Text>
             </TouchableOpacity>
 
@@ -117,7 +107,7 @@ const showplanScreen = ({route, navigation}) => {
                 style={{
                   color: '#1E90FF',
                   textDecorationLine: 'underline',
-                  fontSize: 19,
+                  fontSize: 17,
                 }}>
                 It's same
               </Text>
@@ -138,13 +128,16 @@ const showplanScreen = ({route, navigation}) => {
           {myUsers()}
         </Picker>
       </View>
-      <View style={{height: 340}}>
+
+      <View style={{height: 325}}>
         <FlatList
-          style={styles.flatlist}
+          style={{...styles.flatlist, marginTop: 10}}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           data={Boolean(value1.length) && value1[0].plans}
-          keyExtractor={(item, index) => {return item.term}}
+          keyExtractor={(item, index) => {
+            return item.term;
+          }}
           renderItem={({item}) => (
             <View style={{flex: 1}}>
               <TouchableOpacity
@@ -165,7 +158,6 @@ const showplanScreen = ({route, navigation}) => {
                 />
 
                 <Text style={styles.typeOfSubscription}>{item.term}</Text>
-
                 <View style={{flexDirection: 'row'}}>
                   <Text style={styles.serviceDetails}>Trip Cost</Text>
                   <Text style={styles.price}> - ₹ {item.tripcost}</Text>
@@ -190,9 +182,12 @@ const showplanScreen = ({route, navigation}) => {
           )}
         />
       </View>
-      {Boolean(value1.length) && value1[0].status == 'subscribed' ? 
-        null
-       : (
+      {Boolean(value1.length) && value1[0].status == 'subscribed' ? (
+        <Text style={{color: '#ce1212', marginHorizontal: 5, marginTop: 10,fontWeight:'700'}}>
+          {' '}
+          * Nanny service is compulsory for children below 9 years.
+        </Text>
+      ) : (
         <Text style={styles.randomText2}>
           Unsusbcribed Child. select a plan to get subscribed
         </Text>
@@ -212,10 +207,11 @@ const showplanScreen = ({route, navigation}) => {
       {Boolean(value1.length) && value1[0].status == 'subscribed' ? (
         <TouchableOpacity
           style={styles.unsubscribeBtn}
-          onPress={() => navigation.navigate('Pause Plan',{
-
-            childid: Boolean(value1.length) && value1[0].childId,     
-          })}>
+          onPress={() =>
+            navigation.navigate('Pause Plan', {
+              childid: Boolean(value1.length) && value1[0].childId,
+            })
+          }>
           <Text style={styles.loginText}>Pause subscription</Text>
         </TouchableOpacity>
       ) : null}
