@@ -100,7 +100,7 @@ export default function addchild({route, navigation}) {
           })
           .catch(function (error) {
             setLoading(false);
-            console.error(error);
+            console.log(error);
             setToast(true);
             setType(ToastMessage.failure);
             SetMessage(ToastMessage.message5);

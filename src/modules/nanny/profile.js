@@ -146,7 +146,7 @@ const Profile = ({ navigation }) => {
       navigation.replace('Login');
       Alert.alert('You have been logged out');
     } catch (error) {
-      console.error('Error clearing app data.');
+      console.log('Error clearing app data.');
     }
   }
 
