@@ -99,7 +99,7 @@ export default function user_Details({ route, navigation }) {
                    <Text style={{alignSelf:"center",marginLeft:10,fontSize: 15,
         color: "black",
         fontWeight: '700',}}>
-          Name:        
+                 
                    {
                       item.childName
                    }

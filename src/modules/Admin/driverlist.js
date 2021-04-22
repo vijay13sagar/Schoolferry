@@ -52,14 +52,27 @@ export default class driverList extends Component  {
               <Body>
                 <View style={{flexDirection:"row"}}>      
                 <Image style={styles.licence2} source={item.photoUrl == "NULL" ? { uri: (img) }:{ uri: (item.photoUrl) }} />         
-                   <Text style={{alignSelf:"center",marginLeft:10,fontSize: 15,
+                <View >     
+                   <Text style={{marginLeft:10,fontSize: 15,marginTop:50,
         color: "black",
         fontWeight: '700',}}>
-          Name:        
+                 
                    {
                       item.name
                    }
+                   
+                   
                 </Text>
+                <Text style={{alignSelf:"center",marginLeft:10,fontSize: 12,
+        color: "grey",
+        fontWeight: '600',marginBottom:6}}>
+                 
+                
+                   {
+                      item.contact
+                   }
+                </Text>
+                </View>
                 </View>
 
               </Body>
