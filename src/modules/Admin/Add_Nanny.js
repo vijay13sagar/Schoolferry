@@ -25,7 +25,7 @@ import { v4 as uuidv4 } from "uuid";
 
 export default function Add_Nanny({ navigation }) {
   const [isloading, setLoading] = useState(false);
-  const [img, setImg] = useState('https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg');
+  const [img, setImg] = useState('https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/grandma_elderly_nanny_avatar-512.png    ');
   const [pic, setPic] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [name, setname] = useState("");
@@ -126,7 +126,8 @@ export default function Add_Nanny({ navigation }) {
         let imageRef = storage().ref(imageName)
         const url1 = await imageRef.getDownloadURL().catch((error) => { throw error });
         console.log("url", url1);
-        setImg1(url1)
+       
+        setLink1(url1)
       })
       .catch((e) => {
 
@@ -147,7 +148,7 @@ export default function Add_Nanny({ navigation }) {
         Alert.alert('Image Uploaded Successfully')
         let imageRef = storage().ref(imageName)
         const url2 = await imageRef.getDownloadURL().catch((error) => { throw error });
-        console.log("url", url2);
+        
         setLink2(url2)
       })
       .catch((e) => {
@@ -296,7 +297,7 @@ export default function Add_Nanny({ navigation }) {
           }
           <View>
             <Text style={styles.TextInput4}>
-              user image
+              Profile Image
            </Text>
           </View>
         </View>
@@ -398,7 +399,7 @@ export default function Add_Nanny({ navigation }) {
           }
           <View>
             <Text style={styles.TextInput4}>
-              Licence
+              Gov ID
            </Text>
           </View>
         </View>

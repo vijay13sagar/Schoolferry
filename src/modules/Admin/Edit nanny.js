@@ -1,23 +1,18 @@
 import React, { useState } from "react";
 import {
-  StyleSheet,
   Text,
   View,
-  Image,
   StatusBar,
   Alert,
-  TextInput,
   TouchableOpacity,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { event } from "react-native-reanimated";
 import Ngrok from '../../constants/ngrok';
-import axios from 'axios';
 import Loader from '../../components/Loader';
 import styles from '../../components/styles_admin'
 import ToastComponent from '../../components/Toaster';
 import* as ToastMessage from '../../constants/ToastMessages';
-
+import axios from 'axios';
 
 
 export default function Edit_Nanny({ route,navigation }) {
@@ -25,41 +20,35 @@ export default function Edit_Nanny({ route,navigation }) {
   const [message, SetMessage] = useState()
   const [isloading, setLoading] = useState(false);
   let c = route.params.tripid1;
-  console.log("sfsdffasdas", c);
+  
   let nannyid = route.params.item.id;
-  console.log("apistarts", nannyid)
+ 
 
   const pressHandler = () => {
     setLoading(true);
-    fetch(`${Ngrok.url}/api/admin/trips/nanny/new`, {
-      "method": "POST",
-      "headers": {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        nannyid : nannyid,
-             tripid : c
-    
-      })
+    axios
+    .post(`${Ngrok.url}/api/admin/trips/nanny/new`, {
+      nannyid : nannyid,
+      tripid : c
     })
-      .then(response => response.json())
-      .then(responseJson => {
-        setLoading(false);
-        console.log(responseJson);
-        if (responseJson.message == "nanny changed") {
+    .then(function (response) {
+      
+      setLoading(false);
+
+        if (response.data.message == "nanny changed") {
           Alert.alert('Changed Successfully','', [{text: 'Proceed', onPress:() => navigation.navigate('Home_page')}])
         } else {
-          //Alert.alert('Try again!')
+          
           setToast(true)
         }
-        //alert(JSON.stringify(response))
-      })
-      .catch(err => {
-        setToast(true)
-        setLoading(false);
-        console.log(err);
-      });
+    })
+    .catch(function (error) {
+  console.log(error);
+      setLoading(false);
+   
+   setToast(true)
+    });
+    
   
       setToast(false)
 }

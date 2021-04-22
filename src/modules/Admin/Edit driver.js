@@ -13,7 +13,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import ToastComponent from '../../components/Toaster';
 import* as ToastMessage from '../../constants/ToastMessages';
 import Ngrok from '../../constants/ngrok';
-
+import axios from 'axios';
 import Loader from '../../components/Loader';
 import styles from '../../components/styles_admin'
 
@@ -22,42 +22,35 @@ export default function Edit_Driver({ route,navigation }) {
   const [message, SetMessage] = useState()
   const [isloading, setLoading] = useState(false);
   let c = route.params.tripid1;
-  console.log("sfsdffasdas", c);
+ 
   let driverid = route.params.item.id;
-  console.log("apistarts", driverid)
+
 
   const pressHandler = () => {
 
     setLoading(true);
-    fetch(`${Ngrok.url}/api/admin/trips/driver/new`, {
-      "method": "POST",
-      "headers": {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        driverid : driverid,
+    axios
+        .post(`${Ngrok.url}/api/admin/trips/driver/new`, {
+          driverid : driverid,
              tripid : c
+        })
+        .then(function (response) {
+          
+          setLoading(false);
+      
+              if (response.data.message == "driver changed") {
+                Alert.alert('Changed Successfully','', [{text: 'Proceed', onPress:() => navigation.navigate('Home_page')}])
+              } else {
+                setToast(true)
+              }
+        })
+        .catch(function (error) {
+          console.log(error);
+          setLoading(false);
+       
+       setToast(true)
+        });
     
-      })
-    })
-      .then(response => response.json())
-      .then(responseJson => {
-        setLoading(false);
-        console.log(responseJson);
-        if (responseJson.message == "driver changed") {
-          Alert.alert('Changed Successfully','', [{text: 'Proceed', onPress:() => navigation.navigate('Home_page')}])
-        } else {
-          setToast(true)
-        }
-        //alert(JSON.stringify(response))
-      })
-      .catch(err => {
-        setLoading(false);
-        console.log(err);
-        setToast(true)
-      });
-  
       setToast(false)
 }
 
