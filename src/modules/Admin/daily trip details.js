@@ -27,11 +27,11 @@ export default function Trip_Details({ route, navigation }) {
 
 
   const nannyid = route.params.item.nanny_id
-//let bd = false;
+
 
   if (nannyid == null) {
     NID = "no nanny provided"
-    //  bd = true
+  
   } else {
     NID = nannyid
   } 
@@ -39,7 +39,7 @@ export default function Trip_Details({ route, navigation }) {
 
 
 
-  // console.log("item", data.nannyRequired);
+
 
   return (
 

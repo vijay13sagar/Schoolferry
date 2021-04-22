@@ -24,41 +24,34 @@ export default function Edit_Vehicle({ route ,navigation}) {
   const [message, SetMessage] = useState()
   const [isloading, setLoading] = useState(false);
   let c = route.params.tripid1;
-  console.log("sfsdffasdas", c);
+  
   let vehicleid = route.params.item.id;
-  console.log("apistarts",vehicleid)
+
 
   const pressHandler = () => {
     setLoading(true);
-    fetch(`${Ngrok.url}/api/admin/trips/vehicle/new`, {
-      "method": "POST",
-      "headers": {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        vehicleid : vehicleid,
+    axios
+        .post(`${Ngrok.url}/api/admin/trips/vehicle/new`, {
+          vehicleid : vehicleid,
              tripid : c
+        })
+        .then(function (response) {
+          
+          setLoading(false);
+      
+              if (response.data.message == "vehicle changed") {
+                Alert.alert('Changed Successfully','', [{text: 'Proceed', onPress:() => navigation.navigate('Home_page')}])
+              } else {
+      
+                setToast(true)
+              }
+        })
+        .catch(function (error) {
+          console.log(error);
+          setLoading(false);
+              setToast(true)
+        });
     
-      })
-    })
-      .then(response => response.json())
-      .then(responseJson => {
-        setLoading(false);
-        console.log(responseJson);
-        if (responseJson.message == "vehicle changed") {
-          Alert.alert('Changed Successfully','', [{text: 'Proceed', onPress:() => navigation.navigate('Home_page')}])
-        } else {
-          //Alert.alert('Try again!')
-          setToast(true)
-        }
-        //alert(JSON.stringify(response))
-      })
-      .catch(err => {
-        setLoading(false);
-        setToast(true)
-        console.log(err);
-      });
   
       setToast(false)
 }

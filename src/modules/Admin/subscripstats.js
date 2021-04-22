@@ -42,11 +42,11 @@ const MyPieChart = () => {
         })
         .catch(function (error) {
           setLoading(false);
-          // handle error
-          console.log("error",error.message);
+         
+         
         })
         .finally(function () {
-          // always executed
+
         });
         axios
     .get(`${Ngrok.url}/api/management/usersreport`)
@@ -54,37 +54,23 @@ const MyPieChart = () => {
       setHist(response.data.usersVal);
       setEmpHist(response.data.employeesVals);
       setEmp(response.data.employees);
-      //setmonths(response.data.users)
-      //setisload(false);
       setLoading(false);
     })
     .catch(function (error) {
       setLoading(false);
-      // handle error
-      console.log("error",error.message);
+     
     })
     .finally(function () {
-      // always executed
     });
       },[]);
-      
-    // const prog = {
-    //   labels: ["Swim", "Bike", "Run"], // optional
-    //   data: [0.4, 0.7, 0.8]
-    // };
   return (
     <View style={styles.container1}>
        <Loader loading={loading} />
       <StatusBar
         barStyle="light-content"
-        // dark-content, light-content and default
         hidden={false}
-        //To hide statusBar
         backgroundColor="#FF5C00"
-        //Background color of statusBar only works for Android
         translucent={false}
-      //allowing light, but not detailed shapes
-
       />
     <ScrollView>
       <Text style={styles.header}>SUBSCRIPTION STATS</Text>
@@ -114,7 +100,6 @@ const MyPieChart = () => {
           backgroundColor: '#1cc910',
           backgroundGradientFrom: '#eff3ff',
           backgroundGradientTo: '#efefef',
-          //decimalPlaces: 0,
           color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
           style: {
             borderRadius: 16,
@@ -127,7 +112,7 @@ const MyPieChart = () => {
         accessor="population"
         backgroundColor="transparent"
         paddingLeft="15"
-        absolute //For the absolute number else percentage
+        absolute 
       />
       <Text style={styles.header}>USERS STATS</Text>
       <BarChart
@@ -148,8 +133,8 @@ const MyPieChart = () => {
           backgroundColor: '#ffefa0',
      fillShadowGradient:'#FF5C00',
     fillShadowGradientOpacity:1,
-          backgroundGradientFrom: '#f5a25d',//'rgb(12, 99, 250)',//'#EFF3FF',
-          backgroundGradientTo: '#ffefa0',//'rgb(39, 143, 255)',//'#EFEFEF',
+          backgroundGradientFrom: '#f5a25d',
+          backgroundGradientTo: '#ffefa0',
           decimalPlaces: 0,
           barPercentage:1,
           color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
@@ -183,8 +168,8 @@ const MyPieChart = () => {
           backgroundColor: '#ffefa0',
           fillShadowGradient:'#FF5C00',
     fillShadowGradientOpacity:1,
-          backgroundGradientFrom: '#f5a25d',//'rgb(12, 99, 250)',//'#EFF3FF',
-          backgroundGradientTo: '#ffefa0',//'rgb(39, 143, 255)',//'#EFEFEF',
+          backgroundGradientFrom: '#f5a25d',
+          backgroundGradientTo: '#ffefa0',
           decimalPlaces: 0,
           barPercentage:1,
           color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,

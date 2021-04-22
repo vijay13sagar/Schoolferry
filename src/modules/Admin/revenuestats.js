@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
- 
   Text,
   View,
- 
   TouchableOpacity,
   Dimensions,
   ScrollView,
@@ -32,8 +30,7 @@ const MyPieChart = () => {
       },[]);
   const CallHIST=(val)=>{
     const newvalue=val
-    console.log("hahah",newvalue);
-    
+   
     axios
     .get(`${Ngrok.url}/api/management/histogram/${newvalue}`)
     .then(function (response) {
@@ -45,11 +42,10 @@ const MyPieChart = () => {
     .catch(function (error) {
       setLoading(false);
       setLoading(false);
-      // handle error
-      console.log("error",error.message);
+    
+     
     })
     .finally(function () {
-      // always executed
     });
 
   }
@@ -77,8 +73,8 @@ const MyPieChart = () => {
           backgroundColor: '#ffefa0',
           fillShadowGradient:'#FF5C00',
           fillShadowGradientOpacity:1,
-          backgroundGradientFrom: '#f5a25d',//'rgb(12, 99, 250)',//'#EFF3FF',
-          backgroundGradientTo: '#ffefa0',//'rgb(39, 143, 255)',//'#EFEFEF',
+          backgroundGradientFrom: '#f5a25d',
+          backgroundGradientTo: '#ffefa0',
           decimalPlaces: 0,
           barPercentage:0.5,
           color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
