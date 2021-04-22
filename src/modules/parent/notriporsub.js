@@ -1,11 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  StyleSheet,
-  FlatList,
-} from 'react-native';
+import {Text, View, TouchableOpacity, FlatList} from 'react-native';
 
 import Ngrok from '../../constants/ngrok';
 import axios from 'axios';
@@ -34,9 +28,6 @@ const oldmap = ({navigation}) => {
             `${Ngrok.url}/api/parent/trip/start/${token}`,
           );
 
-          console.log('tracking page:', response.data.payment);
-          //console.log('Trip Status:', response2.data);
-
           let data = response.data.payment;
           setripDetails(response2.data);
           setLoading(false);
@@ -46,14 +37,9 @@ const oldmap = ({navigation}) => {
           } else {
             setUserType(false);
           }
-        } catch (e) {
-          // Handle error
-        }
+        } catch (e) {}
       };
-
       fetchUser();
-
-      //return null;
     }, []),
   );
 
@@ -93,7 +79,6 @@ const oldmap = ({navigation}) => {
                   <Body>
                     {item.trips.length ? (
                       <View style={styles.bodyView}>
-                        {/* <Text> Trip ID - {item.trips[0].tripId} </Text>*/}
                         <Text>
                           {' '}
                           Trip start status - {item.trips[0].startStatus}{' '}
@@ -120,7 +105,9 @@ const oldmap = ({navigation}) => {
                               tripId: item.trips[0].tripId,
                             })
                           }>
-                          <Text style={{fontSize: 15, color:'#fff'}}>Track Vehicle</Text>
+                          <Text style={{fontSize: 15, color: '#fff'}}>
+                            Track Vehicle
+                          </Text>
                         </TouchableOpacity>
                       </View>
                     ) : (

@@ -1,34 +1,30 @@
 import React, {useState} from 'react';
 import {
-  StyleSheet,
   Text,
   View,
   Image,
-  StatusBar,
   TextInput,
   Alert,
   TouchableOpacity,
 } from 'react-native';
 import Ngrok from '../constants/ngrok';
 import axios from 'axios';
-import Login from './login';
 import Loader from '../components/Loader';
 import styles from '../components/style';
 import ToastComponent from '../components/Toaster';
-import* as ToastMessage from '../constants/ToastMessages';
+import * as ToastMessage from '../constants/ToastMessages';
 
-
-export default function App({route,navigation}) {
-  const [email, setEmail] = useState("");
-  const [Name, setName] = useState("");
-  const [contact, setcontact] = useState("");
-  const [password1, setpassword1] = useState("");
-  const [password2, setpassword2] = useState("");
+export default function App({route, navigation}) {
+  const [email, setEmail] = useState('');
+  const [Name, setName] = useState('');
+  const [contact, setcontact] = useState('');
+  const [password1, setpassword1] = useState('');
+  const [password2, setpassword2] = useState('');
   const [isloading, setLoading] = useState(false);
-  const [{ emptyFields }, setemptyFeilds] = useState("");
-  const [showtoast,setToast] = useState(false)
-  const[message, SetMessage] = useState()
-  
+  const [{emptyFields}, setemptyFeilds] = useState('');
+  const [showtoast, setToast] = useState(false);
+  const [message, SetMessage] = useState();
+
   const validateEmail = (email) => {
     const regex_mail = /^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)$/;
     if (regex_mail.test(email)) {
@@ -46,29 +42,24 @@ export default function App({route,navigation}) {
 
   const validateFunction = () => {
     if (!Name || !email || !contact || !password1 || !password2) {
-      setemptyFeilds({ emptyFields: "Please Enter All The Details" })
-      return false
+      setemptyFeilds({emptyFields: 'Please Enter All The Details'});
+      return false;
+    } else if (!validateEmail(email)) {
+      setemptyFeilds({emptyFields: 'Enter Valid Email Id'});
+
+      return false;
+    } else if (!validatecontact(contact)) {
+      setemptyFeilds({emptyFields: 'Enter Valid Phone Number'});
+
+      return false;
+    } else if (password1 !== password2) {
+      setemptyFeilds({emptyFields: 'Both Fields should be same'});
+
+      return false;
+    } else {
+      return true;
     }
-    else if (!validateEmail(email)) {
-      setemptyFeilds({ emptyFields:  "Enter Valid Email Id" })
-      
-      return false
-    }
-    else if (!validatecontact(contact)) {
-      setemptyFeilds({ emptyFields:  "Enter Valid Phone Number" })
-      
-      return false
-    }
-    else if (password1!== password2) {
-      setemptyFeilds({ emptyFields:  "Both Fields should be same" })
-      
-      return false
-      
-    }else{
-      return true
-    }
-   
-  }
+  };
 
   const pressHandler = () => {
     if (validateFunction()) {
@@ -99,14 +90,12 @@ export default function App({route,navigation}) {
                 },
               ]);
             }
-           
           })
           .catch(function (error) {
             setLoading(false);
-            console.log(error.response.status);
-            console.log(error.response.data.message); 
+            //console.log(error.response.data.message);
             if (error.response.status == 401) {
-            setToast(true)
+              setToast(true);
             }
           });
       } catch (error) {
@@ -114,16 +103,23 @@ export default function App({route,navigation}) {
         console.log('errordetails', error);
       }
     }
-    setToast(false)
+    setToast(false);
   };
-
 
   return (
     <View style={styles.cont2}>
-       {showtoast? (<ToastComponent type = {ToastMessage.failure}  message = {ToastMessage.message3}/>): null}
+      {showtoast ? (
+        <ToastComponent
+          type={ToastMessage.failure}
+          message={ToastMessage.message3}
+        />
+      ) : null}
       <Loader loading={isloading} />
-<View>
-      <Image style={{width:280,height:170,marginBottom:20}} source={require('../assets/Logo.png')} />
+      <View>
+        <Image
+          style={{width: 280, height: 170, marginBottom: 20}}
+          source={require('../assets/Logo.png')}
+        />
       </View>
       <View style={styles.inputView}>
         <TextInput
@@ -163,15 +159,15 @@ export default function App({route,navigation}) {
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
-          placeholder="Reenter Password"
+          placeholder="confirm"
           placeholderTextColor="#929292"
           secureTextEntry={true}
           onChangeText={(password2) => setpassword2(password2)}
         />
       </View>
       <Text style={styles.error}>{emptyFields}</Text>
-     
-      <TouchableOpacity style={styles.loginBtn} onPress={pressHandler} >
+
+      <TouchableOpacity style={styles.loginBtn} onPress={pressHandler}>
         <Text style={styles.loginText}>SIGN UP</Text>
       </TouchableOpacity>
     </View>

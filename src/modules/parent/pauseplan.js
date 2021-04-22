@@ -1,11 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-  Alert,
-} from 'react-native';
+import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
 import axios from 'axios';
@@ -13,12 +7,12 @@ import Ngrok from '../../constants/ngrok';
 import Loader from '../../components/Loader';
 import styles from '../../components/style';
 import ToastComponent from '../../components/Toaster';
-import* as ToastMessage from '../../constants/ToastMessages';
+import * as ToastMessage from '../../constants/ToastMessages';
 
 const PausePlan = ({route, navigation}) => {
   const [selectedStartDate, setselectedStartDate] = useState('');
   const [selectedEndDate, setselectedEndDate] = useState('');
-  const minDate = new Date(); // Today
+  const minDate = new Date();
   const maxDate = new Date(2021, 10, 1);
   const startDate = moment(selectedStartDate).format('DD-MM-YYYY');
   const endDate = moment(selectedEndDate).format('DD-MM-YYYY');
@@ -27,9 +21,9 @@ const PausePlan = ({route, navigation}) => {
   const [count, setCount] = useState(0);
   const [error, setError] = useState();
   const [loader, setLoader] = useState(false);
-  const [showtoast,setToast] = useState(false)
-  const [message, SetMessage] = useState()
-  const [type,setType] =useState()
+  const [showtoast, setToast] = useState(false);
+  const [message, SetMessage] = useState();
+  const [type, setType] = useState();
 
   const childid = route.params.childid;
 
@@ -45,10 +39,7 @@ const PausePlan = ({route, navigation}) => {
   useEffect(() => {
     const fetchdata = async () => {
       let id = await childid;
-      console.log('child id:', id);
       let response = await axios(`${Ngrok.url}/api/cancellation/details/${id}`);
-
-      console.log('response: ', response.data);
       setData(response.data);
       setLoading(false);
     };
@@ -56,10 +47,6 @@ const PausePlan = ({route, navigation}) => {
   }, [count]);
 
   const pauseHandler = async () => {
-    console.log('id', childid);
-    console.log('sd: ', startDate);
-    console.log('ed: ', endDate);
-
     if (startDate == 'Invalid date' || endDate == 'Invalid date') {
       setError('Please select start/end date');
     } else {
@@ -72,47 +59,40 @@ const PausePlan = ({route, navigation}) => {
             enddate: endDate,
           })
           .then(function (response) {
-            // console.log('data: ', response.data);
-            console.log('message: ', response.data.message);
             setLoader(false);
 
             if (response.status == 200) {
-              //Alert.alert('Plan paused successful');
-              setToast(true)
-              setType(ToastMessage.success)
-              SetMessage(ToastMessage.message6)
+              setToast(true);
+              setType(ToastMessage.success);
+              SetMessage(ToastMessage.message6);
               setCount(count + 1);
               setError();
               setselectedEndDate('');
               setselectedStartDate('');
             } else {
-              setToast(true)
-              setType(ToastMessage.failure)
-              SetMessage(ToastMessage.message5)
+              setToast(true);
+              setType(ToastMessage.failure);
+              SetMessage(ToastMessage.message5);
             }
           })
           .catch(function (error) {
-            console.log('err', error.response.data);
             setLoader(false);
 
             if (error.response.data.status == 409) {
-              //Alert.alert(JSON.stringify(error.response.data.message));
-              setToast(true)
-              setType(ToastMessage.failure)
-              SetMessage(JSON.stringify(error.response.data.message))
+              setToast(true);
+              setType(ToastMessage.failure);
+              SetMessage(JSON.stringify(error.response.data.message));
             } else if (error.response.data.status == 401) {
-             // Alert.alert('Failed. You have exhausted maximum attempts');
-              setToast(true)
-              setType(ToastMessage.failure)
-              SetMessage(ToastMessage.message7)
-
+              setToast(true);
+              setType(ToastMessage.failure);
+              SetMessage(ToastMessage.message7);
             }
           });
       } catch (error) {
         console.log(error);
       }
     }
-    setToast(false)
+    setToast(false);
   };
 
   return isLoading ? (
@@ -121,11 +101,11 @@ const PausePlan = ({route, navigation}) => {
     </View>
   ) : (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        {showtoast? (<ToastComponent type = {type}  message = {message}/>): null}
+      {showtoast ? <ToastComponent type={type} message={message} /> : null}
       <Loader loading={loader} />
 
       <View style={[data.pauseEndDate ? styles.biggerBox : styles.pausePlan]}>
-        <Text style={styles.mainHeading1}>Pause Plan Details</Text>
+        <Text style={{...styles.mainHeading1,marginBottom:5,}}>Pause Plan Details</Text>
         <Text style={styles.heading}>Total number of pauses - 03</Text>
 
         {!data.pauseEndDate ? null : (
@@ -149,7 +129,7 @@ const PausePlan = ({route, navigation}) => {
           justifyContent: 'center',
           marginTop: 20,
         }}>
-        <Text style={{fontWeight: 'bold', fontSize: 20}}>Pause Plan :-</Text>
+        <Text style={{fontWeight: 'bold', fontSize: 18}}>Pause Plan :-</Text>
       </View>
       <View style={styles.headertext}>
         <Text style={styles.registerTextStyle}>
@@ -173,7 +153,6 @@ const PausePlan = ({route, navigation}) => {
           allowRangeSelection={true}
           minDate={minDate}
           maxDate={maxDate}
-          // weekdays=['M','T','W','Th','F','Sa','Su']
           width={250}
           height={250}
           maxRangeDuration={10}
@@ -200,5 +179,4 @@ const PausePlan = ({route, navigation}) => {
     </ScrollView>
   );
 };
-// }
 export default PausePlan;

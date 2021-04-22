@@ -23,7 +23,6 @@ import { v4 as uuidv4 } from "uuid";
 
 
 
-
 export default function Add_Driver({ navigation }) {
   const [isloading, setLoading] = useState(false);
   const [img, setImg] = useState('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQS0E1095uZGr8SfFNizuXsMxB3S9iNuisOtw&usqp=CAU');

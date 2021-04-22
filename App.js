@@ -10,9 +10,6 @@ import messaging from '@react-native-firebase/messaging';
 import AsyncStorage from '@react-native-community/async-storage';
 import {Alert} from 'react-native';
 
-
-// for accessing driver interface temporarily use - <DriverNav /> - in place of <Onboarding />
-
 export default function App() {
 
   var foreground
@@ -21,31 +18,25 @@ export default function App() {
 
     messaging().getToken()
       .then(token => {
-        console.log('firebase token:', token)
         AsyncStorage.setItem("FBtoken", token)
       })
 
     messaging().onTokenRefresh(token => {
-      console.log('token refresh', token)
       AsyncStorage.setItem("FBtoken", token)
     })
 
-    // foreground message handler 
     foreground = messaging().onMessage(async remoteMessage => {
       Alert.alert(remoteMessage.notification.body);
-      console.log('Message handled in the foreground!', remoteMessage);
     });
 
-    // Assume a message-notification contains a "type" property in the data payload of the screen to open
     messaging().onNotificationOpenedApp(remoteMessage => {
       console.log(
         'Notification caused app to open from background state:',
         remoteMessage.notification,
       );
-     // navigation.navigate('Track');
     });
 
-    // Check whether an initial notification is available
+    // Notification caused app to open from quit state
     messaging()
       .getInitialNotification()
       .then(remoteMessage => {
@@ -54,9 +45,7 @@ export default function App() {
             'Notification caused app to open from quit state:',
             remoteMessage.notification,
           );
-         // setInitialRoute(remoteMessage.data.type);
         }
-       // setLoading(false);
       });
 
   }, [])
