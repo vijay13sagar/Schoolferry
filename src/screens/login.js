@@ -26,6 +26,7 @@ export default function Login({navigation}) {
   const pressHandler = () => {
     navigation.navigate('Sign up');
   };
+
   validateEmail = (email) => {
     var regex_phone = /^((\+91)?|91)?[789][0-9]{9}/;
 
@@ -34,6 +35,7 @@ export default function Login({navigation}) {
     }
     return false;
   };
+
   const validateFunction = () => {
     if (!email) {
       setEmailError({emailError: 'Phone Number Field Cannot be Empty'});
@@ -49,9 +51,11 @@ export default function Login({navigation}) {
     }
     return true;
   };
+
   const gotootpscreen = () => {
     navigation.navigate('OTPscreen', {item: email});
   };
+
   const handleSubmitpPress = async () => {
     let firebaseToken = await AsyncStorage.getItem('FBtoken');
     if (validateFunction()) {
@@ -79,7 +83,7 @@ export default function Login({navigation}) {
           }
         })
         .catch(function (error) {
-          console.error(error);
+          console.log(error);
           setLoading(false);
           if (error.response.status == 401) {
             if (error.response.data.message == 'Token not provided') {
@@ -100,6 +104,7 @@ export default function Login({navigation}) {
             setToast(true);
             SetMessage(ToastMessage.message5);
           }
+          
         });
       setToast(false);
     }

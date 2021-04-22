@@ -34,7 +34,7 @@ export default class Notificationlist extends Component {
         this.setState({ data: json });
         this.setState({item1:json.map(child=>({...child,attend:false}))})
       })
-      .catch((error) => console.error(error))
+      .catch((error) => console.log(error))
       .finally(() => {
         this.setState({ isLoading: false });
       });
