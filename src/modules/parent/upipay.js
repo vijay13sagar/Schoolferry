@@ -1,311 +1,143 @@
-import React, { useState,useEffect } from "react";
+import React, {useState} from 'react';
 import {
-  StyleSheet,
   Alert,
   Modal,
-  StatusBar,
   Text,
   View,
-  Image,
-  CheckBox,
   TextInput,
-  Button,
   TouchableHighlight,
-
-  TouchableOpacity,
-} from "react-native";
-//import { CheckBox } from "@react-native-community/checkbox";
+} from 'react-native';
 import Ngrok from '../../constants/ngrok';
 import axios from 'axios';
-//import AsyncStorage from '@react-native-community/async-storage';
 import styles from '../../components/style';
 
-export default function App({ route,navigation }) {
-  const [UPI, setUPI] = useState("");
-  const [{ value_error }, setError] = useState("");
-  const [entry, setentry] = useState("");
+export default function App({route, navigation}) {
+  const [UPI, setUPI] = useState('');
+  const [{value_error}, setError] = useState('');
+  const [entry, setentry] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
-  let s=route.params.costly;
-  const e=s.toString();
+
+  let s = route.params.costly;
+  const e = s.toString();
+
   const pressHandler1 = () => {
     if (!UPI) {
-        setError({ value_error: "Field cannot be Empty" })
-        return value_error
-      }
-      if (UPI) {
-        setError({ value_error: null });
-        pressHandler();
-        //setModalVisible(true);
-        return value_error
-      } 
+      setError({value_error: 'Field cannot be Empty'});
+      return value_error;
     }
+    if (UPI) {
+      setError({value_error: null});
+      pressHandler();
+      return value_error;
+    }
+  };
   const pressHandler = () => {
-      try {
-        axios({
-          method: 'POST',
-          url: `${Ngrok.url}/api/payment/upi`,
-          "headers": {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
-          },
-          data: {
-            childid: route.params.childid,
-            upi: UPI,
+    try {
+      axios({
+        method: 'POST',
+        url: `${Ngrok.url}/api/payment/upi`,
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        data: {
+          childid: route.params.childid,
+          upi: UPI,
+        },
+      })
+        .then(function (response) {
+          if (response.status == 200) {
+            setModalVisible(!modalVisible);
           }
         })
-          .then(function (response) {
-            if (response.status == 200) {
-              setModalVisible(!modalVisible);
-            }
-
-            console.log("response", response.status);
-          })
-          .catch(function (error) {
-            console.log(error.response.status) // 401
-            console.log(error.response.data.error) //Please Authenticate or whatever returned from server
-            if (error.response.status == 401) {
-              //redirect to login
-              Alert.alert('payment unsucessful')
-            }
-          })
-      }
-      catch (error) {
-        console.log("errordetails", error);
-      }
-  }
+        .catch(function (error) {
+          console.log(error.response.data.error);
+          if (error.response.status == 401) {
+            Alert.alert('payment unsucessful');
+          }
+        });
+    } catch (error) {
+      console.log('errordetails', error);
+    }
+  };
   const sendplan = () => {
-
     try {
       axios({
         method: 'POST',
         url: `${Ngrok.url}/api/plandetails`,
-        "headers": {
+        headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         data: {
-          childid:route.params.childid,//token of child id
-          startdate:route.params.maxDate,
-          enddate:route.params.tomorrow,
-          tenure:route.params.f,
-          amount:e,
-        }
+          childid: route.params.childid,
+          startdate: route.params.maxDate,
+          enddate: route.params.tomorrow,
+          tenure: route.params.f,
+          amount: e,
+        },
       })
         .then(function (response) {
           if (response.status == 200) {
-            Alert.alert("plan details sent")
+            Alert.alert('plan details sent');
           }
-
-          console.log("response", response.status);
         })
         .catch(function (error) {
-          console.log(error.response.status) // 401
-          console.log(error.response.data.error) //Please Authenticate or whatever returned from server
+          console.log(error.response.data.error);
           if (error.response.status == 401) {
-            //redirect to login
-            Alert.alert('plan details not sent')
+            Alert.alert('plan details not sent');
           }
-
-        })
+        });
+    } catch (error) {
+      console.log('errordetails', error);
     }
-    catch (error) {
-      console.log("errordetails", error);
-    }
-
-}
+  };
   return (
-
-
-    <View style={styles.cont}>
-      <StatusBar
-        barStyle="light-content"
-        // dark-content, light-content and default
-        hidden={false}
-        //To hide statusBar
-        backgroundColor="#FF5C00"
-        //Background color of statusBar only works for Android
-        translucent={false}
-      //allowing light, but not detailed shapes
-
-      />
-      
-      
+    <View style={styles.container}>
       <View style={styles.textview}>
-        <Text style={styles.headertext} >Enter UPI ID</Text>
+        <Text style={styles.headertext}>Enter UPI ID</Text>
       </View>
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
           placeholder="UPI ID"
           placeholderTextColor="#929292"
-
           onChangeText={(UPI) => setUPI(UPI)}
         />
       </View>
       <View style={styles.centeredView}>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-        >
+        <Modal animationType="slide" transparent={true} visible={modalVisible}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={{
-                marginBottom: 15,
-                textAlign: "center",
-              }}>Payment Successful</Text>
+              <Text
+                style={{
+                  marginBottom: 15,
+                  textAlign: 'center',
+                }}>
+                Payment Successful
+              </Text>
 
               <TouchableHighlight
-                style={{ ...styles.openButtono, backgroundColor: "#2196F3" }}
+                style={{...styles.openButtono, backgroundColor: '#2196F3'}}
                 onPress={() => {
                   setModalVisible(!modalVisible);
                   sendplan();
                   navigation.navigate('New_sub_screen');
-                }}
-              >
+                }}>
                 <Text style={styles.textStyle}>OK</Text>
               </TouchableHighlight>
             </View>
           </View>
         </Modal>
-
-
       </View>
       <Text style={styles.error}>{value_error}</Text>
       <TouchableHighlight
         style={styles.loginBtn}
         onPress={() => {
           pressHandler1();
-          //setModalVisible(true);
-        }}
-      >
+        }}>
         <Text style={styles.loginText}>Confirm</Text>
       </TouchableHighlight>
-
     </View>
-
   );
 }
-
-
-// const styles = StyleSheet.create({
-//   container: {
-//     backgroundColor: "#F9F2F2",
-//     justifyContent: "center",
-//   },
-//   check: {
-//     marginLeft: 35,
-//   },
-
-//   image: {
-//     marginBottom: 40,
-//   },
-//   error: {
-//     color: '#dc143c',
-//     fontSize: 11,
-//     //marginTop: 2,
-//     alignSelf: 'center',
-//     marginBottom:5,
-//   },
-
-//   inputView: {
-//     borderWidth: 1,
-//     borderColor: '#b0003a',
-//     borderRadius: 10,
-//     width: "80%",
-//     height: 45, alignSelf: "center",
-//     alignItems: "center",
-//     backgroundColor: "#fff",   //"#C4C4C4",
-//     marginTop: 5,
-//     //opacity: 0.5,
-//   },
-//   textview: {
-//     justifyContent:'center',
-//     marginBottom: 7,
-
-//   },
-//   headertext: {
-//     fontSize: 14,
-//     marginTop: 15,
-//     marginLeft: 30,
-//     //alignSelf:'center'
-//   },
-
-//   TextInput: {
-//     height: 50,
-//     flex: 1,
-//     padding: 10,
-//     marginLeft: 20,
-
-//   },
-
-//   forgot_button: {
-//     height: 30,
-//     marginBottom: 15,
-//     color: '#1e90ff',
-
-//   },
-
-//   loginBtn: {
-//     width: "50%",
-//     borderRadius: 10,
-//     height: 38,
-//     alignItems: "center",
-//     justifyContent: "center",
-//     backgroundColor: "#ff5c8d",
-//     alignSelf: "center",
-//     marginBottom: 90,
-//   },
-//   registerTextStyle: {
-//     marginTop: 10,
-//     color: 'black',
-//     fontSize: 13,
-//     alignSelf: "center",
-//   },
-//   modalView: {
-//     margin: 20,
-//     backgroundColor: "white",
-//     borderRadius: 20,
-//     padding: 35,
-//     alignItems: "center",
-//     shadowColor: "#000",
-//     shadowOffset: {
-//       width: 0,
-//       height: 2
-//     },
-//     shadowOpacity: 0.25,
-//     shadowRadius: 3.84,
-//     elevation: 5
-//   },
-//   openButton: {
-//     width: '70%',
-//     backgroundColor: "#4DAFCE",
-//     borderRadius: 15,
-//     padding: 10,
-//     elevation: 2,
-//     marginBottom: 180,
-//   },
-//   openButtono: {
-//     backgroundColor: "#4DAFCE",
-//     borderRadius: 15,
-//     padding: 10,
-//     elevation: 2,
-//   },
-//   textStyle: {
-//     color: "white",
-//     fontWeight: "bold",
-//     textAlign: "center"
-//   },
-//   modalText: {
-//     marginBottom: 15,
-//     textAlign: "center",
-//     color: "red",
-//   },
-//   centeredView: {
-//     flex: 1,
-//     justifyContent: "center",
-//     alignItems: "center",
-//     marginTop: 22
-//   }
-
-// });

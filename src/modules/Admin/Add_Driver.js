@@ -20,7 +20,6 @@ import * as ToastMessage from '../../constants/ToastMessages';
 import storage from '@react-native-firebase/storage';
 
 
-
 export default function Add_Driver({ navigation }) {
   const [isloading, setLoading] = useState(false);
   const [img, setImg] = useState('https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg');

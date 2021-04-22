@@ -1,11 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {
-  Text,
-  View,
-  StatusBar,
-  StyleSheet,
-  ActivityIndicator,
-} from 'react-native';
+import {View} from 'react-native';
 import Addsubscription from './addsubscription';
 import Showplans from './showplans';
 import Ngrok from '../../constants/ngrok';
@@ -21,20 +15,21 @@ const subscription = ({navigation}) => {
   useEffect(() => {
     const fetchData = navigation.addListener('focus', async () => {
       let token = await AsyncStorage.getItem('token');
-      let response = await axios(
-        `${Ngrok.url}/api/parent/registeration/${token}`,
-      );
-
-      console.log('status:', response.data.payment);
-
-      let data = response.data.payment;
-      let id = response.data.childId;
-      if (data == 'registered') {
-        setChildInfo(true);
-      } else {
-        setChildInfo(false);
+      try {
+        let response = await axios(
+          `${Ngrok.url}/api/parent/registeration/${token}`,
+        );
+        let data = response.data.payment;
+        let id = response.data.childId;
+        if (data == 'registered') {
+          setChildInfo(true);
+        } else {
+          setChildInfo(false);
+        }
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
       }
-      setLoading(false);
     });
 
     fetchData;
@@ -42,7 +37,7 @@ const subscription = ({navigation}) => {
 
   return isLoading ? (
     <View style={styles.container}>
-       <Loader loading={isLoading} />
+      <Loader loading={isLoading} />
     </View>
   ) : (
     <View style={styles.container}>
@@ -56,4 +51,3 @@ const subscription = ({navigation}) => {
 };
 
 export default subscription;
-

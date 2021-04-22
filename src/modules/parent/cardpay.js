@@ -23,8 +23,6 @@ import * as ToastMessage from '../../constants/ToastMessages';
 stripe.setOptions({
   publishableKey:
     'pk_test_51IZAAASCYy6hVMxJHvsmow6FXKpv9fnsK4ESEgtKFI9JjyEtXGhwUsyGfvtHMliiogTanOUX3WXluf8y77KVY72q00zgnOWoFX',
-  // merchantId: '<MERCHANT_ID>',
-  //androidPayMode: 'test',
 });
 
 export default function CardFormScreen({route, navigation}) {
@@ -52,7 +50,6 @@ export default function CardFormScreen({route, navigation}) {
         let response = await axios.get(
           `${Ngrok.url}/api/payment/cardsaved/${token}`,
         );
-        console.log('card data: ', response.data);
         setisLoading(false);
         if (response.data.length > 0) {
           setSavedData(response.data);
@@ -65,11 +62,9 @@ export default function CardFormScreen({route, navigation}) {
   }, [count]);
 
   const handleCardPayPress = async () => {
-  
     try {
       setLoading(true);
       setpaymentMethod(null);
-
       const paymentMethod = await stripe.paymentRequestWithCardForm({
         card: {
           number: '4000002500003155',
@@ -78,19 +73,16 @@ export default function CardFormScreen({route, navigation}) {
           expYear: 2020,
         },
       });
-    
       setLoading(false);
       setpaymentMethod(paymentMethod);
       setCardno(paymentMethod.card.last4);
       setId(paymentMethod.id);
-      //console.log('token', paymentMethod);
     } catch (error) {
       setLoading(false);
     }
   };
 
   const deleteHandler = (value) => {
-    console.log(value);
     Alert.alert(`Delete card ending with ${value}`, ' ', [
       {
         text: 'Delete',
@@ -109,11 +101,9 @@ export default function CardFormScreen({route, navigation}) {
             cardno: value,
           })
           .then(function (response) {
-            console.log('response:', response.data.message);
             setisLoading(false);
 
             if (response.data.message == 'Card deleted successfully') {
-              //Alert.alert('Card Deleted Successfully');
               setToast(true);
               setType(ToastMessage.success);
               SetMessage(ToastMessage.message9);
@@ -145,13 +135,8 @@ export default function CardFormScreen({route, navigation}) {
   const paymentHandler = async (value) => {
     setisLoading(true);
     let parentId = await AsyncStorage.getItem('token');
-    console.log('paymentmethod', id);
-    console.log('card save ?', isSelected);
-    console.log('amount', amount);
     setTokenData(value);
     sendplan();
-
-    console.log('token', value);
     try {
       axios
         .post(`${Ngrok.url}/api/payment`, {
@@ -164,7 +149,6 @@ export default function CardFormScreen({route, navigation}) {
           save: isSelected,
         })
         .then(function (response) {
-          console.log('payment response:', response.data.message);
           setisLoading(false);
 
           if (response.data.message == 'Payment Succesful. Thanks.') {
@@ -174,14 +158,12 @@ export default function CardFormScreen({route, navigation}) {
             response.data.message == 'Payment Successful. Card Saved. Thanks.'
           ) {
             setModalVisible(true);
-            //setCount(count+1)
           } else if (
             response.data.message == 'Payment failed. Please contact your bank.'
           ) {
             setToast(true);
             setType(ToastMessage.failure);
             SetMessage(ToastMessage.message10);
-            
           }
         })
         .catch(function (error) {
@@ -194,7 +176,7 @@ export default function CardFormScreen({route, navigation}) {
     } catch (error) {
       console.log(error);
     }
-    setToast(false)
+    setToast(false);
   };
 
   const sendplan = () => {
@@ -214,14 +196,9 @@ export default function CardFormScreen({route, navigation}) {
           amount: amount.toString(),
         },
       })
-        .then(function (response) {
-          console.log('plan details send status: ', response.status);
-        })
+        .then(function (response) {})
         .catch(function (error) {
-          console.log(error.response.status); // 401
-          console.log(error.response.data.error); //Please Authenticate or whatever returned from server
           if (error.response.status == 401) {
-            //redirect to login
             console.log('plan details not sent');
           }
         });
@@ -281,11 +258,7 @@ export default function CardFormScreen({route, navigation}) {
                   onPress={() => {
                     savedCardPayemnt(item.cardNo);
                   }}>
-                  <Ionicons
-                    name="card"
-                    color="#000"
-                    size={35}
-                  />
+                  <Ionicons name="card" color="#000" size={35} />
                   <Text style={styles.cardNumText}>
                     Card ending with {item.cardNo}
                   </Text>
@@ -313,7 +286,6 @@ export default function CardFormScreen({route, navigation}) {
               flexDirection: 'row',
               justifyContent: 'center',
               alignItems: 'center',
-              //marginBottom: 10,
               marginTop: 5,
             }}>
             <CheckBox
@@ -378,7 +350,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
     flexDirection: 'row',
     borderWidth: 1,
-    justifyContent:'space-evenly',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
     marginLeft: 10,
   },
@@ -420,7 +392,6 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     padding: 35,
     alignItems: 'center',
-    //elevation: 5
   },
   openButtono: {
     backgroundColor: '#4DAFCE',
