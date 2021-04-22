@@ -12,10 +12,13 @@ import styles from '../../components/styles_admin'
 import ImagePicker from 'react-native-image-crop-picker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 export default function nanny_Details({route}){
-  const [img, setImg] = useState('https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg');
+  const [dimg, setdImg] = useState('https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/grandma_elderly_nanny_avatar-512.png ');
+  const [dimg1, setdImg1] = useState('https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/grandma_elderly_nanny_avatar-512.png ');
+  const [img, setImg] = useState(route.params.item.idProofUrl);
+  const [userrimg, setuserImg] = useState(route.params.item.photoUrl);
   const [pic, setPic] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [img1, setImg1] = useState('https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg');
+  console.log('details',route.params.item);
   const gallery = () => {
     ImagePicker.openPicker({
       
@@ -50,7 +53,7 @@ export default function nanny_Details({route}){
     <View style={styles.container4}>
       <ScrollView>
       <StatusBar style="auto" />
-      <Image style={styles.licence1} source={{ uri:route.params.item.photoUrl}} />
+      <Image style={styles.licence1} source={userrimg=="NULL" ? {uri:dimg} : {uri:userrimg}} />
       <View style={{marginTop:10,marginBottom:10,alignSelf: "center",}}>
        
         
@@ -110,7 +113,7 @@ export default function nanny_Details({route}){
           : <View>
             <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
               <TouchableOpacity onPress={pick} >
-                <Image style={styles.licence} source={{ uri: img }} />
+                <Image style={styles.licence} source={img=="NULL" ? {uri:dimg1} : {uri:img}} />
                 
               </TouchableOpacity>
             </View>

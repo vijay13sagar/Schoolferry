@@ -25,19 +25,22 @@ export default class Home_page extends Component {
  
   
     this._unsubscribe = this.props.navigation.addListener('focus', () => {
-
-    fetch(`${Ngrok.url}/api/admin/today/trips`)
-    .then((response) => response.json())
-    .then((json) => {
-      this.setState({ data: json });
-      
-    })
-    .catch((error) => console.error(error))
-    .finally(() => {
-      this.setState({ isLoading: false });
+      var self=this;
+      axios
+      .get(`${Ngrok.url}/api/admin/today/trips`)
+      .then(function (response) {
+        self.setState({ data: response.data });
+      })
+      .catch(function (error) {
+        console.log("error",error.message);
+      })
+      .finally(function () {
+        self.setState({ isLoading: false });
       });
+    
+       });
       
-    });
+  
   }
   componentWillUnmount() {
     this._unsubscribe();
@@ -90,7 +93,7 @@ export default class Home_page extends Component {
         />
         <Text style={{ alignSelf: "center" }}>{TD}</Text>
         <View>
-          <TouchableOpacity disabled={data.trip_id ? false : true} style= { data.trip_id ? styles.loginBtn :styles.card2} onPress={this.onpressHandler} >
+          <TouchableOpacity disabled={data ? false : true} style= { data? styles.loginBtn :styles.card2} onPress={this.onpressHandler} >
             <Text style={styles.TextInput}>Schedule Trips</Text>
             
 

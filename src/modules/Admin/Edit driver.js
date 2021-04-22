@@ -13,7 +13,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import ToastComponent from '../../components/Toaster';
 import* as ToastMessage from '../../constants/ToastMessages';
 import Ngrok from '../../constants/ngrok';
-
+import axios from 'axios';
 import Loader from '../../components/Loader';
 import styles from '../../components/styles_admin'
 
@@ -29,35 +29,28 @@ export default function Edit_Driver({ route,navigation }) {
   const pressHandler = () => {
 
     setLoading(true);
-    fetch(`${Ngrok.url}/api/admin/trips/driver/new`, {
-      "method": "POST",
-      "headers": {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        driverid : driverid,
+    axios
+        .post(`${Ngrok.url}/api/admin/trips/driver/new`, {
+          driverid : driverid,
              tripid : c
-    
-      })
-    })
-      .then(response => response.json())
-      .then(responseJson => {
-        setLoading(false);
+        })
+        .then(function (response) {
+          
+          setLoading(false);
       
-        if (responseJson.message == "driver changed") {
-          Alert.alert('Changed Successfully','', [{text: 'Proceed', onPress:() => navigation.navigate('Home_page')}])
-        } else {
-          setToast(true)
-        }
-    
-      })
-      .catch(err => {
-        setLoading(false);
+              if (response.data.message == "driver changed") {
+                Alert.alert('Changed Successfully','', [{text: 'Proceed', onPress:() => navigation.navigate('Home_page')}])
+              } else {
+                setToast(true)
+              }
+        })
+        .catch(function (error) {
+          console.log(error);
+          setLoading(false);
        
-        setToast(true)
-      });
-  
+       setToast(true)
+        });
+    
       setToast(false)
 }
 

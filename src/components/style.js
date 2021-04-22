@@ -790,6 +790,14 @@ card1: {
   alignItems: 'center',
   justifyContent: 'center',
 },
+card3: {
+  width: '75%',
+  alignSelf: 'center',
+  height: 100,
+  alignItems: 'center',
+  justifyContent: 'center',
+  borderRadius:20,
+},
 //plandetails.js
 headertext1: {
   fontSize: 13,
@@ -907,5 +915,13 @@ licence: {
     alignSelf: 'center',
     justifyContent: 'center',
   },
+  //tripdetails.js
+  licence1: {
+    marginTop:20,
+    height: 140,
+    width: 140,
+    borderRadius:140,
+    alignSelf: 'center'
+    },
     })
     

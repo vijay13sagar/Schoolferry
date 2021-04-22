@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
+  Image, 
   Text,
   View,
   StatusBar, ActivityIndicator, FlatList
@@ -10,7 +11,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import AsyncStorage from '@react-native-community/async-storage';
 import Ngrok from '../../constants/ngrok';
 import styles from '../../components/styles_admin'
-
+import axios from 'axios';
 
 
 export default function user_Details({ route, navigation }) {
@@ -18,25 +19,22 @@ export default function user_Details({ route, navigation }) {
 
   const [childlists, getData] = useState()
 
+  const [dimg, setdImg] = useState('https://www.shareicon.net/data/512x512/2016/06/25/786525_people_512x512.png');
 
 
   useEffect(() => {
     let take1 = route.params.item.id
-    fetch(`${Ngrok.url}/api/parent/detail/childlist/${take1}`, {
-      "method": "GET",
-      "headers": {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
+    axios
+    .get(`${Ngrok.url}/api/parent/detail/childlist/${take1}`)
+    .then(function (response) {
+      getData(response.data)
     })
-      .then(response => response.json())
-      .then(responseJson => {
-       
-        getData(responseJson)
-      })
-      .catch(err => {
-
-      });
+    .catch(function (error) {
+      console.log("error",error.message);
+    })
+    .finally(function () {
+    });
+    
   }, [])
 
 
@@ -96,11 +94,23 @@ export default function user_Details({ route, navigation }) {
           <Card>
             <CardItem button onPress={() => navigation.navigate('child_Details', { item: item })}>
               <Body>
-                <Text>
+              <View style={{flexDirection:"row"}}>      
+                <Image style={styles.licence2} source={item.photoUrl ? { uri: (item.photoUrl) }:{ uri: (dimg) }} />         
+                   <Text style={{alignSelf:"center",marginLeft:10,fontSize: 15,
+        color: "black",
+        fontWeight: '700',}}>
+          Name:        
+                   {
+                      item.childName
+                   }
+                </Text>
+                </View>
+
+                {/* <Text>
                   {
                     item.childName
                   }
-                </Text>
+                </Text> */}
               </Body>
             </CardItem>
           </Card>

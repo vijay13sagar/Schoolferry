@@ -5,7 +5,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import Ngrok from '../../constants/ngrok';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from '../../components/styles_admin'
-
+import axios from 'axios';
 
 export default class dailyChildtrip_list extends Component  {
   constructor(props) {
@@ -20,18 +20,21 @@ export default class dailyChildtrip_list extends Component  {
  
   componentDidMount() {
     const tripid = this.props.route.params.s;
-    
-    fetch(`${Ngrok.url}/api/admin/trips/children/${tripid}`)
-      .then((response) => response.json())
-      .then((json) => {
-        this.setState({ data: json });
+    var self=this;
+    axios
+    .get(`${Ngrok.url}/api/admin/trips/children/${tripid}`)
+    .then(function (response) {
+      self.setState({ data: response.data });
        
-      })
-      .catch((error) => console.error(error))
-      .finally(() => {
-        this.setState({ isLoading: false });
-      });
-  }
+    })
+    .catch(function (error) {
+      console.log("error",error.message);
+    })
+    .finally(function () {
+      self.setState({ isLoading: false });
+    });
+  
+   }
  
 
   render() {

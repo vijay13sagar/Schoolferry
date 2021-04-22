@@ -5,7 +5,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import Ngrok from '../../constants/ngrok';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from '../../components/styles_admin'
-
+import axios from 'axios';
 
 export default class freeNannytrip_list extends Component  {
   constructor(props) {
@@ -19,17 +19,19 @@ export default class freeNannytrip_list extends Component  {
  
   componentDidMount() {
    ;
-    
-    fetch(`${Ngrok.url}/api/admin/trip/available/nannies`)
-      .then((response) => response.json())
-      .then((json) => {
-        this.setState({ data: json });
-       
-      })
-      .catch((error) => console.error(error))
-      .finally(() => {
-        this.setState({ isLoading: false });
-      });
+   var self=this;
+   axios
+   .get(`${Ngrok.url}/api/admin/trip/available/nannies`)
+   .then(function (response) {
+    self.setState({ data: response.data });
+   })
+   .catch(function (error) {
+     console.log("error",error.message);
+   })
+   .finally(function () {
+    self.setState({ isLoading: false });
+   });
+   
   }
   
 

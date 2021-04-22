@@ -13,9 +13,12 @@ import ImagePicker from 'react-native-image-crop-picker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default function driver_Details({ route, navigation }){
-  const [img, setImg] = useState('https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg');
+  const [dimg, setdImg] = useState('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQS0E1095uZGr8SfFNizuXsMxB3S9iNuisOtw&usqp=CAU');
+  const [dimg1, setdImg1] = useState('https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/grandma_elderly_nanny_avatar-512.png    ');
+  const [img, setImg] = useState(route.params.item.idProofUrl);
+  const [userrimg, setuserImg] = useState(route.params.item.photoUrl);
   const [modalVisible, setModalVisible] = useState(false);
-  console.log('details',route.params.item);
+ 
   
 const [pic, setPic] = useState(false);
 const gallery = () => {
@@ -54,7 +57,7 @@ const pick = () => {
     <View style={styles.container4}>
       <ScrollView>
       <StatusBar style="auto" />
-      <Image style={styles.licence1} source={{ uri:route.params.item.photoUrl }} />
+      <Image style={styles.licence1} source={userrimg == "NULL" ? {uri:dimg} : {uri:userrimg}} />
       <View style={{marginTop:10,marginBottom:10,alignSelf: "center",}}>
        
         
@@ -114,7 +117,7 @@ const pick = () => {
           : <View>
             <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
               <TouchableOpacity onPress={pick} >
-                <Image style={styles.licence} source={{ uri: img }} />
+                <Image style={styles.licence} source={img=="NULL" ? {uri:dimg1} : {uri:img}} />
                 
               </TouchableOpacity>
             </View>
@@ -129,7 +132,7 @@ const pick = () => {
         fontWeight: '700',
         
         alignSelf:"center"}}>
-         Licence
+         License
            </Text>
         </View>
      

@@ -12,7 +12,7 @@ import Trip_details from '../modules/nanny/tripdetails';
 import Child_list from '../modules/nanny/childlist';
 import Child_details from '../modules/nanny/childdetails';
 import History from '../modules/nanny/history';
-import updateprof from '../modules/nanny/updatenannypro';
+import updateProfile from '../components/updateprofile';
 import End_trips from '../modules/nanny/endtrips';
 import Old_childdetails from '../modules/nanny/oldchilddetails';
 
@@ -125,7 +125,7 @@ function Profile() {
       />
       <Stack.Screen
         name="Updateprof"
-        component={updateprof}
+        component={updateProfile}
         options={{ title: 'Update Profile' }}
       />
     </Stack.Navigator>

@@ -17,7 +17,7 @@ import Loader from '../../components/Loader';
 import styles from '../../components/styles_admin'
 import ToastComponent from '../../components/Toaster';
 import * as ToastMessage from '../../constants/ToastMessages';
-
+import axios from 'axios';
 
 
 export default function remove_Child({ route, navigation }) {
@@ -32,34 +32,27 @@ export default function remove_Child({ route, navigation }) {
   const pressHandler = () => {
 
     setLoading(true);
-    fetch(`${Ngrok.url}/api/admin/trips/child/remove`, {
-      "method": "POST",
-      "headers": {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        childid: childid,
-        tripid: c
-
-      })
+    axios
+    .post(`${Ngrok.url}/api/admin/trips/child/remove`, {
+      childid: childid,
+     tripid: c
     })
-      .then(response => response.json())
-      .then(responseJson => {
+    .then(function (response) {
       
-        if (responseJson.message == "child removed from the trip") {
-          Alert.alert('Removed Successfully', '', [{ text: 'Proceed', onPress: () => navigation.navigate('Home_page') }])
-        } else {
-          setLoading(false);
-         
-          setToast(true)
-        }
-       
-      })
-      .catch(err => {
-        setLoading(false);
+      if (response.data.message == "child removed from the trip") {
+              Alert.alert('Removed Successfully', '', [{ text: 'Proceed', onPress: () => navigation.navigate('Home_page') }])
+            } else {
+              setLoading(false);
+             
+              setToast(true)
+            }
+    })
+    .catch(function (error) {
+      console.log(error);
+      setLoading(false);
         
-      });
+    });
+    
     setToast(false)
 
   }

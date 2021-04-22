@@ -13,6 +13,7 @@ import styles from '../../components/styles_admin';
 import ToastComponent from '../../components/Toaster';
 import* as ToastMessage from '../../constants/ToastMessages';
 
+import axios from 'axios';
 
 export default function add_Child({ route,navigation}) {
   const [isloading, setLoading] = useState(false);
@@ -22,32 +23,52 @@ export default function add_Child({ route,navigation}) {
 let age = route.params.item.age
   const pressHandler = () => {
     setLoading(true);
-    fetch(`${Ngrok.url}/api/admin/trips/child/add`, {
-      "method": "POST",
-      "headers": {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        childid : childid,
-             tripid : c
-    
-      })
+    axios
+    .post(`${Ngrok.url}/api/admin/trips/child/add`, {
+      childid : childid,
+              tripid : c
     })
-      .then(response => response.json())
-      .then(responseJson => {
-        setLoading(false);
+    .then(function (response) {
+      setLoading(false);
        
-        if (responseJson.message == "child added") {
-         Alert. alert('Added Successfully','', [{text: 'Proceed', onPress:() => navigation.navigate('Home_page',)}])
-        } else {
-        setToast(true)
-        }
-      })
-      .catch(err => {
-        setLoading(false);
+              if (response.data.message == "child added") {
+               Alert. alert('Added Successfully','', [{text: 'Proceed', onPress:() => navigation.navigate('Home_page',)}])
+              } else {
+              setToast(true)
+              }   
       
-      });
+    
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+//     fetch(`${Ngrok.url}/api/admin/trips/child/add`, {
+//       "method": "POST",
+//       "headers": {
+//         Accept: 'application/json',
+//         'Content-Type': 'application/json'
+//       },
+//       body: JSON.stringify({
+//         childid : childid,
+//              tripid : c
+    
+//       })
+//     })
+//       .then(response => response.json())
+//       .then(responseJson => {
+//         setLoading(false);
+       
+//         if (responseJson.message == "child added") {
+//          Alert. alert('Added Successfully','', [{text: 'Proceed', onPress:() => navigation.navigate('Home_page',)}])
+//         } else {
+//         setToast(true)
+//         }
+//       })
+//       .catch(err => {
+//         setLoading(false);
+      
+//       });
   
       setToast(false)
 }

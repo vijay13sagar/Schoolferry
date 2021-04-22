@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, FlatList, Text, View } from 'react-native';
+import { ActivityIndicator,Image, FlatList, Text, View } from 'react-native';
 import {  Card, CardItem, Body } from 'native-base';
 import Ngrok from '../../constants/ngrok';
 import styles from '../../components/styles_admin'
+import axios from 'axios';
 
 export default class nannyList extends Component  {
   constructor(props) {
@@ -15,20 +16,25 @@ export default class nannyList extends Component  {
   }
 
   componentDidMount() {
-    fetch(`${Ngrok.url}/api/admin/home/nannies`)
-      .then((response) => response.json())
-      .then((json) => {
-        this.setState({ data: json });
-      })
-      .catch((error) => console.error(error))
-      .finally(() => {
-        this.setState({ isLoading: false });
-      });
+    var self=this;
+   axios
+   .get(`${Ngrok.url}/api/admin/home/nannies`)
+   .then(function (response) {
+    self.setState({ data: response.data });
+   })
+   .catch(function (error) {
+     console.log("error",error.message);
+   })
+   .finally(function () {
+    self.setState({ isLoading: false });
+   });
+  
   }
 
   render() {
     const { data, isLoading } = this.state;
-
+    const img = 'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/grandma_elderly_nanny_avatar-512.png    ';
+    const b="NULL"
     return (
       <View style={styles.container1}>
         {isLoading ? <ActivityIndicator/> : (
@@ -40,11 +46,17 @@ export default class nannyList extends Component  {
         <Card>
         <CardItem button onPress = {()=>this.props.navigation.navigate('nanny_Details',{item:item})}>
               <Body>
-                <Text>
+              <View style={{flexDirection:"row"}}>      
+                <Image style={styles.licence2} source={item.photoUrl=="NULL"  ? { uri: (img) }:{ uri: (item.photoUrl) }} />         
+                   <Text style={{alignSelf:"center",marginLeft:10,fontSize: 15,
+        color: "black",
+        fontWeight: '700',}}>
+          Name:        
                    {
-                     item.name
+                      item.name
                    }
                 </Text>
+                </View>
               </Body>
             </CardItem>
             </Card>

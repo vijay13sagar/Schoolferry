@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import {  Text, View, StatusBar,TextInput, TouchableOpacity, Alert } from 'react-native';
-import Ngrok from '../../constants/ngrok'
+import Ngrok from '../constants/ngrok'
 import AsyncStorage from '@react-native-community/async-storage';
-import styles from '../../components/style';
-import ToastComponent from '../../components/Toaster';
+import styles from './style';
+import ToastComponent from './Toaster';
 import axios from 'axios';
-import* as ToastMessage from '../../constants/ToastMessages';
-import Loader from '../../components/Loader';
+import* as ToastMessage from '../constants/ToastMessages';
+import Loader from './Loader';
 
 const Updateprofile = ({navigation,route}) => {
   const [contact, setContact] = useState(route.params.con)
@@ -15,7 +15,16 @@ const Updateprofile = ({navigation,route}) => {
   const [showtoast,setToast] = useState(false)
   const [message, SetMessage] = useState()
   const [isloading, setLoading] = useState(false);
+  const [person,setPerson]= useState();
+  useEffect(async () => {
+    let token = await AsyncStorage.getItem('token')
+      if (token[0]==='N'){
+        setPerson('nanny')
+      }else if(token[0]==='D'){
+        setPerson('driver')
+      }
 
+  }, []);
   const presshandler = async () => {
     let token = await AsyncStorage.getItem('token')
     var regex_phone = /^((\+91)?|91)?[789][0-9]{9}/
@@ -30,7 +39,7 @@ const Updateprofile = ({navigation,route}) => {
     else {
       setLoading(true);
       axios
-        .post(`${Ngrok.url}/api/profileupdate/driver`, {
+        .post(`${Ngrok.url}/api/profileupdate/${person}`, {
           id: token,
           contact: contact,
           address: address
@@ -40,6 +49,7 @@ const Updateprofile = ({navigation,route}) => {
           if (response.data.message == "data updated successfully") {
             setToast(true)
             SetMessage(ToastMessage.updateProfile)
+            setError({ error: "" })
           }
         })
         .catch(function (error) {

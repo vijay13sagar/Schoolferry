@@ -26,7 +26,7 @@ import { v4 as uuidv4 } from "uuid";
 
 export default function Add_Driver({ navigation }) {
   const [isloading, setLoading] = useState(false);
-  const [img, setImg] = useState('https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg');
+  const [img, setImg] = useState('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQS0E1095uZGr8SfFNizuXsMxB3S9iNuisOtw&usqp=CAU');
   const [pic, setPic] = useState(false);
   const [name, setname] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
@@ -45,19 +45,21 @@ export default function Add_Driver({ navigation }) {
   const [img1, setImg1] = useState('https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg');
   const [pic1, setPic1] = useState(false);
   const [modalVisible1, setModalVisible1] = useState(false);
+  const [link1,setLink1]= useState();
+  const [link2,setLink2]=useState();
   const gallery1 = () => {
     ImagePicker.openPicker({
-      compressImageMaxWidth:350,
+      compressImageMaxWidth: 350,
       //compressImageMaxHeight: 350,
       compressImageMaxHeight: 175,
       cropping: true
     })
-    .then( async image => {
-     
-      await setImg1(image.path);
-      upload2();
-      
-    });
+      .then(async image => {
+
+        await setImg1(image.path);
+        upload2();
+
+      });
   }
   const Camera1 = () => {
     ImagePicker.openCamera({
@@ -65,15 +67,15 @@ export default function Add_Driver({ navigation }) {
       compressImageMaxHeight: 175,
       cropping: true,
     }).then(async image => {
-      
+
       await setImg1(image.path)
       upload2();
     });
   }
-  
+
   const backpress1 = () => {
     setPic1(false)
-   setModalVisible1(false)
+    setModalVisible1(false)
   }
   const pick1 = () => {
     setModalVisible1(true);
@@ -94,15 +96,15 @@ export default function Add_Driver({ navigation }) {
 
   const gallery = () => {
     ImagePicker.openPicker({
-     
+
       compressImageMaxHeight: 350,
       compressImageMaxHeight: 175,
       cropping: true
     }).then(async image => {
-      
+
       await setImg(image.path)
       upload1();
-      
+
     });
   }
   const Camera = () => {
@@ -111,59 +113,59 @@ export default function Add_Driver({ navigation }) {
       compressImageMaxHeight: 175,
       cropping: true,
     }).then(async image => {
-     
+
       await setImg(image.path)
       upload1();
     });
   }
   const upload1 = async () => {
-    let imageName  =`Driver/profile/${uuidv4()}`;
-    //let imageName = `${id}/profile`;
-    let s=decodeURI(img)
+    let imageName = `Driver/profile/${uuidv4()}`;
+    let s = decodeURI(img)
     storage()
       .ref(imageName)
       .putFile(s)
       .then(async (snapshot) => {
-       
+
         Alert.alert('Image Uploaded Successfully');
-        let imageRef=storage().ref(imageName)
-       
-        const url1 =await imageRef.getDownloadURL().catch((error) => { throw error });
-        console.log("url",url1);
+        let imageRef = storage().ref(imageName)
+
+        const url1 = await imageRef.getDownloadURL().catch((error) => { throw error });
+        console.log("url", url1);
+        setLink1(url1)
       })
       .catch((e) => {
-        
+
         Alert.alert('Uploading Failed');
-        
-    }
+
+      }
       );
   }
   const upload2 = () => {
-    let imageName  =`Driver/id/${uuidv4()}`;
-    console.log("name",imageName);
-    //let imageName = `${id}/license`;
-    let s=decodeURI(img1)
+    let imageName = `Driver/id/${uuidv4()}`;
+    console.log("name", imageName);
+    let s = decodeURI(img1)
     storage()
       .ref(imageName)
       .putFile(s)
       .then(async (snapshot) => {
-       console.log("snapshot",snapshot);
+        console.log("snapshot", snapshot);
         Alert.alert('Image Uploaded Successfully')
-        let imageRef=storage().ref(imageName)
-        const url2 =await imageRef.getDownloadURL().catch((error) => { throw error });
-  console.log("url",url2);
-        })
+        let imageRef = storage().ref(imageName)
+        const url2 = await imageRef.getDownloadURL().catch((error) => { throw error });
+        console.log("url", url2);
+        setLink2(url2)
+      })
       .catch((e) => {
-        
+
         Alert.alert('Uploading Failed');
-       
-    }
+
+      }
       );
   }
-  
+
   const backpress = () => {
     setPic(false)
-     setModalVisible(false)
+    setModalVisible(false)
   }
   const pick = () => {
     setModalVisible(true);
@@ -174,14 +176,14 @@ export default function Add_Driver({ navigation }) {
 
     if (!name || !EXP || !contact || !ADR || !LIN || !password) {
       setemptyFeilds({ emptyFields: "Please Enter All The Details" })
-      setcontactError({ contactError: null })
+     
 
       return false
     }
 
     else if (!validatecontact(contact)) {
-      setcontactError({ contactError: "Enter Valid Phone Number" })
-      setEmailError({ emailError: null })
+      setemptyFeilds({ emptyFields:  "Enter Valid Phone Number" })
+     
 
       return false
     }
@@ -192,14 +194,14 @@ export default function Add_Driver({ navigation }) {
   }
 
   function pressHandler() {
-   
+
     if (validateFunction()) {
-      
- 
+
+
 
       try {
         setLoading(true);
-        console.log("start",url1);
+        console.log("start",);
         axios({
           method: 'POST',
           url: `${Ngrok.url}/api/admin/register/driver`,
@@ -210,11 +212,11 @@ export default function Add_Driver({ navigation }) {
           data: {
             name: name,
             contact: contact,
-            address: ADR,
-            experience: EXP,
-            photourl: url1,
-            idproofurl: url2,
-            password: password
+            address:ADR,
+            experience:EXP,
+             photourl:link1,
+             idproofurl:link2,
+            password:password
 
           }
         })
@@ -224,14 +226,14 @@ export default function Add_Driver({ navigation }) {
               Alert.alert('Registration Successful', '', [{ text: 'Proceed', onPress: () => navigation.navigate('Employee',) }])
             }
 
-           
+
           })
           .catch(function (error) {
             setLoading(false);
-            
+
             if (error.response.status == 401) {
               setLoading(false);
-             
+
               setToast(true)
             }
 
@@ -241,7 +243,7 @@ export default function Add_Driver({ navigation }) {
       catch (error) {
 
         setLoading(false);
-       
+
       }
     }
     setToast(false)
@@ -252,69 +254,69 @@ export default function Add_Driver({ navigation }) {
     <View style={styles.container3}>
       <ScrollView>
         {showtoast ? (<ToastComponent type={ToastMessage.failure} message={ToastMessage.message3} />) : null}
-        
-          <View >
-        {pic ?
-          <View >
-            <Modal animationType="slide" transparent={true} visible={modalVisible}>
-              <View style={styles.modalContainer}>
-                <Ionicons
-                  name="close-circle-outline"
-                  color="#fff"
-                  size={30}
-                  style={styles.icon}
-                  onPress={backpress}
-                />
-                <View style={styles.modalBody1}>
-                  <TouchableOpacity
-                    style={{ alignSelf: 'center', marginTop: 5 }}
-                    onPress={Camera}>
-                    <Text
-                      style={{
-                        color: 'black',
-                        fontSize: 19,
-                      }}>
-                      Open Camera <Ionicons name="camera"
-                        color="#FF5C00" size={25}
-                        style={styles.icon}
-                      />
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={{ alignSelf: 'center', marginTop: 20 }}
-                    onPress={gallery}>
-                    <Text
-                      style={{
-                        color: 'black',
-                        fontSize: 19,
-                      }}>
-                      Choose From Gallery <Ionicons name="folder"
-                        color="#FF5C00" size={25}
-                        style={styles.icon}
-                      />
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </Modal>        
-          </View>
-          : <View>
-            <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-              <TouchableOpacity onPress={pick} >
-                <Image style={styles.licence1} source={{ uri: img }} />
-              </TouchableOpacity>
-            </View>
 
-          </View>
-        }
-        <View>
-          <Text style={styles.TextInput4}>
-            user image
+        <View >
+          {pic ?
+            <View >
+              <Modal animationType="slide" transparent={true} visible={modalVisible}>
+                <View style={styles.modalContainer}>
+                  <Ionicons
+                    name="close-circle-outline"
+                    color="#fff"
+                    size={30}
+                    style={styles.icon}
+                    onPress={backpress}
+                  />
+                  <View style={styles.modalBody1}>
+                    <TouchableOpacity
+                      style={{ alignSelf: 'center', marginTop: 5 }}
+                      onPress={Camera}>
+                      <Text
+                        style={{
+                          color: 'black',
+                          fontSize: 19,
+                        }}>
+                        Open Camera <Ionicons name="camera"
+                          color="#FF5C00" size={25}
+                          style={styles.icon}
+                        />
+                      </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={{ alignSelf: 'center', marginTop: 20 }}
+                      onPress={gallery}>
+                      <Text
+                        style={{
+                          color: 'black',
+                          fontSize: 19,
+                        }}>
+                        Choose From Gallery <Ionicons name="folder"
+                          color="#FF5C00" size={25}
+                          style={styles.icon}
+                        />
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </Modal>
+            </View>
+            : <View>
+              <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+                <TouchableOpacity onPress={pick} >
+                  <Image style={styles.licence1} source={{ uri: img }} />
+                </TouchableOpacity>
+              </View>
+
+            </View>
+          }
+          <View>
+            <Text style={styles.TextInput4}>
+            Profile Image
            </Text>
+          </View>
         </View>
-        </View>
-       
-        
+
+
         <View style={styles.inputView1}>
           <TextInput
             style={styles.TextInput2}
@@ -352,7 +354,7 @@ export default function Add_Driver({ navigation }) {
           />
         </View>
 
-       
+
         <View style={styles.inputView1}>
           <TextInput
             style={styles.TextInput2}
@@ -362,7 +364,7 @@ export default function Add_Driver({ navigation }) {
             onChangeText={(LIN) => setLIN(LIN)}
           />
         </View>
-        
+
         <View style={styles.inputView1}>
           <TextInput
             style={styles.TextInput2}
@@ -373,71 +375,70 @@ export default function Add_Driver({ navigation }) {
           />
         </View>
         <View >
-        {pic1 ?
-          <View >
-            <Modal animationType="slide"  transparent={true} visible={modalVisible1}>
-              <View style={styles.modalContainer}>
-                <Ionicons
-                  name="close-circle-outline"
-                  color="#fff"
-                  size={30}
-                  style={styles.icon}
-                  onPress={backpress1}
-                />
-                <View style={styles.modalBody1}>
-                  <TouchableOpacity
-                    style={{ alignSelf: 'center', marginTop: 5 }}
-                    onPress={Camera1}>
-                    <Text
-                      style={{
-                        color: 'black',
-                        fontSize: 19,
-                      }}>
-                      Open Camera <Ionicons name="camera"
-                        color="#FF5C00" size={25}
-                        style={styles.icon}
-                      />
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={{ alignSelf: 'center', marginTop: 20 }}
-                    onPress={gallery1}>
-                    <Text
-                      style={{
-                        color: 'black',
-                        fontSize: 19,
-                      }}>
-                      Choose From Gallery <Ionicons name="folder"
-                        color="#FF5C00" size={25}
-                        style={styles.icon}
-                      />
-                    </Text>
-                  </TouchableOpacity>
+          {pic1 ?
+            <View >
+              <Modal animationType="slide" transparent={true} visible={modalVisible1}>
+                <View style={styles.modalContainer}>
+                  <Ionicons
+                    name="close-circle-outline"
+                    color="#fff"
+                    size={30}
+                    style={styles.icon}
+                    onPress={backpress1}
+                  />
+                  <View style={styles.modalBody1}>
+                    <TouchableOpacity
+                      style={{ alignSelf: 'center', marginTop: 5 }}
+                      onPress={Camera1}>
+                      <Text
+                        style={{
+                          color: 'black',
+                          fontSize: 19,
+                        }}>
+                        Open Camera <Ionicons name="camera"
+                          color="#FF5C00" size={25}
+                          style={styles.icon}
+                        />
+                      </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={{ alignSelf: 'center', marginTop: 20 }}
+                      onPress={gallery1}>
+                      <Text
+                        style={{
+                          color: 'black',
+                          fontSize: 19,
+                        }}>
+                        Choose From Gallery <Ionicons name="folder"
+                          color="#FF5C00" size={25}
+                          style={styles.icon}
+                        />
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
-              </View>
-            </Modal>
-          </View>
-         
-          : <View>
-            <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-              <TouchableOpacity onPress={pick1} >
-                <Image style={styles.licence} source={{ uri: img1 }} />
-                
-              </TouchableOpacity>
+              </Modal>
             </View>
 
-          </View>
-        }
-        <View>
-          <Text style={styles.TextInput4}>
-           Licence
+            : <View>
+              <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+                <TouchableOpacity onPress={pick1} >
+                  <Image style={styles.licence} source={{ uri: img1 }} />
+
+                </TouchableOpacity>
+              </View>
+
+            </View>
+          }
+          <View>
+            <Text style={styles.TextInput4}>
+              License
            </Text>
+          </View>
         </View>
-        </View>
-       
+
         <Text style={styles.error}>{emptyFields}</Text>
-        <Text style={styles.error}>{emailError}</Text>
-        <Text style={styles.error}>{contactError}</Text>
+       
         <TouchableOpacity style={styles.loginBtn} onPress={pressHandler} >
           <Text style={styles.TextInput}>Confirm</Text>
 

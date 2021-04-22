@@ -12,7 +12,7 @@ import Loader from '../../components/Loader';
 import styles from '../../components/styles_admin'
 import ToastComponent from '../../components/Toaster';
 import* as ToastMessage from '../../constants/ToastMessages';
-
+import axios from 'axios';
 
 
 export default function Edit_Nanny({ route,navigation }) {
@@ -26,35 +26,29 @@ export default function Edit_Nanny({ route,navigation }) {
 
   const pressHandler = () => {
     setLoading(true);
-    fetch(`${Ngrok.url}/api/admin/trips/nanny/new`, {
-      "method": "POST",
-      "headers": {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        nannyid : nannyid,
-             tripid : c
-    
-      })
+    axios
+    .post(`${Ngrok.url}/api/admin/trips/nanny/new`, {
+      nannyid : nannyid,
+      tripid : c
     })
-      .then(response => response.json())
-      .then(responseJson => {
-        setLoading(false);
+    .then(function (response) {
+      
+      setLoading(false);
 
-        if (responseJson.message == "nanny changed") {
+        if (response.data.message == "nanny changed") {
           Alert.alert('Changed Successfully','', [{text: 'Proceed', onPress:() => navigation.navigate('Home_page')}])
         } else {
           
           setToast(true)
         }
-        
-      })
-      .catch(err => {
-        setToast(true)
-        setLoading(false);
-
-      });
+    })
+    .catch(function (error) {
+  console.log(error);
+      setLoading(false);
+   
+   setToast(true)
+    });
+    
   
       setToast(false)
 }
