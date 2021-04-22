@@ -790,8 +790,16 @@ card1: {
   alignItems: 'center',
   justifyContent: 'center',
 },
-card3: {
+driverchild: {
   width: '75%',
+  alignSelf: 'center',
+  height: 100,
+  alignItems: 'center',
+  justifyContent: 'center',
+  borderRadius:20,
+},
+nannychild: {
+  width: '85%',
   alignSelf: 'center',
   height: 100,
   alignItems: 'center',
@@ -917,11 +925,25 @@ licence: {
   },
   //tripdetails.js
   licence1: {
-    marginTop:20,
+    marginTop:5,
+    marginBottom:15,
     height: 140,
     width: 140,
     borderRadius:140,
     alignSelf: 'center'
+    },
+    busstarted:{
+      height:110,
+      width:180,
+      alignSelf:'center'
+    },
+    startTripText2: {
+      fontSize: 22,
+      textAlign: "center",
+      marginTop: 30,
+      fontWeight:'bold',
+      marginBottom: 10,
+      color:'black',
     },
     })
     

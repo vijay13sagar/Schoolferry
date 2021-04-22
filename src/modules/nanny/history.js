@@ -62,10 +62,10 @@ const Homescreen = ({ navigation }) => {
                 <Text style={{ fontSize: 17, marginLeft: 5, fontWeight: '700' }}>
                 {item.trip_id}
                 </Text>
-                <Text style={{marginLeft:50}}></Text>
+                <Text style={{marginLeft:"50%"}}></Text>
                 <Ionicons name="chevron-forward-outline"
                   color="#000" size={25}
-                  style={styles.icon1}
+                  style={styles.icon}
                 />
               </Body>
             </CardItem>

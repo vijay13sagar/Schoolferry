@@ -14,7 +14,6 @@ import Child_details from '../modules/nanny/childdetails';
 import History from '../modules/nanny/history';
 import updateProfile from '../components/updateprofile';
 import End_trips from '../modules/nanny/endtrips';
-import Old_childdetails from '../modules/nanny/oldchilddetails';
 
 const Tab = createBottomTabNavigator()
 const Stack=createStackNavigator()
@@ -76,7 +75,7 @@ function Triphistory() {
       />
       <Stack.Screen
         name="oldChild Details"
-        component={Old_childdetails}
+        component={Child_details}
         options={{ title: 'Child Details' }}
       />
     </Stack.Navigator>

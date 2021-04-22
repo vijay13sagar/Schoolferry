@@ -2,13 +2,14 @@ import * as React from 'react';
 import { Text, View, TouchableOpacity, StatusBar, Image } from 'react-native';
 import styles from '../../components/style';
 
+
 const nannyhome = ({ route }) =>  {
     return (
       <View style={styles.cont} >
         <StatusBar
         barStyle="light-content" hidden={false} backgroundColor="#FF5C00" translucent={true}
       /> 
-            
+              <Image style={styles.licence1} source={{uri:'https://www.shareicon.net/data/512x512/2016/06/25/786525_people_512x512.png'}}/>
               <Text style={styles.headertext}>child name:</Text>
               <Text style={styles.details}>{route.params.item.childName}</Text>
          
