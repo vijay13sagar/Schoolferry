@@ -30,7 +30,7 @@ export default class Home_page extends Component {
       .get(`${Ngrok.url}/api/admin/today/trips`)
       .then(function (response) {
         self.setState({ data: response.data });
-        console.log(response.data);
+  
       })
       .catch(function (error) {
         console.log("error",error.message);
@@ -92,7 +92,7 @@ export default class Home_page extends Component {
           translucent={false}
 
         />
-        <Text style={{ alignSelf: "center" }}>{TD}</Text>
+        <Text style={{ alignSelf: "center",marginTop:10 }}>{TD}</Text>
         <View>
           <TouchableOpacity disabled={data? false : true} style= { data? styles.loginBtn :styles.card2} onPress={this.onpressHandler} >
             <Text style={styles.TextInput}>Schedule Trips</Text>

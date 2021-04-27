@@ -43,7 +43,7 @@ export default class freeVehicletrip_list extends Component  {
     const { modalVisible } = this.state;
     const tripid1 = this.props.route.params.s;
     return (
-      <View style={styles.Container}>
+      <View style={styles.container1}>
         {isLoading ? <ActivityIndicator/> : (
           <FlatList
             data={data}
