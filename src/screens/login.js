@@ -104,7 +104,6 @@ export default function Login({navigation}) {
             setToast(true);
             SetMessage(ToastMessage.message5);
           }
-          
         });
       setToast(false);
     }
@@ -123,24 +122,25 @@ export default function Login({navigation}) {
         translucent={false}
       />
       <Image
-        style={{width: '80%', height: '25%', marginBottom: 20}}
+        style={styles.logoImage}
         source={require('../assets/Logo.png')}
       />
-        <TextInput
-          keyboardType="numeric"
-          style={styles.TextInput}
-          placeholder="Phone"
-          maxLength={10}
-          placeholderTextColor="#929292"
-          onChangeText={(email) => setEmail(email)}
-        />
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Password"
-          placeholderTextColor="#929292"
-          secureTextEntry={true}
-          onChangeText={(password) => setPassword(password)}
-        />
+      <TextInput
+        keyboardType="numeric"
+        style={styles.TextInput}
+        placeholder="Phone"
+        maxLength={10}
+        placeholderTextColor="#929292"
+        onChangeText={(email) => setEmail(email)}
+      />
+      <TextInput
+        style={styles.TextInput}
+        placeholder="Password"
+        autoCapitalize='none'
+        placeholderTextColor="#929292"
+        secureTextEntry={true}
+        onChangeText={(password) => setPassword(password)}
+      />
       <Text style={styles.error}>{emailError}</Text>
       <TouchableOpacity onPress={() => navigation.navigate('Forgot Password')}>
         <Text style={styles.forgot_button}>Forgot Password?</Text>

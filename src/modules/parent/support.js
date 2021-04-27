@@ -8,9 +8,9 @@ const Support = () => {
   return (
     <View style={{...styles.container, justifyContent:'center'}}>
       <View>
-        <Text style={{fontSize: 19, textAlign: 'center', marginHorizontal: 10}}>
+        <Text style={styles.mailSupportText}>
           If you have any complaint/query regarding our services, feel free to
-          mail.
+          mail
         </Text>
       </View>
       <TouchableOpacity
@@ -27,11 +27,11 @@ const Support = () => {
         </Text>
       </TouchableOpacity>
       <View style={{marginTop: 70}}>
-        <Text style={{fontSize: 19, alignSelf: 'center', marginBottom: 10}}>
-          Or you can call us{' '}
+        <Text style={styles.mailSupportText}>
+          Or call us{' '}
         </Text>
         <TouchableOpacity
-          style={styles.CallBtn}
+          style={styles.mailBtn}
           onPress={() => {
             Linking.openURL('tel:8192856814');
           }}>

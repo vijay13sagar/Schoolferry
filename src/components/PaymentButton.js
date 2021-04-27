@@ -6,8 +6,12 @@ import {
   ActivityIndicator,
   Platform,
   StyleSheet,
+  Dimensions,
 } from 'react-native';
 import PropTypes from 'prop-types';
+
+var height = Dimensions.get('window').height;
+var width = Dimensions.get('window').width;
 
 export default class Button extends PureComponent {
   static propTypes = {
@@ -60,18 +64,18 @@ export default class Button extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-  button: {  
-    height: 42,
-    width: '60%',
+  button: {
+    width: width * 0.55,
+    height: height * 0.05,
     borderRadius: 10,
     backgroundColor: '#1e90ff',
-    justifyContent:'center',
+    justifyContent: 'center',
     alignItems: 'center',
-   alignSelf:'center',
-   marginTop:40,
+    alignSelf: 'center',
+    marginTop: 40,
   },
   btnText: {
     color: '#fff',
-    fontSize: 15,
+    fontSize: 14,
   },
 });

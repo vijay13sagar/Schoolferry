@@ -9,10 +9,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import Ngrok from '../../constants/ngrok';
-import { Picker } from '@react-native-picker/picker';
-import axios from 'axios';
-import { set } from "react-native-reanimated";
+
 import styles from '../../components/styles_admin';
 
 

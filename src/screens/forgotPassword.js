@@ -20,14 +20,13 @@ export default function forgotPassword() {
           Enter your Email/Mobile and we will send you a new password.
         </Text>
       </View>
-      <View style={styles.inputView}>
+     
         <TextInput
           style={styles.TextInput}
           placeholder="Email/Phone"
           placeholderTextColor="#929292"
           onChangeText={(value) => setValue(value)}
         />
-      </View>
       <Text style={styles.error}>{value_error}</Text>
 
       <TouchableOpacity

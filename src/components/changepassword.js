@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Text, View, TextInput, TouchableOpacity} from 'react-native';
+import {Text, View, TextInput, TouchableOpacity} from 'react-native';
 import styles from '../components/style';
 
 export default function change_pwd() {
@@ -13,7 +13,7 @@ export default function change_pwd() {
       return value_error;
     }
     if (value1 !== value2) {
-      setError({value_error: 'Both Fields should be same'});
+      setError({value_error: 'Password does not match'});
       return value_error;
     }
   };
@@ -35,11 +35,8 @@ export default function change_pwd() {
           onChangeText={(value2) => setValue2(value2)}
         />
       <Text style={styles.error}>{value_error}</Text>
-
       <TouchableOpacity
-        style={
-          ({alignItems: 'center', justifyContent: 'center'}, styles.loginBtn)
-        }
+        style={{...styles.loginBtn,marginTop :10}}
         onPress={handlePress}>
         <Text style={styles.loginText}>Submit</Text>
       </TouchableOpacity>
