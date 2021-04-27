@@ -46,7 +46,7 @@ function Homestack() {
         headerStyle: { backgroundColor: '#FFFFFF' },
         headerTintColor: '#000000',
         headerTitleStyle: { fontWeight: 'bold' },
-        headerTitleAlign:"center"
+        headerTitleAlign: "center"
       }}>
       <Stack.Screen
         name="Home_page"
@@ -98,7 +98,7 @@ function Homestack() {
         component={Edit_Nanny}
         options={{ title: 'Nanny Details' }}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="freeVehicletrip_list"
         component={freeVehicletrip_list}
         options={{ title: 'Vehicle List' }}
@@ -108,33 +108,33 @@ function Homestack() {
         component={Edit_Vehicle}
         options={{ title: 'Vehicle Details' }}
       />
-     
+
     </Stack.Navigator>
   );
 }
 function UserStack() {
   return (
-    
-    
+
+
     <Stack.Navigator
       initialRouteName="user"
       screenOptions={{
         headerStyle: { backgroundColor: '#FFFFFF' },
         headerTintColor: '#000000',
         headerTitleStyle: { fontWeight: 'bold' },
-        headerTitleAlign:"center"
+        headerTitleAlign: "center"
       }}>
       <Stack.Screen
         name="UserList"
         component={userList}
         options={{ title: 'Customer' }}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="user_Details"
         component={user_Details}
         options={{ title: 'Customer Details' }}
       />
-      
+
       <Stack.Screen
         name="child_Details"
         component={child_Details}
@@ -151,7 +151,7 @@ function EmployeeStack() {
         headerStyle: { backgroundColor: '#FFFFFF' },
         headerTintColor: '#000000',
         headerTitleStyle: { fontWeight: 'bold' },
-        headerTitleAlign:"center"
+        headerTitleAlign: "center"
       }}>
       <Stack.Screen
         name="Employee"
@@ -163,7 +163,7 @@ function EmployeeStack() {
         component={driverList}
         options={{ title: 'Driver' }}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="nannyList"
         component={nannyList}
         options={{ title: 'Nanny' }}
@@ -186,9 +186,9 @@ function EmployeeStack() {
       <Stack.Screen
         name="nanny_Details"
         component={nanny_Details}
-        options={{ title:  'Nanny Details' }}
+        options={{ title: 'Nanny Details' }}
       />
-      
+
     </Stack.Navigator>
   );
 }
@@ -200,7 +200,7 @@ function VehicleStack() {
         headerStyle: { backgroundColor: '#FFFFFF' },
         headerTintColor: '#000000',
         headerTitleStyle: { fontWeight: 'bold' },
-        headerTitleAlign:"center"
+        headerTitleAlign: "center"
       }}>
       {/* <Stack.Screen
         name="Vehicle"
@@ -222,59 +222,59 @@ function VehicleStack() {
         component={vehicle_Details}
         options={{ title: 'Vehicle Details' }}
       />
-     
+
     </Stack.Navigator>
   );
 }
 function WebsiteStack() {
-    return (
-      <Stack.Navigator
-        initialRouteName="ManageOptions"
-        screenOptions={{
-          headerStyle: { backgroundColor: '#FFFFFF' },
-          headerTintColor: '#000000',
-          headerTitleStyle: { fontWeight: 'bold' },
-          headerTitleAlign:"center"
-        }}>
-          <Stack.Screen
-          name="ManageOptions"
-          component={Manageoptions}
-          options={{ title: 'Reports' }}
-        />
-        
-        <Stack.Screen
-          name="TripStats"
-          component={Trip_stats}
-          options={{ title: 'Reports' }}
-        />
-        <Stack.Screen
-          name="SubStats"
-          component={Sub_stats}
-          options={{ title: 'Reports' }}
-        />
-        <Stack.Screen
-          name="RevStats"
-          component={Rev_stats}
-          options={{ title: 'Reports' }}
-        />
-       
-       
-      </Stack.Navigator>
-    );
-  }
-  
+  return (
+    <Stack.Navigator
+      initialRouteName="ManageOptions"
+      screenOptions={{
+        headerStyle: { backgroundColor: '#FFFFFF' },
+        headerTintColor: '#000000',
+        headerTitleStyle: { fontWeight: 'bold' },
+        headerTitleAlign: "center"
+      }}>
+      <Stack.Screen
+        name="ManageOptions"
+        component={Manageoptions}
+        options={{ title: 'Reports' }}
+      />
+
+      <Stack.Screen
+        name="TripStats"
+        component={Trip_stats}
+        options={{ title: 'Reports' }}
+      />
+      <Stack.Screen
+        name="SubStats"
+        component={Sub_stats}
+        options={{ title: 'Reports' }}
+      />
+      <Stack.Screen
+        name="RevStats"
+        component={Rev_stats}
+        options={{ title: 'Reports' }}
+      />
+
+
+    </Stack.Navigator>
+  );
+}
+
 
 function App() {
- 
-    
- 
+
+
+
   return (
-    
-  
-    
-    
-      
-      <Tab.Navigator
+
+
+
+
+
+    <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
@@ -294,7 +294,7 @@ function App() {
           else if (route.name === 'Management') {
             iconName = focused ? 'pie-chart' : 'pie-chart-outline';
           }
-       
+
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },
@@ -304,14 +304,14 @@ function App() {
         inactiveTintColor: 'gray',
       }}
     >
-       <Tab.Screen name="Home" component={Homestack} />
+      <Tab.Screen name="Home" component={Homestack} />
       <Tab.Screen name="Customer" component={UserStack} />
       <Tab.Screen name="Employee" component={EmployeeStack} />
       <Tab.Screen name="Vehicle" component={VehicleStack} />
       <Tab.Screen name="Management" component={WebsiteStack} />
     </Tab.Navigator>
-  
-   
+
+
   );
 }
 export default App;

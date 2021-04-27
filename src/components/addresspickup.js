@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
-import { View, StyleSheet} from 'react-native';
-import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
+import React, { useState } from 'react';
+import { View, StyleSheet } from 'react-native';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import API_KEY from '../../config';
 
-const address_pickup = ({placeholderText, fetchAddress}) => {
+const address_pickup = ({ placeholderText, fetchAddress }) => {
   const onSubmit = (data, details) => {
     const lat = details.geometry.location.lat;
     const lng = details.geometry.location.lng;

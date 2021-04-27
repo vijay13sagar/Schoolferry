@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
-  Image, 
+  Image,
   Text,
   View,
   StatusBar, ActivityIndicator, FlatList
@@ -25,16 +25,16 @@ export default function user_Details({ route, navigation }) {
   useEffect(() => {
     let take1 = route.params.item.id
     axios
-    .get(`${Ngrok.url}/api/parent/detail/childlist/${take1}`)
-    .then(function (response) {
-      getData(response.data)
-    })
-    .catch(function (error) {
-      console.log("error",error.message);
-    })
-    .finally(function () {
-    });
-    
+      .get(`${Ngrok.url}/api/parent/detail/childlist/${take1}`)
+      .then(function (response) {
+        getData(response.data)
+      })
+      .catch(function (error) {
+        console.log("error", error.message);
+      })
+      .finally(function () {
+      });
+
   }, [])
 
 
@@ -94,16 +94,18 @@ export default function user_Details({ route, navigation }) {
           <Card>
             <CardItem button onPress={() => navigation.navigate('child_Details', { item: item })}>
               <Body>
-              <View style={{flexDirection:"row"}}>      
-                <Image style={styles.licence3} source={item.photoUrl ? { uri: (item.photoUrl) }:{ uri: (dimg) }} />         
-                   <Text style={{alignSelf:"center",marginLeft:10,fontSize: 15,
-        color: "black",
-        fontWeight: '700',}}>
-                 
-                   {
+                <View style={{ flexDirection: "row" }}>
+                  <Image style={styles.licence3} source={item.photoUrl ? { uri: (item.photoUrl) } : { uri: (dimg) }} />
+                  <Text style={{
+                    alignSelf: "center", marginLeft: 10, fontSize: 15,
+                    color: "black",
+                    fontWeight: '700',
+                  }}>
+
+                    {
                       item.childName
-                   }
-                </Text>
+                    }
+                  </Text>
                 </View>
 
                 {/* <Text>

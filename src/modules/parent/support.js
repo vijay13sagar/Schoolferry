@@ -1,12 +1,12 @@
 import * as React from 'react';
-import {Text, View, Linking} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import { Text, View, Linking } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from '../../components/style';
 
 const Support = () => {
   return (
-    <View style={{...styles.container, justifyContent:'center'}}>
+    <View style={{ ...styles.container, justifyContent: 'center' }}>
       <View>
         <Text style={styles.mailSupportText}>
           If you have any complaint/query regarding our services, feel free to
@@ -23,10 +23,10 @@ const Support = () => {
         title="AdminSchoolferry@gmail.com">
         <Text style={styles.loginText}>
           {' '}
-          Write a Mail <Ionicons name="mail" color="white" size={19}/>
+          Write a Mail <Ionicons name="mail" color="white" size={19} />
         </Text>
       </TouchableOpacity>
-      <View style={{marginTop: 70}}>
+      <View style={{ marginTop: 70 }}>
         <Text style={styles.mailSupportText}>
           Or call us{' '}
         </Text>

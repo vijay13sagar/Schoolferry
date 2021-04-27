@@ -11,114 +11,114 @@ import Loader from '../../components/Loader';
 import Ngrok from '../../constants/ngrok';
 import styles from '../../components/styles_admin';
 import ToastComponent from '../../components/Toaster';
-import* as ToastMessage from '../../constants/ToastMessages';
+import * as ToastMessage from '../../constants/ToastMessages';
 
 import axios from 'axios';
 
-export default function add_Child({ route,navigation}) {
+export default function add_Child({ route, navigation }) {
   const [isloading, setLoading] = useState(false);
-  const [showtoast,setToast] = useState(false)
+  const [showtoast, setToast] = useState(false)
   let c = route.params.tripid1;
   let childid = route.params.item.childId;
-let age = route.params.item.age
+  let age = route.params.item.age
   const pressHandler = () => {
     setLoading(true);
     axios
-    .post(`${Ngrok.url}/api/admin/trips/child/add`, {
-      childid : childid,
-              tripid : c
-    })
-    .then(function (response) {
-      setLoading(false);
-       
-              if (response.data.message == "child added") {
-               Alert. alert('Added Successfully','', [{text: 'Proceed', onPress:() => navigation.navigate('Home_page',)}])
-              } else {
-              setToast(true)
-              }   
-      
-    
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+      .post(`${Ngrok.url}/api/admin/trips/child/add`, {
+        childid: childid,
+        tripid: c
+      })
+      .then(function (response) {
+        setLoading(false);
+
+        if (response.data.message == "child added") {
+          Alert.alert('Added Successfully', '', [{ text: 'Proceed', onPress: () => navigation.navigate('Home_page',) }])
+        } else {
+          setToast(true)
+        }
 
 
-      setToast(false)
-}
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
 
 
-return (
-  <View style={styles.container1}>
-    {showtoast? (<ToastComponent type = {ToastMessage.failure}  message = {ToastMessage.message5}/>): null}
-  <ScrollView>
-    <Loader loading={isloading} />
-   
-      <StatusBar style="auto" />
-      <View style={{ width: "70%",  marginLeft: 35 }}>
-        <Text>Name</Text></View>
+    setToast(false)
+  }
 
-      <View style={styles.details}>
-        <Text>
 
-          {route.params.item.childName}
+  return (
+    <View style={styles.container1}>
+      {showtoast ? (<ToastComponent type={ToastMessage.failure} message={ToastMessage.message5} />) : null}
+      <ScrollView>
+        <Loader loading={isloading} />
 
-        </Text>
-      </View>
-      <View style={{ width: "70%",  marginLeft: 35 }}>
-        <Text>Parent Contact Number</Text></View>
+        <StatusBar style="auto" />
+        <View style={{ width: "70%", marginLeft: 35 }}>
+          <Text>Name</Text></View>
 
-      <View style={styles.details}>
-        <Text>
+        <View style={styles.details}>
+          <Text>
 
-          {route.params.item.parentsContact}
+            {route.params.item.childName}
 
-        </Text>
-      </View>
+          </Text>
+        </View>
+        <View style={{ width: "70%", marginLeft: 35 }}>
+          <Text>Parent Contact Number</Text></View>
 
-      <View style={{ width: "70%",  marginLeft: 35 }}>
-        <Text>Age</Text></View>
-      <View style={styles.details}>
-        <Text>
+        <View style={styles.details}>
+          <Text>
 
-          {route.params.item.age}
+            {route.params.item.parentsContact}
 
-        </Text>
-      </View>
-      <View style={{ width: "70%",  marginLeft: 35}}>
-        <Text>Blood Group</Text></View>
+          </Text>
+        </View>
 
-      <View style={styles.details}>
-        <Text>
+        <View style={{ width: "70%", marginLeft: 35 }}>
+          <Text>Age</Text></View>
+        <View style={styles.details}>
+          <Text>
 
-          {route.params.item.bloodGroup}
+            {route.params.item.age}
 
-        </Text>
-      </View>
-      <View style={{ width: "70%",marginLeft: 35 }}>
-        <Text>Pickup Location</Text></View>
-      <View style={styles.details}>
-        <Text>
+          </Text>
+        </View>
+        <View style={{ width: "70%", marginLeft: 35 }}>
+          <Text>Blood Group</Text></View>
 
-          {route.params.item.address}
+        <View style={styles.details}>
+          <Text>
 
-        </Text>
-      </View>
-      <View style={{ width: "70%",  marginLeft: 35 }}>
-        <Text>Drop Location</Text></View>
-      <View style={styles.details}>
-        <Text>
-          {route.params.item.school}
+            {route.params.item.bloodGroup}
 
-        </Text>
-      </View>
-      <TouchableOpacity style={styles.loginBtn}
-        onPress={pressHandler} >
-        <Text style={styles.TextInput}>Add Child</Text>
-      </TouchableOpacity>
+          </Text>
+        </View>
+        <View style={{ width: "70%", marginLeft: 35 }}>
+          <Text>Pickup Location</Text></View>
+        <View style={styles.details}>
+          <Text>
 
-   
-  </ScrollView>
-  </View>
-);
+            {route.params.item.address}
+
+          </Text>
+        </View>
+        <View style={{ width: "70%", marginLeft: 35 }}>
+          <Text>Drop Location</Text></View>
+        <View style={styles.details}>
+          <Text>
+            {route.params.item.school}
+
+          </Text>
+        </View>
+        <TouchableOpacity style={styles.loginBtn}
+          onPress={pressHandler} >
+          <Text style={styles.TextInput}>Add Child</Text>
+        </TouchableOpacity>
+
+
+      </ScrollView>
+    </View>
+  );
 }

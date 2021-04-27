@@ -1,15 +1,15 @@
-import React, {useState} from 'react';
-import {Text, View, ScrollView, TouchableOpacity, Modal} from 'react-native';
-import {TextInput} from 'react-native-gesture-handler';
+import React, { useState } from 'react';
+import { Text, View, ScrollView, TouchableOpacity, Modal } from 'react-native';
+import { TextInput } from 'react-native-gesture-handler';
 import AddressPickup from '../../components/addresspickup';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {getDistance} from 'geolib';
+import { getDistance } from 'geolib';
 import Loader from '../../components/Loader';
 import styles from '../../components/style';
 import Ngrok from '../../constants/ngrok';
 import axios from 'axios';
 
-const location = ({navigation}) => {
+const location = ({ navigation }) => {
   const [pincode, setPincode] = useState('');
   const [origin, setOrigin] = useState({
     latitude1: '0 ',
@@ -24,7 +24,7 @@ const location = ({navigation}) => {
   const [residenceAddress, setResidenceAddress] = useState(' ');
   const [modalVisible, setModalVisible] = useState(false);
   const [modal1Visible, setModal1Visible] = useState(false);
-  const [{error}, setError] = useState(' ');
+  const [{ error }, setError] = useState(' ');
   const [isLoading, setLoading] = useState(false);
 
   const fetchCoords = (lat, lng, name, address, schooladdress) => {
@@ -50,8 +50,8 @@ const location = ({navigation}) => {
 
   const calculateDistance = () => {
     var dis = getDistance(
-      {latitude: origin.latitude1, longitude: origin.longitude1},
-      {latitude: destination.latitude2, longitude: destination.longitude2},
+      { latitude: origin.latitude1, longitude: origin.longitude1 },
+      { latitude: destination.latitude2, longitude: destination.longitude2 },
     );
     let finalDistance = dis / 1000;
     setDistance(finalDistance);
@@ -60,9 +60,9 @@ const location = ({navigation}) => {
 
   const submitHandler = async () => {
     if (!schoolAddress || !residenceAddress || !pincode) {
-      setError({error: 'Please enter all fields'});
+      setError({ error: 'Please enter all fields' });
     } else if (pincode.length != 6) {
-      setError({error: 'Please enter valid pincode'});
+      setError({ error: 'Please enter valid pincode' });
     } else {
       setLoading(true);
       let responsePincode = 0;
@@ -169,7 +169,7 @@ const location = ({navigation}) => {
         placeholderText=" Enter School Name"
         fetchAddress={fetchCoords}
       />
-      <View style={{marginBottom: 16}} />
+      <View style={{ marginBottom: 16 }} />
       <AddressPickup
         placeholderText=" Enter Residence Address"
         fetchAddress={fetchDestinationCoords}

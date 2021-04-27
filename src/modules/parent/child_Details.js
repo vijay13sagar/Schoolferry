@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
-import {Text, View, Image, ScrollView} from 'react-native';
+import React, { useState } from 'react';
+import { Text, View, Image, ScrollView } from 'react-native';
 import styles from '../../components/style';
-import {Card, CardItem, Body} from 'native-base';
+import { Card, CardItem, Body } from 'native-base';
 
-export default function Trip_Details({route}) {
+export default function Trip_Details({ route }) {
   const nannyid = route.params.nannyId;
   const driverPhoto = route.params.driverPhotoUrl;
   const NannyPhoto = route.params.nannyphotoUrl;
@@ -15,7 +15,7 @@ export default function Trip_Details({route}) {
           <Text style={styles.headingText}>Driver Alloted -</Text>
         </CardItem>
         <CardItem bordered>
-          <Body style={{flexDirection: 'row'}}>
+          <Body style={{ flexDirection: 'row' }}>
             {driverPhoto && driverPhoto !== 'NULL' ? (
               <Image
                 style={styles.tripdDetailsImage}
@@ -67,28 +67,28 @@ export default function Trip_Details({route}) {
         </CardItem>
       </Card>
       {nannyid ? (
-        <Card style={{...styles.tripDetailsCard, marginTop: 5}}>
+        <Card style={{ ...styles.tripDetailsCard, marginTop: 5 }}>
           <CardItem>
             <Text style={styles.headingText}>Nanny Alloted -</Text>
           </CardItem>
           <CardItem bordered>
-            <Body style={{flexDirection: 'row'}}>
-            {NannyPhoto && NannyPhoto !== 'NULL' ? (
-              <Image
-                style={styles.tripdDetailsImage}
-                source={{
-                  uri: route.params.nannyphotoUrl,
-                }}
-              />
-            ) : (
-              <Image
-                style={styles.tripdDetailsImage}
-                source={{
-                  uri:
-                    'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/grandma_elderly_nanny_avatar-512.png',
-                }}
-              />
-            )}
+            <Body style={{ flexDirection: 'row' }}>
+              {NannyPhoto && NannyPhoto !== 'NULL' ? (
+                <Image
+                  style={styles.tripdDetailsImage}
+                  source={{
+                    uri: route.params.nannyphotoUrl,
+                  }}
+                />
+              ) : (
+                <Image
+                  style={styles.tripdDetailsImage}
+                  source={{
+                    uri:
+                      'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/grandma_elderly_nanny_avatar-512.png',
+                  }}
+                />
+              )}
               <View style={styles.detailsBox}>
                 <View
                   style={{
@@ -125,12 +125,12 @@ export default function Trip_Details({route}) {
         </Card>
       ) : null}
 
-      <Card style={{...styles.tripDetailsCard, marginTop: 5, marginBottom: 20}}>
+      <Card style={{ ...styles.tripDetailsCard, marginTop: 5, marginBottom: 20 }}>
         <CardItem>
           <Text style={styles.headingText}>Vehicle Alloted -</Text>
         </CardItem>
         <CardItem bordered>
-          <Body style={{flexDirection: 'row'}}>
+          <Body style={{ flexDirection: 'row' }}>
             <Image
               style={styles.tripdDetailsImage}
               source={{

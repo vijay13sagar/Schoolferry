@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
 import axios from 'axios';
@@ -9,7 +9,7 @@ import styles from '../../components/style';
 import ToastComponent from '../../components/Toaster';
 import * as ToastMessage from '../../constants/ToastMessages';
 
-const PausePlan = ({route, navigation}) => {
+const PausePlan = ({ route, navigation }) => {
   const [selectedStartDate, setselectedStartDate] = useState('');
   const [selectedEndDate, setselectedEndDate] = useState('');
   const minDate = new Date();
@@ -105,7 +105,7 @@ const PausePlan = ({route, navigation}) => {
       <Loader loading={loader} />
 
       <View style={[data.pauseEndDate ? styles.biggerBox : styles.pausePlan]}>
-        <Text style={{...styles.mainHeading1, marginBottom: 5}}>
+        <Text style={{ ...styles.mainHeading1, marginBottom: 5 }}>
           Pause Plan Details
         </Text>
         <Text style={styles.heading}>Total number of pauses - 03</Text>
@@ -131,7 +131,7 @@ const PausePlan = ({route, navigation}) => {
           justifyContent: 'center',
           marginTop: 20,
         }}>
-        <Text style={{fontWeight: 'bold', fontSize: 18}}>Pause Plan :-</Text>
+        <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Pause Plan :-</Text>
       </View>
       <View style={styles.headertext}>
         <Text style={styles.registerTextStyle}>
@@ -164,7 +164,7 @@ const PausePlan = ({route, navigation}) => {
           onDateChange={onDateChange}
         />
       </View>
-      <View style={{alignSelf: 'center'}}>
+      <View style={{ alignSelf: 'center' }}>
         <Text style={styles.registerTextStyle}>
           Selected Start Date: {startDate}
         </Text>
@@ -174,7 +174,7 @@ const PausePlan = ({route, navigation}) => {
       </View>
       <Text style={styles.error}>{error}</Text>
       <TouchableOpacity
-        style={{...styles.loginBtn, marginTop: 5}}
+        style={{ ...styles.loginBtn, marginTop: 5 }}
         onPress={pauseHandler}>
         <Text style={styles.loginText}>Apply</Text>
       </TouchableOpacity>

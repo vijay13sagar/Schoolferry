@@ -58,7 +58,7 @@ const Homescreen = ({ navigation }) => {
                     <Text style={styles.tripstartedtext}>
                       Trip Id :{' '}{item.trip_id}
                     </Text>
-                    <Text>{'                                '}<Ionicons name="chevron-forward-outline"
+                    <Text>{'                                     '}<Ionicons name="chevron-forward-outline"
                       color="#000" size={25}
                     /></Text>
                   </Body>

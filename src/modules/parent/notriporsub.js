@@ -1,15 +1,15 @@
-import React, {useState} from 'react';
-import {Text, View, TouchableOpacity, FlatList} from 'react-native';
+import React, { useState } from 'react';
+import { Text, View, TouchableOpacity, FlatList } from 'react-native';
 
 import Ngrok from '../../constants/ngrok';
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
-import {Content, Card, CardItem, Body} from 'native-base';
-import {useFocusEffect} from '@react-navigation/native';
+import { Content, Card, CardItem, Body } from 'native-base';
+import { useFocusEffect } from '@react-navigation/native';
 import Loader from '../../components/Loader';
 import styles from '../../components/style';
 
-const oldmap = ({navigation}) => {
+const oldmap = ({ navigation }) => {
   const [flag, setflag] = useState(true);
   const [userType, setUserType] = useState();
   const [isLoading, setLoading] = useState(true);
@@ -37,7 +37,7 @@ const oldmap = ({navigation}) => {
           } else {
             setUserType(false);
           }
-        } catch (e) {}
+        } catch (e) { }
       };
       fetchUser();
     }, []),
@@ -45,7 +45,7 @@ const oldmap = ({navigation}) => {
 
   const Nosubs = () => {
     return (
-      <View style={{flex: 1, justifyContent: 'center', alignContent: 'center'}}>
+      <View style={{ flex: 1, justifyContent: 'center', alignContent: 'center' }}>
         <View style={styles.body}>
           <Text style={styles.name}>No subscription added</Text>
         </View>
@@ -55,7 +55,7 @@ const oldmap = ({navigation}) => {
         </Text>
         <TouchableOpacity
           style={styles.loginBtn}
-          onPress={() => navigation.navigate('location', {refresh: true})}>
+          onPress={() => navigation.navigate('location', { refresh: true })}>
           <Text style={styles.loginText}>Check availability</Text>
         </TouchableOpacity>
       </View>
@@ -63,13 +63,13 @@ const oldmap = ({navigation}) => {
   };
   const Subs = () => {
     return (
-      <View style={{flex: 1, justifyContent: 'center', alignContent: 'center'}}>
+      <View style={{ flex: 1, justifyContent: 'center', alignContent: 'center' }}>
         <Text style={styles.mainHeading}> Trips for Today </Text>
         <FlatList
           style={styles.flatlist}
           data={tripDetails}
           keyExtractor={(item) => item.childId}
-          renderItem={({item}) => (
+          renderItem={({ item }) => (
             <Content>
               <Card>
                 <CardItem header>
@@ -86,13 +86,13 @@ const oldmap = ({navigation}) => {
                       <TouchableOpacity
                         style={
                           item.trips[0].endStatus == 'ended' ||
-                          item.trips[0].startStatus == 'not started'
+                            item.trips[0].startStatus == 'not started'
                             ? styles.disabled
                             : styles.trackVehicle
                         }
                         disabled={
                           item.trips[0].endStatus == 'ended' ||
-                          item.trips[0].startStatus == 'not started'
+                            item.trips[0].startStatus == 'not started'
                             ? true
                             : false
                         }
@@ -101,14 +101,14 @@ const oldmap = ({navigation}) => {
                             tripId: item.trips[0].tripId,
                           })
                         }>
-                        <Text style={{fontSize: 15, color: '#fff'}}>
+                        <Text style={{ fontSize: 15, color: '#fff' }}>
                           Track Vehicle
                         </Text>
                       </TouchableOpacity>
                     </Body>
                   ) : (
                     <Body>
-                      <Text style={{fontSize: 16}}>No trips for today</Text>
+                      <Text style={{ fontSize: 16 }}>No trips for today</Text>
                     </Body>
                   )}
                 </CardItem>

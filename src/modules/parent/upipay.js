@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Alert,
   Modal,
@@ -11,9 +11,9 @@ import Ngrok from '../../constants/ngrok';
 import axios from 'axios';
 import styles from '../../components/style';
 
-export default function App({route, navigation}) {
+export default function App({ route, navigation }) {
   const [UPI, setUPI] = useState('');
-  const [{value_error}, setError] = useState('');
+  const [{ value_error }, setError] = useState('');
   const [entry, setentry] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -22,11 +22,11 @@ export default function App({route, navigation}) {
 
   const pressHandler1 = () => {
     if (!UPI) {
-      setError({value_error: 'Field cannot be Empty'});
+      setError({ value_error: 'Field cannot be Empty' });
       return value_error;
     }
     if (UPI) {
-      setError({value_error: null});
+      setError({ value_error: null });
       pressHandler();
       return value_error;
     }
@@ -118,7 +118,7 @@ export default function App({route, navigation}) {
               </Text>
 
               <TouchableHighlight
-                style={{...styles.openButtono, backgroundColor: '#2196F3'}}
+                style={{ ...styles.openButtono, backgroundColor: '#2196F3' }}
                 onPress={() => {
                   setModalVisible(!modalVisible);
                   sendplan();

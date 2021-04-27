@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   StatusBar,
   Text,
@@ -15,10 +15,10 @@ import styles from '../components/style';
 import ToastComponent from '../components/Toaster';
 import * as ToastMessage from '../constants/ToastMessages';
 
-export default function Login({navigation}) {
+export default function Login({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [{emailError}, setEmailError] = useState('');
+  const [{ emailError }, setEmailError] = useState('');
   const [isloading, setLoading] = useState(false);
   const [showtoast, setToast] = useState(false);
   const [message, SetMessage] = useState();
@@ -38,22 +38,22 @@ export default function Login({navigation}) {
 
   const validateFunction = () => {
     if (!email) {
-      setEmailError({emailError: 'Phone Number Field Cannot be Empty'});
+      setEmailError({ emailError: 'Phone Number Field Cannot be Empty' });
       return false;
     }
     if (!validateEmail(email)) {
-      setEmailError({emailError: 'Enter Valid Phone Number'});
+      setEmailError({ emailError: 'Enter Valid Phone Number' });
       return false;
     }
     if (!password) {
-      setEmailError({emailError: 'Password Cannot be Empty'});
+      setEmailError({ emailError: 'Password Cannot be Empty' });
       return false;
     }
     return true;
   };
 
   const gotootpscreen = () => {
-    navigation.navigate('OTPscreen', {item: email});
+    navigation.navigate('OTPscreen', { item: email });
   };
 
   const handleSubmitpPress = async () => {

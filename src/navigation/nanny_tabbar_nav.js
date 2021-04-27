@@ -16,19 +16,19 @@ import updateProfile from '../components/updateprofile';
 import End_trips from '../modules/nanny/endtrips';
 
 const Tab = createBottomTabNavigator()
-const Stack=createStackNavigator()
+const Stack = createStackNavigator()
 
 function Home() {
   return (
     <Stack.Navigator
-    
-    initialRouteName="Home_screen"
-    screenOptions={{
-      headerTitleStyle: { fontWeight: 'bold' },
-      headerTitleAlign:'center'
-    }}
+
+      initialRouteName="Home_screen"
+      screenOptions={{
+        headerTitleStyle: { fontWeight: 'bold' },
+        headerTitleAlign: 'center'
+      }}
     >
-     <Stack.Screen
+      <Stack.Screen
         name="Home_screen"
         component={Trips}
         options={{ title: 'Home' }}
@@ -56,14 +56,14 @@ function Home() {
 function Triphistory() {
   return (
     <Stack.Navigator
-    
-    initialRouteName="History page"
-    screenOptions={{
-      headerTitleStyle: { fontWeight: 'bold' },
-      headerTitleAlign:'center'
-    }}
+
+      initialRouteName="History page"
+      screenOptions={{
+        headerTitleStyle: { fontWeight: 'bold' },
+        headerTitleAlign: 'center'
+      }}
     >
-     <Stack.Screen
+      <Stack.Screen
         name="History page"
         component={History}
         options={{ title: 'Trip History' }}
@@ -85,14 +85,14 @@ function Triphistory() {
 function Notification() {
   return (
     <Stack.Navigator
-    
-    initialRouteName="Notification page"
-    screenOptions={{
-      headerTitleStyle: { fontWeight: 'bold' },
-      headerTitleAlign:'center'
-    }}
+
+      initialRouteName="Notification page"
+      screenOptions={{
+        headerTitleStyle: { fontWeight: 'bold' },
+        headerTitleAlign: 'center'
+      }}
     >
-     <Stack.Screen
+      <Stack.Screen
         name="Notifications page"
         component={Notifications}
         options={{ title: 'Notifications' }}
@@ -104,15 +104,15 @@ function Notification() {
 function Profile() {
   return (
     <Stack.Navigator
-    
-    initialRouteName="Profile_screen"
-    screenOptions={{
-      headerTitleStyle: { fontWeight: 'bold' },
-      headerTitleAlign:'center'
-      
-    }}
+
+      initialRouteName="Profile_screen"
+      screenOptions={{
+        headerTitleStyle: { fontWeight: 'bold' },
+        headerTitleAlign: 'center'
+
+      }}
     >
-     <Stack.Screen
+      <Stack.Screen
         name="Profile_screen"
         component={Profile_Nanny}
         options={{ title: 'Profile ' }}
@@ -132,16 +132,16 @@ function Profile() {
 }
 
 const NannyTab = () => {
-    return (
+  return (
     <Tab.Navigator
-    screenOptions={({ route }) => ({
+      screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
           if (route.name === 'Home') {
             iconName = focused ? 'home' : 'home-outline';
           }
-           else if (route.name === 'Notifications') {
+          else if (route.name === 'Notifications') {
             iconName = focused ? 'notifications' : 'notifications-outline';
           }
           else if (route.name === 'Trip History') {
@@ -158,12 +158,12 @@ const NannyTab = () => {
         inactiveTintColor: 'gray',
       }}
     >
-        <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="Trip History" component={Triphistory} />
-        <Tab.Screen name="Notifications" component={Notification} />
-        <Tab.Screen name="Profile" component={Profile} />
+      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Trip History" component={Triphistory} />
+      <Tab.Screen name="Notifications" component={Notification} />
+      <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
-    );
+  );
 }
 
 export default NannyTab;

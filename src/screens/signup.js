@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Text,
   View,
@@ -14,14 +14,14 @@ import styles from '../components/style';
 import ToastComponent from '../components/Toaster';
 import * as ToastMessage from '../constants/ToastMessages';
 
-export default function App({route, navigation}) {
+export default function App({ route, navigation }) {
   const [email, setEmail] = useState('');
   const [Name, setName] = useState('');
   const [contact, setcontact] = useState('');
   const [password1, setpassword1] = useState('');
   const [password2, setpassword2] = useState('');
   const [isloading, setLoading] = useState(false);
-  const [{emptyFields}, setemptyFeilds] = useState('');
+  const [{ emptyFields }, setemptyFeilds] = useState('');
   const [showtoast, setToast] = useState(false);
   const [message, SetMessage] = useState();
 
@@ -42,18 +42,18 @@ export default function App({route, navigation}) {
 
   const validateFunction = () => {
     if (!Name || !email || !contact || !password1 || !password2) {
-      setemptyFeilds({emptyFields: 'Please Enter All The Details'});
+      setemptyFeilds({ emptyFields: 'Please Enter All The Details' });
       return false;
     } else if (!validateEmail(email)) {
-      setemptyFeilds({emptyFields: 'Enter Valid Email Id'});
+      setemptyFeilds({ emptyFields: 'Enter Valid Email Id' });
 
       return false;
     } else if (!validatecontact(contact)) {
-      setemptyFeilds({emptyFields: 'Enter Valid Phone Number'});
+      setemptyFeilds({ emptyFields: 'Enter Valid Phone Number' });
 
       return false;
     } else if (password1 !== password2) {
-      setemptyFeilds({emptyFields: 'Both Fields should be same'});
+      setemptyFeilds({ emptyFields: 'Both Fields should be same' });
 
       return false;
     } else {
@@ -86,7 +86,7 @@ export default function App({route, navigation}) {
                 {
                   text: 'Proceed',
                   onPress: () =>
-                    navigation.navigate('OTPscreen', {item: contact}),
+                    navigation.navigate('OTPscreen', { item: contact }),
                 },
               ]);
             }
@@ -117,7 +117,7 @@ export default function App({route, navigation}) {
       <Loader loading={isloading} />
       <View>
         <Image
-          style={{...styles. logoImage}}
+          style={{ ...styles.logoImage }}
           source={require('../assets/Logo.png')}
         />
       </View>

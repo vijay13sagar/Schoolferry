@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {View} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View } from 'react-native';
 import Addsubscription from './addsubscription';
 import Showplans from './showplans';
 import Ngrok from '../../constants/ngrok';
@@ -8,7 +8,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import Loader from '../../components/Loader';
 import styles from '../../components/style';
 
-const subscription = ({navigation}) => {
+const subscription = ({ navigation }) => {
   const [childinfo, setChildInfo] = useState();
   const [isLoading, setLoading] = useState(true);
 

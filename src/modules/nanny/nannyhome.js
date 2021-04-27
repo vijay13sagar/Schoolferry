@@ -56,12 +56,12 @@ export default class Triplist extends Component {
                     <Text style={styles.tripstartedtext}>
                       Trip Id :{' '} {item.trip_id}
                     </Text>
-                    {item.endedTripAt ?<Text style={styles.tripendedtext}>{'     '}Trip Completed</Text> 
-                  : <Text >
-                        {item.startedTripAt ? <Text style={styles.tripstartedtext}>{'     '}Trip Started</Text> 
-                        : <Text>{'                                '}<Ionicons name="chevron-forward-outline"
-                          color="#000" size={25}
-                        /></Text>}
+                    {item.endedTripAt ? <Text style={styles.tripendedtext}>{'     '}Trip Completed</Text>
+                      : <Text >
+                        {item.startedTripAt ? <Text style={styles.tripstartedtext}>{'     '}Trip Started</Text>
+                          : <Text>{'                                     '}<Ionicons name="chevron-forward-outline"
+                            color="#000" size={25}
+                          /></Text>}
                       </Text>}
                   </Body>
                 </CardItem>

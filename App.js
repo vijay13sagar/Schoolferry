@@ -1,6 +1,6 @@
 
 import React, { useEffect } from 'react';
-import { NavigationContainer, useNavigation  } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import Onboarding from './src/navigation/onboardingnavigation';
 import DriverNav from './src/navigation/driver_tabbar_nav';
 import ParentNav from './src/navigation/parent_tabbar_nav';
@@ -8,7 +8,7 @@ import AdminNav from './src/navigation/admin_tabbar';
 import NannyNav from './src/navigation/nanny_tabbar_nav';
 import messaging from '@react-native-firebase/messaging';
 import AsyncStorage from '@react-native-community/async-storage';
-import {Alert} from 'react-native';
+import { Alert } from 'react-native';
 
 export default function App() {
 
@@ -52,7 +52,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Onboarding/>
+      <Onboarding />
     </NavigationContainer>
   );
 }

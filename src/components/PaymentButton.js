@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React, { PureComponent } from 'react';
 import {
   View,
   Text,
@@ -31,7 +31,7 @@ export default class Button extends PureComponent {
   };
 
   handlePress = (event) => {
-    const {loading, disabled, onPress} = this.props;
+    const { loading, disabled, onPress } = this.props;
 
     if (loading || disabled) {
       return;
@@ -43,7 +43,7 @@ export default class Button extends PureComponent {
   };
 
   render() {
-    const {text, disabledText, loading, disabled, style, ...rest} = this.props;
+    const { text, disabledText, loading, disabled, style, ...rest } = this.props;
 
     return (
       <TouchableHighlight

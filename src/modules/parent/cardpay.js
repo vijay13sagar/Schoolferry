@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -30,7 +30,7 @@ stripe.setOptions({
 var height = Dimensions.get('window').height;
 var width = Dimensions.get('window').width;
 
-export default function CardFormScreen({route, navigation}) {
+export default function CardFormScreen({ route, navigation }) {
   const [loading, setLoading] = useState(false);
   const [paymentMethod, setpaymentMethod] = useState(null);
   const [isSelected, setSelection] = useState(false);
@@ -61,7 +61,7 @@ export default function CardFormScreen({route, navigation}) {
         } else {
           setSavedData([]);
         }
-      } catch (error) {}
+      } catch (error) { }
     };
     fetchdata();
   }, [count]);
@@ -93,7 +93,7 @@ export default function CardFormScreen({route, navigation}) {
         text: 'Delete',
         onPress: () => deletecard(),
       },
-      {text: 'Discard', style: 'cancel'},
+      { text: 'Discard', style: 'cancel' },
     ]);
 
     const deletecard = async () => {
@@ -122,7 +122,7 @@ export default function CardFormScreen({route, navigation}) {
             console.log(error);
             setisLoading(false);
           });
-      } catch (error) {}
+      } catch (error) { }
     };
     setToast(false);
   };
@@ -133,7 +133,7 @@ export default function CardFormScreen({route, navigation}) {
         text: 'Pay',
         onPress: () => paymentHandler(val),
       },
-      {text: 'Discard', style: 'cancel'},
+      { text: 'Discard', style: 'cancel' },
     ]);
   };
 
@@ -201,7 +201,7 @@ export default function CardFormScreen({route, navigation}) {
           amount: amount.toString(),
         },
       })
-        .then(function (response) {})
+        .then(function (response) { })
         .catch(function (error) {
           if (error.response.status == 401) {
             console.log('plan details not sent');
@@ -233,12 +233,12 @@ export default function CardFormScreen({route, navigation}) {
             </Text>
 
             <TouchableHighlight
-              style={{...styles.openButtono, backgroundColor: '#2196F3'}}
+              style={{ ...styles.openButtono, backgroundColor: '#2196F3' }}
               onPress={() => {
                 setModalVisible(!modalVisible);
                 navigation.navigate('New_sub_screen');
               }}>
-              <Text style={{color: '#fff', textAlign: 'center'}}>OK</Text>
+              <Text style={{ color: '#fff', textAlign: 'center' }}>OK</Text>
             </TouchableHighlight>
           </View>
         </View>
@@ -249,10 +249,10 @@ export default function CardFormScreen({route, navigation}) {
         <>
           <Text style={styles.heading}>Use Saved Cards -</Text>
           <FlatList
-            style={{flexGrow: 0}}
+            style={{ flexGrow: 0 }}
             data={savedData}
             keyExtractor={(item) => item.cardNo}
-            renderItem={({item}) => (
+            renderItem={({ item }) => (
               <View
                 style={{
                   flexDirection: 'row',
@@ -284,7 +284,7 @@ export default function CardFormScreen({route, navigation}) {
         loading={loading}
         onPress={handleCardPayPress}
       />
-      <View style={{flex: 1, justifyContent: 'flex-end', width: '100%'}}>
+      <View style={{ flex: 1, justifyContent: 'flex-end', width: '100%' }}>
         {paymentMethod ? (
           <View
             style={{
@@ -298,7 +298,7 @@ export default function CardFormScreen({route, navigation}) {
               onValueChange={(isSelected) => setSelection(isSelected)}
               style={styles.check}
             />
-            <Text style={{fontSize: 14, marginTop: 4}}>
+            <Text style={{ fontSize: 14, marginTop: 4 }}>
               Save Card Details To Use In Future{' '}
             </Text>
           </View>
@@ -310,7 +310,7 @@ export default function CardFormScreen({route, navigation}) {
             onPress={() => {
               paymentHandler(null);
             }}>
-            <Text style={{fontSize: 15, color: '#fff'}}> Make Payment</Text>
+            <Text style={{ fontSize: 15, color: '#fff' }}> Make Payment</Text>
           </TouchableOpacity>
         ) : null}
       </View>

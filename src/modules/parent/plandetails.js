@@ -1,17 +1,17 @@
-import React, {useState, useEffect} from 'react';
-import {Text, View, TouchableOpacity, ScrollView} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
 import styles from '../../components/style';
 
-const App = ({route, navigation}) => {
+const App = ({ route, navigation }) => {
   const [selectedStartDate, setselectedStartDate] = useState('');
   const minDate = new Date();
   const maxDate = moment(selectedStartDate).format('DD-MM-YYYY');
   let tomorrow = selectedStartDate;
   const f = route.params.item.term;
   const [stay, setStay] = useState(true);
-  const [{valueError}, setValueerror] = useState('');
+  const [{ valueError }, setValueerror] = useState('');
 
   let e;
   if (f == 'Monthly') {
@@ -29,7 +29,7 @@ const App = ({route, navigation}) => {
   };
   const validateentries = () => {
     if (stay == false) {
-      setValueerror({valueError: null});
+      setValueerror({ valueError: null });
       navigation.navigate('PaymentScreen', {
         maxDate: maxDate,
         tomorrow: tomorrow,
@@ -38,7 +38,7 @@ const App = ({route, navigation}) => {
         childid: route.params.childid,
       });
     } else {
-      setValueerror({valueError: 'Select Start Date of Plan'});
+      setValueerror({ valueError: 'Select Start Date of Plan' });
     }
   };
   tomorrow = moment(tomorrow).add(e, 'day').format('DD-MM-YYYY');
@@ -70,15 +70,15 @@ const App = ({route, navigation}) => {
         </View>
         <View>
           <Text style={styles.headertext1}>End Date</Text>
-          <Text style={{...styles.inputView1,marginTop:3}}>{tomorrow}</Text>
+          <Text style={{ ...styles.inputView1, marginTop: 3 }}>{tomorrow}</Text>
         </View>
         <View>
           <Text style={styles.headertext1}>Cost</Text>
-          <Text style={{...styles.inputView1,marginTop:3}}>{route.params.item.total}</Text>
+          <Text style={{ ...styles.inputView1, marginTop: 3 }}>{route.params.item.total}</Text>
         </View>
         <View>
           <Text style={styles.headertext1}>School Name</Text>
-          <Text style={{...styles.inputView1,marginTop:3}}>{route.params.schooladdress}</Text>
+          <Text style={{ ...styles.inputView1, marginTop: 3 }}>{route.params.schooladdress}</Text>
         </View>
         <Text style={styles.error}>{valueError}</Text>
         <TouchableOpacity

@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import {Text, Alert, View, TouchableOpacity, Modal, Image} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Text, Alert, View, TouchableOpacity, Modal, Image } from 'react-native';
 import Ngrok from '../../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
-import {ScrollView} from 'react-native-gesture-handler';
+import { ScrollView } from 'react-native-gesture-handler';
 import Loader from '../../components/Loader';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -12,7 +12,7 @@ import * as ToastMessage from '../../constants/ToastMessages';
 import storage from '@react-native-firebase/storage';
 import axios from 'axios';
 
-const Profile = ({navigation}) => {
+const Profile = ({ navigation }) => {
   const [data, getData] = useState([]);
   const [isloading, setLoading] = useState(true);
   const [avatar, setAvatar] = useState(true);
@@ -68,13 +68,13 @@ const Profile = ({navigation}) => {
         </Text>
       </TouchableOpacity>
       <Image
-        style={{...styles.profileView,borderRadius:60, marginTop:0}}
+        style={{ ...styles.profileView, borderRadius: 60, marginTop: 0 }}
         source={{
           uri:
             'https://www.shareicon.net/data/512x512/2016/09/01/822711_user_512x512.png',
         }}
       />
-      <View style={{flexDirection: 'row', alignSelf: 'center'}}></View>
+      <View style={{ flexDirection: 'row', alignSelf: 'center' }}></View>
       <View style={styles.body}>
         <Text style={styles.name}>Hello,{data.name}</Text>
       </View>

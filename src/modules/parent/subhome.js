@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   ScrollView,
   Text,
@@ -9,18 +9,18 @@ import {
 } from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
-import {Picker} from '@react-native-picker/picker';
+import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
 import Ngrok from '../../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
-import {useFocusEffect} from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 import Loader from '../../components/Loader';
 import styles from '../../components/style';
 import ToastComponent from '../../components/Toaster';
 import * as ToastMessage from '../../constants/ToastMessages';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const subscribedHome = ({route, navigation}) => {
+const subscribedHome = ({ route, navigation }) => {
   const [selectedStartDate, setselectedStartDate] = useState('');
   const [selectedEndDate, setselectedEndDate] = useState('');
   const minDate = new Date(); // Today
@@ -85,11 +85,11 @@ const subscribedHome = ({route, navigation}) => {
   const value1 =
     pickerValue.length && selectedValue
       ? pickerValue.filter((item) => {
-          var data = item.name
-            .toLowerCase()
-            .includes(selectedValue.toLowerCase());
-          return data;
-        })
+        var data = item.name
+          .toLowerCase()
+          .includes(selectedValue.toLowerCase());
+        return data;
+      })
       : [];
 
   const cancelHandler = async () => {
@@ -156,12 +156,12 @@ const subscribedHome = ({route, navigation}) => {
       <TouchableOpacity>
         {Boolean(value1[0].photoUrl) ? (
           <Image
-            style={{...styles.profileView, marginTop:0}}
-            source={{uri: value1[0].photoUrl}}
+            style={{ ...styles.profileView, marginTop: 0 }}
+            source={{ uri: value1[0].photoUrl }}
           />
         ) : (
           <Image
-            style={{...styles.profileView, marginTop:0}}
+            style={{ ...styles.profileView, marginTop: 0 }}
             source={{
               uri:
                 'https://www.shareicon.net/data/512x512/2016/06/25/786525_people_512x512.png',
@@ -176,7 +176,7 @@ const subscribedHome = ({route, navigation}) => {
           alignSelf: 'flex-start',
           justifyContent: 'center',
         }}>
-        <Text style={{fontWeight: 'bold', fontSize: 18}}>
+        <Text style={{ fontWeight: 'bold', fontSize: 18 }}>
           Trips For Today :-
         </Text>
       </View>
@@ -199,12 +199,12 @@ const subscribedHome = ({route, navigation}) => {
                 name="chevron-forward-outline"
                 color="#000"
                 size={19}
-                style={{alignSelf: 'center', marginRight: 10}}
+                style={{ alignSelf: 'center', marginRight: 10 }}
               />
             </TouchableOpacity>
           ))
         ) : (
-          <Text style={{justifyContent: 'center', marginLeft: 30}}>
+          <Text style={{ justifyContent: 'center', marginLeft: 30 }}>
             No Trips
           </Text>
         )}
@@ -215,7 +215,7 @@ const subscribedHome = ({route, navigation}) => {
           alignSelf: 'flex-start',
           justifyContent: 'center',
         }}>
-        <Text style={{fontWeight: 'bold', fontSize: 18}}>Plan Details :-</Text>
+        <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Plan Details :-</Text>
       </View>
       <View style={styles.headertext}>
         <Text style={styles.registerTextStyle}>Plan Tenure</Text>
@@ -251,7 +251,7 @@ const subscribedHome = ({route, navigation}) => {
           justifyContent: 'center',
           marginTop: 10,
         }}>
-        <Text style={{fontWeight: 'bold', fontSize: 18}}>
+        <Text style={{ fontWeight: 'bold', fontSize: 18 }}>
           Cancelation of Ride :-
         </Text>
       </View>
@@ -286,7 +286,7 @@ const subscribedHome = ({route, navigation}) => {
           onDateChange={onDateChange}
         />
       </View>
-      <View style={{alignSelf: 'center', marginTop: 10}}>
+      <View style={{ alignSelf: 'center', marginTop: 10 }}>
         <Text style={styles.registerTextStyle}>
           Selected Start Date: {startDate}
         </Text>
@@ -296,7 +296,7 @@ const subscribedHome = ({route, navigation}) => {
       </View>
       <Text style={styles.error}>{error}</Text>
       <TouchableOpacity
-        style={{...styles.loginBtn,marginBottom:10}}
+        style={{ ...styles.loginBtn, marginBottom: 10 }}
         onPress={cancelHandler}>
         <Text style={styles.loginText}>Apply</Text>
       </TouchableOpacity>

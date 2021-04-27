@@ -1,11 +1,11 @@
 import React from "react";
-import { Text, View,Image,Alert, StyleSheet,TouchableOpacity, StatusBar, ScrollView} from 'react-native';
+import { Text, View, Image, Alert, StyleSheet, TouchableOpacity, StatusBar, ScrollView } from 'react-native';
 import { Card, CardItem, Body } from 'native-base'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from '../../components/styles_admin'
 
 const Homescreen = ({ navigation }) => {
- 
+
   return (
     <View style={styles.container1}>
       <StatusBar
@@ -15,57 +15,59 @@ const Homescreen = ({ navigation }) => {
         translucent={false}
       />
       <ScrollView>
-      <View style={{alignSelf:'center',alignItems:'center'}}>
-        <Image  style={styles.logo} source={require('../../assets/analytics.png')} />
-      </View>
-      <View style={{marginVertical:20,}}>
+        <View style={{ alignSelf: 'center', alignItems: 'center' }}>
+          <Image style={styles.logo} source={require('../../assets/analytics.png')} />
+        </View>
+        <View style={{ marginVertical: 20, }}>
           <Card style={styles.card1}>
             <CardItem button onPress={() => navigation.navigate('RevStats')}>
               <Body style={{ flexDirection: 'row' }}>
-              <Image  style={styles.payicon} source={require('../../assets/RevenueIcon.png')} />
-                <Text style={{ fontSize: 17, fontWeight: '700',marginLeft:100 }}>
-                Revenue Stats :
+                <Image style={styles.payicon} source={require('../../assets/RevenueIcon.png')} />
+                <Text style={{ fontSize: 17, fontWeight: '700', marginLeft: 100 }}>
+                  Revenue Stats :
                 </Text>
                 <Ionicons name="chevron-forward-outline"
                   color="#000" size={25}
-                  style={{marginLeft:70}}
+                  style={{ marginLeft: 70 }}
                 />
               </Body>
             </CardItem>
           </Card>
           <Card style={styles.card1}>
-            <CardItem button onPress={() =>{
-              navigation.navigate('SubStats')}}>
+            <CardItem button onPress={() => {
+              navigation.navigate('SubStats')
+            }}>
               <Body style={{ flexDirection: 'row' }}>
-              <Image  style={styles.payicon} source={require('../../assets/StatsIcon.png')} /> 
-                <Text style={{ fontSize: 17, fontWeight: '700',marginLeft:100 }}>
-                Subscription Stats :
+                <Image style={styles.payicon} source={require('../../assets/StatsIcon.png')} />
+                <Text style={{ fontSize: 17, fontWeight: '700', marginLeft: 100 }}>
+                  Subscription Stats :
                 </Text>
                 <Ionicons name="chevron-forward-outline"
                   color="#000" size={25}
-                  style={{marginLeft:38}}
+                  style={{ marginLeft: 38 }}
                 />
               </Body>
             </CardItem>
           </Card>
           <Card style={styles.card1}>
-            <CardItem button onPress={() =>{
-              navigation.navigate('TripStats')}}>
+            <CardItem button onPress={() => {
+              navigation.navigate('TripStats')
+            }}>
               <Body style={{ flexDirection: 'row' }}>
-              <Image  style={styles.payicon} source={require('../../assets/TripIcon.png')} />
-                <Text style={{ fontSize: 17, fontWeight: '700',marginLeft:100 }}>
-                Trip Stats :
+                <Image style={styles.payicon} source={require('../../assets/TripIcon.png')} />
+                <Text style={{ fontSize: 17, fontWeight: '700', marginLeft: 100 }}>
+                  Trip Stats :
                 </Text>
                 <Ionicons name="chevron-forward-outline"
                   color="#000" size={25}
-                  style={{marginLeft:102}}
+                  style={{ marginLeft: 102 }}
                 />
               </Body>
             </CardItem>
           </Card>
-          </View>
-         
-          </ScrollView>
+        </View>
+
+      </ScrollView>
     </View>
   );
 }

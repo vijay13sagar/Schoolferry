@@ -1,13 +1,13 @@
 import React from 'react';
-import {StyleSheet, Text, View, ActivityIndicator, Modal} from 'react-native';
+import { StyleSheet, Text, View, ActivityIndicator, Modal } from 'react-native';
 
-export default function Loader({loading}) {
+export default function Loader({ loading }) {
   return (
     <Modal
       transparent
       animationType={'none'}
       visible={loading}
-      onRequestClose={() => {}}>
+      onRequestClose={() => { }}>
       <View style={styles.modalBackground}>
         <View style={styles.activityIndicatorHolder}>
           <ActivityIndicator animating={loading} size="large" color="#FF5C00" />

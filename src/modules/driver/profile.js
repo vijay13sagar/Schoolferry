@@ -25,12 +25,12 @@ const Profile = ({ navigation }) => {
       let token = await AsyncStorage.getItem('token')
       axios
         .get(`${Ngrok.url}/api/profiledetails/driver/${token}`)
-        .then( async function (response) {
+        .then(async function (response) {
           getData(response.data)
-          if(response.data.photoUrl!==null && response.data.photoUrl!=='NULL'){
+          if (response.data.photoUrl !== null && response.data.photoUrl !== 'NULL') {
             setImg(response.data.photoUrl)
           }
-          if(response.data.idProofUrl!==null && response.data.idProofUrl!=='NULL'){
+          if (response.data.idProofUrl !== null && response.data.idProofUrl !== 'NULL') {
             setID(response.data.idProofUrl)
           }
           setLoading(false)
@@ -166,14 +166,15 @@ const Profile = ({ navigation }) => {
               color="#FFF" size={25}
               style={styles.icon}
             /></TouchableOpacity>
-            <TouchableOpacity onPress={deleteimg} style={{ marginLeft: '35%' }}><Ionicons name="trash-bin"
+            {/* PLANNED FOR IMPROVEMENT */}
+            {/* <TouchableOpacity onPress={deleteimg} style={{ marginLeft: '35%' }}><Ionicons name="trash-bin"
               color="#FFF" size={25}
               style={styles.icon}
             /></TouchableOpacity>
             <TouchableOpacity onPress={pick} style={{ marginLeft: '35%' }}><Ionicons name="create"
               color="#FFF" size={25}
               style={styles.icon}
-            /></TouchableOpacity>
+            /></TouchableOpacity> */}
           </View>
           <Image style={{ width: '100%', height: '50%', justifyContent: 'center' }} source={{ uri: img }} />
           <View style={{ alignItems: 'center', marginTop: "25%", justifyContent: 'flex-end' }}>
@@ -194,9 +195,9 @@ const Profile = ({ navigation }) => {
             /></Text>
           </TouchableOpacity>
           <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-              <TouchableOpacity onPress={press} >
-                <Image style={styles.licence} source={{ uri: img }} />
-              </TouchableOpacity>
+            <TouchableOpacity onPress={press} >
+              <Image style={styles.licence} source={{ uri: img }} />
+            </TouchableOpacity>
           </View>
           <View style={styles.body}>
             <Text style={styles.name}>Hello,{data.name}</Text>

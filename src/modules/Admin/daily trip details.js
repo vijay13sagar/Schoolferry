@@ -17,7 +17,7 @@ import styles from '../../components/styles_admin';
 
 export default function Trip_Details({ route, navigation }) {
 
- 
+
   const s = route.params.item.trip_id
   let NID = null;
 
@@ -28,10 +28,10 @@ export default function Trip_Details({ route, navigation }) {
 
   if (nannyid == null) {
     NID = "no nanny provided"
-  
+
   } else {
     NID = nannyid
-  } 
+  }
 
 
 
@@ -45,7 +45,7 @@ export default function Trip_Details({ route, navigation }) {
         <StatusBar style="auto" />
 
 
-        <View style={{ marginRight:240,marginTop:50,}}>
+        <View style={{ marginRight: 240, marginTop: 50, }}>
           <Text>Driver Name</Text></View>
 
         <View style={styles.details}>
@@ -56,7 +56,7 @@ export default function Trip_Details({ route, navigation }) {
           </Text>
         </View>
 
-        <View style={{ marginRight:230}}>
+        <View style={{ marginRight: 230 }}>
           <Text>Vehicle Number</Text></View>
 
         <View style={styles.details}>
@@ -67,7 +67,7 @@ export default function Trip_Details({ route, navigation }) {
           </Text>
         </View>
 
-        <View style={{ marginRight:210 }}>
+        <View style={{ marginRight: 210 }}>
           <Text>Number of children</Text></View>
         <View style={styles.details}>
           <Text>
@@ -77,7 +77,7 @@ export default function Trip_Details({ route, navigation }) {
           </Text>
         </View>
 
-        <View style={{ marginRight:260}}>
+        <View style={{ marginRight: 260 }}>
           <Text>Nanny ID</Text></View>
 
         <View style={styles.details}>
@@ -88,7 +88,7 @@ export default function Trip_Details({ route, navigation }) {
 
           </Text>
         </View>
-        <View style={{marginRight:240 }}>
+        <View style={{ marginRight: 240 }}>
           <Text>Start Location</Text></View>
         <View style={styles.details}>
           <Text>
@@ -97,7 +97,7 @@ export default function Trip_Details({ route, navigation }) {
 
           </Text>
         </View>
-        <View style={{ marginRight:240}}>
+        <View style={{ marginRight: 240 }}>
           <Text>End Location</Text></View>
         <View style={styles.details}>
           <Text >
@@ -112,7 +112,7 @@ export default function Trip_Details({ route, navigation }) {
         <TouchableOpacity style={styles.loginBtns} onPress={() => navigation.navigate('freeDrivertrip_list', { s: s })} >
           <Text style={styles.TextInput}>Change Driver</Text>
         </TouchableOpacity>
-        <TouchableOpacity  style={styles.loginBtns} onPress={() => navigation.navigate('freeNannytrip_list', { s: s })} >
+        <TouchableOpacity style={styles.loginBtns} onPress={() => navigation.navigate('freeNannytrip_list', { s: s })} >
           <Text style={styles.TextInput}>Change Nanny</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.loginBtns} onPress={() => navigation.navigate('freeVehicletrip_list', { s: s })} >

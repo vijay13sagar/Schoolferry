@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {Text, View, TextInput, TouchableOpacity} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Text, View, TextInput, TouchableOpacity } from 'react-native';
 import axios from 'axios';
 import Ngrok from '../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -8,7 +8,7 @@ import styles from '../components/style';
 import ToastComponent from '../components/Toaster';
 import * as ToastMessage from '../constants/ToastMessages';
 
-const Otpscreen = ({route, navigation}) => {
+const Otpscreen = ({ route, navigation }) => {
   const [otp, setOtp] = useState(['-', '-', '-', '-', '-', '-']);
   const [otpVal, setOtpVal] = useState('');
   const [otpError, setOtpError] = useState('');
@@ -35,7 +35,7 @@ const Otpscreen = ({route, navigation}) => {
         SetMessage(ToastMessage.ResendOTP);
         console.log('error', error.message);
       })
-      .finally(function () {});
+      .finally(function () { });
     setToast(false);
   };
 
@@ -111,7 +111,7 @@ const Otpscreen = ({route, navigation}) => {
       ) : null}
       <Loader loading={isloading} />
       <Text style={styles.tripsTitleText}>Verify Your Mobile Number</Text>
-      <Text style={{marginVertical: 20, fontWeight: '300'}}>
+      <Text style={{ marginVertical: 20, fontWeight: '300' }}>
         Enter your OTP here
       </Text>
       <TextInput
@@ -123,7 +123,7 @@ const Otpscreen = ({route, navigation}) => {
           let a = [...val];
           setOtpVal(a), setOtp(value), console.log('value', otp);
         }}
-        style={{height: 0}}
+        style={{ height: 0 }}
         maxLength={6}
         autoFocus={true}
         keyboardType="numeric"
@@ -136,11 +136,11 @@ const Otpscreen = ({route, navigation}) => {
         ))}
       </View>
 
-      <Text style={{marginVertical: 20, fontWeight: '300'}}>
+      <Text style={{ marginVertical: 20, fontWeight: '300' }}>
         Didn't receive otp?
       </Text>
       <TouchableOpacity onPress={() => Resendotp()}>
-        <Text style={{textDecorationLine: 'underline', color: '#1E90FF'}}>
+        <Text style={{ textDecorationLine: 'underline', color: '#1E90FF' }}>
           Resend OTP
         </Text>
       </TouchableOpacity>

@@ -25,34 +25,34 @@ export default function remove_Child({ route, navigation }) {
   const [showtoast, setToast] = useState(false)
   const [message, SetMessage] = useState()
   let c = route.params.tripid;
- 
+
   let childid = route.params.item.childId;
-  
+
 
   const pressHandler = () => {
 
     setLoading(true);
     axios
-    .post(`${Ngrok.url}/api/admin/trips/child/remove`, {
-      childid: childid,
-     tripid: c
-    })
-    .then(function (response) {
-      
-      if (response.data.message == "child removed from the trip") {
-              Alert.alert('Removed Successfully', '', [{ text: 'Proceed', onPress: () => navigation.navigate('Home_page') }])
-            } else {
-              setLoading(false);
-             
-              setToast(true)
-            }
-    })
-    .catch(function (error) {
-      console.log(error);
-      setLoading(false);
-        
-    });
-    
+      .post(`${Ngrok.url}/api/admin/trips/child/remove`, {
+        childid: childid,
+        tripid: c
+      })
+      .then(function (response) {
+
+        if (response.data.message == "child removed from the trip") {
+          Alert.alert('Removed Successfully', '', [{ text: 'Proceed', onPress: () => navigation.navigate('Home_page') }])
+        } else {
+          setLoading(false);
+
+          setToast(true)
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+        setLoading(false);
+
+      });
+
     setToast(false)
 
   }

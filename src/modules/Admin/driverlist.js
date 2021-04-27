@@ -25,7 +25,7 @@ export default class driverList extends Component {
       .get(`${Ngrok.url}/api/admin/home/drivers`)
       .then(function (response) {
         self.setState({ data: response.data });
-      
+
       })
       .catch(function (error) {
         console.log("error", error.message);
@@ -46,22 +46,22 @@ export default class driverList extends Component {
         {isLoading ? <ActivityIndicator /> : (
           <FlatList
             data={data}
-            
+
             numColumns={2}
             keyExtractor={({ id }, index) => id}
             renderItem={({ item }) => (
 
-              <Card  style={{ flex: 1, width: "100%",height:200 }}>
+              <Card style={{ flex: 1, width: "100%", height: 200 }}>
                 <CardItem button onPress={() => this.props.navigation.navigate('driver_Details', { item: item })}>
-                  <Body style={{ justifyContent:"center",alignItems:"center" }}>
+                  <Body style={{ justifyContent: "center", alignItems: "center" }}>
                     <View>
-                      <Image style={styles.licence2} source={item.photoUrl == "NULL" ? { uri: (img) }:{ uri: (item.photoUrl) }} />         
+                      <Image style={styles.licence2} source={item.photoUrl == "NULL" ? { uri: (img) } : { uri: (item.photoUrl) }} />
                       <View >
                         <Text style={{
-                           fontSize: 15, marginTop: 10,
+                          fontSize: 15, marginTop: 10,
                           color: "black",
                           fontWeight: '700',
-                          alignSelf:"center"
+                          alignSelf: "center"
                         }}>
 
                           {

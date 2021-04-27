@@ -1,13 +1,13 @@
-import React, {useEffect, useState} from 'react';
-import {View, StyleSheet} from 'react-native';
-import MapView, {Marker, AnimatedRegion} from 'react-native-maps';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet } from 'react-native';
+import MapView, { Marker, AnimatedRegion } from 'react-native-maps';
 import axios from 'axios';
 import Ngrok from '../../constants/ngrok';
 
-const Driver = ({route}) => {
+const Driver = ({ route }) => {
   const [lat, setLatitude] = useState(18.1083);
   const [lon, setLongitude] = useState(83.3799);
-  const [LATLNG, setLATLNG] = useState({latitude: 18.999, longitude: 81.992});
+  const [LATLNG, setLATLNG] = useState({ latitude: 18.999, longitude: 81.992 });
   const [region, setRegion] = useState({
     latitude: 18.999,
     longitude: 81.992,
@@ -30,7 +30,7 @@ const Driver = ({route}) => {
       .catch(function (error) {
         console.log('error', error.message);
       })
-      .finally(function () {});
+      .finally(function () { });
   };
 
   useEffect(() => {
@@ -41,7 +41,7 @@ const Driver = ({route}) => {
   });
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <MapView
         followsUserLocation
         mapType="standard"
@@ -83,7 +83,7 @@ const Driver = ({route}) => {
           strokeWidth={1.5}
         />
         <Marker
-          coordinate={{latitude: lat, longitude: lon}}
+          coordinate={{ latitude: lat, longitude: lon }}
           image={require('../../assets/car.png')}></Marker>
       </MapView>
     </View>

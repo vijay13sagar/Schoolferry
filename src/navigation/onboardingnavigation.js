@@ -21,10 +21,10 @@ const OnboardingNav = () => {
         return (
                 <Stack.Navigator screenOptions={{ headerTitleAlign: 'center' }}   >
                         <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-                        <Stack.Screen name="Sign up" component={Signup}  />
+                        <Stack.Screen name="Sign up" component={Signup} />
                         <Stack.Screen name="Forgot Password" component={ForgotPassword} />
-                        <Stack.Screen name="OTPscreen" component={OTP_screen} options={{ title: 'Verify Mobile', headerTitleStyle: { fontWeight: 'bold' }, }}/>
-                        <Stack.Screen name="Parent Interface" component={parent_nav} options={{headerShown: false }} />
+                        <Stack.Screen name="OTPscreen" component={OTP_screen} options={{ title: 'Verify Mobile', headerTitleStyle: { fontWeight: 'bold' }, }} />
+                        <Stack.Screen name="Parent Interface" component={parent_nav} options={{ headerShown: false }} />
                         <Stack.Screen name="Admin Interface" component={admin_tabbar} options={{ headerShown: false }} />
                         <Stack.Screen name="Nanny Interface" component={nanny_nav} options={{ headerShown: false }} />
                         <Stack.Screen name="Driver Interface" component={driver_nav} options={{ headerShown: false }} />

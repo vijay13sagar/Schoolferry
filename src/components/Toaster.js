@@ -1,8 +1,8 @@
-import React, {useEffect, useRef} from 'react';
-import {StyleSheet, Text, View, Animated} from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { StyleSheet, Text, View, Animated } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-export default function Toaster({message, type}) {
+export default function Toaster({ message, type }) {
   const opacity = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -50,8 +50,8 @@ export default function Toaster({message, type}) {
         marginBottom: 20,
         flexDirection: 'row',
         alignItems: 'center',
-        alignSelf:'center',
-        elevation:1
+        alignSelf: 'center',
+        elevation: 1
       }}>
       {Boolean(type == 1) ? (
         <View style={styles.failureWrapper}>
@@ -93,6 +93,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: '#000',
     alignSelf: 'center',
-    padding:10
+    padding: 10
   },
 });

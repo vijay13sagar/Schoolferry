@@ -1,14 +1,14 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   RefreshControl,
   Text,
   View,
   ScrollView,
-  Alert,
+  Alert, Footer,
   StatusBar,
   FlatList,
   TouchableOpacity,
-  Modal,Image,
+  Modal, Image,
   Switch,
 } from 'react-native';
 import { Card, CardItem, Body } from 'native-base'
@@ -23,7 +23,7 @@ const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
 };
 
-const Tripdetails = ({route, navigation}) => {
+const Tripdetails = ({ route, navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [but, setBut] = useState('Start Trip');
   const [defimg, setDef] = useState('https://www.shareicon.net/data/512x512/2016/06/25/786525_people_512x512.png');
@@ -45,17 +45,17 @@ const Tripdetails = ({route, navigation}) => {
 
   const Children = () => {
     axios
-    .get(`${Ngrok.url}/api/driver/trip/${TripID}`)
-    .then(function (response) {
-      setInfo(response.data.noOfChildrenAbsent);
-      setLoc(response.data.startedTripAt);
-      setDet(response.data.childList);
-    })
-    .catch(function (error) {
-      console.log("error",error.message);
-    })
-    .finally(function () {
-    });
+      .get(`${Ngrok.url}/api/driver/trip/${TripID}`)
+      .then(function (response) {
+        setInfo(response.data.noOfChildrenAbsent);
+        setLoc(response.data.startedTripAt);
+        setDet(response.data.childList);
+      })
+      .catch(function (error) {
+        console.log("error", error.message);
+      })
+      .finally(function () {
+      });
   };
   useEffect(() => {
     Children();
@@ -64,16 +64,16 @@ const Tripdetails = ({route, navigation}) => {
   const SetSwitchValue = (id, value) => {
     try {
       axios
-      .post(`${Ngrok.url}/api/driver/attendance`, {
-        childid: id,
-        tripid: TripID, 
-        attendance: value,
-      })
-      .then(function (response) {
-        if (response.data.message == 'attendance marked') {
-          onRefresh();
-        }
-      });
+        .post(`${Ngrok.url}/api/driver/attendance`, {
+          childid: id,
+          tripid: TripID,
+          attendance: value,
+        })
+        .then(function (response) {
+          if (response.data.message == 'attendance marked') {
+            onRefresh();
+          }
+        });
     } catch (error) {
       console.log('errordetails', error);
     }
@@ -83,16 +83,16 @@ const Tripdetails = ({route, navigation}) => {
     setBut('Trip Inprogress');
     try {
       axios
-      .post(`${Ngrok.url}/api/driver/trip/start`, {
-        tripid: route.params.item.trip_id,
-      })
-      .then(function (response) {
-        if (response.status == 200) {    
-          setToast(true);
-          SetMessage(ToastMessage.drivestart);
-          onRefresh();
-        }
-      });
+        .post(`${Ngrok.url}/api/driver/trip/start`, {
+          tripid: route.params.item.trip_id,
+        })
+        .then(function (response) {
+          if (response.status == 200) {
+            setToast(true);
+            SetMessage(ToastMessage.drivestart);
+            onRefresh();
+          }
+        });
     } catch (error) {
       console.log('errordetails', error);
     }
@@ -101,21 +101,21 @@ const Tripdetails = ({route, navigation}) => {
   const Nannyprofile = () => {
     return (
       <View >
-        <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
           <Text style={styles.textHeads}>Nanny Id:</Text>
           <Text style={styles.textDetails}>
             {' '}
             {route.params.item.nannyInfo.nannyId}
           </Text>
         </View>
-        <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
           <Text style={styles.textHeads}>Nanny Name:</Text>
           <Text style={styles.textDetails}>
             {' '}
             {route.params.item.nannyInfo.nannyName}
           </Text>
         </View>
-        <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
           <Text style={styles.textHeads}>Nanny Contact:</Text>
           <Text style={styles.textDetails}>
             {' '}
@@ -143,7 +143,7 @@ const Tripdetails = ({route, navigation}) => {
             onPress={(modalVisible) => setModalVisible(!modalVisible)}
           />
           <View style={styles.modalBody}>
-            <Image style={styles.licence1} source={item1.photoUrl == "NULL" || item1.photoUrl == null ? { uri: (defimg) }:{ uri: (item1.photoUrl) }} />
+            <Image style={styles.licence1} source={item1.photoUrl == "NULL" || item1.photoUrl == null ? { uri: (defimg) } : { uri: (item1.photoUrl) }} />
             <Text style={styles.newsText}>Name - {item1.childName} </Text>
             <Text style={styles.newsText}>Age - {item1.age}</Text>
             <Text style={styles.newsText}>
@@ -167,34 +167,34 @@ const Tripdetails = ({route, navigation}) => {
             Trip ID - {route.params.item.trip_id}
           </Text>
           <View style={styles.detailsBox}>
-            <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
               <Text style={styles.textHeads}>Destination:</Text>
               <Text style={styles.textDetails}>
                 {' '}
                 {route.params.item.destination}{' '}
               </Text>
             </View>
-            <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
               <Text style={styles.textHeads}>Start Location:</Text>
               <Text style={styles.textDetails}>
-              {' '}{route.params.item.location}
+                {' '}{route.params.item.location}
               </Text>
             </View>
-            <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
               <Text style={styles.textHeads}>Vehicle ID</Text>
               <Text style={styles.textDetails}>
                 {' '}
                 {route.params.item.vehilce}
               </Text>
             </View>
-            <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
               <Text style={styles.textHeads}>Total Children:</Text>
               <Text style={styles.textDetails}>
                 {' '}
                 {route.params.item.noOfChildren}
               </Text>
             </View>
-            <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
               <Text style={styles.textHeads}>Total Absent:</Text>
               <Text style={styles.textDetails}>{' '}{absentee}</Text>
             </View>
@@ -208,7 +208,7 @@ const Tripdetails = ({route, navigation}) => {
           onPress={() => {
             starting();
           }}>
-          <Text style={locdisable ? {color: 'black'} : styles.loginText}>
+          <Text style={locdisable ? { color: 'black' } : styles.loginText}>
             {but}
           </Text>
         </TouchableOpacity>
@@ -218,10 +218,10 @@ const Tripdetails = ({route, navigation}) => {
           onPress={() =>
             navigation.navigate('Map', {
               screen: 'Trackee',
-              params: {tripid: route.params.item.trip_id},
+              params: { tripid: route.params.item.trip_id },
             })
           }>
-          <Text style={!locdisable ? {color: 'black'} : styles.loginText}>
+          <Text style={!locdisable ? { color: 'black' } : styles.loginText}>
             Live location
           </Text>
         </TouchableOpacity>
@@ -238,7 +238,7 @@ const Tripdetails = ({route, navigation}) => {
         <Text style={styles.absent}>Marked Absent</Text>
         <FlatList
           data={details}
-          renderItem={({item}) => (
+          renderItem={({ item }) => (
             <View
               style={{
                 flexDirection: 'row',
@@ -246,14 +246,15 @@ const Tripdetails = ({route, navigation}) => {
               }}>
 
               <Card style={styles.driverchild}>
-                <CardItem button onPress={() =>{setModalVisible(!modalVisible)
+                <CardItem button onPress={() => {
+                  setModalVisible(!modalVisible)
                   setItem1(item);
                 }}>
                   <Body style={{ flexDirection: 'row' }}>
-                    <Image style={styles.payicon} source={item.photoUrl == "NULL" || item.photoUrl == null ? { uri: (defimg) }:{ uri: (item.photoUrl) }} />
+                    <Image style={styles.payicon} source={item.photoUrl == "NULL" || item.photoUrl == null ? { uri: (defimg) } : { uri: (item.photoUrl) }} />
                     <Text style={styles.childcardtext}>
-                    {item.childName}
-                </Text>
+                      {item.childName}
+                    </Text>
                   </Body>
                 </CardItem>
               </Card>

@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {Text, View, TextInput, TouchableOpacity} from 'react-native';
+import React, { useState } from 'react';
+import { Text, View, TextInput, TouchableOpacity } from 'react-native';
 import Ngrok from '../../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
 import Loader from '../../components/Loader';
@@ -8,12 +8,12 @@ import ToastComponent from '../../components/Toaster';
 import * as ToastMessage from '../../constants/ToastMessages';
 import axios from 'axios';
 
-const updateProfile = ({route, navigation}) => {
+const updateProfile = ({ route, navigation }) => {
   const [name, setName] = useState(route.params.name);
   const [contact, setContact] = useState(route.params.contact);
   const [email, setEmail] = useState(route.params.email);
   const [address, setAddress] = useState(route.params.address);
-  const [{error}, setError] = useState(' ');
+  const [{ error }, setError] = useState(' ');
   const [isloading, setLoading] = useState(false);
   const [showtoast, setToast] = useState(false);
   const [message, SetMessage] = useState();
@@ -24,9 +24,9 @@ const updateProfile = ({route, navigation}) => {
     var regex_phone = /^((\+91)?|91)?[789][0-9]{9}/;
 
     if (!name || !contact || !email || !address) {
-      setError({error: 'Please fill all details'});
+      setError({ error: 'Please fill all details' });
     } else if (!regex_phone.test(contact)) {
-      setError({error: 'Please enter valid contact'});
+      setError({ error: 'Please enter valid contact' });
     } else {
       setLoading(true);
       axios

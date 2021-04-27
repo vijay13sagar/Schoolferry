@@ -1,10 +1,10 @@
 import * as React from 'react';
-import {Text, View, TouchableOpacity, ScrollView, Dimensions} from 'react-native';
+import { Text, View, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import styles from '../../components/style';
 
 var width = Dimensions.get("window").width;
 
-const addsubscreen = ({navigation}) => {
+const addsubscreen = ({ navigation }) => {
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.body1}>
@@ -48,13 +48,13 @@ const addsubscreen = ({navigation}) => {
             fontSize: 15,
             marginTop: 20,
             textAlign: 'center',
-            marginHorizontal:width * 0.03
+            marginHorizontal: width * 0.03
           }}>
           To subscribe to a plan , check service availability at your area and
           get started.
         </Text>
         <TouchableOpacity
-          style={{...styles.loginBtn,marginTop:10,marginBottom:10}}
+          style={{ ...styles.loginBtn, marginTop: 10, marginBottom: 10 }}
           onPress={() => navigation.navigate('location')}>
           <Text style={styles.loginText}>Check availability</Text>
         </TouchableOpacity>

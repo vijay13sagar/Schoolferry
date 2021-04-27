@@ -1,9 +1,9 @@
 import React from 'react';
-import {Text, View, TouchableOpacity, StatusBar} from 'react-native';
-import MapView, {Marker} from 'react-native-maps';
+import { Text, View, TouchableOpacity, StatusBar } from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
 import styles from '../../components/style';
 
-const Unsubhomescreen = ({navigation}) => {
+const Unsubhomescreen = ({ navigation }) => {
   return (
     <View>
       <StatusBar

@@ -13,9 +13,9 @@ import axios from 'axios';
 import Loader from '../../components/Loader';
 import styles from '../../components/styles_admin';
 import ToastComponent from '../../components/Toaster';
-import* as ToastMessage from '../../constants/ToastMessages';
+import * as ToastMessage from '../../constants/ToastMessages';
 
-export default function Add_Driver({navigation}) {
+export default function Add_Driver({ navigation }) {
   const [isloading, setLoading] = useState(false);
   const [VH, setVH] = useState("");
   const [Gps, setGps] = useState("");
@@ -23,75 +23,75 @@ export default function Add_Driver({navigation}) {
   const [Cap, setCap] = useState("");
   const [Type, setType] = useState();
   const [{ emptyFields }, setemptyFeilds] = useState("");
-  const [showtoast,setToast] = useState(false)
+  const [showtoast, setToast] = useState(false)
   const [message, SetMessage] = useState()
   const validateFunction = () => {
-    
-    if (!VH||!Gps || !Model || !Type|| !Cap ) {
+
+    if (!VH || !Gps || !Model || !Type || !Cap) {
       setemptyFeilds({ emptyFields: "Please Enter All The Details" })
-       return false
+      return false
     }
     return true
   }
-    function  pressHandler() {
-     
-      if (validateFunction()) {
-    try {
-      setLoading(true);
+  function pressHandler() {
 
-      axios({
-        method: 'POST',
-        url: `${Ngrok.url}/api/admin/register/vehicle`,
-        "headers": {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-        data: {
-              regno: VH,
-              capacity:Number(Cap),
-              gps:Gps,
-              type:Type,
-              model:Model
+    if (validateFunction()) {
+      try {
+        setLoading(true);
 
-        }
-      })
-        .then(function (response) {
-          setLoading(false);
-          if (response.status == 200) {
-            Alert.alert('Registration Successful','', [{text: 'Proceed', onPress:() => navigation.navigate('vehicleList',)}])
+        axios({
+          method: 'POST',
+          url: `${Ngrok.url}/api/admin/register/vehicle`,
+          "headers": {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          data: {
+            regno: VH,
+            capacity: Number(Cap),
+            gps: Gps,
+            type: Type,
+            model: Model
+
           }
+        })
+          .then(function (response) {
+            setLoading(false);
+            if (response.status == 200) {
+              Alert.alert('Registration Successful', '', [{ text: 'Proceed', onPress: () => navigation.navigate('vehicleList',) }])
+            }
 
-          
-        })
-        .catch(function (error) {
-          setLoading(false);
-         
-          setToast(true)
-        if(error.response.status==401){
-         
-          setLoading(false);
-         
-          setToast(true)
-        }
-     
-        })
-    }
-       catch(error){
+
+          })
+          .catch(function (error) {
+            setLoading(false);
+
+            setToast(true)
+            if (error.response.status == 401) {
+
+              setLoading(false);
+
+              setToast(true)
+            }
+
+          })
+      }
+      catch (error) {
         setLoading(false);
-      
+
         setToast(true)
-       }
-     }
-     setToast(false)
-   }
-  
- 
-   return (
+      }
+    }
+    setToast(false)
+  }
+
+
+  return (
     <View style={styles.container}>
-            {showtoast? (<ToastComponent type = {ToastMessage.failure}  message = {ToastMessage.message5}/>): null}
+      {showtoast ? (<ToastComponent type={ToastMessage.failure} message={ToastMessage.message5} />) : null}
 
       <Loader loading={isloading} />
-      
+
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput2}
@@ -116,14 +116,14 @@ export default function Add_Driver({navigation}) {
           onChangeText={(Type) => setType(Type)}
         />
       </View>
-       <View style={styles.inputView}>
+      <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput2}
           placeholder="Enter Model"
           placeholderTextColor="#929292"
           onChangeText={(Model) => setModel(Model)}
         />
-      </View> 
+      </View>
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput2}
@@ -132,15 +132,15 @@ export default function Add_Driver({navigation}) {
           onChangeText={(Cap) => setCap(Cap)}
         />
       </View>
-     
+
       <Text style={styles.error}>{emptyFields}</Text>
 
-        <TouchableOpacity style={styles.loginBtn} onPress={pressHandler}>
-            <Text style={styles.TextInput}>Register</Text>
-          
-            
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity style={styles.loginBtn} onPress={pressHandler}>
+        <Text style={styles.TextInput}>Register</Text>
+
+
+      </TouchableOpacity>
+    </View>
   );
 }
- 
+

@@ -11,95 +11,95 @@ import Ngrok from '../../constants/ngrok';
 import Loader from '../../components/Loader';
 import styles from '../../components/styles_admin'
 import ToastComponent from '../../components/Toaster';
-import* as ToastMessage from '../../constants/ToastMessages';
+import * as ToastMessage from '../../constants/ToastMessages';
 import axios from 'axios';
 
 
-export default function Edit_Nanny({ route,navigation }) {
-  const [showtoast,setToast] = useState(false)
+export default function Edit_Nanny({ route, navigation }) {
+  const [showtoast, setToast] = useState(false)
   const [message, SetMessage] = useState()
   const [isloading, setLoading] = useState(false);
   let c = route.params.tripid1;
-  
+
   let nannyid = route.params.item.id;
- 
+
 
   const pressHandler = () => {
     setLoading(true);
     axios
-    .post(`${Ngrok.url}/api/admin/trips/nanny/new`, {
-      nannyid : nannyid,
-      tripid : c
-    })
-    .then(function (response) {
-      
-      setLoading(false);
+      .post(`${Ngrok.url}/api/admin/trips/nanny/new`, {
+        nannyid: nannyid,
+        tripid: c
+      })
+      .then(function (response) {
+
+        setLoading(false);
 
         if (response.data.message == "nanny changed") {
-          Alert.alert('Changed Successfully','', [{text: 'Proceed', onPress:() => navigation.navigate('Home_page')}])
+          Alert.alert('Changed Successfully', '', [{ text: 'Proceed', onPress: () => navigation.navigate('Home_page') }])
         } else {
-          
+
           setToast(true)
         }
-    })
-    .catch(function (error) {
-  console.log(error);
-      setLoading(false);
-   
-   setToast(true)
-    });
-    
-  
-      setToast(false)
-}
+      })
+      .catch(function (error) {
+        console.log(error);
+        setLoading(false);
+
+        setToast(true)
+      });
 
 
-return (
-<View style={styles.container1}>
-{showtoast? (<ToastComponent type = {ToastMessage.failure}  message = {ToastMessage.message5}/>): null}
-  <ScrollView>
-     <Loader loading={isloading} />
-    
-      <StatusBar style="auto" />
-      <View style={{ width: "70%",marginLeft: 35 ,marginTop:40}}>
-        <Text>Name</Text></View>
+    setToast(false)
+  }
 
-      <View style={styles.details}>
-        <Text>
 
-          {route.params.item.name}
+  return (
+    <View style={styles.container1}>
+      {showtoast ? (<ToastComponent type={ToastMessage.failure} message={ToastMessage.message5} />) : null}
+      <ScrollView>
+        <Loader loading={isloading} />
 
-        </Text>
-      </View>
-      <View style={{ width: "70%", marginLeft: 35}}>
-        <Text>Contact Number</Text></View>
+        <StatusBar style="auto" />
+        <View style={{ width: "70%", marginLeft: 35, marginTop: 40 }}>
+          <Text>Name</Text></View>
 
-      <View style={styles.details}>
-        <Text>
+        <View style={styles.details}>
+          <Text>
 
-          {route.params.item.contact}
+            {route.params.item.name}
 
-        </Text>
-      </View>
+          </Text>
+        </View>
+        <View style={{ width: "70%", marginLeft: 35 }}>
+          <Text>Contact Number</Text></View>
 
-      <View style={{ width: "70%", marginLeft: 35}}>
-        <Text>Nanny ID</Text></View>
-      <View style={styles.details}>
-        <Text>
+        <View style={styles.details}>
+          <Text>
 
-          {route.params.item.id}
+            {route.params.item.contact}
 
-        </Text>
-      </View>
-      <TouchableOpacity style={styles.loginBtn}
-        onPress={pressHandler} >
-        <Text style={styles.TextInput}>Assign Nanny</Text>
-      </TouchableOpacity>
+          </Text>
+        </View>
 
-    
-  </ScrollView>
-  </View>
+        <View style={{ width: "70%", marginLeft: 35 }}>
+          <Text>Nanny ID</Text></View>
+        <View style={styles.details}>
+          <Text>
 
-);
+            {route.params.item.id}
+
+          </Text>
+        </View>
+        <TouchableOpacity style={styles.loginBtn}
+          onPress={pressHandler} >
+          <Text style={styles.TextInput}>Assign Nanny</Text>
+        </TouchableOpacity>
+
+
+      </ScrollView>
+    </View>
+
+  );
 
 }

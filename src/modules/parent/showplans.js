@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Text,
   View,
@@ -10,17 +10,17 @@ import {
   Dimensions
 } from 'react-native';
 
-import {Picker} from '@react-native-picker/picker';
+import { Picker } from '@react-native-picker/picker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-community/async-storage';
 import Ngrok from '../../constants/ngrok';
 import axios from 'axios';
-import {useFocusEffect} from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 import styles from '../../components/style';
 
-var height= Dimensions.get("window").height;
+var height = Dimensions.get("window").height;
 
-const showplanScreen = ({route, navigation}) => {
+const showplanScreen = ({ route, navigation }) => {
   const [data, setData] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [pickerValue, setPickerValue] = useState([]);
@@ -65,10 +65,10 @@ const showplanScreen = ({route, navigation}) => {
   const value1 =
     pickerValue.length && selectedValue
       ? pickerValue.filter((item) => {
-          return item.childName
-            .toLowerCase()
-            .includes(selectedValue.toLowerCase());
-        })
+        return item.childName
+          .toLowerCase()
+          .includes(selectedValue.toLowerCase());
+      })
       : [];
 
   const verifyHandler = () => {
@@ -95,16 +95,16 @@ const showplanScreen = ({route, navigation}) => {
             style={styles.icon}
             onPress={(modalVisible) => setModalVisible(!modalVisible)}
           />
-          <View style={{...styles.modalBody1,height:220}}>
-            <Text style={{...styles.message1,fontSize:18}}>
+          <View style={{ ...styles.modalBody1, height: 220 }}>
+            <Text style={{ ...styles.message1, fontSize: 18 }}>
               In case location of residence/school is different , plese verify.
             </Text>
-            <TouchableOpacity style={{...styles.closeModal,height:35,marginTop:25}} onPress={verifyHandler}>
+            <TouchableOpacity style={{ ...styles.closeModal, height: 35, marginTop: 25 }} onPress={verifyHandler}>
               <Text style={styles.loginText}>Verify</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={{alignSelf: 'center', marginTop: 5}}
+              style={{ alignSelf: 'center', marginTop: 5 }}
               onPress={onpressSame}>
               <Text
                 style={{
@@ -132,17 +132,17 @@ const showplanScreen = ({route, navigation}) => {
         </Picker>
       </View>
 
-      <View style={{height: height *0.45}}>
+      <View style={{ height: height * 0.45 }}>
         <FlatList
-          style={{...styles.flatlist, marginTop: 10}}
+          style={{ ...styles.flatlist, marginTop: 10 }}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           data={Boolean(value1.length) && value1[0].plans}
           keyExtractor={(item, index) => {
             return item.term;
           }}
-          renderItem={({item}) => (
-            <View style={{flex: 1}}>
+          renderItem={({ item }) => (
+            <View style={{ flex: 1 }}>
               <TouchableOpacity
                 style={styles.flatlistContainer}
                 onPress={() =>
@@ -161,22 +161,22 @@ const showplanScreen = ({route, navigation}) => {
                 />
 
                 <Text style={styles.typeOfSubscription}>{item.term}</Text>
-                <View style={{flexDirection: 'row'}}>
+                <View style={{ flexDirection: 'row' }}>
                   <Text style={styles.serviceDetails}>Trip Cost</Text>
                   <Text style={styles.price}> - ₹ {item.tripcost}</Text>
                 </View>
 
-                <View style={{flexDirection: 'row'}}>
+                <View style={{ flexDirection: 'row' }}>
                   <Text style={styles.serviceDetails}>Nanny</Text>
                   <Text style={styles.price}> - ₹ {item.nannycost}</Text>
                 </View>
 
-                <View style={{flexDirection: 'row'}}>
+                <View style={{ flexDirection: 'row' }}>
                   <Text style={styles.serviceDetails}>GST</Text>
                   <Text style={styles.price}> - ₹ {item.gst}</Text>
                 </View>
 
-                <View style={{flexDirection: 'row', marginVertical: 5}}>
+                <View style={{ flexDirection: 'row', marginVertical: 5 }}>
                   <Text style={styles.totalText}>Total</Text>
                   <Text style={styles.totalCost}> - ₹ {item.total}</Text>
                 </View>
@@ -186,7 +186,7 @@ const showplanScreen = ({route, navigation}) => {
         />
       </View>
       {Boolean(value1.length) && value1[0].status == 'subscribed' ? (
-        <Text style={{color: '#ce1212', marginHorizontal: 5, marginTop: 10,fontWeight:'700'}}>
+        <Text style={{ color: '#ce1212', marginHorizontal: 5, marginTop: 10, fontWeight: '700' }}>
           {' '}
           * Nanny service is compulsory for children below 9 years.
         </Text>

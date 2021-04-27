@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Text,
   View,
@@ -11,7 +11,7 @@ import {
 import Ngrok from '../../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
-import {Picker} from '@react-native-picker/picker';
+import { Picker } from '@react-native-picker/picker';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import moment from 'moment';
@@ -20,18 +20,18 @@ import styles from '../../components/style';
 import ToastComponent from '../../components/Toaster';
 import * as ToastMessage from '../../constants/ToastMessages';
 import ImagePicker from 'react-native-image-crop-picker';
-import storage, {firebase} from '@react-native-firebase/storage';
+import storage, { firebase } from '@react-native-firebase/storage';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {v4 as uuidv4} from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
-export default function addchild({route, navigation}) {
+export default function addchild({ route, navigation }) {
   const [CN, setCN] = useState('');
   const [CA, setCA] = useState('');
   const [ST, setST] = useState('');
   const [ET, setET] = useState('');
   const [SA, setSA] = useState(route.params.schooladdress);
   const [HA, setHA] = useState(route.params.homeaddress);
-  const [{value_error}, setError] = useState('');
+  const [{ value_error }, setError] = useState('');
   const [pickerValue, setPickerValue] = useState();
   const [visible, setVisible] = useState(false);
   const [timerValue, setTimerValue] = useState(0);
@@ -139,7 +139,7 @@ export default function addchild({route, navigation}) {
 
   const validateFunction = () => {
     if (!CN || !CA || !ST || !ET || !SA || !HA) {
-      setError({value_error: 'Fields Cannot be Empty'});
+      setError({ value_error: 'Fields Cannot be Empty' });
       return false;
     } else {
       return true;
@@ -152,7 +152,7 @@ export default function addchild({route, navigation}) {
         upload(image);
       }
     } else {
-      return setError({value_error: 'Please upload child image'});
+      return setError({ value_error: 'Please upload child image' });
     }
   };
 
@@ -216,7 +216,7 @@ export default function addchild({route, navigation}) {
           />
           <View style={styles.modalBody1}>
             <TouchableOpacity
-              style={{alignSelf: 'center', marginTop: 5}}
+              style={{ alignSelf: 'center', marginTop: 5 }}
               onPress={Camera}>
               <Text
                 style={{
@@ -233,7 +233,7 @@ export default function addchild({route, navigation}) {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={{alignSelf: 'center', marginTop: 20}}
+              style={{ alignSelf: 'center', marginTop: 20 }}
               onPress={gallery}>
               <Text
                 style={{
@@ -269,22 +269,22 @@ export default function addchild({route, navigation}) {
         maximumDate={new Date(2021, 11, 31)}
         minimumDate={new Date(2002, 0, 1)}
       />
-      <TouchableOpacity      
+      <TouchableOpacity
         onPress={() => setModalVisible(true)}>
         <Image
           style={styles.profileView}
-          source={{uri: image}}
+          source={{ uri: image }}
         />
       </TouchableOpacity>
 
-      <View style={{marginTop: 10}}>     
-          <TextInput
-            style={styles.TextInput}
-            placeholder="Child Name"
-            placeholderTextColor="#929292"
-            onChangeText={(CN) => setCN(CN)}
-            value={CN}
-          />
+      <View style={{ marginTop: 10 }}>
+        <TextInput
+          style={styles.TextInput}
+          placeholder="Child Name"
+          placeholderTextColor="#929292"
+          onChangeText={(CN) => setCN(CN)}
+          value={CN}
+        />
         <TouchableOpacity
           style={styles.inputView}
           onPress={() => setDatePickerVisible(true)}>
@@ -293,23 +293,23 @@ export default function addchild({route, navigation}) {
           </Text>
         </TouchableOpacity>
 
-       
-          <TextInput
-            style={styles.TextInput}
-            placeholder="School"
-            placeholderTextColor="#929292"
-            onChangeText={(SA) => setSA(SA)}
-            value={SA}
-          />
-        
-        
-          <TextInput
-            style={styles.TextInput}
-            placeholder="Residence Address"
-            placeholderTextColor="#929292"
-            onChangeText={(HA) => setHA(HA)}
-            value={HA}
-          />
+
+        <TextInput
+          style={styles.TextInput}
+          placeholder="School"
+          placeholderTextColor="#929292"
+          onChangeText={(SA) => setSA(SA)}
+          value={SA}
+        />
+
+
+        <TextInput
+          style={styles.TextInput}
+          placeholder="Residence Address"
+          placeholderTextColor="#929292"
+          onChangeText={(HA) => setHA(HA)}
+          value={HA}
+        />
       </View>
 
       <View
@@ -353,7 +353,7 @@ export default function addchild({route, navigation}) {
         <Picker.Item label="O -ve" value="O-" />
       </Picker>
 
-      <Text style={{...styles.error, marginBottom: 2}}>{value_error}</Text>
+      <Text style={{ ...styles.error, marginBottom: 2 }}>{value_error}</Text>
       <TouchableOpacity
         style={styles.loginBtn}
         onPress={handlePress}>

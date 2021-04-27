@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {View, StatusBar, ScrollView} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, StatusBar, ScrollView } from 'react-native';
 
 import Subhome from './subhome';
 import Unsubhome from './unsubscribedhome';
@@ -9,7 +9,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import Loader from '../../components/Loader';
 import styles from '../../components/style';
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = ({ navigation }) => {
   const [userType, setUserType] = useState(false);
   const [isLoading, setLoading] = useState(true);
 

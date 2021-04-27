@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {Text, View, FlatList, TouchableOpacity, Image} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Text, View, FlatList, TouchableOpacity, Image } from 'react-native';
 import Ngrok from '../../constants/ngrok';
 import ToastComponent from '../../components/Toaster';
 import * as ToastMessage from '../../constants/ToastMessages';
@@ -7,7 +7,7 @@ import styles from '../../components/style';
 import axios from 'axios';
 import Loader from '../../components/Loader';
 
-const Subscriptions = ({route, navigation}) => {
+const Subscriptions = ({ route, navigation }) => {
   const [data, setData] = useState('');
   const [childid, setChild] = useState(route.params.childID);
   const [showtoast, setToast] = useState(false);
@@ -52,7 +52,7 @@ const Subscriptions = ({route, navigation}) => {
       <View style={styles.firstBox}>
         <Text style={styles.planTitleText}>Subscription Plans </Text>
       </View>
-      <View style={{height: 330,}}>
+      <View style={{ height: 330, }}>
         <FlatList
           style={styles.flatlist}
           horizontal={true}
@@ -61,8 +61,8 @@ const Subscriptions = ({route, navigation}) => {
           keyExtractor={(item, index) => {
             return item.term;
           }}
-          renderItem={({item}) => (
-            <View style={{flex: 1}}>
+          renderItem={({ item }) => (
+            <View style={{ flex: 1 }}>
               <TouchableOpacity
                 style={styles.flatlistContainer}
                 onPress={() =>
@@ -81,22 +81,22 @@ const Subscriptions = ({route, navigation}) => {
                 />
                 <Text style={styles.typeOfSubscription}>{item.term}</Text>
 
-                <View style={{flexDirection: 'row'}}>
+                <View style={{ flexDirection: 'row' }}>
                   <Text style={styles.serviceDetails}>Trip Cost</Text>
                   <Text style={styles.price}> - ₹ {item.tripcost}</Text>
                 </View>
 
-                <View style={{flexDirection: 'row'}}>
+                <View style={{ flexDirection: 'row' }}>
                   <Text style={styles.serviceDetails}>Nanny</Text>
                   <Text style={styles.price}> - ₹ {item.nannycost}</Text>
                 </View>
 
-                <View style={{flexDirection: 'row'}}>
+                <View style={{ flexDirection: 'row' }}>
                   <Text style={styles.serviceDetails}>GST</Text>
                   <Text style={styles.price}> - ₹ {item.gst}</Text>
                 </View>
 
-                <View style={{flexDirection: 'row', marginVertical: 5}}>
+                <View style={{ flexDirection: 'row', marginVertical: 5 }}>
                   <Text style={styles.totalText}>Total</Text>
                   <Text style={styles.totalCost}> - ₹ {item.total}</Text>
                 </View>
