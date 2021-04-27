@@ -36,7 +36,7 @@ const showplanScreen = ({route, navigation}) => {
           setValue(res.data[0].childName);
           setisLoading(false);
         } catch (error) {
-          console.error(error);
+          console.log(error);
         }
       };
 

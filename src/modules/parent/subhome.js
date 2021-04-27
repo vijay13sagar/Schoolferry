@@ -91,6 +91,7 @@ const subscribedHome = ({route, navigation}) => {
           return data;
         })
       : [];
+
   const cancelHandler = async () => {
     let child_id = await value1[0].id;
     if (startDate == 'Invalid date' || endDate == 'Invalid date') {
@@ -153,8 +154,9 @@ const subscribedHome = ({route, navigation}) => {
           {myUsers()}
         </Picker>
 
-        <TouchableOpacity style={{...styles.profileView,marginTop:0,marginBottom:8}}>
-          {Boolean(value1[0].photoUrl) && value1[0].photoUrl !== 'NULL' ? (
+        <TouchableOpacity
+          style={{...styles.profileView, marginTop: 0, marginBottom: 8}}>
+          {Boolean(value1[0].photoUrl) ?(
             <Image
               style={{height: '100%', width: '100%', borderRadius: 50}}
               source={{uri: value1[0].photoUrl}}
@@ -189,15 +191,17 @@ const subscribedHome = ({route, navigation}) => {
                 onPress={() => navigation.navigate('Trip_details', item)}>
                 <Text
                   style={{
-                    marginLeft:10,
-                    fontSize:15,
-                    alignSelf:'center'
+                    marginLeft: 10,
+                    fontSize: 15,
+                    alignSelf: 'center',
                   }}>
                   {item.tripId}
                 </Text>
-                <Ionicons name="chevron-forward-outline"
-                  color="#000" size={19}
-                  style={{alignSelf:'center',marginRight:10}}
+                <Ionicons
+                  name="chevron-forward-outline"
+                  color="#000"
+                  size={19}
+                  style={{alignSelf: 'center', marginRight: 10}}
                 />
               </TouchableOpacity>
             ))

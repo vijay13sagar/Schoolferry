@@ -6,7 +6,7 @@ import Ngrok from '../constants/ngrok';
 import AsyncStorage from '@react-native-community/async-storage';
 import Loader from './Loader';
 import styles from './style';
-
+import axios from 'axios';
 
 export default class Notificationlist extends Component {
 
@@ -22,22 +22,19 @@ export default class Notificationlist extends Component {
   onFocusFunction = async () => {
     this.setState({ isLoading: true });
     let token = await AsyncStorage.getItem('token')
-    fetch(`${Ngrok.url}/api/notices/${token}`, {
-      "method": "GET",
-      "headers": {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
+    let self=this;
+    axios
+    .get(`${Ngrok.url}/api/notices/${token}`)
+    .then(function (response) {
+      self.setState({ data: response.data });
+      self.setState({item1:response.data.map(child=>({...child,attend:false}))})
     })
-      .then((response) => response.json())
-      .then((json) => {
-        this.setState({ data: json });
-        this.setState({item1:json.map(child=>({...child,attend:false}))})
-      })
-      .catch((error) => console.error(error))
-      .finally(() => {
-        this.setState({ isLoading: false });
-      });
+    .catch(function (error) {
+      console.log("error",error.message);
+    })
+    .finally(function () {
+      self.setState({ isLoading: false });
+    });
   }
   componentDidMount = async () => {
     this.focusListener = this.props.navigation.addListener('focus', () => {

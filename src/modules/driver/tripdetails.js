@@ -142,7 +142,7 @@ const Checklist = ({route, navigation}) => {
             onPress={(modalVisible) => setModalVisible(!modalVisible)}
           />
           <View style={styles.modalBody}>
-            <Image style={styles.licence1} source={require('../../assets/UPI1.png')} />
+            <Image style={styles.licence1} source={{uri:'https://www.shareicon.net/data/512x512/2016/06/25/786525_people_512x512.png'}} />
             <Text style={styles.newsText}>Name - {item1.childName} </Text>
             <Text style={styles.newsText}>Age - {item1.age}</Text>
             <Text style={styles.newsText}>
@@ -245,28 +245,18 @@ const Checklist = ({route, navigation}) => {
                 alignSelf: 'center',
               }}>
 
-              <Card style={styles.card3}>
+              <Card style={styles.driverchild}>
                 <CardItem button onPress={() =>{setModalVisible(!modalVisible)
                   setItem1(item);
                 }}>
                   <Body style={{ flexDirection: 'row' }}>
-                    <Image style={styles.payicon} source={require('../../assets/UPI1.png')} />
+                    <Image style={styles.payicon} source={{uri:'https://www.shareicon.net/data/512x512/2016/06/25/786525_people_512x512.png'}} />
                     <Text style={{ fontSize: 17, fontWeight: '700', marginLeft: 100 }}>
                     {item.childName}
                 </Text>
                   </Body>
                 </CardItem>
               </Card>
-              {/* <TouchableOpacity
-                style={styles.childcard}
-                onPress={() => {
-                  setModalVisible(!modalVisible);
-                  setItem1(item);
-                }}>
-                <Text style={styles.itemText}>
-                  {item.childName}
-                </Text>
-              </TouchableOpacity> */}
               <Switch
                 value={item.attendance}
                 onValueChange={(value) => {

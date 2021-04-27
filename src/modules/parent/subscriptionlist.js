@@ -52,7 +52,7 @@ const Subscriptions = ({route, navigation}) => {
       <View style={styles.firstBox}>
         <Text style={styles.planTitleText}>Subscription Plans </Text>
       </View>
-      <View style={{height: 350, marginTop: 15}}>
+      <View style={{height: 330,}}>
         <FlatList
           style={styles.flatlist}
           horizontal={true}
