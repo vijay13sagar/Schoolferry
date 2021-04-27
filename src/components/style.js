@@ -29,18 +29,6 @@ export default StyleSheet.create({
       borderWidth: 1,
       borderRadius: 10
     },
-    // inputView: {
-    //   borderWidth: 1,
-    //   borderColor: '#FF5C00',
-    //   borderRadius: 10,
-    //   width: "80%",
-    //   height: 45,
-    //   alignSelf: "center",
-    //   alignItems:'center',
-    //   backgroundColor: "#fff",   //"#C4C4C4",
-    //   marginTop: 20,
-    //   //opacity: 0.5,
-    // },
     checkboxContainer: {
       flexDirection: "row",
       marginBottom: 20,
@@ -57,7 +45,6 @@ export default StyleSheet.create({
       borderWidth: 1,
       borderRadius: 12,
       borderColor: '#FF5C00',
-      //marginTop: 3,
       width: '85%',
       alignSelf: "center", marginTop: 40,
       padding: 8,
@@ -72,7 +59,6 @@ export default StyleSheet.create({
     //endtripdetails.js
     firstbox1: {
         width: '90%',
-        //flexDirection:'row',
         borderRadius: 10,
         padding: 8,
         borderWidth: 2,
@@ -129,7 +115,6 @@ export default StyleSheet.create({
         borderWidth: 0.5,
         marginBottom: 5,
         marginRight: 15,
-        //backgroundColor: '#fff',
         alignSelf: 'center',
         justifyContent: 'center',
         alignItems: 'center',
@@ -155,7 +140,6 @@ export default StyleSheet.create({
     modalBody: {
         backgroundColor: '#fff',
         borderRadius: 10,
-        //height: 370,
         width: '92%',
         alignSelf: 'center',
         justifyContent: 'center',
@@ -195,7 +179,6 @@ export default StyleSheet.create({
         alignSelf: 'flex-end',
         marginRight:10,
         fontSize: 15,
-        //marginTop:10,
         color: 'red',
     },
     //homepage.js
@@ -236,7 +219,7 @@ export default StyleSheet.create({
         height: 40,
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: '#FF5C00',//"#32cd32",
+        backgroundColor: '#FF5C00',
         alignSelf: 'center',
         marginBottom: 50,
       },
@@ -309,8 +292,6 @@ export default StyleSheet.create({
         alignSelf: "center",
         marginVertical: 10,
     },
-    //triphistory.js (Nothing)
-    //updateprofile.js (check main view background color)
       text1: {
         fontSize: 16,
         color:'black',
@@ -351,13 +332,10 @@ export default StyleSheet.create({
     fontWeight: '700',
     padding: 7,
   },
-  //nanny interface
-
   //childlist.js
   list:{
     flex:1,
     justifyContent:'center',
-    //marginVertical:10,
     padding:20,
     backgroundColor:"#FFF",
   },
@@ -471,7 +449,6 @@ headertext: {
   color:'black',
   marginBottom: height * 0.003
 },
-//updateprofile.js(Nothing)
 //showplans.js
 firstBox: {
   height: height * 0.04,
@@ -572,7 +549,6 @@ unsubscribeBtn: {
 message1: {
   fontSize: 22,
   textAlign: 'center',
-  //marginTop: 30
   color: '#000',
   fontWeight: '600',
   padding: 7,
@@ -591,7 +567,6 @@ TextInput1: {
   borderRadius: 12, 
   padding: 8,
   alignSelf: "center"
-
 },
 inputaddress: {
   borderWidth: 1,
@@ -600,7 +575,7 @@ inputaddress: {
   width: "80%",
   height: 45,
   padding: 2,
-  backgroundColor: "#fff",   //"#C4C4C4",
+  backgroundColor: "#fff",  
   marginTop: 15,
   alignSelf:'center'
 },
@@ -741,7 +716,7 @@ heading: {
   marginTop: 4,
   marginLeft: 10,
 },
-//child_Details.js(Nothing)
+
 //paymode.js
 PendingTrips: {
   backgroundColor: "#fff",
@@ -752,7 +727,6 @@ PendingTrips: {
   alignSelf: "center",
   borderWidth: 1,
   borderRadius: 10
-
 },
 payicon: {
   width: 70,
@@ -760,7 +734,6 @@ payicon: {
   borderRadius: 63,
   borderWidth: 1,
   borderColor: "black",
-  //marginBottom: 10,
   alignSelf: 'center',
   position: 'absolute',
   justifyContent: 'flex-start',
@@ -773,8 +746,16 @@ card1: {
   alignItems: 'center',
   justifyContent: 'center',
 },
-card3: {
+driverchild: {
   width: '75%',
+  alignSelf: 'center',
+  height: 100,
+  alignItems: 'center',
+  justifyContent: 'center',
+  borderRadius:20,
+},
+nannychild: {
+  width: '85%',
   alignSelf: 'center',
   height: 100,
   alignItems: 'center',
@@ -814,11 +795,10 @@ inputView: {
   backgroundColor: "#fff",
   marginTop: height * 0.02,
 },
-//Screens
 //login.js
 cont2:{
   flex: 1,
-  backgroundColor: '#FCFDDB',//'#24103A',
+  backgroundColor: '#FCFDDB',
   alignItems: 'center',
   justifyContent: 'center',
 },
@@ -870,7 +850,6 @@ licence: {
     alignSelf:'center'
   },
   inputView2: {
-    //padding: 2,
     borderWidth: 1,
     borderColor: '#FF5C00',
     borderRadius: 10,
@@ -879,9 +858,8 @@ licence: {
     alignSelf: "center",
     alignItems:'center',
     justifyContent:'center',
-    backgroundColor: "#fff",   //"#C4C4C4",
+    backgroundColor: "#fff",   
     marginTop: 5,
-    //opacity: 0.5,
   },
 // parent trip details
   tripDetailsCard:{
@@ -937,7 +915,8 @@ licence: {
   },
   //tripdetails.js
   licence1: {
-    marginTop:20,
+    marginTop:5,
+    marginBottom:15,
     height: 140,
     width: 140,
     borderRadius:140,
@@ -953,6 +932,19 @@ licence: {
       textAlign: 'center',
       marginHorizontal:width * 0.04,
       marginBottom:10,
-      }
-})
+      },
+    busstarted:{
+      height:110,
+      width:180,
+      alignSelf:'center'
+    },
+    startTripText2: {
+      fontSize: 22,
+      textAlign: "center",
+      marginTop: 30,
+      fontWeight:'bold',
+      marginBottom: 10,
+      color:'black',
+    },
+    })
     

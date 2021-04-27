@@ -28,6 +28,7 @@ export default StyleSheet.create({
       
       },
      
+     
         message1: {
         fontSize: 22,
         textAlign: 'center',
@@ -275,11 +276,18 @@ export default StyleSheet.create({
           },
           licence2: {
             marginTop:20,
-            height: 100,
-            width:100,
+            height: 120,
+            width:120,
            
             alignSelf: 'center'
             },
+            licence3: {
+              marginTop:5,
+              height: 50,
+              width:50,
+             
+              alignSelf: 'center'
+              },
         modalContainer: {
         backgroundColor: '#000000',
         flex: 1,

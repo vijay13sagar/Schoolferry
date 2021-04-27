@@ -7,6 +7,7 @@ import Loader from '../../components/Loader';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ImagePicker from 'react-native-image-crop-picker';
 import styles from '../../components/style';
+import axios from 'axios';
 import ToastComponent from '../../components/Toaster';
 import * as ToastMessage from '../../constants/ToastMessages';
 import storage from '@react-native-firebase/storage';
@@ -14,39 +15,34 @@ import storage from '@react-native-firebase/storage';
 const Profile = ({ navigation }) => {
   const [data, getData] = useState([])
   const [isloading, setLoading] = useState(false)
-  const [img, setImg] = useState('');
+  const [img, setImg] = useState('https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/grandma_elderly_nanny_avatar-512.png ');
   const [id, setID] = useState('https://image.freepik.com/free-vector/cartoon-school-bus-with-children_23-2147827214.jpg');
-  const [avatar, setAvatar] = useState(true);
   const [pic, setPic] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [showtoast, setToast] = useState(false)
-  const [message, SetMessage] = useState()
 
   useEffect(() => {
     const fetchData = navigation.addListener('focus', async () => {
       setLoading(true)
       let token = await AsyncStorage.getItem('token')
-      fetch(`${Ngrok.url}/api/profiledetails/nanny/${token}`, {
-        "method": "GET",
-        "headers": {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-      })
-        .then(response => response.json())
-        .then(responseJson => {
-          getData(responseJson)
-          setImg(responseJson.photoUrl)
-          setID(responseJson.idProofUrl)
-          setLoading(false)
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      axios
+    .get(`${Ngrok.url}/api/profiledetails/nanny/${token}`)
+    .then(function (response) {
+      getData(response.data)
+      if(response.data.photoUrl!==null && response.data.photoUrl!=='NULL'){
+        setImg(response.data.photoUrl)
+      }
+      if(response.data.idProofUrl!==null && response.data.idProofUrl!=='NULL'){
+        setID(response.data.idProofUrl)
+      }
+      setLoading(false)
+    })
+    .catch(function (error) {
+      console.log("error",error.message);
+    })
+    .finally(function () {
+    });
     });
     fetchData;
-    //retrieveimg();
-    //retrieveimg2();
   }, [navigation])
   const gallery = () => {
     ImagePicker.openPicker({
@@ -79,7 +75,6 @@ const Profile = ({ navigation }) => {
       .ref(imageName)
       .putFile(s)
       .then((snapshot) => {
-        setAvatar(false)
         Alert.alert('Image Uploaded Successfully')
       })
       .catch((e) => {
@@ -97,37 +92,6 @@ const Profile = ({ navigation }) => {
   const pick = () => {
     setModalVisible(true);
   }
-
-  const retrieveimg = async () => {
-    let token = await AsyncStorage.getItem('token')
-    storage()
-      .ref('/' + `${token}/profile`)
-      .getDownloadURL()
-      .then((url) => {
-        setImg(url);
-        if(img==null){
-          setAvatar(true)
-        }else{
-          setAvatar(false)
-        }
-      })
-      .catch((e) => console.log('Errors while downloading => ', e));
-  }
-  const retrieveimg2 = async () => {
-    let token = await AsyncStorage.getItem('token')
-    storage()
-      .ref('/' + `${token}/license`)
-      .getDownloadURL()
-      .then((url) => {
-        setID(url);
-        if(img==null){
-          setAvatar(true)
-        }else{
-          setAvatar(false)
-        }
-      })
-      .catch((e) => console.log('Errors while downloading => ', e));
-  }
   const deleteimg = async () => {
     let token = await AsyncStorage.getItem('token')
     storage()
@@ -135,7 +99,6 @@ const Profile = ({ navigation }) => {
       .delete()
       .then(() => {
         setImg(null);
-        setAvatar(true);
         Alert.alert('Image deleted successfully');
       })
       .catch((e) => console.log('error on image deletion => ', e));
@@ -156,7 +119,6 @@ const Profile = ({ navigation }) => {
         barStyle="light-content" hidden={false} backgroundColor="#FF5C00" translucent={true}
       />{pic ?
       <View style={{ flex: 1, backgroundColor: 'black' }}>
-        {showtoast ? (<ToastComponent type={ToastMessage.success} message={message} />) : null}
         <Modal animationType="slide" transparent={true} visible={modalVisible}>
           <View style={styles.modalContainer}>
             <Ionicons
@@ -213,10 +175,7 @@ const Profile = ({ navigation }) => {
             style={styles.icon}
           /></TouchableOpacity>
         </View>
-        {avatar? <Ionicons name="camera"
-      color="grey" size={300}
-      style={{alignSelf:'center',justifyContent:'center'}}
-      />:<Image style={{ width: '100%', height: '50%', justifyContent: 'center' }} source={{ uri: img }} />}
+      <Image style={{ width: '100%', height: '50%', justifyContent: 'center' }} source={{ uri: img }} />
       </View>
       : <ScrollView style={styles.container}>
         <Loader loading={isloading} />
@@ -233,16 +192,9 @@ const Profile = ({ navigation }) => {
           /></Text>
         </TouchableOpacity>
         <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-        {avatar ? <TouchableOpacity onPress={press} >
-            <Ionicons name="camera"
-      color="grey" size={100}
-      style={styles.licence}
-      />
-          </TouchableOpacity>
-          :
           <TouchableOpacity onPress={press} >
             <Image style={styles.licence} source={{ uri: img }} />
-          </TouchableOpacity>}
+          </TouchableOpacity>
         </View>
         <View style={styles.body}>
           <Text style={styles.name}>Hello,{data.name}</Text>

@@ -43,33 +43,7 @@ let age = route.params.item.age
       console.log(error);
     });
 
-//     fetch(`${Ngrok.url}/api/admin/trips/child/add`, {
-//       "method": "POST",
-//       "headers": {
-//         Accept: 'application/json',
-//         'Content-Type': 'application/json'
-//       },
-//       body: JSON.stringify({
-//         childid : childid,
-//              tripid : c
-    
-//       })
-//     })
-//       .then(response => response.json())
-//       .then(responseJson => {
-//         setLoading(false);
-       
-//         if (responseJson.message == "child added") {
-//          Alert. alert('Added Successfully','', [{text: 'Proceed', onPress:() => navigation.navigate('Home_page',)}])
-//         } else {
-//         setToast(true)
-//         }
-//       })
-//       .catch(err => {
-//         setLoading(false);
-      
-//       });
-  
+
       setToast(false)
 }
 

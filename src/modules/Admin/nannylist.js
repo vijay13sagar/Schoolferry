@@ -40,18 +40,19 @@ export default class nannyList extends Component  {
         {isLoading ? <ActivityIndicator/> : (
           <FlatList
             data={data}
+            numColumns={2}
             keyExtractor={({ id }, index) => id}
             renderItem={({ item }) => (
              
-        <Card>
+        <Card style={{ flex: 1, width: "100%",height:200 }}>
         <CardItem button onPress = {()=>this.props.navigation.navigate('nanny_Details',{item:item})}>
-              <Body>
-              <View style={{flexDirection:"row"}}>      
+              <Body style={{ justifyContent:"center",alignItems:"center" }}>
+              <View >      
                 <Image style={styles.licence2} source={item.photoUrl=="NULL"  ? { uri: (img) }:{ uri: (item.photoUrl) }} />    
                 <View >     
-                   <Text style={{marginLeft:10,fontSize: 15,marginTop:50,
+                   <Text style={{fontSize: 15,marginTop:10,
         color: "black",
-        fontWeight: '700',}}>
+        fontWeight: '700',alignSelf:"center"}}>
                  
                    {
                       item.name
