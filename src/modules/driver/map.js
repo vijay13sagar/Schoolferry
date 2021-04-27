@@ -65,7 +65,6 @@ export default class App extends React.Component {
       timeOut: 2000,
       maximumAge: 60 * 60 * 24
     };
-    //this.setState({ ready: false, error: null });
     geolocation.getCurrentPosition(this.geoSuccess,
       this.geoFailure,
       geoOptions);
@@ -116,16 +115,13 @@ export default class App extends React.Component {
       />
         {showtoast? (<ToastComponent type = {ToastMessage.success}  message = {message}/>): null}
         <Loader loading = {isloading}/>
-        {/* { !this.state.ready && (
-           <Text style={styles.big}>Using Geolocation in React Native</Text>
-        )} */}
         { this.state.error && (
           <Text style={styles.big}>{this.state.error}</Text>
         )}
         { this.state.ready && (
           <View>
             <MapView
-              style={{ height: "90%", width: "100%" }}
+              style={styles.mapstyle}
               followsUserLocation
               mapType='standard'
               pitchEnabled
@@ -137,10 +133,9 @@ export default class App extends React.Component {
                 longitudeDelta: 0.0001 * 7
               }}
             >
-
               <Marker
                 coordinate={{ latitude: this.state.where.lat, longitude: this.state.where.lng }}
-              //image={require('../../assets/school.png')}
+                image={require('../../assets/car.png')}
               >
               </Marker >
             </MapView>

@@ -11,6 +11,11 @@ export default StyleSheet.create({
       flex: 1,
       backgroundColor: '#FCFDDB',
     },
+    cont: {
+      flex: 1,
+      backgroundColor: '#FCFDDB',
+      justifyContent:'center'
+    },
     sidehead: {
       fontWeight: 'bold',
       marginLeft: width * 0.02,
@@ -31,8 +36,13 @@ export default StyleSheet.create({
     },
     checkboxContainer: {
       flexDirection: "row",
-      marginBottom: 20,
-      marginLeft: 30
+      marginBottom: height*0.03,
+      marginLeft: width*0.09,
+      alignItems:'center'
+    },
+    datestyle:{
+      alignSelf:'center',
+      fontSize:fontScale*15
     },
     subText: {
       alignSelf: "flex-start",
@@ -50,22 +60,20 @@ export default StyleSheet.create({
       padding: 8,
   
     },
-    checkbox: {
-      alignSelf: "center",
-    },
     label: {
-      margin: 8,
+      margin: width*0.02,
+      fontSize:fontScale*15
     },
     //endtripdetails.js
-    firstbox1: {
-        width: '90%',
-        borderRadius: 10,
-        padding: 8,
-        borderWidth: 2,
+    headingcontainer: {
+        width: width*0.9,
+        borderRadius: height*0.02,
+        padding: height*0.01,
+        borderWidth: height*0.003,
         borderColor: 'black',
         backgroundColor: '#fff',
         alignSelf: 'center',
-        marginVertical: 15,
+        marginVertical: height*0.015,
     },
     loginBtn: {
         width: width * 0.5,
@@ -83,31 +91,29 @@ export default StyleSheet.create({
       borderRadius: 10,
       alignItems: "center",
       justifyContent: "center",
-      backgroundColor: "#212121",
+      backgroundColor: "#FF5C00",
       alignSelf: "center",
       marginVertical: height * 0.02,
   },
+  logoutBtn: {
+    width: width * 0.5,
+    height: height * 0.05,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#212121",
+    alignSelf: "center",
+    marginVertical: height * 0.02,
+},
     textHeads: {
-        fontSize: 18,
+        fontSize: fontScale*18,
         fontWeight: 'bold',
-        marginTop: 4,
-    },
-    textTitle: {
-        fontSize: 25,
-        fontWeight: 'bold',
-        alignSelf: 'center',
-        marginVertical: 5
-    },
-    detailsBox: {
-        flex: 1,
-        marginTop: 5,
-        alignItems: 'flex-start',
-
+        marginTop: height*0.005,
     },
     textDetails: {
-        fontSize: 18,
+        fontSize: fontScale*18,
         fontWeight: '600',
-        marginVertical: 2,
+        marginVertical:  height*0.005,
     },
     childcard: {
         backgroundColor: '#32cd32',
@@ -177,22 +183,27 @@ export default StyleSheet.create({
     },
     absent: {
         alignSelf: 'flex-end',
-        marginRight:10,
-        fontSize: 15,
+        marginRight:width*0.02,
+        fontSize: fontScale*15,
         color: 'red',
+        marginBottom:height*0.01
     },
     //homepage.js
+    tripendedtext:{
+      color:'white',
+      fontWeight:'700',
+      fontSize:fontScale*17 
+    },
+    tripstartedtext:{
+      color: 'black',
+      fontWeight: '700',
+      fontSize: fontScale*17 
+    },
       tripsTitleText: {
-        fontSize: 25,
-        marginTop: 10,
-        fontWeight: "bold"
-      },
-      startTripText1: {
-        fontSize: 22,
-        textAlign: "center",
-        marginTop: 30,
-        marginBottom: 10,
-        color:'black',
+        fontSize: fontScale*25,
+        marginTop: height*0.013,
+        fontWeight: "bold",
+        alignSelf:'center'
       },
       tripBox: {
         flex: 1,
@@ -207,77 +218,84 @@ export default StyleSheet.create({
     
       },
       startTripText: {
-        fontSize: 22,
+        fontSize: fontScale*22,
         textAlign: "center",
-        marginTop: 30,
-        marginBottom: 10,
+        marginTop: height*0.04,
+        marginBottom: height*0.01,
         color:'black',
       },
       CallBtn: {
-        width: "80%",
-        borderRadius: 10,
-        height: 40,
+        width: width*0.8,
+        borderRadius: width*0.03,
+        height: height*0.05,
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: '#FF5C00',
         alignSelf: 'center',
-        marginBottom: 50,
+        marginBottom: height*0.04,
       },
       loginText: {
-        fontSize: fontScale*14,
-        color:'white'   
+        fontSize: fontScale*15,
+        color:'white'
+    
       },
       card: {
-        width: '80%',
+        width: width*0.8,
         alignSelf: 'center',
-        height: 60,
+        height: height*0.08,
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop:10,
+        marginTop:height*0.01,
       },
       card2: {
-        width: '80%',
+        width: width*0.8,
         alignSelf: 'center',
-        height: 60,
+        height: height*0.08,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor:'lightgrey',
-        marginTop:10,
+        marginTop:height*0.01,
       },
     //map.js
       big: {
-        fontSize: 48
+        fontSize: fontScale*40,
+        alignSelf:'center'
+      },
+      mapstyle:{
+        height:height*0.78,
+        width:width*1,
       },
       //notstarted.js
       centerview: {
         color:'black',
         justifyContent:'center',
-        alignSelf:'center'
+        alignSelf:'center',
+        fontSize:fontScale*17,
+        marginBottom:height*0.015
       },
       //profile.js
       edit: {
         flexDirection: 'row-reverse',
-        height: height * 0.05,
-        width: width * 0.2,
+        height: height*0.035,
         backgroundColor: '#FF5C00',
+        width: width*0.2,
         alignSelf: 'flex-end',
-        marginTop: height * 0.015,
-        marginHorizontal: 20,
+        marginTop: height*0.01,
+        marginHorizontal: width*0.075,
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 10,
+        borderRadius: width*0.025,
       },
       name: {
-        fontSize: 20,
+        fontSize: fontScale*22,
         color: "black",
-        fontWeight: '700',
-    
+        fontWeight: '700',    
       },
       details: {
         backgroundColor: "#d3d3d3",
-        borderRadius: 12,
-        width: width * 0.85,
-        padding: 8,
+        borderRadius: height*0.015,
+        width: width*0.85,
+        padding: height*0.012,
         alignSelf: "center",
         flexWrap:'wrap'
       },
@@ -292,6 +310,11 @@ export default StyleSheet.create({
         alignSelf: "center",
         marginVertical: 10,
     },
+    switchstyle:{
+      marginLeft:width*0.025
+    },
+    //triphistory.js (Nothing)
+    //updateprofile.js (check main view background color)
       text1: {
         fontSize: 16,
         color:'black',
@@ -318,19 +341,19 @@ export default StyleSheet.create({
       },
     //notification.js'
   notice: {
-    fontSize: 22,
+    fontSize: fontScale*22,
     textAlign: 'center',
     color: '#000',
     fontWeight: '600',
-    padding: 7,
+    padding: height*0.005,
   },
   modalheading: {
-    fontSize: 22,
+    fontSize: fontScale*22,
     textAlign: 'center',
-    marginBottom: 5,
+    marginBottom:height*0.005,
     color: '#000',
     fontWeight: '700',
-    padding: 7,
+    padding: height*0.005,
   },
   //childlist.js
   list:{
@@ -444,10 +467,10 @@ textview: {
   marginBottom: height * 0.01,
 },
 headertext: {
-  fontSize: fontScale * 14,
-  marginLeft: width * 0.09,
+  fontSize: fontScale*16,
+  marginLeft: width*0.075,
   color:'black',
-  marginBottom: height * 0.003
+  marginTop:height*0.005
 },
 //showplans.js
 firstBox: {
@@ -729,15 +752,14 @@ PendingTrips: {
   borderRadius: 10
 },
 payicon: {
-  width: 70,
-  height: 70,
-  borderRadius: 63,
+  width: width*0.18,
+  height: width*0.18,
+  borderRadius: width*0.18,
   borderWidth: 1,
   borderColor: "black",
   alignSelf: 'center',
   position: 'absolute',
   justifyContent: 'flex-start',
-  marginTop: 50
 },
 card1: {
   width: '90%',
@@ -747,20 +769,25 @@ card1: {
   justifyContent: 'center',
 },
 driverchild: {
-  width: '75%',
+  width: width*0.75,
   alignSelf: 'center',
-  height: 100,
+  height: height*0.125,
   alignItems: 'center',
   justifyContent: 'center',
-  borderRadius:20,
+  borderRadius:width*0.07,
 },
 nannychild: {
-  width: '85%',
+  width: width*0.85,
   alignSelf: 'center',
-  height: 100,
+  height: height*0.125,
   alignItems: 'center',
   justifyContent: 'center',
-  borderRadius:20,
+  borderRadius:width*0.07,
+},
+childcardtext:{
+  fontSize: 17,
+  fontWeight: '700',
+  marginLeft: width*0.25
 },
 //plandetails.js
 headertext1: {
@@ -838,15 +865,15 @@ otpBoxesContainer: {
 },
 //profile.js
 licence: {
-  marginTop:20,
-  height: 100,
-  width: 100,
-  borderRadius:50,
+  marginTop:height*0.02,
+  height: height*0.15,
+  width: height*0.15,
+  borderRadius:height*0.15,
   alignSelf: 'center'
   },
   idproof:{
-    width:"85%",
-    height:170,
+    width:width*0.85,
+    height:height*0.25,
     alignSelf:'center'
   },
   inputView2: {
@@ -888,7 +915,7 @@ licence: {
   detailsBox:{
     flex:1,
     alignSelf:'center', 
-    marginLeft:20
+    marginLeft:width*0.05
   },
   //profile.js
   modalContainer3: {
@@ -915,11 +942,11 @@ licence: {
   },
   //tripdetails.js
   licence1: {
-    marginTop:5,
-    marginBottom:15,
-    height: 140,
-    width: 140,
-    borderRadius:140,
+    marginTop:height*0.01,
+    marginBottom:height*0.015,
+    height: height*0.175,
+    width: height*0.175,
+    borderRadius:height*0.175,
     alignSelf: 'center'
     },
     logoImage:{
@@ -934,17 +961,9 @@ licence: {
       marginBottom:10,
       },
     busstarted:{
-      height:110,
-      width:180,
+      height:height*0.15,
+      width:width*0.5,
       alignSelf:'center'
-    },
-    startTripText2: {
-      fontSize: 22,
-      textAlign: "center",
-      marginTop: 30,
-      fontWeight:'bold',
-      marginBottom: 10,
-      color:'black',
     },
     })
     

@@ -18,22 +18,22 @@ export default function change_pwd() {
     }
   };
   return (
-    <View style={{...styles.container}}>
+    <View style={styles.cont}>
       <View>
         <Text style={styles.text}>Enter your new password.</Text>
       </View>
-      <TextInput
-        style={styles.TextInput}
-        placeholder="Password"
-        placeholderTextColor="#929292"
-        onChangeText={(value1) => setValue1(value1)}
-      />
-      <TextInput
-        style={styles.TextInput}
-        placeholder="Re-enter Password"
-        placeholderTextColor="#929292"
-        onChangeText={(value2) => setValue2(value2)}
-      />
+        <TextInput
+          style={styles.TextInput}
+          placeholder="Password"
+          placeholderTextColor="#929292"
+          onChangeText={(value1) => setValue1(value1)}
+        />
+        <TextInput
+          style={styles.TextInput}
+          placeholder="Re-enter Password"
+          placeholderTextColor="#929292"
+          onChangeText={(value2) => setValue2(value2)}
+        />
       <Text style={styles.error}>{value_error}</Text>
       <TouchableOpacity
         style={{...styles.loginBtn,marginTop :10}}

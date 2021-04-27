@@ -67,7 +67,6 @@ const Updateprofile = ({navigation,route}) => {
       {showtoast? (<ToastComponent type = {ToastMessage.success}  message = {message}/>): null}
       <Loader loading={isloading} />
       <Text style={styles.text}>Enter your new details</Text>
-      <View style={styles.inputView} >
         <TextInput
           keyboardType="numeric"
           style={styles.TextInput}
@@ -77,8 +76,6 @@ const Updateprofile = ({navigation,route}) => {
           onChangeText={(contact) => setContact(contact)}
           value={contact}
         />
-      </View>
-      <View style={styles.inputView} >
         <TextInput
           style={styles.TextInput}
           placeholder="Address"
@@ -86,8 +83,6 @@ const Updateprofile = ({navigation,route}) => {
           onChangeText={(address) => setAddress(address)}
           value={address}
         />
-
-      </View>
       <Text style={styles.error}>{error}</Text>
       <TouchableOpacity style={styles.loginBtn} onPress={presshandler}>
         <Text style={styles.loginText}>
