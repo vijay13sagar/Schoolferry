@@ -23,9 +23,10 @@ const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
 };
 
-const Checklist = ({route, navigation}) => {
+const Tripdetails = ({route, navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [but, setBut] = useState('Start Trip');
+  const [defimg, setDef] = useState('https://www.shareicon.net/data/512x512/2016/06/25/786525_people_512x512.png');
   const [locdisable, setLoc] = useState();
   const [details, setDet] = useState([]);
   const [item1, setItem1] = useState([]);
@@ -99,23 +100,23 @@ const Checklist = ({route, navigation}) => {
   };
   const Nannyprofile = () => {
     return (
-      <View style={styles.detailsBox}>
+      <View >
         <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-          <Text style={styles.textHeads}>Nanny Id - </Text>
+          <Text style={styles.textHeads}>Nanny Id:</Text>
           <Text style={styles.textDetails}>
             {' '}
             {route.params.item.nannyInfo.nannyId}
           </Text>
         </View>
         <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-          <Text style={styles.textHeads}>Nanny Name - </Text>
+          <Text style={styles.textHeads}>Nanny Name:</Text>
           <Text style={styles.textDetails}>
             {' '}
             {route.params.item.nannyInfo.nannyName}
           </Text>
         </View>
         <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-          <Text style={styles.textHeads}>Nanny Contact - </Text>
+          <Text style={styles.textHeads}>Nanny Contact:</Text>
           <Text style={styles.textDetails}>
             {' '}
             {route.params.item.nannyInfo.nannyContact}
@@ -142,7 +143,7 @@ const Checklist = ({route, navigation}) => {
             onPress={(modalVisible) => setModalVisible(!modalVisible)}
           />
           <View style={styles.modalBody}>
-            <Image style={styles.licence1} source={{uri:'https://www.shareicon.net/data/512x512/2016/06/25/786525_people_512x512.png'}} />
+            <Image style={styles.licence1} source={item1.photoUrl == "NULL" || item1.photoUrl == null ? { uri: (defimg) }:{ uri: (item1.photoUrl) }} />
             <Text style={styles.newsText}>Name - {item1.childName} </Text>
             <Text style={styles.newsText}>Age - {item1.age}</Text>
             <Text style={styles.newsText}>
@@ -161,13 +162,13 @@ const Checklist = ({route, navigation}) => {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
-        <View style={styles.firstbox1}>
-          <Text style={styles.textTitle}>
+        <View style={styles.headingcontainer}>
+          <Text style={styles.tripsTitleText}>
             Trip ID - {route.params.item.trip_id}
           </Text>
           <View style={styles.detailsBox}>
             <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-              <Text style={styles.textHeads}>Destination: </Text>
+              <Text style={styles.textHeads}>Destination:</Text>
               <Text style={styles.textDetails}>
                 {' '}
                 {route.params.item.destination}{' '}
@@ -176,26 +177,26 @@ const Checklist = ({route, navigation}) => {
             <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
               <Text style={styles.textHeads}>Start Location:</Text>
               <Text style={styles.textDetails}>
-                {route.params.item.location}
+              {' '}{route.params.item.location}
               </Text>
             </View>
             <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-              <Text style={styles.textHeads}>Vehicle ID: </Text>
+              <Text style={styles.textHeads}>Vehicle ID</Text>
               <Text style={styles.textDetails}>
                 {' '}
                 {route.params.item.vehilce}
               </Text>
             </View>
             <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-              <Text style={styles.textHeads}>Total Children: </Text>
+              <Text style={styles.textHeads}>Total Children:</Text>
               <Text style={styles.textDetails}>
                 {' '}
                 {route.params.item.noOfChildren}
               </Text>
             </View>
             <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-              <Text style={styles.textHeads}>Total Absent - </Text>
-              <Text style={styles.textDetails}> {absentee}</Text>
+              <Text style={styles.textHeads}>Total Absent:</Text>
+              <Text style={styles.textDetails}>{' '}{absentee}</Text>
             </View>
 
             {route.params.item.nannyInfo.nannyId ? <Nannyprofile /> : null}
@@ -241,7 +242,6 @@ const Checklist = ({route, navigation}) => {
             <View
               style={{
                 flexDirection: 'row',
-                marginTop: 20,
                 alignSelf: 'center',
               }}>
 
@@ -250,8 +250,8 @@ const Checklist = ({route, navigation}) => {
                   setItem1(item);
                 }}>
                   <Body style={{ flexDirection: 'row' }}>
-                    <Image style={styles.payicon} source={{uri:'https://www.shareicon.net/data/512x512/2016/06/25/786525_people_512x512.png'}} />
-                    <Text style={{ fontSize: 17, fontWeight: '700', marginLeft: 100 }}>
+                    <Image style={styles.payicon} source={item.photoUrl == "NULL" || item.photoUrl == null ? { uri: (defimg) }:{ uri: (item.photoUrl) }} />
+                    <Text style={styles.childcardtext}>
                     {item.childName}
                 </Text>
                   </Body>
@@ -262,7 +262,7 @@ const Checklist = ({route, navigation}) => {
                 onValueChange={(value) => {
                   SetSwitchValue(item.childId, value);
                 }}
-                style={{marginLeft: 10}}
+                style={styles.switchstyle}
               />
             </View>
           )}
@@ -272,4 +272,4 @@ const Checklist = ({route, navigation}) => {
     </View>
   );
 };
-export default Checklist;
+export default Tripdetails;

@@ -126,7 +126,6 @@ export default function Login({navigation}) {
         style={{width: '80%', height: '25%', marginBottom: 20}}
         source={require('../assets/Logo.png')}
       />
-      <View style={styles.inputView}>
         <TextInput
           keyboardType="numeric"
           style={styles.TextInput}
@@ -135,9 +134,6 @@ export default function Login({navigation}) {
           placeholderTextColor="#929292"
           onChangeText={(email) => setEmail(email)}
         />
-      </View>
-
-      <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
           placeholder="Password"
@@ -145,7 +141,6 @@ export default function Login({navigation}) {
           secureTextEntry={true}
           onChangeText={(password) => setPassword(password)}
         />
-      </View>
       <Text style={styles.error}>{emailError}</Text>
       <TouchableOpacity onPress={() => navigation.navigate('Forgot Password')}>
         <Text style={styles.forgot_button}>Forgot Password?</Text>

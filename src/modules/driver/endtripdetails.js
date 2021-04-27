@@ -15,21 +15,21 @@ const Endedtrips = ({ route, navigation }) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [item1, setItem1] = useState([]);
     const [item2, setItem2] = useState(route.params.item.childList);
-
+    const [defimg, setDef] = useState('https://www.shareicon.net/data/512x512/2016/06/25/786525_people_512x512.png');
     const Nannyprofile = () => {
         return (
-            <View style={styles.detailsBox}>
+            <View>
                 <View style={{flexDirection:'row',flexWrap:'wrap'}}>
-                <Text style={styles.textHeads}>Nanny Id - </Text>
-                <Text style={styles.textDetails}> {route.params.item.nannyInfo.nannyId}</Text>
+                <Text style={styles.textHeads}>Nanny Id:</Text>
+                <Text style={styles.textDetails}>{' '}{route.params.item.nannyInfo.nannyId}</Text>
                 </View>
                 <View style={{flexDirection:'row',flexWrap:'wrap'}}>
-                <Text style={styles.textHeads}>Nanny Name - </Text>
-                <Text style={styles.textDetails}> {route.params.item.nannyInfo.nannyName}</Text>
+                <Text style={styles.textHeads}>Nanny Name:</Text>
+                <Text style={styles.textDetails}>{' '}{route.params.item.nannyInfo.nannyName}</Text>
                 </View>
                 <View style={{flexDirection:'row',flexWrap:'wrap'}}>
-                <Text style={styles.textHeads}>Nanny Contact - </Text>
-                <Text style={styles.textDetails}> {route.params.item.nannyInfo.nannyContact}</Text>
+                <Text style={styles.textHeads}>Nanny Contact:</Text>
+                <Text style={styles.textDetails}>{' '}{route.params.item.nannyInfo.nannyContact}</Text>
                 </View>
             </View>
         );
@@ -52,7 +52,7 @@ const Endedtrips = ({ route, navigation }) => {
                         onPress={(modalVisible) => setModalVisible(!modalVisible)}
                     />
                     <View style={styles.modalBody}>
-                        <Image style={styles.licence1} source={{uri:'https://www.shareicon.net/data/512x512/2016/06/25/786525_people_512x512.png'}} />
+                        <Image style={styles.licence1} source={item1.photoUrl == "NULL" || item1.photoUrl == null ? { uri: (defimg) }:{ uri: (item1.photoUrl) }} />
                         <Text style={styles.newsText}>Name - {item1.childName} </Text>
                         <Text style={styles.newsText}>Age - {item1.age}</Text>
                         <Text style={styles.newsText}>Blood Group - {item1.bloodGroup}</Text>
@@ -63,49 +63,43 @@ const Endedtrips = ({ route, navigation }) => {
                     </View>
                 </View>
             </Modal>
-            <View style={styles.firstbox1} >
-                    <Text style={styles.textTitle}>Trip ID - {route.params.item.trip_id}</Text>
+            <View style={styles.headingcontainer} >
+                    <Text style={styles.tripsTitleText}>Trip ID - {route.params.item.trip_id}</Text>
                         <View style={{flexDirection:'row',flexWrap:'wrap'}}>
-                        <Text style={styles.textHeads}>Destination: </Text>
-                        <Text style={styles.textDetails}> {route.params.item.destination} </Text>
+                        <Text style={styles.textHeads}>Destination:</Text>
+                        <Text style={styles.textDetails}>{' '}{route.params.item.destination} </Text>
                         </View>
                         <View style={{flexDirection:'row',flexWrap:'wrap'}}>
                         <Text style={styles.textHeads}>Start Location:</Text>
-                        <Text style={styles.textDetails}>{route.params.item.location}</Text>
+                        <Text style={styles.textDetails}>{' '}{route.params.item.location}</Text>
                         </View>
                         <View style={{flexDirection:'row',flexWrap:'wrap'}}>
-                        <Text style={styles.textHeads}>Vehicle ID: </Text>
-                        <Text style={styles.textDetails}> {route.params.item.vehilce}</Text>
+                        <Text style={styles.textHeads}>Vehicle ID:</Text>
+                        <Text style={styles.textDetails}>{' '}{route.params.item.vehilce}</Text>
                         </View>
                         <View style={{flexDirection:'row',flexWrap:'wrap'}}>
-                        <Text style={styles.textHeads}>Total Children: </Text>
-                        <Text style={styles.textDetails}> {route.params.item.noOfChildren}</Text>
+                        <Text style={styles.textHeads}>Total Children:</Text>
+                        <Text style={styles.textDetails}>{' '}{route.params.item.noOfChildren}</Text>
                         </View>                
                         <Text>{route.params.item.nannyInfo.nannyId ? <Nannyprofile /> : null}</Text>
                 </View>
                 <FlatList
                     data={item2}
                     renderItem={({ item }) => (
-                        <View style={{ flexDirection: 'row', marginTop: 20, alignSelf: 'center', }}>
+                        <View style={{ flexDirection: 'row', alignSelf: 'center', }}>
                             <Card style={styles.driverchild}>
                                 <CardItem button onPress={() => {
                                     setModalVisible(!modalVisible)
                                     setItem1(item);
                                 }}>
                                     <Body style={{ flexDirection: 'row' }}>
-                                        <Image style={styles.payicon} source={{uri:'https://www.shareicon.net/data/512x512/2016/06/25/786525_people_512x512.png'}} />
-                                        <Text style={{ fontSize: 17, fontWeight: '700', marginLeft: 100 }}>
+                                        <Image style={styles.payicon} source={item.photoUrl == "NULL" || item.photoUrl == null ? { uri: (defimg) }:{ uri: (item.photoUrl) }} />
+                                        <Text style={styles.childcardtext}>
                                             {item.childName}
                                         </Text>
                                     </Body>
                                 </CardItem>
                             </Card>
-                            {/* <TouchableOpacity style={styles.childcard} onPress={() => {
-                                setModalVisible(!modalVisible)
-                                setItem1(item)
-                            }}>
-                                <Text style={styles.itemText}>{item.childName},{item.childId}</Text>
-                            </TouchableOpacity> */}
                         </View>
                     )}
                     keyExtractor={item => item.childId}

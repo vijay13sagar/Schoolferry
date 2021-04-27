@@ -39,33 +39,27 @@ const Homescreen = ({ navigation }) => {
       <StatusBar
         barStyle="light-content" hidden={false} backgroundColor="#FF5C00" translucent={true}
       />
- 
-      <View style={styles.pendingTrips}>
+      <View style={styles.headingcontainer}>
         <Text style={styles.tripsTitleText}>Today's Trips</Text>
-        <Text style={styles.startTripText1}>Click to see Trip details</Text>
+        <Text style={styles.startTripText}>Click to see Trip details</Text>
       </View>
       <FlatList
-        style={styles.flatlist}
         data={data}
         keyExtractor={item => item.trip_id}
         renderItem={({ item }) => (
           <Card style= { item.endedTripAt ? styles.card2 :styles.card}>
             <CardItem style={item.endedTripAt ? {backgroundColor:'lightgrey'}:{backgroundColor:'white'}} button disabled={item.endedTripAt ? true : false} onPress={() => navigation.navigate('Trip Details',{item:item})}>
               <Body style={{ flexDirection: 'row' }}>
-                <Text style={{ fontSize: 17, fontWeight: '700' }}>
-                Trip Id :
+                <Text style={styles.tripstartedtext}>
+                Trip Id :{' '}{item.trip_id}
                 </Text>
-                <Text style={{ fontSize: 17, marginLeft: 5, fontWeight: '700' }}>
-                {item.trip_id}
-                </Text>
-                <Text style={{marginLeft:40}}>
-                  {item.endedTripAt ?<Text style={{color:'white',fontWeight:'700',fontSize:17}}>Trip Completed</Text> : null}
-                </Text>
-                {item.endedTripAt ? null : <Ionicons name="chevron-forward-outline"
-                  color="#000" size={25}
-                  style={{marginLeft:"35%"}}
-                />}
-
+                  {item.endedTripAt ?<Text style={styles.tripendedtext}>{'     '}Trip Completed</Text> 
+                  : <Text >
+                        {item.startedTripAt ? <Text style={styles.tripstartedtext}>{'     '}Trip Started</Text> 
+                        : <Text>{'                                '}<Ionicons name="chevron-forward-outline"
+                          color="#000" size={25}
+                        /></Text>}
+                      </Text>}
               </Body>
             </CardItem>
           </Card>

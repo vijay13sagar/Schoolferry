@@ -9,7 +9,7 @@ export default function trip_Details({ route, navigation }) {
         barStyle="light-content" hidden={false} backgroundColor="#FF5C00" translucent={true}
       />
         {route.params.item.startedTripAt ? <View style={{alignItems:'center'}}>
-          <Text style={styles.startTripText2}>Trip Started</Text>
+          <Text style={styles.tripsTitleText}>Trip Started</Text>
           <Image style={styles.busstarted} source={require('../../assets/movingbus.png')}/>
         </View> : null}
         <Text style={styles.headertext}>Location:</Text>

@@ -46,7 +46,6 @@ const Triphistory = ({ navigation }) => {
       />
       <View >{stat ? <Text style={styles.startTripText}>Click to see Trip details</Text> : <Text style={styles.startTripText}>No Completed Trips</Text>}</View>
       <FlatList
-        style={styles.flatlist}
         data={data}
         keyExtractor={item => item.trip_id}
         renderItem={({ item }) => (
@@ -55,17 +54,12 @@ const Triphistory = ({ navigation }) => {
               <Card style= { styles.card} >
             <CardItem style={{backgroundColor:'white'}} button onPress={() => navigation.navigate('Endtrip_details',{item:item})}>
               <Body style={{ flexDirection: 'row' }}>
-                <Text style={{ fontSize: 17, fontWeight: '700' }}>
-                Trip Id :
+                <Text style={styles.tripstartedtext}>
+                Trip Id :{' '}{item.trip_id}
                 </Text>
-                <Text style={{ fontSize: 17, marginLeft: 5, fontWeight: '700' }}>
-                {item.trip_id}
-                </Text>
-                <Text style={{marginLeft:"50%"}}></Text>
-                <Ionicons name="chevron-forward-outline"
-                  color="#000" size={25}
-                  style={styles.icon}
-                />
+                <Text>{'                                '}<Ionicons name="chevron-forward-outline"
+                          color="#000" size={25}
+                        /></Text>
               </Body>
             </CardItem>
           </Card>
