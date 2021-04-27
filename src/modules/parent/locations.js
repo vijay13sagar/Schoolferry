@@ -1,15 +1,9 @@
 import React, {useState} from 'react';
-import {
-  Text,
-  View,
-  ScrollView,
-  TouchableOpacity,
-  Modal,
-} from 'react-native';
+import {Text, View, ScrollView, TouchableOpacity, Modal} from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
 import AddressPickup from '../../components/addresspickup';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {getDistance, getPreciseDistance} from 'geolib';
+import {getDistance} from 'geolib';
 import Loader from '../../components/Loader';
 import styles from '../../components/style';
 import Ngrok from '../../constants/ngrok';
@@ -25,7 +19,7 @@ const location = ({navigation}) => {
     latitude2: '0',
     longitude2: '0 ',
   });
-  const [Distance, setDistance] = useState(0)
+  const [Distance, setDistance] = useState(0);
   const [schoolAddress, setSchoolAddress] = useState(' ');
   const [residenceAddress, setResidenceAddress] = useState(' ');
   const [modalVisible, setModalVisible] = useState(false);
@@ -65,23 +59,40 @@ const location = ({navigation}) => {
   };
 
   const submitHandler = async () => {
-
     if (!schoolAddress || !residenceAddress || !pincode) {
       setError({error: 'Please enter all fields'});
     } else if (pincode.length != 6) {
       setError({error: 'Please enter valid pincode'});
     } else {
       setLoading(true);
-      const responsePincode = await fetch(
-        `${Ngrok.url}/api/locations/pincode/${pincode}`,
-      );
-     
-      const responseSchool = await fetch(
-        `${Ngrok.url}/api/locations/schools/${schoolAddress}`,
-      );
+      let responsePincode = 0;
+      let responseSchool = 0;
+      await axios
+        .get(`${Ngrok.url}/api/locations/pincode/${pincode}`)
+        .then(function (response) {
+          if (response.status == 200) {
+            responsePincode = 1;
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
 
+      await axios
+        .get(`${Ngrok.url}/api/locations/schools/${schoolAddress}`)
+        .then(function (response) {
+          if (response.status == 200) {
+            responseSchool = 1;
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
+      setError('');
       setLoading(false);
-      if (responsePincode.status == 200 && responseSchool.status == 200) {
+
+      if (responsePincode == 1 && responseSchool == 1) {
         setModal1Visible(true);
       } else {
         setModalVisible(true);
@@ -142,7 +153,7 @@ const location = ({navigation}) => {
           <View style={styles.modalBody1}>
             <Text style={styles.message2}>Great! Service is available</Text>
             <Text style={styles.newsText1}>
-            Please add child details
+              Please add child details to see your subscription plans
             </Text>
 
             <TouchableOpacity

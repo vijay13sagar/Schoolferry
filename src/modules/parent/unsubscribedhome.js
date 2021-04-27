@@ -55,7 +55,7 @@ const Unsubhomescreen = ({navigation}) => {
       </MapView>
       <View style={styles.textview}>
         <Text style={styles.note}>
-          * Click on icons to see schools we cater service to *
+          * Click on icons to see schools we cater service to
         </Text>
         <Text style={styles.text1}>
           Check service availability at your area

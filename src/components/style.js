@@ -1,5 +1,9 @@
 import React from "react";
-import {StyleSheet} from 'react-native'
+import {StyleSheet, Dimensions} from 'react-native'
+
+var height= Dimensions.get("window").height;
+var width = Dimensions.get("window").width;
+var fontScale = Dimensions.get("window").fontScale;
 
 export default StyleSheet.create({
     //checklist.js
@@ -9,10 +13,11 @@ export default StyleSheet.create({
     },
     sidehead: {
       fontWeight: 'bold',
-      marginLeft: 8,
+      marginLeft: width * 0.02,
       alignSelf: 'flex-start',
       justifyContent: 'space-around',
-      fontSize:18
+      fontSize:16,
+      marginTop:height * 0.01
     },
     pendingTrips: {
       backgroundColor: "#fff",
@@ -77,24 +82,24 @@ export default StyleSheet.create({
         marginVertical: 15,
     },
     loginBtn: {
-        width: "50%",
-        borderRadius: 10,
-        height: 38,
+        width: width * 0.5,
+        height: height * 0.05,
+        borderRadius: 10,       
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#FF5C00",//'#72CDF4',////"#ff5c8d",
+        backgroundColor: "#FF5C00",
         alignSelf: "center",
-        marginVertical: 10,
+        marginVertical: height * 0.01,
     },
     logoutBtn: {
-      width: "50%",
+      width: width * 0.5,
+      height: height * 0.05,
       borderRadius: 10,
-      height: 38,
       alignItems: "center",
       justifyContent: "center",
       backgroundColor: "#212121",
       alignSelf: "center",
-      marginTop: 10,
+      marginVertical: height * 0.02,
   },
     textHeads: {
         fontSize: 18,
@@ -145,7 +150,6 @@ export default StyleSheet.create({
     modalContainer: {
         backgroundColor: '#00000080',
         flex: 1,
-        //height: '50%',
         justifyContent: 'center'
     },
     modalBody: {
@@ -175,8 +179,8 @@ export default StyleSheet.create({
 
     closeModal: {
         borderRadius: 10,
-        width: "50%",
-        height: 40,
+        width: width * 0.45,
+        height: height * 0.05,
         marginTop: 40,
         backgroundColor: '#FF5C00',
         alignSelf: 'center',
@@ -186,7 +190,6 @@ export default StyleSheet.create({
     icon: {
         alignSelf: 'flex-end',
         marginRight: 10,
-
     },
     absent: {
         alignSelf: 'flex-end',
@@ -238,9 +241,8 @@ export default StyleSheet.create({
         marginBottom: 50,
       },
       loginText: {
-        fontSize: 15,
-        color:'white'
-    
+        fontSize: fontScale*14,
+        color:'white'   
       },
       card: {
         width: '80%',
@@ -272,19 +274,18 @@ export default StyleSheet.create({
       //profile.js
       edit: {
         flexDirection: 'row-reverse',
-        height: 35,
+        height: height * 0.05,
+        width: width * 0.2,
         backgroundColor: '#FF5C00',
-        width: 70,
         alignSelf: 'flex-end',
-        marginTop: 15,
+        marginTop: height * 0.015,
         marginHorizontal: 20,
         alignItems: 'center',
         justifyContent: 'center',
-        //borderColor:'black',
-        borderRadius: 12,
+        borderRadius: 10,
       },
       name: {
-        fontSize: 22,
+        fontSize: 20,
         color: "black",
         fontWeight: '700',
     
@@ -292,7 +293,7 @@ export default StyleSheet.create({
       details: {
         backgroundColor: "#d3d3d3",
         borderRadius: 12,
-        width: '85%',
+        width: width * 0.85,
         padding: 8,
         alignSelf: "center",
         flexWrap:'wrap'
@@ -311,24 +312,28 @@ export default StyleSheet.create({
     //triphistory.js (Nothing)
     //updateprofile.js (check main view background color)
       text1: {
-        fontSize: 18,
+        fontSize: 16,
         color:'black',
         alignSelf: 'center',
-        marginTop:20,
-        marginBottom: 10,
+        marginTop:height * 0.03,
         justifyContent:'center'
       },
       error: {
         color: '#DC143C',
-        fontSize: 14,
+        fontSize: fontScale* 13,
         alignSelf: 'center',
-        marginTop: 5
+        marginTop: height * 0.01
       },
       TextInput: {
-        height: 50,
-        flex: 1,
-        alignContent:'center',
-        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: '#FF5C00',
+        borderRadius: 10,
+        width: width * 0.8,
+        height: height * 0.06,
+        alignSelf: "center",
+        textAlign:'center',
+        backgroundColor: "#fff",
+        marginTop: height * 0.02,
       },
     //notification.js'
   notice: {
@@ -356,60 +361,48 @@ export default StyleSheet.create({
     padding:20,
     backgroundColor:"#FFF",
   },
-  //tripdetails.js(Nothing)
-  //oldchilddetails.js (Nothing)
-  //endtrips.js (Nothing)
-  //history.js
   icon1: {
     marginLeft: 100,
   },
-  //nannyhome.js(Nothing)
-  //profile.js(Nothing)
-  //updatenannypro.js(Nothing)
-
-  //parent module
-  //unsubscribedhome.js
 map: {
-    height: '75%',
+    height: height * 0.62,
 },
 note:{
-    fontSize:16,
+    fontSize:14,
     marginHorizontal:5,
-    //textAlign:'center',
-    color:'grey'
+    color:'grey',
+    marginTop: height * 0.008
+
 },
 //notriporsub.js
   centerview1: {
     justifyContent: 'center',
     marginVertical: 10,
-    fontSize: 16,
+    fontSize: 15,
     textAlign: 'center',
-    marginHorizontal: 3,
-   //paddingHorizontal:5,
+    marginHorizontal:width * 0.01,
   },
   body: {
-    marginVertical: 20,
+    marginVertical: 10,
     alignSelf: 'center',
   },
   nameText: {
-    fontSize: 18,
+    fontSize: fontScale*17,
     fontWeight: '700',
   },
   mainHeading: {
-    fontSize: 20,
+    fontSize: fontScale* 19,
     fontWeight: 'bold',
     marginTop: 20,
     textAlign: 'center',
   },
   bodyView: {
-    // borderRadius: 10,
-    borderWidth: 1,
-    width: '100%',
-    padding: 5,
+    borderWidth: 0.8,
+    padding:3
   },
   trackVehicle: {
-    width: '50%',
-    height: 38,
+    width: width * 0.45,
+    height: height * 0.05,
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
@@ -419,8 +412,8 @@ note:{
     marginBottom: 5,
   },
   disabled: {
-    width: '50%',
-    height: 38,
+    width: width * 0.45,
+    height: height * 0.05,
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
@@ -432,22 +425,21 @@ note:{
   //addsubscription.js
 
   content:{
-    marginLeft:13,
-    alignSelf:'flex-start',
+    marginLeft:width* 0.02,
     justifyContent:'space-around',
-    marginVertical:2,
-    fontSize:15
-
+    marginVertical:height * 0.005,
+    fontSize:14,
+    marginRight: width* 0.004
   },
   slogans:{
       borderWidth: 1,
       borderColor: '#FF5C00',
       borderRadius: 10,
-      width: "85%",
-      height: 490,
+      width: width * 0.85,
+      height: height * 0.66,
       padding:2,
-      backgroundColor:'#fff',   //"#C4C4C4",
-      marginVertical: 5,
+      backgroundColor:'#fff',
+      marginTop:height* 0.02,
 
   },
   body1: {
@@ -457,14 +449,13 @@ note:{
   },
   //support.js
   mailBtn: {
-    width: "80%",
+    width: width * 0.8,
+    height: height * 0.05,
     borderRadius: 10,
-    height: 38,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#FF5C00",
     alignSelf: "center",
-    marginVertical: 10,
 },
 //profile.js
 body2: {
@@ -472,46 +463,46 @@ body2: {
   alignSelf: 'center',
 },
 textview: {
-  marginBottom: 7,
+  marginBottom: height * 0.01,
 },
 headertext: {
-  fontSize: 16,
-  marginLeft: 30,
+  fontSize: fontScale * 14,
+  marginLeft: width * 0.09,
   color:'black',
+  marginBottom: height * 0.003
 },
 //updateprofile.js(Nothing)
 //showplans.js
 firstBox: {
-  height: 32,
+  height: height * 0.04,
   flexDirection: 'row',
-  marginTop: 10,
-  width: '100%',
+  marginTop: height*0.01,
+  width: width,
   justifyContent:'space-between'
 },
 planTitleText: {
-  fontSize: 20,
+  fontSize: fontScale* 19,
   fontWeight: '700',
-  marginLeft: 14,
+  marginLeft: width*0.04,
 },
 flatlist: {
   flex: 1,
   marginTop: 15,
-  height: 150,
-  width:'95%',
+  height: height * 0.2,
+  width:width * 0.95,
   alignSelf:'center'
 },
 flatlistContainer: {
   flex: 1,
-  width: 220,
+  width: width * 0.55,
   borderWidth: 1,
   borderRadius: 10,
   marginHorizontal: 5,
   backgroundColor: '#FF8A00',
-  marginBottom: 5,
 },
 avatar: {
   width: '100%',
-  height: '50%',
+  height: '53%',
   borderRadius:10
 },
 typeOfSubscription: {
@@ -553,23 +544,25 @@ randomText: {
   marginVertical: 5,
 },
 addChildContainer: {
-  borderWidth: 1,
+  borderWidth: 0.8,
   borderRadius: 10,
   marginTop: 10,
-  width: '90%',
+  width: width * 0.9,
   alignSelf: 'center',
   backgroundColor: '#fff',
+  padding:height * 0.01
 },
 addChildText: {
-  fontSize: 17,
+  fontSize: fontScale* 16,
   fontWeight: '700',
   padding: 6,
- color:'#000'
+  color:'#000'
+
 },
 unsubscribeBtn: {
-  width: '75%',
+  width: width * 0.75,
+  height: height * 0.05,
   borderRadius: 10,
-  height: 40,
   alignItems: 'center',
   justifyContent: 'center',
   backgroundColor: '#FF5C00',
@@ -585,7 +578,7 @@ message1: {
   padding: 7,
 },
 randomText2: {
-  fontSize: 17,
+  fontSize: fontScale*17,
   fontWeight: '700',
   color: '#4169e1',
   marginVertical: 8,
@@ -612,25 +605,23 @@ inputaddress: {
   alignSelf:'center'
 },
 Picker1: {
-  width: "70%",
-  marginTop: 7,
-  borderRadius: 10,
-  height: 45,
-  borderWidth: 2,
+  width: width * 0.7,
+  height:height * 0.05,
+  marginTop: height * 0.01,
   alignContent: "center",
   alignSelf: "center",
 },
 pickerBtn:{
-  width: 150,
+  width: width* 0.380,
+  height: height * 0.06,
   borderRadius: 10,
   borderWidth:1,
-  borderColor:'#FF5C00',
-  height: 45,
+  borderColor:'#FF5C00',  
   alignItems: "center",
   justifyContent: "center",
   backgroundColor: "#fff",
   alignSelf: "center",
-  marginTop: 15,
+  marginTop: height * 0.02,
 
 },
 dobText:{
@@ -645,10 +636,8 @@ bg2:{
 },
 serviceText:{
   color:'#ce1212',
-  fontSize:14,
-  marginTop:10,
-  marginHorizontal:5,
-  marginBottom:10,
+  fontSize:fontScale * 14,
+  margin:height *0.02,
   textAlign:'center'
 },
 //locations.js
@@ -682,75 +671,73 @@ TextBtn: {
 modalContainer1: {
   backgroundColor: '#00000080',
   flex: 1,
-  height: '50%',
+  height: height * 0.5,
   justifyContent: 'center',
 },
 modalBody1: {
   backgroundColor: '#fff',
   borderRadius: 10,
-  height: 280,
-  width: '88%',
+  height: height * 0.35,
+  width: width * 0.88,
   alignSelf: 'center',
   justifyContent: 'center',
 },
 message2: {
-  fontSize: 26,
+  fontSize: 22,
   textAlign: 'center',
-  //marginTop: 30
   color: '#FF5C00',
   fontWeight: '600',
 },
 newsText1: {
-  fontSize: 19,
+  fontSize: 17,
   textAlign: 'center',
   marginTop: 15,
-  padding: 2,
+  padding: 3,
   color: 'green',
 },
 //subhome.js
 trips: {
-  height: 40,
-  backgroundColor: 'white',
-  width: '90%',
-  marginTop: 5,
+  height: height * 0.055,
+  width: width * 0.9,
+  backgroundColor: 'white', 
   alignSelf: 'center',
-  marginBottom:10,
+  marginVertical: height * 0.01,
   flexDirection:'row',
   borderWidth:0.5,
   justifyContent:'space-between'
 },
 Picker: {
-  width: '35%',
-  height: 30,
+  width: width * 0.35,
+  height: height * 0.04,
   alignSelf: 'flex-end',
 },
 //pauseplan.js
 pausePlan: {
-  borderWidth: 1,
+  borderWidth: 0.8,
   borderRadius: 10,
   marginTop: 20,
-  height: 100,
-  width: '85%',
+  height: height * 0.150,
+  width: width * 0.85,
   alignSelf: 'center',
   backgroundColor: 'white',
 },
 biggerBox: {
-  borderWidth: 1,
+  borderWidth: 0.8,
   borderRadius: 10,
   marginTop: 20,
-  height: 150,
-  width: '85%',
+  height: height * 0.220,
+  width: width * 0.85,
   alignSelf: 'center',
   backgroundColor: 'white',
 },
 mainHeading1: {
-  fontSize: 19,
+  fontSize: fontScale * 18,
   fontWeight: '700',
   textAlign: 'center',
-  marginTop: 5,
+  marginTop: height * 0.01,
 },
 heading: {
-  fontSize: 16,
+  fontSize: fontScale * 16,
   marginTop: 4,
   marginLeft: 10,
 },
@@ -806,28 +793,26 @@ inputView1: {
   borderWidth: 1,
   borderColor: '#FF5C00',
   borderRadius: 10,
-  width: "80%",
+  width: width * 0.8,
   flexWrap:'wrap',
   alignSelf: "center",
   alignItems:'center',
   justifyContent:'center',
-  backgroundColor: "#fff",   //"#C4C4C4",
+  backgroundColor: "#fff", 
   marginTop: 15,
 },
 //upipay.js
 inputView: {
-  padding: 2,
   borderWidth: 1,
   borderColor: '#FF5C00',
   borderRadius: 10,
-  width: "80%",
-  height: 45,
+  width: width * 0.8,
+  height: height * 0.06,
   alignSelf: "center",
   alignItems:'center',
-  justifyContent:'center',
-  backgroundColor: "#fff",   //"#C4C4C4",
-  marginTop: 15,
-  //opacity: 0.5,
+  textAlign:'center',
+  backgroundColor: "#fff",
+  marginTop: height * 0.02,
 },
 //Screens
 //login.js
@@ -841,19 +826,21 @@ image: {
   marginBottom: 10,
 },
 forgot_button: {
-  height: 30,
+  fontSize:fontScale *14,
   color: '#1E90FF',
+  marginBottom:height * 0.01
 },
 registerTextStyle: {
-  marginTop: 10,
+ marginTop: height * 0.01,
   color:'black',
-  fontSize: 13,
+  fontSize: fontScale * 13,
 },
 //forgotpassword.js
 text: {
-  marginTop: 100,
+  marginTop: height * 0.160,
   alignSelf:'center',
-  fontSize: 15,
+  fontSize: fontScale*15,
+  marginHorizontal:width * 0.01,
 },
 //otpscreen.js
 otpBox: {
@@ -898,25 +885,25 @@ licence: {
   },
 // parent trip details
   tripDetailsCard:{
-    width: '95%',
+    width: width * 0.95,
     alignSelf: 'center',
     marginTop: 20
   },
   headingText:{
-    fontSize: 17,
+    fontSize: fontScale*17,
      fontWeight: '700'
   },
   tripdetailsSubHeading:{
-    fontSize: 15
+    fontSize: fontScale *14
   },
   subDetails:{
-    fontSize: 15,
+    fontSize: fontScale *14,
     marginLeft: 10,
     fontWeight: '700',
   },
   tripdDetailsImage:{
-    height:130,
-    width:120,
+    height:height * 0.160,
+    width:width * 0.27,
     borderRadius:10,
     alignSelf:'center',
   },
@@ -941,10 +928,11 @@ licence: {
     justifyContent: 'center',
   },
   profileView:{
-    width:100,
-    height:100,
+    width:width *0.27,
+    height:height *0.160,
     alignSelf:'center',
     marginTop:15,
+    borderRadius:50
     
   },
   //tripdetails.js
@@ -955,5 +943,16 @@ licence: {
     borderRadius:140,
     alignSelf: 'center'
     },
+    logoImage:{
+      width: width * 0.7,
+      height: height * 0.25,
+      marginBottom: 20
+    },
+    mailSupportText: {
+      fontSize: fontScale * 17,
+      textAlign: 'center',
+      marginHorizontal:width * 0.04,
+      marginBottom:10,
+      }
 })
     

@@ -117,54 +117,49 @@ export default function App({route, navigation}) {
       <Loader loading={isloading} />
       <View>
         <Image
-          style={{width: 280, height: 170, marginBottom: 20}}
+          style={{...styles. logoImage}}
           source={require('../assets/Logo.png')}
         />
       </View>
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Name"
-          placeholderTextColor="#929292"
-          onChangeText={(Name) => setName(Name)}
-        />
-      </View>
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Email"
-          placeholderTextColor="#929292"
-          onChangeText={(email) => setEmail(email)}
-        />
-      </View>
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Mobile Number"
-          keyboardType="numeric"
-          maxLength={10}
-          placeholderTextColor="#929292"
-          onChangeText={(contact) => setcontact(contact)}
-        />
-      </View>
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Password"
-          placeholderTextColor="#929292"
-          secureTextEntry={true}
-          onChangeText={(password1) => setpassword1(password1)}
-        />
-      </View>
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="confirm"
-          placeholderTextColor="#929292"
-          secureTextEntry={true}
-          onChangeText={(password2) => setpassword2(password2)}
-        />
-      </View>
+
+      <TextInput
+        style={styles.TextInput}
+        placeholder="Name"
+        placeholderTextColor="#929292"
+        onChangeText={(Name) => setName(Name)}
+      />
+
+      <TextInput
+        style={styles.TextInput}
+        placeholder="Email"
+        placeholderTextColor="#929292"
+        onChangeText={(email) => setEmail(email)}
+      />
+
+      <TextInput
+        style={styles.TextInput}
+        placeholder="Mobile Number"
+        keyboardType="numeric"
+        maxLength={10}
+        placeholderTextColor="#929292"
+        onChangeText={(contact) => setcontact(contact)}
+      />
+
+      <TextInput
+        style={styles.TextInput}
+        placeholder="Password"
+        placeholderTextColor="#929292"
+        secureTextEntry={true}
+        onChangeText={(password1) => setpassword1(password1)}
+      />
+
+      <TextInput
+        style={styles.TextInput}
+        placeholder="Confirm Password"
+        placeholderTextColor="#929292"
+        secureTextEntry={true}
+        onChangeText={(password2) => setpassword2(password2)}
+      />
       <Text style={styles.error}>{emptyFields}</Text>
 
       <TouchableOpacity style={styles.loginBtn} onPress={pressHandler}>
