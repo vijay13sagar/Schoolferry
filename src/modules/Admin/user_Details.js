@@ -95,7 +95,7 @@ export default function user_Details({ route, navigation }) {
             <CardItem button onPress={() => navigation.navigate('child_Details', { item: item })}>
               <Body>
               <View style={{flexDirection:"row"}}>      
-                <Image style={styles.licence2} source={item.photoUrl ? { uri: (item.photoUrl) }:{ uri: (dimg) }} />         
+                <Image style={styles.licence3} source={item.photoUrl ? { uri: (item.photoUrl) }:{ uri: (dimg) }} />         
                    <Text style={{alignSelf:"center",marginLeft:10,fontSize: 15,
         color: "black",
         fontWeight: '700',}}>

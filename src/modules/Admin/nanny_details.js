@@ -18,7 +18,7 @@ export default function nanny_Details({route}){
   const [userrimg, setuserImg] = useState(route.params.item.photoUrl);
   const [pic, setPic] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  console.log('details',route.params.item);
+  
   const gallery = () => {
     ImagePicker.openPicker({
       

@@ -57,7 +57,7 @@ const pick = () => {
     <View style={styles.container4}>
       <ScrollView>
       <StatusBar style="auto" />
-      <Image style={styles.licence1} source={userrimg == "NULL" ? {uri:dimg} : {uri:userrimg}} />
+      <Image style={styles.licence1} source={userrimg == "NULL" || null? {uri:dimg} : {uri:userrimg}} />
       <View style={{marginTop:10,marginBottom:10,alignSelf: "center",}}>
        
         

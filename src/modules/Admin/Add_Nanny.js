@@ -19,7 +19,6 @@ import ImagePicker from 'react-native-image-crop-picker';
 import ToastComponent from '../../components/Toaster';
 import * as ToastMessage from '../../constants/ToastMessages';
 import storage from '@react-native-firebase/storage';
-import AsyncStorage from '@react-native-community/async-storage';
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from "uuid";
 
@@ -32,7 +31,7 @@ export default function Add_Nanny({ navigation }) {
   const [password, setpassword] = useState("");
   const [contact, setcontact] = useState("");
   const [ADR, setADR] = useState("");
-
+  const [type, setType] = useState();
   const [{ emptyFields }, setemptyFeilds] = useState("");
   const [showtoast, setToast] = useState(false)
   const [message, SetMessage] = useState()
@@ -49,10 +48,12 @@ export default function Add_Nanny({ navigation }) {
       cropping: true
     }).then(async image => {
 
-      await setImg1(image.path);
-      upload2();
+     setImg1(image.path);
+      upload2(image.path);
 
     });
+    setPic1(false)
+    setModalVisible1(false)
   }
   const Camera1 = () => {
     ImagePicker.openCamera({
@@ -60,10 +61,11 @@ export default function Add_Nanny({ navigation }) {
       compressImageMaxHeight: 175,
       cropping: true,
     }).then(async image => {
-
-      await setImg1(image.path)
-      upload2();
+  setImg1(image.path)
+      upload2(image.path);
     });
+    setPic1(false)
+    setModalVisible1(false)
   }
   const backpress1 = () => {
     setPic1(false)
@@ -97,11 +99,12 @@ export default function Add_Nanny({ navigation }) {
       compressImageMaxHeight: 175,
       cropping: true
     }).then(async image => {
-
-      await setImg(image.path)
-      upload1();
+     setImg(image.path)
+      upload1(image.path);
 
     });
+    setPic(false)
+    setModalVisible(false)
   }
   const Camera = () => {
     ImagePicker.openCamera({
@@ -109,54 +112,69 @@ export default function Add_Nanny({ navigation }) {
       compressImageMaxHeight: 175,
       cropping: true,
     }).then(async image => {
-
-      await setImg(image.path)
-      upload1();
+ setImg(image.path)
+      upload1(image.path);
     });
+    setPic(false)
+    setModalVisible(false)
   }
-  const upload1 = async () => {
+  const upload1 = async (value) => {
     let imageName = `Nanny/profile/${uuidv4()}`;
-    let s = decodeURI(img)
+    let imgpath=value
     storage()
       .ref(imageName)
-      .putFile(s)
+      .putFile(imgpath)
       .then(async (snapshot) => {
 
-        Alert.alert('Image Uploaded Successfully');
+       
         let imageRef = storage().ref(imageName)
         const url1 = await imageRef.getDownloadURL().catch((error) => { throw error });
-        console.log("url", url1);
+        if (url1) {
+          setToast(true);
+          setType(ToastMessage.success);
+          SetMessage(ToastMessage.ImageSuccessful);
+        } else {
+          setToast(true);
+          setType(ToastMessage.failure);
+          SetMessage(ToastMessage.message5);
+        }
        
         setLink1(url1)
       })
-      .catch((e) => {
-
-        Alert.alert('Uploading Failed');
-
+      .catch((e) =>  { setToast(true);
+        setType(ToastMessage.failure);
+        SetMessage(ToastMessage.message5);
       }
       );
+      setToast(false);
   }
-  const upload2 = () => {
+  const upload2 = (value) => {
     let imageName = `Nanny/id/${uuidv4()}`;
-    console.log("name", imageName);
-    let s = decodeURI(img1)
+    let imgpath=value
     storage()
       .ref(imageName)
-      .putFile(s)
+      .putFile(imgpath)
       .then(async (snapshot) => {
-        console.log("snapshot", snapshot);
-        Alert.alert('Image Uploaded Successfully')
+        
         let imageRef = storage().ref(imageName)
         const url2 = await imageRef.getDownloadURL().catch((error) => { throw error });
-        
+        if (url2) {
+          setToast(true);
+          setType(ToastMessage.success);
+          SetMessage(ToastMessage.LicenseSucessful);
+        } else {
+          setToast(true);
+          setType(ToastMessage.failure);
+          SetMessage(ToastMessage.message5);
+        }
         setLink2(url2)
       })
-      .catch((e) => {
-
-        Alert.alert('Uploading Failed');
-
+      .catch((e) => {setToast(true);
+        setType(ToastMessage.failure);
+        SetMessage(ToastMessage.message5);
       }
       );
+      setToast(false);
   }
 
   const backpress = () => {
@@ -203,8 +221,8 @@ export default function Add_Nanny({ navigation }) {
             name: name,
             contact: contact,
             address: ADR,
-            photourl: link1,//"NULL",
-            idproofurl: link2,//"NULL",
+            photourl: link1,
+            idproofurl: link2,
             password: password
 
 
@@ -220,8 +238,9 @@ export default function Add_Nanny({ navigation }) {
             setLoading(false);
 
             if (error.response.status == 401) {
-              console.log("sgyg");
-              setToast(true)
+              setToast(true);
+              setType(ToastMessage.failure);
+              SetMessage(ToastMessage.message5);
               setLoading(false);
             }
           })
@@ -238,7 +257,7 @@ export default function Add_Nanny({ navigation }) {
     <View style={styles.container3}>
       <Loader loading={isloading} />
 
-      {showtoast ? (<ToastComponent type={ToastMessage.failure} message={ToastMessage.message3} />) : null}
+      {showtoast ? <ToastComponent type={type} message={message} /> : null}
       <ScrollView>
         <View >
           {pic ?
@@ -399,7 +418,7 @@ export default function Add_Nanny({ navigation }) {
           }
           <View>
             <Text style={styles.TextInput4}>
-              Gov ID
+              ID Proof
            </Text>
           </View>
         </View>

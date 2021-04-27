@@ -25,7 +25,7 @@ export default class driverList extends Component {
       .get(`${Ngrok.url}/api/admin/home/drivers`)
       .then(function (response) {
         self.setState({ data: response.data });
-        console.log("faf", response.data);
+      
       })
       .catch(function (error) {
         console.log("error", error.message);

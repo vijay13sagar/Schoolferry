@@ -281,6 +281,13 @@ export default StyleSheet.create({
            
             alignSelf: 'center'
             },
+            licence3: {
+              marginTop:5,
+              height: 50,
+              width:50,
+             
+              alignSelf: 'center'
+              },
         modalContainer: {
         backgroundColor: '#000000',
         flex: 1,
