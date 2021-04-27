@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {Text, View, TouchableOpacity, FlatList} from 'react-native';
 
 import Ngrok from '../../constants/ngrok';
@@ -51,7 +51,7 @@ const oldmap = ({navigation}) => {
         </View>
         <Text style={styles.centerview1}>
           Tracking service is only available with subscription. Check service
-          availability at your area.
+          availability to get started.
         </Text>
         <TouchableOpacity
           style={styles.loginBtn}
@@ -76,44 +76,41 @@ const oldmap = ({navigation}) => {
                   <Text style={styles.nameText}>{item.childName} -</Text>
                 </CardItem>
                 <CardItem bordered>
-                  <Body>
-                    {item.trips.length ? (
-                      <View style={styles.bodyView}>
-                        <Text>
-                          {' '}
-                          Trip start status - {item.trips[0].startStatus}{' '}
+                  {item.trips.length ? (
+                    <Body style={styles.bodyView}>
+                      <Text>
+                        {' '}
+                        Trip start status - {item.trips[0].startStatus}{' '}
+                      </Text>
+                      <Text> Trip end status - {item.trips[0].endStatus} </Text>
+                      <TouchableOpacity
+                        style={
+                          item.trips[0].endStatus == 'ended' ||
+                          item.trips[0].startStatus == 'not started'
+                            ? styles.disabled
+                            : styles.trackVehicle
+                        }
+                        disabled={
+                          item.trips[0].endStatus == 'ended' ||
+                          item.trips[0].startStatus == 'not started'
+                            ? true
+                            : false
+                        }
+                        onPress={() =>
+                          navigation.navigate('Track', {
+                            tripId: item.trips[0].tripId,
+                          })
+                        }>
+                        <Text style={{fontSize: 15, color: '#fff'}}>
+                          Track Vehicle
                         </Text>
-                        <Text>
-                          {' '}
-                          Trip end status - {item.trips[0].endStatus}{' '}
-                        </Text>
-                        <TouchableOpacity
-                          style={
-                            item.trips[0].endStatus == 'ended' ||
-                            item.trips[0].startStatus == 'not started'
-                              ? styles.disabled
-                              : styles.trackVehicle
-                          }
-                          disabled={
-                            item.trips[0].endStatus == 'ended' ||
-                            item.trips[0].startStatus == 'not started'
-                              ? true
-                              : false
-                          }
-                          onPress={() =>
-                            navigation.navigate('Track', {
-                              tripId: item.trips[0].tripId,
-                            })
-                          }>
-                          <Text style={{fontSize: 15, color: '#fff'}}>
-                            Track Vehicle
-                          </Text>
-                        </TouchableOpacity>
-                      </View>
-                    ) : (
-                      <Text style={{fontSize: 17}}>No trips for today</Text>
-                    )}
-                  </Body>
+                      </TouchableOpacity>
+                    </Body>
+                  ) : (
+                    <Body>
+                      <Text style={{fontSize: 16}}>No trips for today</Text>
+                    </Body>
+                  )}
                 </CardItem>
               </Card>
             </Content>

@@ -7,6 +7,7 @@ import {
   ScrollView,
   Image,
   Modal,
+  Dimensions
 } from 'react-native';
 
 import {Picker} from '@react-native-picker/picker';
@@ -16,6 +17,8 @@ import Ngrok from '../../constants/ngrok';
 import axios from 'axios';
 import {useFocusEffect} from '@react-navigation/native';
 import styles from '../../components/style';
+
+var height= Dimensions.get("window").height;
 
 const showplanScreen = ({route, navigation}) => {
   const [data, setData] = useState('');
@@ -129,7 +132,7 @@ const showplanScreen = ({route, navigation}) => {
         </Picker>
       </View>
 
-      <View style={{height: 325}}>
+      <View style={{height: height *0.45}}>
         <FlatList
           style={{...styles.flatlist, marginTop: 10}}
           horizontal={true}

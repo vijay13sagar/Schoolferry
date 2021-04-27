@@ -65,44 +65,40 @@ const updateProfile = ({route, navigation}) => {
       {showtoast ? <ToastComponent type={type} message={message} /> : null}
       <Loader loading={isloading} />
       <Text style={styles.text}>Enter details to be changed</Text>
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Name"
-          placeholderTextColor="#929292"
-          onChangeText={(name) => setName(name)}
-          value={name}
-        />
-      </View>
-      <View style={styles.inputView}>
-        <TextInput
-          keyboardType="numeric"
-          style={styles.TextInput}
-          placeholder="Contact"
-          maxLength={10}
-          placeholderTextColor="#929292"
-          onChangeText={(contact) => setContact(contact)}
-          value={contact}
-        />
-      </View>
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Email"
-          placeholderTextColor="#929292"
-          onChangeText={(email) => setEmail(email)}
-          value={email}
-        />
-      </View>
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Address"
-          placeholderTextColor="#929292"
-          onChangeText={(address) => setAddress(address)}
-          value={address}
-        />
-      </View>
+
+      <TextInput
+        style={styles.TextInput}
+        placeholder="Name"
+        placeholderTextColor="#929292"
+        onChangeText={(name) => setName(name)}
+        value={name}
+      />
+
+      <TextInput
+        keyboardType="numeric"
+        style={styles.TextInput}
+        placeholder="Phone Number"
+        maxLength={10}
+        placeholderTextColor="#929292"
+        onChangeText={(contact) => setContact(contact)}
+        value={contact}
+      />
+
+      <TextInput
+        style={styles.TextInput}
+        placeholder="Email"
+        placeholderTextColor="#929292"
+        onChangeText={(email) => setEmail(email)}
+        value={email}
+      />
+
+      <TextInput
+        style={styles.TextInput}
+        placeholder="Address"
+        placeholderTextColor="#929292"
+        onChangeText={(address) => setAddress(address)}
+        value={address}
+      />
       <Text style={styles.error}>{error}</Text>
       <TouchableOpacity style={styles.loginBtn} onPress={presshandler}>
         <Text style={styles.loginText}>Update Profile</Text>

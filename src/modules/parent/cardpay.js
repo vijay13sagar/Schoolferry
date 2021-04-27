@@ -8,7 +8,9 @@ import {
   Alert,
   Modal,
   TouchableHighlight,
+  Dimensions,
 } from 'react-native';
+
 import stripe from 'tipsi-stripe';
 import Button from '../../components/PaymentButton';
 import CheckBox from '@react-native-community/checkbox';
@@ -24,6 +26,9 @@ stripe.setOptions({
   publishableKey:
     'pk_test_51IZAAASCYy6hVMxJHvsmow6FXKpv9fnsK4ESEgtKFI9JjyEtXGhwUsyGfvtHMliiogTanOUX3WXluf8y77KVY72q00zgnOWoFX',
 });
+
+var height = Dimensions.get('window').height;
+var width = Dimensions.get('window').width;
 
 export default function CardFormScreen({route, navigation}) {
   const [loading, setLoading] = useState(false);
@@ -258,7 +263,7 @@ export default function CardFormScreen({route, navigation}) {
                   onPress={() => {
                     savedCardPayemnt(item.cardNo);
                   }}>
-                  <Ionicons name="card" color="#000" size={35} />
+                  <Ionicons name="card" color="#000" size={32} />
                   <Text style={styles.cardNumText}>
                     Card ending with {item.cardNo}
                   </Text>
@@ -266,7 +271,7 @@ export default function CardFormScreen({route, navigation}) {
                 <TouchableOpacity
                   style={styles.deleteBtn}
                   onPress={() => deleteHandler(item.cardNo)}>
-                  <Ionicons name="trash" color="#fff" size={30} />
+                  <Ionicons name="trash" color="#fff" size={28} />
                 </TouchableOpacity>
               </View>
             )}
@@ -293,7 +298,7 @@ export default function CardFormScreen({route, navigation}) {
               onValueChange={(isSelected) => setSelection(isSelected)}
               style={styles.check}
             />
-            <Text style={{fontSize: 15, marginTop: 4}}>
+            <Text style={{fontSize: 14, marginTop: 4}}>
               Save Card Details To Use In Future{' '}
             </Text>
           </View>
@@ -319,7 +324,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FCFDDB',
   },
   header: {
-    fontSize: 22,
+    fontSize: 20,
     textAlign: 'center',
     marginTop: 150,
   },
@@ -327,50 +332,49 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
-    fontSize: 28,
+    fontSize: 25,
   },
   paymentMethod: {
     height: 20,
   },
   paybtn: {
-    width: '60%',
+    width: width * 0.55,
     borderRadius: 10,
-    height: 40,
+    height: height * 0.05,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#1e90ff',
     alignSelf: 'center',
     marginTop: 5,
-    marginBottom: 50,
+    marginBottom: height * 0.07,
   },
   cardData: {
-    width: '65%',
+    width: width * 0.65,
     backgroundColor: '#fff',
-    height: 60,
+    height: height * 0.075,
     marginTop: 8,
     flexDirection: 'row',
-    borderWidth: 1,
+    borderWidth: 0.8,
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    marginLeft: 10,
+    marginLeft: width * 0.01,
   },
   deleteBtn: {
     backgroundColor: 'red',
-    height: 60,
+    height: height * 0.075,
     marginTop: 8,
     alignItems: 'center',
     justifyContent: 'center',
-    width: '25%',
-    borderWidth: 1,
+    width: width * 0.22,
+    borderWidth: 0.8,
   },
   cardNumText: {
     alignSelf: 'center',
-    fontSize: 16,
-    //marginLeft: 15,
+    fontSize: 15,
   },
   heading: {
-    fontSize: 17,
-    marginLeft: 25,
+    fontSize: 15,
+    marginLeft: width * 0.07,
     marginTop: 20,
   },
   check: {
