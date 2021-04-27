@@ -34,16 +34,7 @@ export default class freeVehicletrip_list extends Component  {
    .finally(function () {
     self.setState({ isLoading: false });
    });
-    // fetch(`${Ngrok.url}/api/admin/trip/available/vehicles`)
-    //   .then((response) => response.json())
-    //   .then((json) => {
-    //     this.setState({ data: json });
-       
-    //   })
-    //   .catch((error) => console.error(error))
-    //   .finally(() => {
-    //     this.setState({ isLoading: false });
-    //   });
+    
   }
   
 
