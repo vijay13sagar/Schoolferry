@@ -202,7 +202,7 @@ export default function addchild({route, navigation}) {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       {showtoast ? <ToastComponent type={type} message={message} /> : null}
       <Loader loading={isLoading} />
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
@@ -269,26 +269,22 @@ export default function addchild({route, navigation}) {
         maximumDate={new Date(2021, 11, 31)}
         minimumDate={new Date(2002, 0, 1)}
       />
-      <TouchableOpacity
-        style={styles.profileView}
+      <TouchableOpacity      
         onPress={() => setModalVisible(true)}>
         <Image
-          style={{height: '100%', width: '100%', borderRadius: 50}}
+          style={styles.profileView}
           source={{uri: image}}
         />
       </TouchableOpacity>
 
-      <View style={{marginTop: 10}}>
-        <View style={styles.inputView}>
+      <View style={{marginTop: 10}}>     
           <TextInput
-            style={styles.TextInput1}
+            style={styles.TextInput}
             placeholder="Child Name"
             placeholderTextColor="#929292"
             onChangeText={(CN) => setCN(CN)}
             value={CN}
           />
-        </View>
-
         <TouchableOpacity
           style={styles.inputView}
           onPress={() => setDatePickerVisible(true)}>
@@ -297,24 +293,23 @@ export default function addchild({route, navigation}) {
           </Text>
         </TouchableOpacity>
 
-        <View style={styles.inputaddress}>
+       
           <TextInput
-            style={styles.TextInput1}
+            style={styles.TextInput}
             placeholder="School"
             placeholderTextColor="#929292"
             onChangeText={(SA) => setSA(SA)}
             value={SA}
           />
-        </View>
-        <View style={styles.inputaddress}>
+        
+        
           <TextInput
-            style={styles.TextInput1}
+            style={styles.TextInput}
             placeholder="Residence Address"
             placeholderTextColor="#929292"
             onChangeText={(HA) => setHA(HA)}
             value={HA}
           />
-        </View>
       </View>
 
       <View
@@ -360,7 +355,7 @@ export default function addchild({route, navigation}) {
 
       <Text style={{...styles.error, marginBottom: 2}}>{value_error}</Text>
       <TouchableOpacity
-        style={{...styles.loginBtn, marginTop: 2}}
+        style={styles.loginBtn}
         onPress={handlePress}>
         <Text style={styles.loginText}>Add Child</Text>
       </TouchableOpacity>
