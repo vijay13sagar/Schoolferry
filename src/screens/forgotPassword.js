@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Text, View, TextInput, TouchableOpacity } from 'react-native';
 import styles from '../components/style';
 
-export default function forgotPassword() {
+export default function forgotPassword({navigation}) {
   const [value, setValue] = useState('');
   const [{ value_error }, setError] = useState('');
 
@@ -10,11 +10,13 @@ export default function forgotPassword() {
     if (!value) {
       setError({ value_error: 'Email/Phone Field Cannot be Empty' });
       return value_error;
+    }else{
+      navigation.navigate('OTPscreen', { item: value })
     }
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.cont}>
       <View>
         <Text style={styles.text}>
           Enter your Email/Mobile and we will send you a new password.
@@ -24,8 +26,10 @@ export default function forgotPassword() {
       <TextInput
         style={styles.TextInput}
         placeholder="Email/Phone"
+        maxLength={10}
         placeholderTextColor="#929292"
         onChangeText={(value) => setValue(value)}
+        
       />
       <Text style={styles.error}>{value_error}</Text>
 

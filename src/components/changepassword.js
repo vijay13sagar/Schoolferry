@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
 import styles from '../components/style';
+import AsyncStorage from '@react-native-community/async-storage';
 
-export default function change_pwd() {
+export default function change_pwd({navigation}) {
   const [value1, setValue1] = useState('');
   const [value2, setValue2] = useState('');
   const [{ value_error }, setError] = useState('');
@@ -12,9 +13,20 @@ export default function change_pwd() {
       setError({ value_error: 'Password Field Cannot be Empty' });
       return value_error;
     }
-    if (value1 !== value2) {
+    else if (value1 !== value2) {
       setError({ value_error: 'Password does not match' });
       return value_error;
+    }else if(value1===value2) {
+      //Need the api for changing the password
+      Alert.alert('Password successfully changed', 'Please Login', [
+        {
+          text: 'Proceed',
+          onPress: () =>{
+          AsyncStorage.removeItem('token');
+          navigation.replace('Login');
+          }
+        },
+      ]);
     }
   };
   return (

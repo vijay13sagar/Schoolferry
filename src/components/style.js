@@ -849,7 +849,7 @@ export default StyleSheet.create({
   },
   //forgotpassword.js
   text: {
-    marginTop: height * 0.160,
+    //marginTop: height * 0.160,
     alignSelf: 'center',
     fontSize: fontScale * 15,
     marginHorizontal: width * 0.01,

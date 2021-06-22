@@ -13,6 +13,7 @@ import admin_tabbar from './admin_tabbar';
 import nanny_nav from './nanny_tabbar_nav';
 import driver_nav from './driver_tabbar_nav';
 import OTP_screen from '../screens/otpscreen';
+import ChangePwd from '../components/changepassword';
 
 
 const Stack = createStackNavigator();
@@ -23,6 +24,7 @@ const OnboardingNav = () => {
                         <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
                         <Stack.Screen name="Sign up" component={Signup} />
                         <Stack.Screen name="Forgot Password" component={ForgotPassword} />
+                        <Stack.Screen name="Change Password" component={ChangePwd} />
                         <Stack.Screen name="OTPscreen" component={OTP_screen} options={{ title: 'Verify Mobile', headerTitleStyle: { fontWeight: 'bold' }, }} />
                         <Stack.Screen name="Parent Interface" component={parent_nav} options={{ headerShown: false }} />
                         <Stack.Screen name="Admin Interface" component={admin_tabbar} options={{ headerShown: false }} />
